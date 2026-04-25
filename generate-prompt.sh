@@ -7,7 +7,7 @@
 cd "$(dirname "$0")" || exit 1
 
 # Выходной файл
-OUTPUT_FILE="Promt(Lucerno-PC).txt"
+OUTPUT_FILE="$HOME/Promt(Lucerno-PC).txt"
 
 echo "Генерация файла $OUTPUT_FILE..."
 

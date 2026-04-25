@@ -74,6 +74,7 @@ home.sessionVariables = {
     kdePackages.kcalc
 
     # ГРАФИКА
+    pinta
     krita
     gimp
     inkscape
