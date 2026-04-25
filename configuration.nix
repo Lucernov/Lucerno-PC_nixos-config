@@ -395,11 +395,11 @@ systemd.paths.sync-nixos-config = {
   wantedBy = [ "paths.target" ];
   pathConfig = {
     PathModified = [
-      "/home/lucerno/nixos-config/configuration.nix"
-      "/home/lucerno/nixos-config/flake.nix"
-      "/home/lucerno/nixos-config/flake.lock"
-      "/home/lucerno/nixos-config/home.nix"
       "/home/lucerno/nixos-config/hardware-configuration.nix"
+      "/home/lucerno/nixos-config/flake.lock"
+      "/home/lucerno/nixos-config/flake.nix"
+      "/home/lucerno/nixos-config/configuration.nix"
+      "/home/lucerno/nixos-config/home.nix"
     ];
     Unit = "sync-nixos-config.service"; # имя сервиса для запуска
     MakeDirectory = false;
