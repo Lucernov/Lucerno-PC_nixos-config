@@ -11,7 +11,7 @@ let
 
   # НАСТРОЙКА ФОНА ДЛЯ ЭКРАНА ВХОДА (SDDM)
   mySddmBackground = pkgs.runCommand "my-sddm-bg" {} ''
-    cp ${./dotfiles/wallpapers/Velo_01.JPG} $out
+    cp ${/home/lucerno/nixos-config/dotfiles/wallpapers/Velo_01.JPG} $out
   '';
 in
 
@@ -371,8 +371,40 @@ security.pam.loginLimits = [
     };
   };
 
-    # ========== МУЗЫКА НАСТРОЙКА!!!! ==========
+    # ========== Бэкапы на Гитхаб ==========
 
+    # Сервис, который выполняет синхронизацию
+systemd.services.sync-nixos-config = {
+  description = "Synchronize nixos-config with GitHub";
+  script = ''
+    ${pkgs.git}/bin/git -C /home/lucerno/nixos-config add --all
+    if ! ${pkgs.git}/bin/git -C /home/lucerno/nixos-config diff --cached --quiet; then
+      ${pkgs.git}/bin/git -C /home/lucerno/nixos-config commit -m "Автосинхронизация $(date '+\%Y-\%m-\%d \%H:\%M:\%S')"
+      ${pkgs.git}/bin/git -C /home/lucerno/nixos-config push origin main
+    fi
+  '';
+  serviceConfig = {
+    Type = "oneshot";
+    User = "lucerno";
+  };
+};
+
+# Path unit, который следит за изменениями
+systemd.paths.sync-nixos-config = {
+  description = "Watch for changes in nixos-config";
+  wantedBy = [ "paths.target" ];
+  pathConfig = {
+    PathModified = [
+      "/home/lucerno/nixos-config/configuration.nix"
+      "/home/lucerno/nixos-config/flake.nix"
+      "/home/lucerno/nixos-config/flake.lock"
+      "/home/lucerno/nixos-config/home.nix"
+      "/home/lucerno/nixos-config/hardware-configuration.nix"
+    ];
+    Unit = "sync-nixos-config.service"; # имя сервиса для запуска
+    MakeDirectory = false;
+  };
+};
 
   # ====================================================
 

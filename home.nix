@@ -205,7 +205,7 @@ home.file = {
 
   # --- Кастомный запуск REAPER с GDK_BACKEND=x11 ---
   ".local/bin/reaper" = {
-    source = ./dotfiles/reaper;
+    source = /home/lucerno/nixos-config/scripts/reaper;
     executable = true;
   };
 
@@ -242,6 +242,15 @@ home.file = {
     '';
     force = true;
   };
+
+      # Игнорируем папки в гит репозитории (Через какую же жопу оно работает!!! Что игнорит гит папки и для копирования на гит хаб и для сборки системы аааааааа)
+  "nixos-config/.gitignore" = {
+  text = ''
+    dotfiles/
+    secrets/
+    .Trash-1000/
+  '';
+};
 
   # Ссылка REAPER для SWS
   ".config/REAPER/UserPlugins/reaper_sws-x86_64.so".source = "${pkgs.reaper-sws-extension}/UserPlugins/reaper_sws-x86_64.so";
@@ -306,7 +315,7 @@ home.file = {
       nrs = "sudo nixos-rebuild switch --flake .#Lucerno-PC";
       nrb = "sudo nixos-rebuild boot --flake .#Lucerno-PC";
       hm = "export NIXPKGS_ALLOW_UNFREE=1 && nix run github:nix-community/home-manager -- switch --flake .#lucerno --impure";
-      update = "nix flake update && sudo nixos-rebuild switch --flake .#Lucerno-PC";
+      update = "nix flake update && sudo nixos-rebuild switch --impure --flake .#Lucerno-PC";
     };
 
     # Дополнительные настройки в .zshrc
