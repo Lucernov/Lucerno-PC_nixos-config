@@ -1,0 +1,5 @@
+#!/run/current-system/sw/bin/bash
+export GDK_BACKEND=x11
+exec gamemoderun /etc/profiles/per-user/lucerno/bin/reaper "$@"
+#exec /etc/profiles/per-user/lucerno/bin/reaper "$@"
+
