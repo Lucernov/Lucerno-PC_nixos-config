@@ -1,0 +1,798 @@
+flake.nix
+
+{
+  description = "Моя основная конфигурация NixOS для домашнего ПК";
+
+  inputs = {
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.11";
+    nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
+
+    home-manager = {
+      url = "github:nix-community/home-manager/release-25.11";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    plasma-manager = {
+      url = "github:nix-community/plasma-manager/trunk";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.home-manager.follows = "home-manager";
+    };
+  };
+
+  outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, plasma-manager, ... }@inputs: {
+    # Конфигурация системы
+    nixosConfigurations.Lucerno-PC = nixpkgs.lib.nixosSystem {
+      system = "x86_64-linux";
+      specialArgs = { inherit inputs; };
+      modules = [
+        ./configuration.nix
+        home-manager.nixosModules.home-manager {
+          home-manager.useGlobalPkgs = true;
+          home-manager.useUserPackages = true;
+          home-manager.users.lucerno = import ./home.nix;
+          home-manager.extraSpecialArgs = {
+            inherit inputs;
+            pkgs-unstable = import nixpkgs-unstable {
+              system = "x86_64-linux";
+              config.allowUnfree = true;
+            };
+          };
+        }
+      ];
+    };
+
+    # Конфигурация Home Manager для пользователя
+    homeConfigurations.lucerno = home-manager.lib.homeManagerConfiguration {
+      pkgs = nixpkgs.legacyPackages.x86_64-linux;
+      modules = [ ./home.nix ];
+      extraSpecialArgs = {
+        inherit inputs;
+        pkgs-unstable = nixpkgs-unstable.legacyPackages.x86_64-linux;
+      };
+    };
+  };
+}
+
+configuration.nix
+
+{ config, pkgs, lib, ... }:
+
+let
+  # UUID дисков для удобства обслуживания
+  gamesUUID = "897f0999-d31e-45d1-b186-6822c7d17477";
+  musicUUID = "3615f1b6-bb2e-4254-b795-f08e9a542523";
+  dataUUID = "09024d77-6155-4db0-ae3c-5655858a83ad";          # 1.8TB общий для всех подтомов btrfs
+  sysBackupUUID = "67a25908-e1e2-4e53-a04b-909418c0eff8";     # второй раздел системного диска @nixos-config, @ai, @sys-archiv
+
+  # НАСТРОЙКА ФОНА ДЛЯ ЭКРАНА ВХОДА (SDDM)
+  mySddmBackground = pkgs.runCommand "my-sddm-bg" {} ''
+    cp ${./dotfiles/wallpapers/Velo_01.JPG} $out
+  '';
+in
+
+{
+  imports = [
+    ./hardware-configuration.nix
+  ];
+
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+
+  # ========== BOOTLOADER ==========
+  boot.loader.systemd-boot.enable = true;
+  boot.loader.efi.canTouchEfiVariables = true;
+  # ЯДРО
+  boot.kernelPackages = pkgs.linuxPackages_6_19;
+  # Автозагрузка модуля NTSync
+  boot.kernelModules = [ "ntsync" ];
+
+  # ========== ДОПОЛНИТЕЛЬНЫЕ ДИСКИ ==========
+  # NVMe SSD для игр (ext4)
+  fileSystems."/mnt/games" = {
+    device = "/dev/disk/by-uuid/${gamesUUID}";
+    fsType = "ext4";
+    options = [ "rw" "noatime" "discard" "nobarrier" ];
+  };
+
+  # HDD для музыки (sdc1, btrfs с подтомом @music)
+  fileSystems."/mnt/music" = {
+    device = "/dev/disk/by-uuid/${musicUUID}";
+    fsType = "btrfs";
+    options = [ "subvol=@music" "compress=zstd" "noatime" "space_cache=v2" ];
+  };
+
+  # HDD с несколькими подтомами (sdb1)
+  fileSystems."/mnt/archiv" = {
+    device = "/dev/disk/by-uuid/${dataUUID}";
+    fsType = "btrfs";
+    options = [ "subvol=@archiv" "compress=zstd" "noatime" "space_cache=v2" ];
+  };
+
+  fileSystems."/mnt/docs" = {
+    device = "/dev/disk/by-uuid/${dataUUID}";
+    fsType = "btrfs";
+    options = [ "subvol=@docs" "compress=zstd" "noatime" "space_cache=v2" ];
+  };
+
+  fileSystems."/mnt/images" = {
+    device = "/dev/disk/by-uuid/${dataUUID}";
+    fsType = "btrfs";
+    options = [ "subvol=@images" "nodatacow" "noatime" "space_cache=v2" ];
+  };
+
+  fileSystems."/mnt/video" = {
+    device = "/dev/disk/by-uuid/${dataUUID}";
+    fsType = "btrfs";
+    options = [ "subvol=@video" "nodatacow" "noatime" "space_cache=v2" ];
+  };
+
+  fileSystems."/mnt/video-temp" = {
+    device = "/dev/disk/by-uuid/${dataUUID}";
+    fsType = "btrfs";
+    options = [ "subvol=@video-temp" "nodatacow" "noatime" "space_cache=v2" ];
+  };
+
+  # SSD раздел бэкапа с несколькими подтомами
+  fileSystems."/home/lucerno/nixos-config" = {
+    device = "/dev/disk/by-uuid/${sysBackupUUID}";
+    fsType = "btrfs";
+    options = [ "subvol=@nixos-config" "compress=zstd" "noatime" "space_cache=v2" "ssd" ];
+  };
+
+  fileSystems."/mnt/ai" = {
+    device = "/dev/disk/by-uuid/${sysBackupUUID}";
+    fsType = "btrfs";
+    options = [ "subvol=@ai" "compress=zstd" "noatime" "space_cache=v2" "ssd" ];
+  };
+
+  fileSystems."/mnt/sys_archiv" = {
+    device = "/dev/disk/by-uuid/${sysBackupUUID}";
+    fsType = "btrfs";
+    options = [ "subvol=@sys-archiv" "compress=zstd" "noatime" "space_cache=v2" "ssd" ];
+  };
+
+  # ========== ВИРТУАЛЬНЫЙ ДИСК Zram0 ==========
+  zramSwap = {
+    enable = true;
+    memoryPercent = 25;       # Размер zram-устройства в процентах от общего объёма RAM (1/4 = 25%)
+    algorithm = "lz4";
+    priority = 100;
+  };
+
+  # ========== ССЫЛКИ НА ДИСКИ ==========
+  systemd.tmpfiles.rules = [
+    "L+ /home/lucerno/Видео - - - - /mnt/video"
+    "L+ /home/lucerno/Документы - - - - /mnt/docs"
+    "L+ /home/lucerno/Музыка - - - - /mnt/music"
+    "L+ /home/lucerno/Изображения - - - - /mnt/images"
+    "d /home/lucerno/nixos-config 0755 lucerno lucerno -"
+    "d /mnt/ai 0755 lucerno lucerno -"
+    "d /mnt/sys_archiv 0755 lucerno lucerno -"
+
+    # мои симлинки
+    "L+ /home/lucerno/drum_sklad - - - - /mnt/sys_archiv/samples/drum_sklad"
+    "d /home/lucerno/.local/share 0755 lucerno lucerno -"
+    "L+ /home/lucerno/.local/share/Steam/userdata - - - - /home/lucerno/nixos-config/dotfiles/config/Steam/userdata"
+    "L+ /home/lucerno/.local/share/vital - - - - /mnt/sys_archiv/samples/vital"
+    "d /home/lucerno/.config 0755 lucerno lucerno -"
+    "L+ /home/lucerno/.config/AmneziaVPN.ORG - - - - /home/lucerno/nixos-config/dotfiles/config/AmneziaVPN.ORG"
+    "L+ /home/lucerno/.config/obs-studio - - - - /home/lucerno/nixos-config/dotfiles/config/obs-studio"
+    "L+ /home/lucerno/.config/DecentSampler - - - - /mnt/sys_archiv/samples/DecentSampler"
+    "L+ /home/lucerno/.config/REAPER - - - - /home/lucerno/nixos-config/dotfiles/config/REAPER"
+    "L+ /home/lucerno/.config/yabridgectl - - - - /home/lucerno/nixos-config/dotfiles/config/yabridgectl"
+
+  ];
+  # ========== КОНЕЦ ДОПОЛНИТЕЛЬНЫХ ДИСКОВ ==========
+
+  # ========== BLUETOOTH ==========
+  hardware.bluetooth = {
+    enable = true;
+    powerOnBoot = true;
+  };
+  #services.blueman.enable = true;
+
+  # ========== NVIDIA RTX 3070 ==========
+  services.xserver.videoDrivers = [ "nvidia" ];
+  hardware.graphics = {
+    enable = true;                                    # Включаем поддержку аппаратного ускорения графики
+    enable32Bit = true;
+  };
+  boot.kernelParams = [ "nvidia_drm.modeset=1" ];     # Загружаем модуль ядра NVIDIA раньше, для более гладкой загрузки и Wayland
+
+  # Настройка драйвера NVIDIA для Wayland
+  hardware.nvidia = {
+    open = true;                      # Используем открытые модули (для RTX 3070 это работает)
+    modesetting.enable = true;        # Обязательно для Wayland: включает режим "Sync & Destroy"
+    nvidiaSettings = false;            # Устанавливает утилиту nvidia-settings
+    powerManagement.enable = false;   # Отключаем управление питанием (на десктопе не нужно, только для ноутбуков)
+
+    package = config.boot.kernelPackages.nvidiaPackages.mkDriver {
+      version = "595.58.03";
+      sha256_64bit = "sha256-jA1Plnt5MsSrVxQnKu6BAzkrCnAskq+lVRdtNiBYKfk=";
+      sha256_aarch64 = "sha256-6LvJyT0cMXGS290Dh8hd9rc+nYZqBzDIlItOFk8S4n8=";
+      openSha256 = "sha256-6LvJyT0cMXGS290Dh8hd9rc+nYZqBzDIlItOFk8S4n8=";
+      settingsSha256 = "sha256-6LvJyT0cMXGS290Dh8hd9rc+nYZqBzDIlItOFk8S4n8=";
+      persistencedSha256 = "sha256-6LvJyT0cMXGS290Dh8hd9rc+nYZqBzDIlItOFk8S4n8=";
+    };
+  };
+
+    # ========== NETWORK & SYSTEM ==========
+  networking.hostName = "Lucerno-PC";
+  networking.networkmanager.enable = true;
+
+  # Firewall настройки с nftables
+  networking.nftables.enable = true; # переход на nftables
+
+  networking.firewall = {
+    enable = true;
+    allowedTCPPorts = [ 22 ];     # Разрешаем SSH
+    allowPing = true; # Разрешаем ping
+    # Логирование подозрительных пакетов
+    logRefusedConnections = false; # Не засорять логи
+    logRefusedPackets = false;
+  };
+
+    # ========== Время и локаль ==========
+  time.timeZone = "Europe/Moscow";
+  i18n.defaultLocale = "ru_RU.UTF-8";
+  i18n.extraLocaleSettings = {
+    LC_ADDRESS = "ru_RU.UTF-8";
+    LC_IDENTIFICATION = "ru_RU.UTF-8";
+    LC_MEASUREMENT = "ru_RU.UTF-8";
+    LC_MONETARY = "ru_RU.UTF-8";
+    LC_NAME = "ru_RU.UTF-8";
+    LC_NUMERIC = "ru_RU.UTF-8";
+    LC_PAPER = "ru_RU.UTF-8";
+    LC_TELEPHONE = "ru_RU.UTF-8";
+    LC_TIME = "ru_RU.UTF-8";
+  };
+
+    # ========== USER ==========
+  # Группа для пользователя
+  users.groups.lucerno = {};
+  users.groups.realtime = {};
+  users.groups.games = {};
+
+security.pam.loginLimits = [
+  { domain = "@realtime"; item = "rtprio"; type = "-"; value = "99"; }
+  { domain = "@realtime"; item = "memlock"; type = "-"; value = "unlimited"; }
+  { domain = "@games"; type = "-"; item = "rtprio"; value = 98; }
+  { domain = "@games"; type = "-"; item = "memlock"; value = "unlimited"; }
+];
+
+  users.users.lucerno = {
+    isNormalUser = true;
+    hashedPasswordFile = "/home/lucerno/nixos-config/secrets/lucerno-password.hash";
+    group = "lucerno";
+    extraGroups = [ "wheel" "networkmanager" "audio" "video" "storage" "realtime" "games"   ];
+    shell = pkgs.zsh;
+  };
+
+  nixpkgs.config.allowUnfree = true;      # Разрешение unfree пакетов
+  programs.zsh.enable = true;             # консоль оболочка для всех пользователей
+  programs.amnezia-vpn.enable = true;     # AmneziaVPN
+
+  # Wayland + KDE Plasma 6
+  services.displayManager.sddm.enable = true;                     # Включает SDDM (Simple Desktop Display Manager)
+  services.displayManager.sddm.wayland.enable = true;             # Разрешает SDDM работать под Wayland
+  #services.displayManager.plasma-login-manager.enable = true;    # Plasma Login Manager (PLM) — это новый менеджер входа
+  services.desktopManager.plasma6.enable = true;                  # Включает рабочий стол KDE Plasma 6
+  services.displayManager.defaultSession = "plasma";              # Устанавливает сеанс по умолчанию — Plasma (KDE)
+  services.xserver.enable = false;                                # Отключает X11-сервер полностью
+  programs.dconf.enable = true;                                   # Включает систему хранения настроек dconf
+  programs.partition-manager.enable = true;                       # Устанавливает KDE Partition Manager
+  #services.tumbler.enable = true;                                 # Включает фоновую службу tumbler
+
+  # ПОДМЕНА ФОНА SDDM
+  # файл theme.conf.user внутри темы breeze. SDDM читает этот файл и применяет настройки, не затрагивая оригинальные файлы темы.
+  # Параметр background указывает на пакет mySddmBackground.
+  environment.systemPackages = [
+    (pkgs.writeTextDir "share/sddm/themes/breeze/theme.conf.user" ''
+      [General]
+      background=${mySddmBackground}
+    '')
+  # --------------------------------------------------------------------------
+  ] ++ (with pkgs; [
+    home-manager
+    kdePackages.plasma-desktop
+    kdePackages.breeze-gtk
+    vim                       # консоль системный текстовый редактор
+    nano                      # консоль системный текстовый редактор
+    #carbonyl                  # консольный Браузер
+    nvtopPackages.nvidia      # консоль телеметрия видеокарты
+    wayland-utils             # системные утилиты Wayland
+    gsettings-desktop-schemas # системные схемы
+    glib                      # системная библиотека
+    nvidia-vaapi-driver       # драйвера видеокарты
+    libva-utils               # системные утилиты VA-API
+
+    # Добавляем директорию для VST3
+    (symlinkJoin {
+      name = "vst3-plugins";
+      paths = [];  # сюда можно будет добавить пакеты VST из nixpkgs
+    })
+  ]);
+
+  # Переменные окружения для менеджера входа
+  environment.sessionVariables = {
+    LANG = "ru_RU.UTF-8";
+    LANGUAGE = "ru_RU.UTF-8";
+
+  # Переменные окружения для Wayland
+    # Принудительно указываем Vulkan-драйвер NVIDIA
+    __GLX_VENDOR_LIBRARY_NAME = "nvidia";
+    __GL_VRR_ALLOWED = "1";
+    # Указываем бэкенд для GBM (Graphics Buffer Manager)
+    GBM_BACKEND = "nvidia-drm";
+    CHROME_FLAGS = "--ozone-platform-hint=auto";
+    ELECTRON_OZONE_PLATFORM_HINT = "auto";
+    QT_QPA_PLATFORM = "wayland";
+    GDK_BACKEND = "wayland";
+    SDL_VIDEODRIVER = "wayland";
+    QT_QPA_PLATFORM_PLUGIN_PATH = "${pkgs.qt6.qtwayland}/lib/qt-6/plugins/platforms";
+  };
+
+  # Звук (PipeWire)
+  security.rtkit.enable = true;
+  services.pipewire = {
+    enable = true;
+    alsa.enable = true;
+    alsa.support32Bit = true;
+    jack.enable = true;
+    pulse.enable = true;
+    wireplumber.enable = true;
+
+  extraConfig = {
+    pipewire."99-low-latency" = {
+      "context.properties" = {
+        "default.clock.rate" = 48000;
+        "default.clock.quantum" = 512;
+        "default.clock.min-quantum" = 256;
+        "default.clock.max-quantum" = 8192;
+        "default.clock.allowed-rates" = [ 44100 48000 ];
+      };
+      "context.modules" = [
+        {
+          name = "libpipewire-module-rt";
+          args = {
+            "nice.level" = -15;
+            "rt.prio" = 88;
+          };
+        }
+      ];
+    };
+  };
+};
+
+  services.pulseaudio.enable = false;
+
+  # STEAM
+  programs.steam = {
+    enable = true;
+    remotePlay.openFirewall = true;
+    dedicatedServer.openFirewall = true;
+    extraCompatPackages = with pkgs; [
+      proton-ge-bin
+    ];
+  };
+
+  hardware.xone.enable = true;      # Модули ядра
+  programs.gamemode = {             # Системная служба производительности
+  enable = true;
+  settings = {
+    general = {
+      desiredgov = "performance";
+      reaper_freq = 5;
+    };
+  };
+};
+
+  # ========== NIX ОПТИМИЗАЦИЯ ==========
+  nix = {
+    # Автоматически оптимизировать store (удалять дубликаты)
+    settings.auto-optimise-store = true;
+
+    # Автоматическая очистка старых поколений
+    gc = {
+      automatic = true;      # Автоматически запускать сборку мусора
+      dates = "weekly";      # Раз в неделю
+      options = "--delete-older-than 7d";  # Удалять поколения старше 7 дней
+    };
+
+    # Дополнительные настройки для оптимизации
+    settings = {
+      max-jobs = 4;                       # Параллельных сборок
+      keep-derivations = true;
+      keep-outputs = true;
+    };
+  };
+
+    # ========== МУЗЫКА НАСТРОЙКА!!!! ==========
+
+  # ====================================================
+
+  system.stateVersion = "25.11";
+}
+
+home.nix
+
+{ config, pkgs, pkgs-unstable, inputs, lib, ... }:
+
+{
+  # Импорт plasma-manager
+  imports = [
+    inputs.plasma-manager.homeModules.plasma-manager
+  ];
+
+# СИМВОЛИЧЕСКАЯ ССЫЛКА, ЧТОБЫ WINETRICKS НЕ РУГАЛСЯ НА ОТСУТСТВИЕ WINЕ64
+home.activation.createWine64Link = lib.hm.dag.entryAfter ["writeBoundary"] ''
+  mkdir -p $HOME/.local/bin
+  ln -sf ${pkgs.wineWow64Packages.staging}/bin/wine $HOME/.local/bin/wine64
+'';
+
+  # ========== УПРАВЛЕНИЕ KDE Plasma ==========
+  programs.plasma = {
+    enable = true;
+      # workspace - настройки рабочего пространства (рабочий стол)
+    workspace = {
+      wallpaper = "/home/lucerno/nixos-config/dotfiles/wallpapers/Velo_01.JPG";
+    };
+
+      # Настройки клавиатуры
+  configFile."kxkbrc" = {
+    Layout = {
+      LayoutList = "us,ru";
+      LayoutLoopCount = "-1";                           # Бесконечный цикл переключения
+      ResetOldOptions = "true";                         # Сбросить старые опции
+      Options = "grp:ctrl_shift_toggle,grp_led:scroll"; # Переключение: Ctrl+Shift, индикатор на Scroll Lock
+      ShowLayoutIndicator = "true";                     # Показывать индикатор раскладки в трее
+      SwitchMode = "Global";                            # Глобальное переключение (для всей системы)
+      Use = "true";                                     # Использовать эти настройки
+      VariantList = "";                                 # Нет вариантов раскладок
+    };
+  };
+
+      # Горячие клавиши
+  shortcuts = {
+    # Глобальные клавиши для всех приложений
+
+      # Yakuake toggle
+    yakuake = {
+      "toggle-window-state" = "Meta+Z";  # "toggle-window-state" - действие: показать/скрыть окно Yakuake Win + Z
+    };
+  };
+};
+
+      # ========== МУЗЫКА НАСТРОЙКА!!!! ==========
+    # Устанавливаем переменную окружения для пользовательской папки VST3
+home.sessionVariables = {
+  VST3_PATH = "${config.home.homeDirectory}/.vst3";
+  WINEPREFIX = "/mnt/music/wine-yabridge";
+};
+
+  # ====================================================
+
+  # НАСТРОЙКИ HOME MANAGER
+  home.username = "lucerno";
+  home.homeDirectory = "/home/lucerno";
+  home.stateVersion = "25.11";
+  programs.home-manager.enable = true;
+
+  # Пакеты для пользователя
+  home.packages = with pkgs; [
+    nh
+    # KDE приложения
+    kdePackages.kde-gtk-config
+    kdePackages.ktorrent
+    kdePackages.kdenlive
+    kdePackages.yakuake
+    kdePackages.kcalc
+
+    # ГРАФИКА
+    krita
+    gimp
+    inkscape
+    blender
+
+    # ИГРЫ
+    goverlay
+    lutris
+    heroic
+    (bottles.override { removeWarningPopup = true; })
+
+    # ИНТЕРНЕТ
+    google-chrome
+    media-downloader
+    discord
+    telegram-desktop
+
+    # МУЛЬТИМЕДИА
+    vlc
+    qmmp
+
+    # МУЗЫКА
+    yabridge
+    yabridgectl
+    winetricks                # для настройки префиксов
+    coppwr
+
+    vital                     # синтезатор FM
+    surge-xt                  # синтезатор FM
+    geonkick                  # синтезатор барабанов
+    drumgizmo               # сэмплер барабанов (0.9.20)
+    dragonfly-reverb
+    fretboard
+
+    # ОФИС
+
+    # ВСЯКОЕ
+    git
+    curl
+    wget
+    bat      # аналог cat с подсветкой синтаксиса
+    htop
+    btop
+    fastfetch
+    nix-tree
+
+    # Minion обёртка
+  (writeShellScriptBin "minion" ''
+    export JAVA_TOOL_OPTIONS="-Dprism.lcdtext=false -Dprism.text=t2k"
+    exec ${pkgs.minion}/bin/minion "$@"
+  '')
+  ] ++ (with pkgs-unstable; [
+    # из нестабильного
+    wineWow64Packages.staging
+    reaper
+    reaper-sws-extension
+    reaper-reapack-extension
+  ]);
+
+programs.obs-studio = {
+  enable = true;
+  package = pkgs.obs-studio.override { cudaSupport = true; };
+  plugins = with pkgs.obs-studio-plugins; [
+    wlrobs
+    obs-multi-rtmp
+  ];
+};
+
+# ========== MANGO HUD ==========
+programs.mangohud = {
+  enable = true;
+  enableSessionWide = false;
+  settings = {
+    fps = true;
+    cpu_temp = true;
+    gpu_temp = true;
+    ram = true;
+    vram = true;
+    winesync = true;
+    position = "top-right";
+    font_size = 24;
+    background_alpha = 0.5;
+    full = true;
+  };
+};
+
+# ========== УПРАВЛЕНИЕ ФАЙЛАМИ ПОЛЬЗОВАТЕЛЯ ==========
+home.file = {
+
+  # XDG пользовательские директории
+".config/user-dirs.dirs" = {
+  text = ''
+    XDG_DESKTOP_DIR="$HOME/Desktop"
+    XDG_DOWNLOAD_DIR="$HOME/Загрузки"
+    XDG_TEMPLATES_DIR="$HOME/Templates"
+    XDG_PUBLICSHARE_DIR="$HOME/Public"
+    XDG_DOCUMENTS_DIR="/mnt/docs"
+    XDG_MUSIC_DIR="/mnt/music"
+    XDG_PICTURES_DIR="/mnt/images"
+    XDG_VIDEOS_DIR="/mnt/video"
+  '';
+      force = true;
+  };
+
+  # --- Автозапуск AmneziaVPN ---
+  # Создаёт .desktop-файл, который запускает AmneziaVPN при входе в KDE.
+  ".config/autostart/amneziavpn.desktop".text = ''
+    [Desktop Entry]
+    Type=Application
+    Name=AmneziaVPN
+    Exec=amnezia-vpn
+    Icon=amnezia-vpn
+    X-KDE-autostart-after=panel
+    StartupNotify=false
+    Terminal=false
+  '';
+
+  # --- Автозапуск Yakuake ---
+  # Создаёт .desktop-файл для запуска Yakuake (выпадающий терминал).
+  # sleep 2 даёт время на полную загрузку KDE перед стартом.
+  ".config/autostart/yakuake.desktop".text = ''
+    [Desktop Entry]
+    Type=Application
+    Name=Yakuake
+    Exec=bash -c "sleep 2 && yakuake"
+    Icon=yakuake
+    X-KDE-autostart-after=panel
+    StartupNotify=false
+    Terminal=false
+  '';
+
+  # --- Кастомный запуск REAPER с GDK_BACKEND=x11 ---
+  ".local/bin/reaper" = {
+    source = ./dotfiles/reaper;
+    executable = true;
+  };
+
+  # --- Ярлык REAPER в меню KDE ---
+".local/share/applications/reaper-x11.desktop" = {
+  text = ''
+    [Desktop Entry]
+    Version=1.0
+    Type=Application
+    Name=REAPER
+    Comment=ПРОСТО БОЛЬ !!!
+    Exec=/home/lucerno/.local/bin/reaper %F
+    Icon=cockos-reaper
+    Categories=Audio;AudioVideo;
+    Terminal=false
+    StartupWMClass=REAPER
+    '';
+    force = true;
+  };
+
+  # --- Ярлык Minion в меню KDE ---
+  ".local/share/applications/minion.desktop" = {
+    text = ''
+      [Desktop Entry]
+      Version=1.0
+      Type=Application
+      Name=Minion
+      Comment=Управление аддонами для MMORPG
+      Exec=minion
+      Icon=/mnt/images/sys-icons/icon-minion.png
+      Categories=Game;
+      Terminal=false
+      StartupWMClass=Minion
+    '';
+    force = true;
+  };
+
+  # Ссылка REAPER для SWS
+  ".config/REAPER/UserPlugins/reaper_sws-x86_64.so".source = "${pkgs.reaper-sws-extension}/UserPlugins/reaper_sws-x86_64.so";
+
+  # Ссылка REAPER для ReaPack
+  ".config/REAPER/UserPlugins/reaper_reapack-x86_64.so".source = "${pkgs.reaper-reapack-extension}/UserPlugins/reaper_reapack-x86_64.so";
+};
+# ===================================================
+
+  # ========== ZSH НАСТРОЙКА ==========
+  programs.zsh = {
+    enable = true;
+    enableCompletion = true;
+    autosuggestion.enable = true;
+    syntaxHighlighting.enable = true;
+
+    # Oh My Zsh
+    oh-my-zsh = {
+      enable = true;                      # Включает Oh My Zsh (коллекция тем и плагинов)
+      theme = "agnoster";                 # тема с информацией о git ветке
+      plugins = [                         # Список плагинов
+        "git"                             # Алиасы для Git (сокращает время набора) - gst, ga, gc, gp
+        "docker"                          # Алиасы для Docker - dps, drm, dstop
+        "sudo"                            # Добавляет sudo перед последней командой [Esc][Esc]
+        "extract"                         # Распаковывает любой архив (7z, rar, zip, tar...) extract file.zip
+        "web-search"                      # Поиск в браузере прямо из терминала - google nixos, youtube linux
+        "command-not-found"               # Предлагает установить пакет через nix - неизвестная_команда
+        "colored-man-pages"               # Цветные man страницы - man ls
+        "history"                         # Показывает историю команд - h или history
+        "npm"                             # Автодополнения
+        "node"                            # Автодополнения
+        "python"                          # Автодополнения
+      ];
+    };
+
+    # Настройки истории
+    history = {
+      size = 10000;                       # Сколько команд хранить в памяти
+      path = "$HOME/.zsh_history";        # Файл с историей
+      share = true;                       # Общая история между всеми терминалами
+      save = 10000;                       # Сколько команд сохранять в файл
+# Полезные команды:
+# показать историю - history
+# повторить последнюю команду - !!
+# выполнить команду под номером 123 - !123
+# выполнить последнюю команду начинающуюся с ls - !ls
+# поиск по истории - Ctrl+R
+    };
+
+    # Алиасы
+    shellAliases = {
+    btop = "LD_LIBRARY_PATH=/run/opengl-driver/lib btop";
+      ll = "ls -la";
+      la = "ls -a";
+      l = "ls -l";
+      gs = "git status";
+      gp = "git pull";
+      gc = "git commit -m";
+      gco = "git checkout";
+      gb = "git branch";
+      nrs = "sudo nixos-rebuild switch --flake .#Lucerno-PC";
+      nrb = "sudo nixos-rebuild boot --flake .#Lucerno-PC";
+      hm = "export NIXPKGS_ALLOW_UNFREE=1 && nix run github:nix-community/home-manager -- switch --flake .#lucerno --impure";
+      update = "nix flake update && sudo nixos-rebuild switch --flake .#Lucerno-PC";
+    };
+
+    # Дополнительные настройки в .zshrc
+    initContent = ''
+      # Переменные окружения для игр
+      export PROTON_USE_NTSYNC=1
+      export PROTON_NO_ESYNC=1
+      export PROTON_NO_FSYNC=1
+
+      # Разрешение unfree пакетов для home-manager
+      export NIXPKGS_ALLOW_UNFREE=1
+
+      # Путь к локальным скриптам
+      export PATH="$HOME/.local/bin:$PATH"
+
+      # Утилиты для удобства
+      alias cat="bat"
+      alias top="btop"
+
+      # Промпт
+      PROMPT='%F{green}%n@%m%f:%F{blue}%~%f$ '
+      RPROMPT='%F{red}$(git branch --show-current 2>/dev/null)%f'
+    '';
+  };
+  # =================================
+
+}
+
+hardware-configuration.nix
+
+# Это конфигурация для Btrfs с подтомами @, @nix, @home
+# Создана вручную для SSD (INTEL SSDSC2BB80)
+{ config, lib, pkgs, modulesPath, ... }:
+
+{
+  imports =
+    [ (modulesPath + "/installer/scan/not-detected.nix")
+    ];
+
+  boot.initrd.availableKernelModules = [ "vmd" "xhci_pci" "ahci" "nvme" "usbhid" "usb_storage" "sd_mod" ];
+  boot.initrd.kernelModules = [ ];
+  boot.kernelModules = [ "kvm-intel" ];
+  boot.extraModulePackages = [ ];
+
+  fileSystems."/" = {
+    device = "/dev/disk/by-uuid/1964f286-7b1d-40df-8201-5824671e9631";
+    fsType = "btrfs";
+    options = [ "subvol=@" "compress=zstd" "noatime" "space_cache=v2" "ssd" ];
+  };
+
+  fileSystems."/nix" = {
+    device = "/dev/disk/by-uuid/1964f286-7b1d-40df-8201-5824671e9631";
+    fsType = "btrfs";
+    options = [ "subvol=@nix" "compress=zstd" "noatime" "space_cache=v2" "ssd" ];
+  };
+
+  fileSystems."/home" = {
+    device = "/dev/disk/by-uuid/1964f286-7b1d-40df-8201-5824671e9631";
+    fsType = "btrfs";
+    options = [ "subvol=@home" "compress=zstd" "noatime" "space_cache=v2" "ssd" ];
+  };
+
+  fileSystems."/boot" = {
+    device = "/dev/disk/by-uuid/59A7-C7F6";
+    fsType = "vfat";
+    options = [ "fmask=0077" "dmask=0077" ];
+  };
+
+  swapDevices = [ ];
+
+  nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
+  hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+}
+
