@@ -245,6 +245,23 @@ home.file = {
     force = true;
   };
 
+  # --- Ярлык QMMP ---
+    ".local/bin/qmmp-wayland-fix".source = ./scripts/qmmp-wayland-fix;
+    ".local/bin/qmmp-wayland-fix".executable = true;
+
+      ".local/share/applications/org.qmmp.qmmp.desktop" = {
+    text = ''
+      [Desktop Entry]
+      Name=Qmmp
+      Exec=/home/lucerno/.local/bin/qmmp-wayland-fix %F
+      Icon=qmmp
+      Terminal=false
+      Type=Application
+      Categories=Audio;AudioVideo;
+      '';
+    force = true;
+  };
+
       # Игнорируем папки в гит репозитории (Через какую же жопу оно работает!!! Что игнорит гит папки и для копирования на гит хаб и для сборки системы аааааааа)
   "nixos-config/.gitignore" = {
   text = ''
