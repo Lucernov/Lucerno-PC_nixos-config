@@ -331,8 +331,8 @@ home.file = {
       gc = "git commit -m";
       gco = "git checkout";
       gb = "git branch";
-      nrs = "sudo nixos-rebuild switch --flake .#Lucerno-PC";
-      nrb = "sudo nixos-rebuild boot --flake .#Lucerno-PC";
+      nrs = "sudo nixos-rebuild switch --impure --flake .#Lucerno-PC";
+      nrb = "sudo nixos-rebuild boot --impure --flake .#Lucerno-PC";
       hm = "export NIXPKGS_ALLOW_UNFREE=1 && nix run github:nix-community/home-manager -- switch --flake .#lucerno --impure";
       update = "nix flake update && sudo nixos-rebuild switch --impure --flake .#Lucerno-PC";
     };
