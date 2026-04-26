@@ -246,7 +246,7 @@ home.file = {
   };
 
   # --- Ярлык QMMP ---
-    ".local/bin/qmmp-wayland-fix".source = ./scripts/qmmp-wayland-fix;
+    ".local/bin/qmmp-wayland-fix".source = /home/lucerno/scripts/qmmp-wayland-fix;
     ".local/bin/qmmp-wayland-fix".executable = true;
 
       ".local/share/applications/org.qmmp.qmmp.desktop" = {
