@@ -258,8 +258,7 @@ home.file = {
   Terminal=false
   Type=Application
   Categories=Audio;AudioVideo;
-  MimeType=application/ogg;application/x-ogg;audio/mpeg;audio/x-mpeg;audio/x-mpegurl;audio/x-scpls;audio/x-m4a;audio/x-ms-asf;audio/x-ms-asx;audio/x-ms-wax;audio/vnd.rn-realmedia;audio/x-real-audio;audio/x-pn-realaudio;audio/x-wav;audio/x-mp3;audio/x-mpeg;audio/mp3;audio/x-mpg;audio/x-mpeg2;audio/mp2;audio/x-mp2;audio/x-mp3;audio/x-mp4;audio/x-m4a;audio/x-ape;audio/x-wavpack;audio/x-tta;audio/x-tak;audio/x-ffmpeg;video/x-ms-asf;video/x-ms-asx;audio/x-ms-wma;audio/x-ms-wax;application/x-troff-msvideo;
-      '';
+'';
     force = true;
   };
 
