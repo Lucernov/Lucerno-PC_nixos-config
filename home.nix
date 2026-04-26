@@ -79,6 +79,7 @@ home.sessionVariables = {
     gimp
     inkscape
     blender
+    upscaler
 
     # ИГРЫ
     (bottles.override { removeWarningPopup = true; })
