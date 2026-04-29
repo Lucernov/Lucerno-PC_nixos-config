@@ -219,6 +219,12 @@ security.pam.loginLimits = [
     shell = pkgs.zsh;
   };
 
+  # Отключаем запрос пароля для sudo для группы wheel
+  security.sudo = {
+    enable = true;
+    wheelNeedsPassword = false;
+  };
+
 
   nixpkgs.config.allowUnfree = true;      # Разрешение unfree пакетов
   programs.zsh.enable = true;             # консоль оболочка для всех пользователей
