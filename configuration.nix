@@ -1,4 +1,4 @@
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, pkgs-unstable, ... }:
 
 
 let
@@ -155,15 +155,7 @@ in
     modesetting.enable = true;        # Обязательно для Wayland: включает режим "Sync & Destroy"
     nvidiaSettings = false;            # Устанавливает утилиту nvidia-settings
     powerManagement.enable = false;   # Отключаем управление питанием (на десктопе не нужно, только для ноутбуков)
-
-    package = config.boot.kernelPackages.nvidiaPackages.mkDriver {
-      version = "595.58.03";
-      sha256_64bit = "sha256-jA1Plnt5MsSrVxQnKu6BAzkrCnAskq+lVRdtNiBYKfk=";
-      sha256_aarch64 = "sha256-6LvJyT0cMXGS290Dh8hd9rc+nYZqBzDIlItOFk8S4n8=";
-      openSha256 = "sha256-6LvJyT0cMXGS290Dh8hd9rc+nYZqBzDIlItOFk8S4n8=";
-      settingsSha256 = "sha256-6LvJyT0cMXGS290Dh8hd9rc+nYZqBzDIlItOFk8S4n8=";
-      persistencedSha256 = "sha256-6LvJyT0cMXGS290Dh8hd9rc+nYZqBzDIlItOFk8S4n8=";
-    };
+    package = pkgs-unstable.linuxPackages.nvidiaPackages.beta;
   };
 
 
