@@ -252,14 +252,14 @@ security.pam.loginLimits = [
     curl
     wget
     htop
-    #carbonyl                  # консольный Браузер
+    #carbonyl                 # консольный Браузер
     nvtopPackages.nvidia      # консоль телеметрия видеокарты
     wayland-utils             # системные утилиты Wayland
     gsettings-desktop-schemas # системные схемы
     glib                      # системная библиотека
     nvidia-vaapi-driver       # драйвера видеокарты
     libva-utils               # системные утилиты VA-API
-      google-chrome
+      google-chrome           # браузер
 
 
     # Добавляем директорию для VST3
