@@ -259,6 +259,7 @@ security.pam.loginLimits = [
     glib                      # системная библиотека
     nvidia-vaapi-driver       # драйвера видеокарты
     libva-utils               # системные утилиты VA-API
+      google-chrome
 
 
     # Добавляем директорию для VST3
