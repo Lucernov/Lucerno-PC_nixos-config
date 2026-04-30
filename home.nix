@@ -88,7 +88,6 @@ home.sessionVariables = {
     heroic
 
     # ИНТЕРНЕТ
-    google-chrome
     media-downloader
     discord
     telegram-desktop
