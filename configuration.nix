@@ -156,7 +156,7 @@ in
     modesetting.enable = true;        # Обязательно для Wayland: включает режим "Sync & Destroy"
     nvidiaSettings = false;            # Устанавливает утилиту nvidia-settings
     powerManagement.enable = false;   # Отключаем управление питанием (на десктопе не нужно, только для ноутбуков)
-    package = pkgs-unstable.linuxPackages.nvidiaPackages.beta;
+    package = config.boot.kernelPackages.nvidiaPackages.stable;
   };
 
 
