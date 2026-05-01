@@ -142,8 +142,8 @@ in
 
 
   # ========== NVIDIA RTX 3070 ==========
-  #services.xserver.videoDrivers = [ "nvidia" ];
-  services.xserver.videoDrivers = [ "nouveau" ];
+  services.xserver.videoDrivers = [ "nvidia" ];
+  #services.xserver.videoDrivers = [ "nouveau" ];
   hardware.graphics = {
     enable = true;                                    # Включаем поддержку аппаратного ускорения графики
     enable32Bit = true;
