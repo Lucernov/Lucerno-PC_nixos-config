@@ -142,7 +142,8 @@ in
 
 
   # ========== NVIDIA RTX 3070 ==========
-  services.xserver.videoDrivers = [ "nvidia" ];
+  #services.xserver.videoDrivers = [ "nvidia" ];
+  services.xserver.videoDrivers = [ "nouveau" ];
   hardware.graphics = {
     enable = true;                                    # Включаем поддержку аппаратного ускорения графики
     enable32Bit = true;
@@ -157,8 +158,6 @@ in
 #    powerManagement.enable = false;   # Отключаем управление питанием (на десктопе не нужно, только для ноутбуков)
 #    package = pkgs-unstable.linuxPackages.nvidiaPackages.beta;
 #  };
-
-  services.xserver.videoDrivers = [ "nouveau" ];
 
 
     # ========== NETWORK & SYSTEM ==========
