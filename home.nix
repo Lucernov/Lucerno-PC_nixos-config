@@ -115,6 +115,7 @@ home.sessionVariables = {
     # ВСЯКОЕ
     bat      # аналог cat с подсветкой синтаксиса
     btop
+    mission-center
     fastfetch
     nix-tree
 
