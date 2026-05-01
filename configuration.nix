@@ -151,13 +151,13 @@ in
   boot.kernelParams = [ "nvidia_drm.modeset=1" ];     # Загружаем модуль ядра NVIDIA раньше, для более гладкой загрузки и Wayland
 
   # Настройка драйвера NVIDIA для Wayland
-#  hardware.nvidia = {
-#    open = true;                      # Используем открытые модули (для RTX 3070 это работает)
-#    modesetting.enable = true;        # Обязательно для Wayland: включает режим "Sync & Destroy"
-#    nvidiaSettings = false;            # Устанавливает утилиту nvidia-settings
-#    powerManagement.enable = false;   # Отключаем управление питанием (на десктопе не нужно, только для ноутбуков)
-#    package = pkgs-unstable.linuxPackages.nvidiaPackages.beta;
-#  };
+  hardware.nvidia = {
+    open = true;                      # Используем открытые модули (для RTX 3070 это работает)
+    modesetting.enable = true;        # Обязательно для Wayland: включает режим "Sync & Destroy"
+    nvidiaSettings = false;            # Устанавливает утилиту nvidia-settings
+    powerManagement.enable = false;   # Отключаем управление питанием (на десктопе не нужно, только для ноутбуков)
+    package = pkgs-unstable.linuxPackages.nvidiaPackages.beta;
+  };
 
 
     # ========== NETWORK & SYSTEM ==========
