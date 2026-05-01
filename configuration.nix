@@ -30,7 +30,7 @@ in
   boot.supportedFilesystems = [ "exfat" ];
   #system.nixos-init.enable = true;           # иногда проверять, пока проблемы с нвидиа
   # ЯДРО
-  boot.kernelPackages = pkgs-unstable.linuxPackages_latest;
+  boot.kernelPackages = pkgs.linuxPackages_6_19;
   # Автозагрузка модуля NTSync
   boot.kernelModules = [ "ntsync" ];
 
