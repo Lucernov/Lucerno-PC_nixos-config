@@ -271,7 +271,7 @@ home.file = {
     Comment=Hotone Ampero II Editor
     Exec=wine "/home/lucerno/Музыка/wine-yabridge/drive_c/Program Files/Hotone/Ampero II/Ampero II.exe"
     Icon=wine
-    Categories=Audio;Midi;
+    Categories=Audio;AudioVideo;
     StartupNotify=true
     Terminal=false
   '';
