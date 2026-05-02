@@ -262,6 +262,22 @@ home.file = {
     force = true;
   };
 
+  # --- Ярлык Ampero ---
+  ".local/share/applications/ampero2.desktop" = {
+  text = ''
+    [Desktop Entry]
+    Type=Application
+    Name=Ampero II
+    Comment=Hotone Ampero II Editor
+    Exec=wine "/home/lucerno/Музыка/wine-yabridge/drive_c/Program Files/Hotone/Ampero II/Ampero II.exe"
+    Icon=wine
+    Categories=Audio;Midi;
+    StartupNotify=true
+    Terminal=false
+  '';
+  force = true;
+};
+
       # Игнорируем папки в гит репозитории (Через какую же жопу оно работает!!! Что игнорит гит папки и для копирования на гит хаб и для сборки системы аааааааа)
   "nixos-config/.gitignore" = {
   text = ''
