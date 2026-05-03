@@ -89,6 +89,7 @@ home.sessionVariables = {
 
     # ИНТЕРНЕТ
     media-downloader
+    parabolic
     deno
     you-get
 
