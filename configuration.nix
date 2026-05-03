@@ -128,6 +128,8 @@ in
     "L+ /home/lucerno/.config/DecentSampler - - - - /mnt/sys_archiv/samples/DecentSampler"
     "L+ /home/lucerno/.config/REAPER - - - - /home/lucerno/nixos-config/dotfiles/config/REAPER"
     "L+ /home/lucerno/.config/yabridgectl - - - - /home/lucerno/nixos-config/dotfiles/config/yabridgectl"
+    "L+ /home/lucerno/.local/share/media-downloader/bin/deno - - - - ${pkgs.deno}/bin/deno"
+    "L+ /home/lucerno/.local/share/media-downloader/bin/you-get - - - - ${pkgs.you-get}/bin/you-get"
 
   ];
   # ========== КОНЕЦ ДОПОЛНИТЕЛЬНЫХ ДИСКОВ ==========
