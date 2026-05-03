@@ -89,6 +89,9 @@ home.sessionVariables = {
 
     # ИНТЕРНЕТ
     media-downloader
+    deno
+    you-get
+
     discord
     telegram-desktop
 
