@@ -246,6 +246,7 @@ security.pam.loginLimits = [
   ] ++ (with pkgs; [
     home-manager
     git
+    unzip
     kdePackages.plasma-desktop
     kdePackages.breeze-gtk
     vim                       # консоль системный текстовый редактор
