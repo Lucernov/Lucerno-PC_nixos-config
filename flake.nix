@@ -15,6 +15,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.home-manager.follows = "home-manager";
     };
+
+
+        # Star Citizen helper flake
+        #nix-citizen.url = "github:LovingMelody/nix-citizen";
   };
 
   outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, plasma-manager, ... }@inputs: {
