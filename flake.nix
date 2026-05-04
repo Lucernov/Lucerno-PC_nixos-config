@@ -35,6 +35,7 @@
       };
       modules = [
         ./configuration.nix
+        musnix.nixosModules.musnix
         home-manager.nixosModules.home-manager {
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
