@@ -27,13 +27,7 @@
   outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, plasma-manager, musnix, ... }@inputs: {        # Функция, которая принимает все входы и возвращает набор результатов
     nixosConfigurations.Lucerno-PC = nixpkgs.lib.nixosSystem {            # Конфигурация всей системы (NixOS) для хоста с именем Lucerno-PC
       system = "x86_64-linux";                                            # Архитектура системы (x86_64 — стандартный ПК)
-      specialArgs = {                                                     # Дополнительные аргументы, которые будут переданы во все модули
-        inherit inputs;                                                   # Передаём весь набор inputs (чтобы из модулей было видно другие flake-входы)
-        pkgs-unstable = import nixpkgs-unstable {                         # Создаём экземпляр нестабильного nixpkgs с разрешением проприетарных пакетов
-          system = "x86_64-linux";
-          config.allowUnfree = true;
-        };
-      };
+      specialArgs = { inherit inputs; };
 
 
       modules = [                                                         # Список модулей, которые будут объединены для сборки системы.
@@ -51,10 +45,7 @@
     homeConfigurations.lucerno = home-manager.lib.homeManagerConfiguration {  # Это позволяет применять настройки пользователя без прав root (команда home-manager switch)
       pkgs = nixpkgs.legacyPackages.x86_64-linux;                             # Стабильный nixpkgs — основа для пакетов пользователя
       modules = [ ./home.nix ];                                               # Модули home-manager — только ./home.nix (и возможно другие)
-      extraSpecialArgs = {                                                    # Дополнительные аргументы, аналогичные системной сборке
-        inherit inputs;
-        pkgs-unstable = nixpkgs-unstable.legacyPackages.x86_64-linux;         # Здесь используем уже готовый набор пакетов из нестабильного канала
-      };
+      extraSpecialArgs = { inherit inputs; };
     };
   };
 }
