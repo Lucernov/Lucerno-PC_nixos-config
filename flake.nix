@@ -45,10 +45,9 @@
         musnix.nixosModules.musnix                                        # Включение musnix (аудио настройки).
         home-manager.nixosModules.home-manager {
           # Глобальные настройки home-manager:
-          home-manager.useGlobalPkgs = true;   # Использовать пакеты из system environment.
-          home-manager.useUserPackages = true; # Разрешить пользовательские пакеты.
-          # Пользовательская конфигурация home-manager (для пользователя lucerno).
-          home-manager.users.lucerno = import ./home.nix;
+          home-manager.useGlobalPkgs = true;                              # Использовать пакеты из system environment.
+          home-manager.useUserPackages = true;                            # Разрешить пользовательские пакеты.
+          home-manager.users.lucerno = import ./home.nix;                 # Пользовательская конфигурация home-manager (для пользователя lucerno).
           # Дополнительные аргументы специально для home-manager.
           # (Повторяем pkgs-unstable, хотя он уже передан выше — можно было опустить, но так безопаснее)
           home-manager.extraSpecialArgs = {
@@ -63,17 +62,13 @@
     };
 
     # ========== КОНФИГУРАЦИЯ HOME-MANAGER ОТДЕЛЬНО ==========
-    # Это позволяет применять настройки пользователя без прав root (команда home-manager switch).
-    homeConfigurations.lucerno = home-manager.lib.homeManagerConfiguration {
-      # Стабильный nixpkgs — основа для пакетов пользователя.
-      pkgs = nixpkgs.legacyPackages.x86_64-linux;
-      # Модули home-manager — только ./home.nix (и возможно другие).
-      modules = [ ./home.nix ];
-      # Дополнительные аргументы, аналогичные системной сборке.
-      extraSpecialArgs = {
+    homeConfigurations.lucerno = home-manager.lib.homeManagerConfiguration {  # Это позволяет применять настройки пользователя без прав root (команда home-manager switch).
+      pkgs = nixpkgs.legacyPackages.x86_64-linux;                             # Стабильный nixpkgs — основа для пакетов пользователя.
+      modules = [ ./home.nix ];                                               # Модули home-manager — только ./home.nix (и возможно другие).
+      extraSpecialArgs = {                                                    # Дополнительные аргументы, аналогичные системной сборке.
         inherit inputs;
-        # Здесь используем уже готовый набор пакетов из нестабильного канала.
-        pkgs-unstable = nixpkgs-unstable.legacyPackages.x86_64-linux;
+
+        pkgs-unstable = nixpkgs-unstable.legacyPackages.x86_64-linux;         # Здесь используем уже готовый набор пакетов из нестабильного канала.
       };
     };
   };
