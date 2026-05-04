@@ -221,10 +221,8 @@ in
   users.groups.games = {};
 
 security.pam.loginLimits = [
-  { domain = "@realtime"; item = "rtprio"; type = "-"; value = "99"; }
-  { domain = "@realtime"; item = "memlock"; type = "-"; value = "unlimited"; }
-  { domain = "@games"; type = "-"; item = "rtprio"; value = 98; }
-  { domain = "@games"; type = "-"; item = "memlock"; value = "unlimited"; }
+  { domain = "@audio"; item = "rtprio"; type = "-"; value = "99"; }
+  { domain = "@audio"; item = "memlock"; type = "-"; value = "unlimited"; }
 ];
 
   users.users.lucerno = {
