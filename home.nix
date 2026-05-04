@@ -289,15 +289,6 @@ home.file = {
   force = true;
 };
 
-      # Игнорируем папки в гит репозитории (Через какую же жопу оно работает!!! Что игнорит гит папки и для копирования на гит хаб и для сборки системы аааааааа)
-  "nixos-config/.gitignore" = {
-  text = ''
-    dotfiles/
-    secrets/
-    .Trash-1000/
-  '';
-};
-
   # Ссылка REAPER для SWS
   ".config/REAPER/UserPlugins/reaper_sws-x86_64.so".source = "${pkgs-unstable.reaper-sws-extension}/UserPlugins/reaper_sws-x86_64.so";
 
