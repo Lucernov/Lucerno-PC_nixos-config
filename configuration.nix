@@ -48,6 +48,7 @@ in
   "vm.vfs_cache_pressure" = 50;
   "vm.dirty_bytes" = 536870912;            # 512 MiB
   "vm.dirty_background_bytes" = 134217728; # 128 MiB
+  "vm.stat_interval" = 10;
   };
   hardware.ksm.enable = false;
   musnix.enable = true;
