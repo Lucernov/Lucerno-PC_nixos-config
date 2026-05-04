@@ -19,8 +19,8 @@
 
     musnix.url = "github:musnix/musnix";                                  # Musnix — набор модулей для низкой задержки звука
 
-    # Закомментированный пример — помощник для запуска Star Citizen.
-    # #nix-citizen.url = "github:LovingMelody/nix-citizen";
+
+    #nix-citizen.url = "github:LovingMelody/nix-citizen";                 # помощник для запуска Star Citizen.
   };
 
   # ========== ВЫХОДНЫЕ ДАННЫЕ (outputs) ==========
