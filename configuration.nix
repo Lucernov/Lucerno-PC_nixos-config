@@ -230,7 +230,7 @@ security.pam.loginLimits = [
     isNormalUser = true;
     hashedPasswordFile = "/home/lucerno/nixos-config/secrets/lucerno-password.hash";
     group = "lucerno";
-    extraGroups = [ "wheel" "networkmanager" "audio" "video" "storage" "realtime" "games"   ];
+    extraGroups = [ "wheel" "networkmanager" "audio" "video" "storage"   ];
     shell = pkgs.zsh;
   };
 
