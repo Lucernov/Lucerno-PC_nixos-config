@@ -23,7 +23,7 @@ home.activation.createVst3Dir = lib.hm.dag.entryAfter ["writeBoundary"] ''
     enable = true;
 
     workspace = {
-      wallpaper = "${config.home.homeDirectory}/dotfiles/wallpapers/Velo_01.JPG";
+      wallpaper = "/home/lucerno/nixos-config/dotfiles/wallpapers/Velo_01.JPG";
     };
 
       # Настройки клавиатуры
@@ -342,7 +342,7 @@ home.file = {
       gco = "git checkout";
       gb = "git branch";
       sync = "cd /home/lucerno/nixos-config && git add -A && (git commit -m \"$(date '+%Y-%m-%d %H:%M:%S')\" || true) && git push";
-      update = "cd /home/lucerno/nixos-config && git add -A && git commit -m \"pre-rebuild\" && sudo nixos-rebuild switch --impure --flake .#Lucerno-PC && git push";
+      update = "cd /home/lucerno/nixos-config && git add -A && git commit -m \"pre-rebuild\" && git push && sudo nixos-rebuild switch --impure --flake .#Lucerno-PC";
       upgrade = "cd /home/lucerno/nixos-config && nix flake update && git add -A && (git commit -m \"upgrade: $(date)\" || true) && sudo nixos-rebuild switch --impure --flake .#Lucerno-PC && git push";
     };
 
