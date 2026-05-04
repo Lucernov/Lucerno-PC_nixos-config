@@ -1,4 +1,4 @@
-{ config, pkgs, pkgs-unstable, inputs, lib, ... }:
+{ config, pkgs, inputs, lib, ... }:
 
 {
   # Импорт plasma-manager
