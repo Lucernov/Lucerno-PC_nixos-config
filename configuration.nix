@@ -32,7 +32,10 @@ in
   # ЯДРО
   boot.kernelPackages = pkgs.linuxPackages_6_18;
   boot.kernelModules = [ "ntsync" ];      # Автозагрузка модуля NTSync
-  boot.kernelParams = [ "transparent_hugepage=madvise" ];
+  boot.kernelParams = [
+  "transparent_hugepage=madvise"
+  "nvidia_drm.modeset=1"                   # Загружаем модуль ядра NVIDIA раньше, для более гладкой загрузки и Wayland
+  ];
   boot.kernel.sysctl = {
   "vm.swappiness" = 10;
   "vm.vfs_cache_pressure" = 50;
@@ -155,7 +158,7 @@ in
     enable = true;                                    # Включаем поддержку аппаратного ускорения графики
     enable32Bit = true;
   };
-  boot.kernelParams = [ "nvidia_drm.modeset=1" ];     # Загружаем модуль ядра NVIDIA раньше, для более гладкой загрузки и Wayland
+
 
   # Настройка драйвера NVIDIA для Wayland
   hardware.nvidia = {
