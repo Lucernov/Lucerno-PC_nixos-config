@@ -40,7 +40,10 @@ in
   "preempt=full"                  # полное вытеснение ядра – снижает задержки
   ];
   boot.kernel.sysctl = {
-  "kernel.sched_autogroup_enabled" = 1;
+  "kernel.sched_autogroup_enabled" = 0;
+  "kernel.sched_migration_cost_ns" = 500000;    # 0.5 мс
+  "kernel.sched_min_granularity_ns" = 3000000;  # 3 мс
+  "kernel.sched_wakeup_granularity_ns" = 4000000; # 4 мс
   "vm.swappiness" = 10;
   "vm.vfs_cache_pressure" = 50;
   "vm.dirty_bytes" = 536870912;            # 512 MiB
