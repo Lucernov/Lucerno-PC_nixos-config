@@ -56,6 +56,7 @@ home.activation.createVst3Dir = lib.hm.dag.entryAfter ["writeBoundary"] ''
       "toggle-window-state" = "Meta+Z";  # "toggle-window-state" - действие: показать/скрыть окно Yakuake Win + Z
     };
   };
+  };
 
       # ========== МУЗЫКА НАСТРОЙКА!!!! ==========
     # Устанавливаем переменную окружения для пользовательской папки VST3
