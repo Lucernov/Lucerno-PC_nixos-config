@@ -9,6 +9,18 @@ let
 in
 
 {
+services.udev.extraRules = ''
+  # Все SSD и NVMe
+  ACTION=="add|change", ATTR{queue/rotational}=="0", ATTR{queue/scheduler}="kyber"
+  # Все HDD
+  ACTION=="add|change", ATTR{queue/rotational}=="1", ATTR{queue/scheduler}="mq-deadline"
+  # NVMe диск для игр
+  ACTION=="add|change", KERNEL=="nvme0n1", ATTR{bdi/read_ahead_kb}="512"
+  # HDD — read-ahead 1024 KB
+  ACTION=="add|change", ATTR{queue/rotational}=="1", ATTR{bdi/read_ahead_kb}="1024"
+'';
+
+
   # ========== ДОПОЛНИТЕЛЬНЫЕ ДИСКИ ==========
   # NVMe SSD для игр (ext4)
   fileSystems."/mnt/games" = {
@@ -81,6 +93,7 @@ in
     algorithm = "lz4";
     priority = 100;
   };
+#Однако, поскольку ZRAM уже включен и отлично работает, у вас нет необходимости его менять. Он обеспечивает потрясающую скорость и защищает ваш SSD от износа. Но если в будущем вы обнаружите, что игровой процесс стал не таким плавным при заполненной памяти, имеет смысл рассмотреть переход на ZSWAP для более эффективного распределения ресурсов.
 
   # ========== ССЫЛКИ НА ДИСКИ ==========
   systemd.tmpfiles.rules = [
@@ -113,7 +126,15 @@ in
     "mitigations=off"
     "threadirqs"                                           # все прерывания в потоки – для лучшего управления приоритетами
     "preempt=full"                                         # полное вытеснение ядра – снижает задержки
+    "rcupdate.rcu_cpu_stall_timeout=60"
     "usbcore.autosuspend=-1"                               # usb устройства не засыпают
+    "nohz_full=2-15"
+    "isolcpus=2-15"
+  # "rcu_nocbs=2-15"                                       # этот параметр автоматически подразумевается nohz_full и его можно не указывать
+    "clocksource=tsc tsc=reliable"
+    "irqaffinity=0"                                        # перенаправить все IRQ на ядро 0
+    "nowatchdog"
+    "mce=ignore_ce"
   ];
 
   # ========== Тонкая настройка ядра (sysctl) ==========
@@ -129,6 +150,7 @@ in
   "vm.stat_interval" = 10;
   "vm.dirty_writeback_centisecs" = 500;
   "vm.dirty_expire_centisecs" = 3000;
+  "vm.max_map_count" = 1048576;
   };
   # ========== KSM (отключён) ==========
   hardware.ksm.enable = false;
@@ -162,8 +184,6 @@ in
     powerManagement.enable = false;   # Отключаем управление питанием (на десктопе не нужно, только для ноутбуков)
     package = config.boot.kernelPackages.nvidiaPackages.stable;
   };
-
-
 
 
 }
