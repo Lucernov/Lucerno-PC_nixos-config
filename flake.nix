@@ -6,14 +6,13 @@
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.11";                     # Стабильный канал Nixpkgs (NixOS 25.11). Из него будут браться основные пакеты и модули.
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";         # Нестабильный канал Nixpkgs (последние обновления). Используется для пакетов, которым нужны свежие версии.
 
-    # Home Manager — управление пользовательским окружением.
-    home-manager = {
+    home-manager = {                                                      # Home Manager — управление пользовательским окружением.
       url = "github:nix-community/home-manager/release-25.11";
       inputs.nixpkgs.follows = "nixpkgs";                                 # Указываем, что home-manager должен использовать тот же экземпляр nixpkgs, что и основной. Это гарантирует единую версию пакетов.
     };
 
-    # Plasma Manager — управление настройками KDE Plasma через Home Manager
-    plasma-manager = {
+
+    plasma-manager = {                                                    # Plasma Manager — управление настройками KDE Plasma через Home Manager
       url = "github:nix-community/plasma-manager/trunk";
       inputs.nixpkgs.follows = "nixpkgs";                                 # Аналогично следуем за nixpkgs и home-manager
       inputs.home-manager.follows = "home-manager";
