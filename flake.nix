@@ -27,7 +27,7 @@
     nixosConfigurations.Lucerno-PC = nixpkgs.lib.nixosSystem {            # Конфигурация всей системы (NixOS) для хоста с именем Lucerno-PC
       system = "x86_64-linux";                                            # Архитектура системы (x86_64 — стандартный ПК)
       specialArgs = {                                                     # Дополнительные аргументы, которые будут переданы во все модули
-        inherit inputs;                                                   # Передаём весь набор inputs (чтобы из модулей было видно другие flake-входы)
+        # Передаём только pkgs-unstable, чтобы избежать рекурсии через inputs
         pkgs-unstable = import nixpkgs-unstable {                         # Создаём экземпляр нестабильного nixpkgs с разрешением проприетарных пакетов
           system = "x86_64-linux";
           config.allowUnfree = true;
@@ -41,6 +41,10 @@
           home-manager.useGlobalPkgs = true;                              # Использовать пакеты из system environment
           home-manager.useUserPackages = true;                            # Разрешить пользовательские пакеты
           home-manager.users.lucerno = import ./home.nix;                 # Пользовательская конфигурация home-manager
+          home-manager.extraSpecialArgs = {                               # Дополнительные аргументы только для home.nix
+            inherit inputs;
+            pkgs-unstable = nixpkgs-unstable.legacyPackages.x86_64-linux;
+          };
         }
       ];
     };
