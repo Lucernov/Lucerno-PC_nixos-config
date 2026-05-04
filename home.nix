@@ -6,7 +6,6 @@
     inputs.plasma-manager.homeModules.plasma-manager
   ];
 
-
 # СИМВОЛИЧЕСКАЯ ССЫЛКА, ЧТОБЫ WINETRICKS НЕ РУГАЛСЯ НА ОТСУТСТВИЕ WINЕ64
 home.activation.createWine64Link = lib.hm.dag.entryAfter ["writeBoundary"] ''
   mkdir -p $HOME/.local/bin
@@ -21,7 +20,7 @@ home.activation.createVst3Dir = lib.hm.dag.entryAfter ["writeBoundary"] ''
   # ========== УПРАВЛЕНИЕ KDE Plasma ==========
   programs.plasma = {
     enable = true;
-
+      # workspace - настройки рабочего пространства (рабочий стол)
     workspace = {
       wallpaper = "/home/lucerno/nixos-config/dotfiles/wallpapers/Velo_01.JPG";
     };
