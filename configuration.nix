@@ -287,7 +287,7 @@ in
     nvidia-vaapi-driver       # драйвера видеокарты
     libva-utils               # системные утилиты VA-API
       google-chrome           # браузер
-
+  ]);
 
   # Переменные окружения для менеджера входа
   environment.sessionVariables = {
