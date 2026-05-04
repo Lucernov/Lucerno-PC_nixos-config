@@ -31,8 +31,7 @@ in
   #system.nixos-init.enable = true;           # иногда проверять, пока проблемы с нвидиа
   # ЯДРО
   boot.kernelPackages = pkgs.linuxPackages_6_18;
-  # Автозагрузка модуля NTSync
-  boot.kernelModules = [ "ntsync" ];
+  boot.kernelModules = [ "ntsync" ];      # Автозагрузка модуля NTSync
   boot.kernel.sysctl = {
   "vm.swappiness" = 10;
   "vm.vfs_cache_pressure" = 50;
