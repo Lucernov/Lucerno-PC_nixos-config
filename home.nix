@@ -266,13 +266,13 @@ home.file = {
   };
 
   # --- Ярлык Ampero ---
-  ".local/share/applications/ampero2.desktop" = {
+".local/share/applications/ampero2.desktop" = {
   text = ''
     [Desktop Entry]
     Type=Application
     Name=Ampero II
     Comment=Hotone Ampero II Editor
-    Exec=wine "/home/lucerno/Музыка/wine-yabridge/drive_c/Program Files/Hotone/Ampero II/Ampero II.exe"
+    Exec=env WINEPREFIX="/mnt/music/wine/wine-guitar" wine "/mnt/music/wine/wine-guitar/drive_c/Program Files/Hotone/Ampero II/Ampero II.exe"
     Icon=/home/lucerno/nixos-config/dotfiles/sys-icons/icon-hotone.png
     Categories=Audio;AudioVideo;
     StartupNotify=true
