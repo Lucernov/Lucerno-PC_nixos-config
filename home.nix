@@ -19,6 +19,10 @@ home.activation.createWine64Link = lib.hm.dag.entryAfter ["writeBoundary"] ''
   ln -sf ${pkgs.wineWow64Packages.staging}/bin/wine $HOME/.local/bin/wine64
 '';
 
+home.activation.createVst3Dir = lib.hm.dag.entryAfter ["writeBoundary"] ''
+  mkdir -p $HOME/.vst3
+'';
+
 
   # ========== УПРАВЛЕНИЕ KDE Plasma ==========
   programs.plasma = {
