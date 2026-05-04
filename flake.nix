@@ -53,12 +53,12 @@
     };
 
     # ========== КОНФИГУРАЦИЯ HOME-MANAGER ОТДЕЛЬНО ==========
-    homeConfigurations.lucerno = home-manager.lib.homeManagerConfiguration {
-      pkgs = nixpkgs.legacyPackages.x86_64-linux;
-      modules = [ ./home.nix ];
-      extraSpecialArgs = {
+    homeConfigurations.lucerno = home-manager.lib.homeManagerConfiguration {  # Это позволяет применять настройки пользователя без прав root (команда home-manager switch)
+      pkgs = nixpkgs.legacyPackages.x86_64-linux;                             # Стабильный nixpkgs — основа для пакетов пользователя
+      modules = [ ./home.nix ];                                               # Модули home-manager — только ./home.nix (и возможно другие)
+      extraSpecialArgs = {                                                    # Дополнительные аргументы, аналогичные системной сборке
         inherit inputs;
-        pkgs-unstable = nixpkgs-unstable.legacyPackages.x86_64-linux;
+        pkgs-unstable = nixpkgs-unstable.legacyPackages.x86_64-linux;         # Здесь используем уже готовый набор пакетов из нестабильного канала
       };
     };
   };
