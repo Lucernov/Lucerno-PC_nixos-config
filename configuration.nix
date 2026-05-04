@@ -289,13 +289,6 @@ in
       google-chrome           # браузер
 
 
-    # Добавляем директорию для VST3
-    (symlinkJoin {
-      name = "vst3-plugins";
-      paths = [];  # сюда можно будет добавить пакеты VST из nixpkgs
-    })
-  ]);
-
   # Переменные окружения для менеджера входа
   environment.sessionVariables = {
     LANG = "ru_RU.UTF-8";
