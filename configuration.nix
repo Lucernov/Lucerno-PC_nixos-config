@@ -328,7 +328,7 @@ security.pam.loginLimits = [
         "default.clock.rate" = 48000;
         "default.clock.quantum" = 512;
         "default.clock.min-quantum" = 256;
-        "default.clock.max-quantum" = 4096;
+        "default.clock.max-quantum" = 2048;
         "default.clock.allowed-rates" = [ 44100 48000 ];
       };
       "context.modules" = [
