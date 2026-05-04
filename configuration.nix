@@ -45,7 +45,7 @@ in
   "kernel.sched_migration_cost_ns" = 250000;      # 0.25 мс
   "kernel.sched_min_granularity_ns" = 1000000;   # 1 мс
   "kernel.sched_wakeup_granularity_ns" = 2000000; # 2 мс
-  "vm.swappiness" = 10;
+  #"vm.swappiness" = 10;
   "vm.vfs_cache_pressure" = 50;
   "vm.dirty_bytes" = 536870912;            # 512 MiB
   "vm.dirty_background_bytes" = 134217728; # 128 MiB
