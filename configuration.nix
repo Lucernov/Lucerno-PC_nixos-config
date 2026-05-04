@@ -38,6 +38,7 @@ in
   "mitigations=off"
   "threadirqs"                    # все прерывания в потоки – для лучшего управления приоритетами
   "preempt=full"                  # полное вытеснение ядра – снижает задержки
+  "usbcore.autosuspend=-1"        # usb устройства не засыпают
   ];
   boot.kernel.sysctl = {
   "kernel.sched_autogroup_enabled" = 0;
