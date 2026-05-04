@@ -25,12 +25,8 @@ home.activation.createVst3Dir = lib.hm.dag.entryAfter ["writeBoundary"] ''
 
 
   # ========== УПРАВЛЕНИЕ KDE Plasma ==========
-  programs.plasma = {
-    enable = true;
-      # workspace - настройки рабочего пространства (рабочий стол)
-    workspace = {
-      wallpaper = "/home/lucerno/nixos-config/dotfiles/wallpapers/Velo_01.JPG";
-    };
+  home.file.".wallpaper.jpg".source = ./dotfiles/wallpapers/Velo_01.JPG;
+programs.plasma.workspace.wallpaper = "${config.home.homeDirectory}/.wallpaper.jpg";
 
       # Настройки клавиатуры
   configFile."kxkbrc" = {
