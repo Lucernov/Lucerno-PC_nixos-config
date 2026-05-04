@@ -19,12 +19,11 @@ home.activation.createVst3Dir = lib.hm.dag.entryAfter ["writeBoundary"] ''
 
 
   # ========== УПРАВЛЕНИЕ KDE Plasma ==========
-  home.file.".wallpaper.jpg".source = ./dotfiles/wallpapers/Velo_01.JPG;
   programs.plasma = {
     enable = true;
 
     workspace = {
-      wallpaper = "${config.home.homeDirectory}/.wallpaper.jpg";
+      wallpaper = "${config.home.homeDirectory}/dotfiles/wallpapers/Velo_01.JPG";
     };
 
       # Настройки клавиатуры
@@ -342,8 +341,9 @@ home.file = {
       gc = "git commit -m";
       gco = "git checkout";
       gb = "git branch";
-      update  = "cd /home/lucerno/nixos-config && git add -A && git commit -m \"pre-rebuild\" && sudo nixos-rebuild switch --impure --flake .#Lucerno-PC";
-      upgrade = "cd /home/lucerno/nixos-config && nix flake update && git add -A && git commit -m \"upgrade: $(date)\" && sudo nixos-rebuild switch --impure --flake .#Lucerno-PC";
+      sync = "cd /home/lucerno/nixos-config && git add -A && (git commit -m \"$(date '+%Y-%m-%d %H:%M:%S')\" || true) && git push";
+      update = "cd /home/lucerno/nixos-config && git add -A && git commit -m \"pre-rebuild\" && sudo nixos-rebuild switch --impure --flake .#Lucerno-PC";
+      upgrade = "cd /home/lucerno/nixos-config && nix flake update && git add -A && (git commit -m \"upgrade: $(date)\" || true) && sudo nixos-rebuild switch --impure --flake .#Lucerno-PC";
     };
 
     # Дополнительные настройки в .zshrc
