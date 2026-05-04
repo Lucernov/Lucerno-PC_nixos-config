@@ -17,7 +17,7 @@
       inputs.home-manager.follows = "home-manager";
     };
 
-    musnix.url = "github:musnix/musnix";                                  # Musnix — набор модулей для низкой задержки звука (аудиопроизводство)
+    musnix.url = "github:musnix/musnix";                                  # Musnix — набор модулей для низкой задержки звука
 
     # Закомментированный пример — помощник для запуска Star Citizen.
     # #nix-citizen.url = "github:LovingMelody/nix-citizen";
