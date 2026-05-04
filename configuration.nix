@@ -34,7 +34,7 @@ in
   boot.kernelModules = [ "ntsync" ];      # Автозагрузка модуля NTSync
   boot.kernelParams = [
   "transparent_hugepage=madvise"
-  "nvidia_drm.modeset=1"                   # Загружаем модуль ядра NVIDIA раньше, для более гладкой загрузки и Wayland
+  "nvidia_drm.modeset=1"                   # Загружаем модуль ядра NVIDIA раньше для более гладкой загрузки и Wayland
   ];
   boot.kernel.sysctl = {
   "vm.swappiness" = 10;
@@ -42,6 +42,7 @@ in
   "vm.dirty_bytes" = 536870912;            # 512 MiB
   "vm.dirty_background_bytes" = 134217728; # 128 MiB
   };
+  hardware.ksm.enable = false;
 
 
 
