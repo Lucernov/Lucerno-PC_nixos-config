@@ -99,9 +99,6 @@ home.sessionVariables = {
 
     # ИНТЕРНЕТ
     parabolic
-    deno
-    you-get
-
     discord
     telegram-desktop
 
