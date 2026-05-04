@@ -42,9 +42,9 @@ in
   ];
   boot.kernel.sysctl = {
   "kernel.sched_autogroup_enabled" = 0;
-  "kernel.sched_migration_cost_ns" = 500000;    # 0.5 мс
-  "kernel.sched_min_granularity_ns" = 3000000;  # 3 мс
-  "kernel.sched_wakeup_granularity_ns" = 4000000; # 4 мс
+  "kernel.sched_min_granularity_ns" = 1000000;   # 1 мс
+  "kernel.sched_wakeup_granularity_ns" = 2000000; # 2 мс
+  "kernel.sched_migration_cost_ns" = 250000;      # 0.25 мс
   "vm.swappiness" = 10;
   "vm.vfs_cache_pressure" = 50;
   "vm.dirty_bytes" = 536870912;            # 512 MiB
