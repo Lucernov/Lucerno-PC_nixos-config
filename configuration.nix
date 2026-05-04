@@ -359,9 +359,7 @@ in
     enable = true;
     remotePlay.openFirewall = true;
     dedicatedServer.openFirewall = true;
-    extraCompatPackages = with pkgs; [
-      proton-ge-bin
-    ];
+    extraCompatPackages = with pkgs-unstable; [ proton-ge-bin ];
   };
 
   hardware.xone.enable = true;      # Модули ядра
