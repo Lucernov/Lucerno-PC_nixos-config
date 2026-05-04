@@ -55,7 +55,7 @@ in
   };
   hardware.ksm.enable = false;
   musnix.enable = true;
-  musnix.snd_hda_intel.enable = false;  # Оставляем false, так как основная карта — USB
+  #musnix.snd_hda_intel.enable = false;  # Оставляем false, так как основная карта — USB
   musnix.kernel.realtime = false;       # Оставляем false для совместимости с драйверами NVIDIA
 
 
