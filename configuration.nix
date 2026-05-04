@@ -1,4 +1,4 @@
-{ config, pkgs, lib, inputs, ... }:
+{ config, pkgs, lib, pkgs-unstable, ... }:
 let
   # UUID дисков для удобства обслуживания
   gamesUUID = "897f0999-d31e-45d1-b186-6822c7d17477";
