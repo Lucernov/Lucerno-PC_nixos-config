@@ -1,27 +1,29 @@
 {
   description = "Моя основная конфигурация NixOS для домашнего ПК";
 
-  inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.11";
-    nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
+  # ========== ВХОДНЫЕ ДАННЫЕ (inputs) ==========
+  inputs = {                                                              # Здесь перечисляются внешние зависимости — flake-репозитории, которые будут использованы при сборке.
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.11";                     # Стабильный канал Nixpkgs (NixOS 25.11). Из него будут браться основные пакеты и модули.
+    nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";         # Нестабильный канал Nixpkgs (последние обновления). Используется для пакетов, которым нужны свежие версии.
 
-    home-manager = {
+    home-manager = {                                                      # Home Manager — управление пользовательским окружением.
       url = "github:nix-community/home-manager/release-25.11";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "nixpkgs";                                 # Указываем, что home-manager должен использовать тот же экземпляр nixpkgs, что и основной. Это гарантирует единую версию пакетов.
     };
 
-    plasma-manager = {
+    plasma-manager = {                                                    # Plasma Manager — управление настройками KDE Plasma через Home Manager
       url = "github:nix-community/plasma-manager/trunk";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "nixpkgs";                                 # Аналогично следуем за nixpkgs и home-manager
       inputs.home-manager.follows = "home-manager";
     };
 
-    musnix.url = "github:musnix/musnix";
+    musnix.url = "github:musnix/musnix";                                  # Musnix — набор модулей для низкой задержки звука
 
         # Star Citizen helper flake
-        #nix-citizen.url = "github:LovingMelody/nix-citizen";
+        #nix-citizen.url = "github:LovingMelody/nix-citizen";             # помощник для запуска Star Citizen.
   };
 
+  # ========== ВЫХОДНЫЕ ДАННЫЕ (outputs) ==========
   outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, plasma-manager, musnix, ... }@inputs: {
     # Конфигурация системы
     nixosConfigurations.Lucerno-PC = nixpkgs.lib.nixosSystem {
