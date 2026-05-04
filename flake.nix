@@ -24,21 +24,21 @@
   };
 
   # ========== ВЫХОДНЫЕ ДАННЫЕ (outputs) ==========
-  outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, plasma-manager, musnix, ... }@inputs: {
-    # Конфигурация системы
-    nixosConfigurations.Lucerno-PC = nixpkgs.lib.nixosSystem {
-      system = "x86_64-linux";
-      specialArgs = {
-        inherit inputs;
-        pkgs-unstable = import nixpkgs-unstable {
+  outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, plasma-manager, musnix, ... }@inputs: {        # Функция, которая принимает все входы и возвращает набор результатов
+    nixosConfigurations.Lucerno-PC = nixpkgs.lib.nixosSystem {            # Конфигурация всей системы (NixOS) для хоста с именем Lucerno-PC
+      system = "x86_64-linux";                                            # Архитектура системы (x86_64 — стандартный ПК)
+      specialArgs = {                                                     # Дополнительные аргументы, которые будут переданы во все модули
+        inherit inputs;                                                   # Передаём весь набор inputs (чтобы из модулей было видно другие flake-входы)
+        pkgs-unstable = import nixpkgs-unstable {                         # Создаём экземпляр нестабильного nixpkgs с разрешением проприетарных пакетов
           system = "x86_64-linux";
           config.allowUnfree = true;
           };
       };
-      modules = [
-        ./configuration.nix
-        home-manager.nixosModules.home-manager {
-          home-manager.useGlobalPkgs = true;
+      modules = [                                                        # Список модулей, которые будут объединены для сборки системы.
+        ./configuration.nix                                               # Основной файл конфигурации системы
+        musnix.nixosModules.musnix                                        # Включение musnix (аудио настройки)
+        home-manager.nixosModules.home-manager {                          # Глобальные настройки home-manager:
+          home-manager.useGlobalPkgs = true;                                        # Включение musnix (аудио настройки)
           home-manager.useUserPackages = true;
           home-manager.users.lucerno = import ./home.nix;
           home-manager.extraSpecialArgs = {
