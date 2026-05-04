@@ -25,8 +25,12 @@ home.activation.createVst3Dir = lib.hm.dag.entryAfter ["writeBoundary"] ''
 
 
   # ========== УПРАВЛЕНИЕ KDE Plasma ==========
-  home.file.".wallpaper.jpg".source = ./dotfiles/wallpapers/Velo_01.JPG;
-programs.plasma.workspace.wallpaper = "${config.home.homeDirectory}/.wallpaper.jpg";
+  programs.plasma = {
+    enable = true;
+
+    workspace = {
+      wallpaper = "${config.home.homeDirectory}/.wallpaper.jpg";
+    };
 
       # Настройки клавиатуры
   configFile."kxkbrc" = {
