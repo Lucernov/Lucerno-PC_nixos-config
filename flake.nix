@@ -41,7 +41,6 @@
           home-manager.useGlobalPkgs = true;                              # Использовать пакеты из system environment
           home-manager.useUserPackages = true;                            # Разрешить пользовательские пакеты
           home-manager.users.lucerno = import ./home.nix;                 # Пользовательская конфигурация home-manager
-          # extraSpecialArgs не нужен, так как pkgs-unstable уже передан через specialArgs
         }
       ];
     };
