@@ -33,8 +33,7 @@
       system = "x86_64-linux";                                            # Архитектура системы (x86_64 — стандартный ПК).
       specialArgs = {                                                     # Дополнительные аргументы, которые будут переданы во все модули.
         inherit inputs;                                                   # Передаём весь набор inputs (чтобы из модулей было видно другие flake-входы).
-        # Создаём экземпляр нестабильного nixpkgs с разрешением проприетарных пакетов.
-        pkgs-unstable = import nixpkgs-unstable {
+        pkgs-unstable = import nixpkgs-unstable {                         # Создаём экземпляр нестабильного nixpkgs с разрешением проприетарных пакетов.
           system = "x86_64-linux";
           config.allowUnfree = true;
         };
@@ -42,8 +41,8 @@
 
       # Список модулей, которые будут объединены для сборки системы.
       modules = [
-        ./configuration.nix                  # Основной файл конфигурации системы.
-        musnix.nixosModules.musnix          # Включение musnix (аудио настройки).
+        ./configuration.nix                                               # Основной файл конфигурации системы.
+        musnix.nixosModules.musnix                                        # Включение musnix (аудио настройки).
         home-manager.nixosModules.home-manager {
           # Глобальные настройки home-manager:
           home-manager.useGlobalPkgs = true;   # Использовать пакеты из system environment.
