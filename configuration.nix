@@ -34,6 +34,19 @@ in
   boot.kernelModules = [ "ntsync" ];      # Автозагрузка модуля NTSync
   boot.kernelParams = [
   "transparent_hugepage=madvise"
+  "nvidia_drm.modeset=1"
+  "mitigations=off"
+  "threadirqs"                    # все прерывания в потоки – для лучшего управления приоритетами
+  "preempt=full"                  # полное вытеснение ядра – снижает задержки
+  "nohz_full=2-11"                # изоляция от таймеров для ядер 2-11 (все потоки)
+  "rcu_nocbs=2-11"                # отключает RCU обратные вызовы на этих ядрах
+
+
+
+
+
+
+  "transparent_hugepage=madvise"
   "nvidia_drm.modeset=1"                   # Загружаем модуль ядра NVIDIA раньше для более гладкой загрузки и Wayland
   "mitigations=off"
   ];
