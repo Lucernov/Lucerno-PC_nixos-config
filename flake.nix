@@ -19,7 +19,6 @@
 
     musnix.url = "github:musnix/musnix";                                  # Musnix — набор модулей для низкой задержки звука
 
-
     #nix-citizen.url = "github:LovingMelody/nix-citizen";                 # помощник для запуска Star Citizen
   };
 
@@ -27,8 +26,13 @@
   outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, plasma-manager, musnix, ... }@inputs: {        # Функция, которая принимает все входы и возвращает набор результатов
     nixosConfigurations.Lucerno-PC = nixpkgs.lib.nixosSystem {            # Конфигурация всей системы (NixOS) для хоста с именем Lucerno-PC
       system = "x86_64-linux";                                            # Архитектура системы (x86_64 — стандартный ПК)
-      specialArgs = { inherit inputs; };
-
+      specialArgs = {                                                     # Дополнительные аргументы, которые будут переданы во все модули
+        inherit inputs;                                                   # Передаём весь набор inputs (чтобы из модулей было видно другие flake-входы)
+        pkgs-unstable = import nixpkgs-unstable {                         # Создаём экземпляр нестабильного nixpkgs с разрешением проприетарных пакетов
+          system = "x86_64-linux";
+          config.allowUnfree = true;
+        };
+      };
 
       modules = [                                                         # Список модулей, которые будут объединены для сборки системы.
         ./configuration.nix                                               # Основной файл конфигурации системы
@@ -37,6 +41,7 @@
           home-manager.useGlobalPkgs = true;                              # Использовать пакеты из system environment
           home-manager.useUserPackages = true;                            # Разрешить пользовательские пакеты
           home-manager.users.lucerno = import ./home.nix;                 # Пользовательская конфигурация home-manager
+          # extraSpecialArgs не нужен, так как pkgs-unstable уже передан через specialArgs
         }
       ];
     };
@@ -45,7 +50,10 @@
     homeConfigurations.lucerno = home-manager.lib.homeManagerConfiguration {  # Это позволяет применять настройки пользователя без прав root (команда home-manager switch)
       pkgs = nixpkgs.legacyPackages.x86_64-linux;                             # Стабильный nixpkgs — основа для пакетов пользователя
       modules = [ ./home.nix ];                                               # Модули home-manager — только ./home.nix (и возможно другие)
-      extraSpecialArgs = { inherit inputs; };
+      extraSpecialArgs = {                                                    # Дополнительные аргументы, аналогичные системной сборке
+        inherit inputs;
+        pkgs-unstable = nixpkgs-unstable.legacyPackages.x86_64-linux;         # Здесь используем уже готовый набор пакетов из нестабильного канала
+      };
     };
   };
 }
