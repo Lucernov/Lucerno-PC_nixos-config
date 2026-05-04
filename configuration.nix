@@ -218,8 +218,8 @@ in
     # ========== USER ==========
   # Группа для пользователя
   users.groups.lucerno = {};
-  users.groups.realtime = {};
-  users.groups.games = {};
+#  users.groups.realtime = {};
+#  users.groups.games = {};
 
 #security.pam.loginLimits = [
 #  { domain = "@audio"; item = "rtprio"; type = "-"; value = "99"; }
