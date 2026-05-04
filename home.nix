@@ -343,7 +343,7 @@ home.file = {
       gb = "git branch";
       sync = "cd /home/lucerno/nixos-config && git add -A && (git commit -m \"$(date '+%Y-%m-%d %H:%M:%S')\" || true) && git push";
       update = "cd /home/lucerno/nixos-config && git add -A && git commit -m \"pre-rebuild\" && git push && sudo nixos-rebuild switch --impure --flake .#Lucerno-PC";
-      upgrade = "cd /home/lucerno/nixos-config && nix flake update && git add -A && (git commit -m \"upgrade: $(date)\" || true) && sudo nixos-rebuild switch --impure --flake .#Lucerno-PC && git push";
+      upgrade = "cd /home/lucerno/nixos-config && nix flake update && git add -A && (git commit -m \"upgrade: $(date)\" || true) && git push && sudo nixos-rebuild switch --impure --flake .#Lucerno-PC";
     };
 
     # Дополнительные настройки в .zshrc
