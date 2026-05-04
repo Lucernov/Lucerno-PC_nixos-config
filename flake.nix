@@ -11,7 +11,6 @@
       inputs.nixpkgs.follows = "nixpkgs";                                 # Указываем, что home-manager должен использовать тот же экземпляр nixpkgs, что и основной. Это гарантирует единую версию пакетов.
     };
 
-
     plasma-manager = {                                                    # Plasma Manager — управление настройками KDE Plasma через Home Manager
       url = "github:nix-community/plasma-manager/trunk";
       inputs.nixpkgs.follows = "nixpkgs";                                 # Аналогично следуем за nixpkgs и home-manager
