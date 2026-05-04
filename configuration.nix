@@ -38,8 +38,6 @@ in
   "mitigations=off"
   "threadirqs"                    # все прерывания в потоки – для лучшего управления приоритетами
   "preempt=full"                  # полное вытеснение ядра – снижает задержки
-  "nohz_full=2-11"                # изоляция от таймеров для ядер 2-11 (все потоки)
-  "rcu_nocbs=2-11"                # отключает RCU обратные вызовы на этих ядрах
   ];
   boot.kernel.sysctl = {
   "kernel.sched_autogroup_enabled" = 1;
