@@ -11,11 +11,6 @@ let
   mySddmBackground = pkgs.runCommand "my-sddm-bg" {} ''
     cp ${./dotfiles/wallpapers/Velo_01.JPG} $out
   '';
-
-    pkgs-unstable = import inputs.nixpkgs-unstable {
-    system = "x86_64-linux";
-    config.allowUnfree = true;
-  };
 in
 
 
