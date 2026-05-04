@@ -11,7 +11,7 @@ let
 
   # НАСТРОЙКА ФОНА ДЛЯ ЭКРАНА ВХОДА (SDDM)
   mySddmBackground = pkgs.runCommand "my-sddm-bg" {} ''
-    cp ${/home/lucerno/nixos-config/dotfiles/wallpapers/Velo_01.JPG} $out
+    cp ${./dotfiles/wallpapers/Velo_01.JPG} $out
   '';
 in
 
