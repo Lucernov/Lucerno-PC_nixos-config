@@ -49,6 +49,8 @@ in
   "vm.dirty_bytes" = 536870912;            # 512 MiB
   "vm.dirty_background_bytes" = 134217728; # 128 MiB
   "vm.stat_interval" = 10;
+  "vm.dirty_writeback_centisecs" = 500;
+  "vm.dirty_expire_centisecs" = 3000;
   };
   hardware.ksm.enable = false;
   musnix.enable = true;
