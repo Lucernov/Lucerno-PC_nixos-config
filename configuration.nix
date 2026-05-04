@@ -391,7 +391,7 @@ in
 
     # Дополнительные настройки для оптимизации
     settings = {
-      max-jobs = auto;                       # Параллельных сборок
+      max-jobs = auto;                       # Параллельные сборки
       keep-derivations = true;
       keep-outputs = true;
     };
