@@ -16,12 +16,13 @@
       inputs.home-manager.follows = "home-manager";
     };
 
+    musnix.url = "github:musnix/musnix";
 
         # Star Citizen helper flake
         #nix-citizen.url = "github:LovingMelody/nix-citizen";
   };
 
-  outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, plasma-manager, ... }@inputs: {
+  outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, plasma-manager, musnix, ... }@inputs: {
     # Конфигурация системы
     nixosConfigurations.Lucerno-PC = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
