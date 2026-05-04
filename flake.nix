@@ -10,9 +10,7 @@
     # Home Manager — управление пользовательским окружением.
     home-manager = {
       url = "github:nix-community/home-manager/release-25.11";
-      # Указываем, что home-manager должен использовать тот же экземпляр nixpkgs,
-      # что и основной (следуем за ним). Это гарантирует единую версию пакетов.
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "nixpkgs";                                  # Указываем, что home-manager должен использовать тот же экземпляр nixpkgs, что и основной. Это гарантирует единую версию пакетов.
     };
 
     # Plasma Manager — управление настройками KDE Plasma через Home Manager.
