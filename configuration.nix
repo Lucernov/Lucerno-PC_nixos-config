@@ -37,7 +37,7 @@ in
   "nvidia_drm.modeset=1"                   # Загружаем модуль ядра NVIDIA раньше для более гладкой загрузки и Wayland
   ];
   boot.kernel.sysctl = {
-  "kernel.sched_autogroup_enabled" = 0;
+  "kernel.sched_autogroup_enabled" = 1;
   "vm.swappiness" = 10;
   "vm.vfs_cache_pressure" = 50;
   "vm.dirty_bytes" = 536870912;            # 512 MiB
