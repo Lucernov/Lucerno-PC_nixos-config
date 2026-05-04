@@ -344,7 +344,6 @@ home.file = {
 
     # Алиасы
     shellAliases = {
-    btop = "LD_LIBRARY_PATH=/run/opengl-driver/lib btop";
       ll = "ls -la";
       la = "ls -a";
       l = "ls -l";
