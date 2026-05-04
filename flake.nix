@@ -10,19 +10,19 @@
     # Home Manager — управление пользовательским окружением.
     home-manager = {
       url = "github:nix-community/home-manager/release-25.11";
-      inputs.nixpkgs.follows = "nixpkgs";                                  # Указываем, что home-manager должен использовать тот же экземпляр nixpkgs, что и основной. Это гарантирует единую версию пакетов.
+      inputs.nixpkgs.follows = "nixpkgs";                                 # Указываем, что home-manager должен использовать тот же экземпляр nixpkgs, что и основной. Это гарантирует единую версию пакетов.
     };
 
     # Plasma Manager — управление настройками KDE Plasma через Home Manager.
     plasma-manager = {
       url = "github:nix-community/plasma-manager/trunk";
-      # Аналогично следуем за nixpkgs и home-manager.
-      inputs.nixpkgs.follows = "nixpkgs";
+
+      inputs.nixpkgs.follows = "nixpkgs";                                 # Аналогично следуем за nixpkgs и home-manager.
       inputs.home-manager.follows = "home-manager";
     };
 
-    # Musnix — набор модулей для низкой задержки звука (аудиопроизводство).
-    musnix.url = "github:musnix/musnix";
+
+    musnix.url = "github:musnix/musnix";                                  # Musnix — набор модулей для низкой задержки звука (аудиопроизводство).
 
     # Закомментированный пример — помощник для запуска Star Citizen.
     # #nix-citizen.url = "github:LovingMelody/nix-citizen";
