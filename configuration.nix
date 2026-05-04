@@ -35,6 +35,7 @@ in
   boot.kernelParams = [
   "transparent_hugepage=madvise"
   "nvidia_drm.modeset=1"                   # Загружаем модуль ядра NVIDIA раньше для более гладкой загрузки и Wayland
+  "mitigations=off"
   ];
   boot.kernel.sysctl = {
   "kernel.sched_autogroup_enabled" = 1;
