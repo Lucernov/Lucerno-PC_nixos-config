@@ -47,7 +47,7 @@ in
   "vm.dirty_background_bytes" = 134217728; # 128 MiB
   };
   hardware.ksm.enable = false;
-
+  musnix.enable = true;
 
 
   # ========== ДОПОЛНИТЕЛЬНЫЕ ДИСКИ ==========
