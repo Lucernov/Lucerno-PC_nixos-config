@@ -16,11 +16,9 @@
     # Plasma Manager — управление настройками KDE Plasma через Home Manager.
     plasma-manager = {
       url = "github:nix-community/plasma-manager/trunk";
-
       inputs.nixpkgs.follows = "nixpkgs";                                 # Аналогично следуем за nixpkgs и home-manager.
       inputs.home-manager.follows = "home-manager";
     };
-
 
     musnix.url = "github:musnix/musnix";                                  # Musnix — набор модулей для низкой задержки звука (аудиопроизводство).
 
@@ -29,17 +27,12 @@
   };
 
   # ========== ВЫХОДНЫЕ ДАННЫЕ (outputs) ==========
-  # Функция, которая принимает все входы и возвращает набор результатов.
-  outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, plasma-manager, musnix, ... }@inputs: {
-    # Конфигурация всей системы (NixOS) для хоста с именем Lucerno-PC.
-    nixosConfigurations.Lucerno-PC = nixpkgs.lib.nixosSystem {
-      # Архитектура системы (x86_64 — стандартный ПК).
-      system = "x86_64-linux";
 
-      # Дополнительные аргументы, которые будут переданы во все модули.
-      specialArgs = {
-        # Передаём весь набор inputs (чтобы из модулей было видно другие flake-входы).
-        inherit inputs;
+  outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, plasma-manager, musnix, ... }@inputs: {        # Функция, которая принимает все входы и возвращает набор результатов.
+    nixosConfigurations.Lucerno-PC = nixpkgs.lib.nixosSystem {            # Конфигурация всей системы (NixOS) для хоста с именем Lucerno-PC.
+      system = "x86_64-linux";                                            # Архитектура системы (x86_64 — стандартный ПК).
+      specialArgs = {                                                     # Дополнительные аргументы, которые будут переданы во все модули.
+        inherit inputs;                                                   # Передаём весь набор inputs (чтобы из модулей было видно другие flake-входы).
         # Создаём экземпляр нестабильного nixpkgs с разрешением проприетарных пакетов.
         pkgs-unstable = import nixpkgs-unstable {
           system = "x86_64-linux";
