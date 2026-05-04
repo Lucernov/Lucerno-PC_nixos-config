@@ -33,6 +33,11 @@ in
   boot.kernelPackages = pkgs.linuxPackages_6_18;
   # Автозагрузка модуля NTSync
   boot.kernelModules = [ "ntsync" ];
+  boot.kernel.sysctl = {
+  "vm.swappiness" = 10;
+  };
+
+
 
   # ========== ДОПОЛНИТЕЛЬНЫЕ ДИСКИ ==========
   # NVMe SSD для игр (ext4)
