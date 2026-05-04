@@ -16,7 +16,7 @@ in
 # СИМВОЛИЧЕСКАЯ ССЫЛКА, ЧТОБЫ WINETRICKS НЕ РУГАЛСЯ НА ОТСУТСТВИЕ WINЕ64
 home.activation.createWine64Link = lib.hm.dag.entryAfter ["writeBoundary"] ''
   mkdir -p $HOME/.local/bin
-  ln -sf ${pkgs.wineWow64Packages.staging}/bin/wine $HOME/.local/bin/wine64
+  ln -sf ${pkgs-unstable.wineWow64Packages.staging}/bin/wine $HOME/.local/bin/wine64
 '';
 
 home.activation.createVst3Dir = lib.hm.dag.entryAfter ["writeBoundary"] ''
