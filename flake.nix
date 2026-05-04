@@ -38,8 +38,8 @@
         ./configuration.nix                                               # Основной файл конфигурации системы
         musnix.nixosModules.musnix                                        # Включение musnix (аудио настройки)
         home-manager.nixosModules.home-manager {                          # Глобальные настройки home-manager:
-          home-manager.useGlobalPkgs = true;                                        # Включение musnix (аудио настройки)
-          home-manager.useUserPackages = true;
+          home-manager.useGlobalPkgs = true;                              # Использовать пакеты из system environment
+          home-manager.useUserPackages = true;                            # Разрешить пользовательские пакеты
           home-manager.users.lucerno = import ./home.nix;
           home-manager.extraSpecialArgs = {
             inherit inputs;
@@ -52,7 +52,7 @@
       ];
     };
 
-    # Конфигурация Home Manager для пользователя
+    # ========== КОНФИГУРАЦИЯ HOME-MANAGER ОТДЕЛЬНО ==========
     homeConfigurations.lucerno = home-manager.lib.homeManagerConfiguration {
       pkgs = nixpkgs.legacyPackages.x86_64-linux;
       modules = [ ./home.nix ];
