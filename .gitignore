@@ -1,3 +1,31 @@
-dotfiles/
-secrets/
-.Trash-1000/
+# Секреты и хэши паролей
+/secrets/
+*.hash
+*.key
+
+# Большие папки Steam (не должны быть в Git)
+/dotfiles/config/Steam/userdata/
+/dotfiles/config/Steam/userdata/**/*
+
+# Результаты сборок Nix
+/result
+.result-*
+/result-*
+
+# Временные файлы редакторов
+*~
+*.swp
+*.tmp
+*.bak
+
+# Папка корзины (если пользуетесь GUI)
+.Trash-*
+**/.Trash-*
+
+# Логи
+*.log
+
+# Игнорировать все файлы в dotfiles, кроме wallpapers
+/dotfiles/*
+!/dotfiles/wallpapers/
+!/dotfiles/wallpapers/*.JPG

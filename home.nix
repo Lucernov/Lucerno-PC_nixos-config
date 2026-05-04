@@ -342,10 +342,8 @@ home.file = {
       gc = "git commit -m";
       gco = "git checkout";
       gb = "git branch";
-      nrs = "sudo nixos-rebuild switch --impure --flake .#Lucerno-PC";
-      nrb = "sudo nixos-rebuild boot --impure --flake .#Lucerno-PC";
-      hm = "export NIXPKGS_ALLOW_UNFREE=1 && nix run github:nix-community/home-manager -- switch --flake .#lucerno --impure";
-      update = "nix flake update && sudo nixos-rebuild switch --impure --flake .#Lucerno-PC";
+      update  = "cd /home/lucerno/nixos-config && git add -A && git commit -m \"pre-rebuild\" && sudo nixos-rebuild switch --impure --flake .#Lucerno-PC";
+      upgrade = "cd /home/lucerno/nixos-config && nix flake update && git add -A && git commit -m \"upgrade: $(date)\" && sudo nixos-rebuild switch --impure --flake .#Lucerno-PC";
     };
 
     # Дополнительные настройки в .zshrc
@@ -371,5 +369,17 @@ home.file = {
     '';
   };
   # =================================
+
+
+  programs.git = {
+  enable = true;
+  ignores = [ "*.swp" "*~" ".Trash-*" "result" ];
+  settings = {
+    user = {
+      name = "Lucernov";
+      email = "jin.riv@gmail.com";
+    };
+  };
+};
 
 }
