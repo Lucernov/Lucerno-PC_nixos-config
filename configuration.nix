@@ -32,6 +32,7 @@ in
   # ЯДРО
   boot.kernelPackages = pkgs.linuxPackages_6_18;
   boot.kernelModules = [ "ntsync" ];      # Автозагрузка модуля NTSync
+  boot.kernelParams = [ "transparent_hugepage=madvise" ];
   boot.kernel.sysctl = {
   "vm.swappiness" = 10;
   "vm.vfs_cache_pressure" = 50;
