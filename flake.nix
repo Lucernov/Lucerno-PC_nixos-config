@@ -2,8 +2,7 @@
   description = "Моя основная конфигурация NixOS для домашнего ПК";
 
   # ========== ВХОДНЫЕ ДАННЫЕ (inputs) ==========
-  # Здесь перечисляются внешние зависимости — flake-репозитории, которые будут использованы при сборке.
-  inputs = {
+  inputs = {                                                              # Здесь перечисляются внешние зависимости — flake-репозитории, которые будут использованы при сборке.
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.11";                     # Стабильный канал Nixpkgs (NixOS 25.11). Из него будут браться основные пакеты и модули.
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";         # Нестабильный канал Nixpkgs (последние обновления). Используется для пакетов, которым нужны свежие версии.
 
@@ -27,7 +26,6 @@
   };
 
   # ========== ВЫХОДНЫЕ ДАННЫЕ (outputs) ==========
-
   outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, plasma-manager, musnix, ... }@inputs: {        # Функция, которая принимает все входы и возвращает набор результатов
     nixosConfigurations.Lucerno-PC = nixpkgs.lib.nixosSystem {            # Конфигурация всей системы (NixOS) для хоста с именем Lucerno-PC
       system = "x86_64-linux";                                            # Архитектура системы (x86_64 — стандартный ПК)
