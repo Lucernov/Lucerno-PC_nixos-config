@@ -13,6 +13,8 @@
     ../../../modules/nixos/profiles/firewall.nix
     ../../../modules/nixos/profiles/locale.nix
     ../../../modules/nixos/profiles/users.nix
+    ../../../modules/nixos/profiles/sddm.nix
+    ../../../modules/nixos/profiles/environment.nix
   ];
 
 }
