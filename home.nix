@@ -54,7 +54,8 @@ home.activation.createVst3Dir = lib.hm.dag.entryAfter ["writeBoundary"] ''
       "kitty-quake" = {
         name = "Kitty Quake Mode";
         key = "Meta+Z";
-        command = "${config.home.homeDirectory}/.local/bin/toggle-kitty";
+        #command = "${config.home.homeDirectory}/.local/bin/toggle-kitty";
+        command = "kitten quick-access-terminal";
       };
     };
   };
