@@ -4,7 +4,7 @@
   imports = [
     ./hardware-configuration.nix
     ./hardware.nix
-    ./desktop-plasma.nix
+    ./modules/desktop-plasma.nix
   ];
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
