@@ -6,7 +6,8 @@
   environment.systemPackages = [
     (pkgs.writeTextDir "share/sddm/themes/breeze/theme.conf.user" ''
       [General]
-      background=${pkgs.copyPathToStore ./dotfiles/wallpapers/Velo_01.JPG}
+      background=${pkgs.copyPathToStore (toString ../../../dotfiles/wallpapers/Velo_01.JPG)}
     '')
   ];
 }
+
