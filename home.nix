@@ -54,7 +54,7 @@ home.activation.createVst3Dir = lib.hm.dag.entryAfter ["writeBoundary"] ''
       "kitty-quake" = {
         name = "Kitty Quake Mode";
         key = "Meta+Z";
-        command = "kitty --quick-access";
+        command = "${pkgs.kitty}/bin/kitten quick-access-terminal";
       };
     };
   };
@@ -209,11 +209,11 @@ home.file = {
   '';
 
   # --- Автозапуск Kitty ---
-  ".config/autostart/kitty-quick-access.desktop".text = ''
+".config/autostart/kitty-quick-access.desktop".text = ''
   [Desktop Entry]
   Type=Application
   Name=Kitty Quick Access
-  Exec=kitty --quick-access
+  Exec=${pkgs.kitty}/bin/kitten quick-access-terminal
   Icon=kitty
   StartupNotify=false
   Terminal=false
