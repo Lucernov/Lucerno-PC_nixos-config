@@ -54,7 +54,7 @@ home.activation.createVst3Dir = lib.hm.dag.entryAfter ["writeBoundary"] ''
       "kitty-quake" = {
         name = "Kitty Quake Mode";
         key = "Meta+Z";
-        command = "${pkgs.kitty}/bin/kitten quick-access-terminal";
+        command = "${config.home.homeDirectory}/.local/bin/toggle-kitty";
       };
     };
   };
@@ -231,14 +231,21 @@ home.file = {
   background #2e3440
 '';
 
+".local/bin/toggle-kitty".source = /home/lucerno/nixos-config/scripts/toggle-kitty.sh;
+".local/bin/toggle-kitty".executable = true;
+
 ".config/kitty/kitty.conf".text = ''
-  # Открыть новую вкладку в текущей директории по Ctrl+Shift+T
+  # Открыть новую вкладку (в текущей рабочей директории)
   map ctrl+shift+t new_tab_with_cwd
 
-  # Закрыть текущую вкладку по Ctrl+Shift+Q
+  # Закрыть текущую вкладку
   map ctrl+shift+q close_tab
 
-  # Альтернативная настройка: использовать Super (Windows) + W для закрытия вкладки
+  # (Опционально) Переключение между вкладками
+  map ctrl+shift+right next_tab
+  map ctrl+shift+left  previous_tab
+
+  # (Опционально) Привязать Meta (Win) + W для закрытия вкладки (как в браузере)
   map super+w close_tab
 '';
 
