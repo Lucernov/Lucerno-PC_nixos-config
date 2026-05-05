@@ -22,6 +22,7 @@
   # Импорт plasma-manager
   imports = [
     inputs.plasma-manager.homeModules.plasma-manager
+    ./programs/plasma.nix    # настройки KDE Plasma (горячие клавиши, обои)
   ];
 
 # СИМВОЛИЧЕСКАЯ ССЫЛКА, ЧТОБЫ WINETRICKS НЕ РУГАЛСЯ НА ОТСУТСТВИЕ WINЕ64
@@ -33,53 +34,6 @@ home.activation.createWine64Link = lib.hm.dag.entryAfter ["writeBoundary"] ''
 home.activation.createVst3Dir = lib.hm.dag.entryAfter ["writeBoundary"] ''
   mkdir -p $HOME/.vst3
 '';
-
-
-  # ========== УПРАВЛЕНИЕ KDE Plasma ==========
-  programs.plasma = {
-    enable = true;
-      # workspace - настройки рабочего пространства (рабочий стол)
-    workspace = {
-      wallpaper = "/home/lucerno/nixos-config/dotfiles/wallpapers/Velo_01.JPG";
-    };
-
-      # Настройки клавиатуры
-  configFile."kxkbrc" = {
-    Layout = {
-      LayoutList = "us,ru";
-      LayoutLoopCount = "-1";                           # Бесконечный цикл переключения
-      ResetOldOptions = "true";                         # Сбросить старые опции
-      Options = "grp:ctrl_shift_toggle,grp_led:scroll"; # Переключение: Ctrl+Shift, индикатор на Scroll Lock
-      ShowLayoutIndicator = "true";                     # Показывать индикатор раскладки в трее
-      SwitchMode = "Global";                            # Глобальное переключение (для всей системы)
-      Use = "true";                                     # Использовать эти настройки
-      VariantList = "";                                 # Нет вариантов раскладок
-    };
-  };
-
-      # Горячие клавиши
-  shortcuts = {
-    # Глобальные клавиши для всех приложений
-
-      # Yakuake toggle
-   # yakuake = {
-   #   "toggle-window-state" = "Meta+Z";  # "toggle-window-state" - действие: показать/скрыть окно Yakuake Win + Z
-    #};
-  };
-
-    hotkeys = {
-    commands = {
-      "kitty-quake" = {
-        name = "Kitty Quake Mode";
-        key = "Meta+Z";
-        #command = "${config.home.homeDirectory}/.local/bin/toggle-kitty";
-        command = "kitten quick-access-terminal";
-      };
-    };
-  };
-
-
-  };
 
       # ========== МУЗЫКА НАСТРОЙКА!!!! ==========
     # Устанавливаем переменную окружения для пользовательской папки VST3
