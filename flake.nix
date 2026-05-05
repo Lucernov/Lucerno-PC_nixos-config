@@ -26,29 +26,14 @@
     flake-parts.lib.mkFlake { inherit inputs; } {
       systems = [ "x86_64-linux" ];
 
-      flake = {
-        # Сохраняем homeConfigurations в неизменном виде
-        homeConfigurations.lucerno = home-manager.lib.homeManagerConfiguration {
-          pkgs = nixpkgs.legacyPackages.x86_64-linux;
-          modules = [ ./home.nix ];
-          extraSpecialArgs = {
-            inherit inputs;
-            pkgs-unstable = nixpkgs-unstable.legacyPackages.x86_64-linux;
-          };
-        };
-      };
+      # Импортируем дополнительные модули flake-parts (пока пустой)
+      imports = [ ./flake-modules.nix ];
 
-      # Определяем системную конфигурацию
-      nixosConfigurations.Lucerno-PC = { modules, ... }: {
-        imports = modules;   # этот атрибут будет использован flake-parts
-        modules = [
-          # Основной файл конфигурации (пока старый)
+      # Определяем nixosConfigurations через flake
+      flake.nixosConfigurations.Lucerno-PC = { config, pkgs, ... }: {
+        imports = [
           ./configuration.nix
-
-          # Musnix модуль
           musnix.nixosModules.musnix
-
-          # Home Manager как модуль NixOS (та же логика, что раньше)
           home-manager.nixosModules.home-manager {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
@@ -63,13 +48,23 @@
           }
         ];
 
-        # Передаём специальные аргументы во все модули (аналог specialArgs)
+        # Передаём специальные аргументы через config._module.args
         config._module.args = {
           inherit inputs;
           pkgs-unstable = import nixpkgs-unstable {
             system = "x86_64-linux";
             config.allowUnfree = true;
           };
+        };
+      };
+
+      # Оставляем homeConfigurations как есть (они не относятся к nixosConfigurations)
+      flake.homeConfigurations.lucerno = home-manager.lib.homeManagerConfiguration {
+        pkgs = nixpkgs.legacyPackages.x86_64-linux;
+        modules = [ ./home.nix ];
+        extraSpecialArgs = {
+          inherit inputs;
+          pkgs-unstable = nixpkgs-unstable.legacyPackages.x86_64-linux;
         };
       };
     };
