@@ -153,6 +153,11 @@
 
   services.pulseaudio.enable = false;
 
+security.pam.loginLimits = [
+  { domain = "lucerno"; type = "soft"; item = "nofile"; value = "16384"; }
+  { domain = "lucerno"; type = "hard"; item = "nofile"; value = "16384"; }
+];
+
 
   # ========== STEAM ==========
   programs.steam = {
