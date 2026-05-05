@@ -81,7 +81,6 @@ home.sessionVariables = {
   # Пакеты для пользователя
   home.packages = with pkgs; [
     nh
-    kitty
     # KDE приложения
     kdePackages.kde-gtk-config
     kdePackages.ktorrent
@@ -146,6 +145,7 @@ home.sessionVariables = {
     reaper
     reaper-sws-extension
     reaper-reapack-extension
+    kitty
   ]);
 
 programs.obs-studio = {
