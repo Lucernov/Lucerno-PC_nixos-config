@@ -11,12 +11,8 @@
 
     # новые профили
     ../../../modules/nixos/profiles/firewall.nix
+    ../../../modules/nixos/profiles/locale.nix
+    ../../../modules/nixos/profiles/users.nix
   ];
 
-  # все остальные системные настройки (firewall, время, пользователь, звук, steam и т.д.)
-  # пока копируем сюда из configuration.nix, но потом разобьём на профили
-
-  # Временно скопируем сюда всё содержимое configuration.nix (кроме imports).
-  # Для начала просто импортируем старый configuration.nix, но это временно.
-  # Лучше по частям переносить.
 }
