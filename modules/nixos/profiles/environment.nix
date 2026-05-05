@@ -1,5 +1,9 @@
 { pkgs, ... }:
 {
+  nixpkgs.config.allowUnfree = true;      # Разрешение unfree пакетов
+  programs.zsh.enable = true;             # консоль оболочка для всех пользователей
+  programs.amnezia-vpn.enable = true;     # AmneziaVPN
+
   environment.systemPackages = with pkgs; [
     home-manager
     git
