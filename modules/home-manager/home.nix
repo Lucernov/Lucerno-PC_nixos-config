@@ -1,3 +1,21 @@
+#nixos-config/
+#├── flake.nix                     # точка входа для Nix
+#└── modules/
+#    ├── home-manager/             # все модули для home-manager
+#    │   ├── programs/             # ⭐ модули для НАСТРОЙКИ ПРОГРАММ
+#    │   │   ├── zsh.nix
+#    │   │   ├── git.nix
+#    │   │   ├── kitty.nix
+#    │   │   ├── reaper.nix        # здесь всё, что конфигурится через home-manager
+#    │   │   └── gaming.nix        # lutris, heroic и т.д.
+#    │   ├── services/             # ⭐ модули для ФОНОВЫХ СЕРВИСОВ ПОЛЬЗОВАТЕЛЯ
+#    │   │   └── kde-no-file-limit.nix  # systemd сервисы (тот самый fix)
+#    │   ├── misc/                 # ⭐ модули для РАЗНОГО
+#    │   │   └── desktop-files.nix      # XDG, автозапуск, user-dirs
+#    │   ├── music.nix             # "Дикий" модуль, который лежит прямо в папке home-manager
+#    │   └── home.nix              # Корневой модуль, который всё это импортирует
+#    └── nixos/ ...                # системные модули
+
 { config, pkgs, pkgs-unstable, inputs, lib, ... }:
 
 {
@@ -401,6 +419,7 @@ home.file = {
       gc = "git commit -m";
       gco = "git checkout";
       gb = "git branch";
+      hm = "export NIXPKGS_ALLOW_UNFREE=1 && nix run github:nix-community/home-manager -- switch --flake .#lucerno --impure";
       sync = "cd /home/lucerno/nixos-config && git add -A && (git commit -m \"$(date '+%Y-%m-%d %H:%M:%S')\" || true) && git push";
       update = "cd /home/lucerno/nixos-config && git add -A && git commit -m \"pre-rebuild\" && git push && sudo nixos-rebuild switch --impure --flake .#Lucerno-PC";
       upgrade = "cd /home/lucerno/nixos-config && nix flake update && git add -A && (git commit -m \"upgrade: $(date)\" || true) && git push && sudo nixos-rebuild switch --impure --flake .#Lucerno-PC";
