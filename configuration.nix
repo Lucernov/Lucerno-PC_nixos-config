@@ -153,10 +153,13 @@
 
   services.pulseaudio.enable = false;
 
-security.pam.loginLimits = [
-  { domain = "lucerno"; type = "soft"; item = "nofile"; value = "16384"; }
-  { domain = "lucerno"; type = "hard"; item = "nofile"; value = "16384"; }
-];
+systemd.user.services.plasma-plasmashell = {
+  overrideStrategy = "asDropin";
+  serviceConfig.LimitNOFILE = 16384;
+};
+systemd.user.services.kwin_wayland = {
+  serviceConfig.LimitNOFILE = 16384;
+};
 
 
   # ========== STEAM ==========
