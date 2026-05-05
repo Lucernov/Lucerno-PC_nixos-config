@@ -26,45 +26,58 @@
     flake-parts.lib.mkFlake { inherit inputs; } {
       systems = [ "x86_64-linux" ];
 
-      # Импортируем дополнительные модули flake-parts (пока пустой)
-      imports = [ ./flake-modules.nix ];
+      imports = [
+        # здесь можно будет добавить другие модули flake-parts (например, для home-manager)
+      ];
 
-      # Определяем nixosConfigurations через flake
-      flake.nixosConfigurations.Lucerno-PC = { config, pkgs, ... }: {
-        imports = [
-          ./configuration.nix
-          musnix.nixosModules.musnix
-          home-manager.nixosModules.home-manager {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.users.lucerno = import ./home.nix;
-            home-manager.extraSpecialArgs = {
-              inherit inputs;
-              pkgs-unstable = import nixpkgs-unstable {
-                system = "x86_64-linux";
-                config.allowUnfree = true;
-              };
-            };
-          }
-        ];
-
-        # Передаём специальные аргументы через config._module.args
-        config._module.args = {
-          inherit inputs;
-          pkgs-unstable = import nixpkgs-unstable {
-            system = "x86_64-linux";
-            config.allowUnfree = true;
+      flake = {
+        # homeConfigurations остаётся как есть (вне nixosConfigurations)
+        homeConfigurations.lucerno = home-manager.lib.homeManagerConfiguration {
+          pkgs = nixpkgs.legacyPackages.x86_64-linux;
+          modules = [ ./home.nix ];
+          extraSpecialArgs = {
+            inherit inputs;
+            pkgs-unstable = nixpkgs-unstable.legacyPackages.x86_64-linux;
           };
         };
       };
 
-      # Оставляем homeConfigurations как есть (они не относятся к nixosConfigurations)
-      flake.homeConfigurations.lucerno = home-manager.lib.homeManagerConfiguration {
-        pkgs = nixpkgs.legacyPackages.x86_64-linux;
-        modules = [ ./home.nix ];
-        extraSpecialArgs = {
-          inherit inputs;
-          pkgs-unstable = nixpkgs-unstable.legacyPackages.x86_64-linux;
+      perSystem = { config, pkgs, ... }: {
+        # пока пусто, но можно добавить общие пакеты для devShell и т.д.
+      };
+
+      # ВАЖНО: nixosConfigurations определяется ТАК
+      nixosConfigurations = {
+        Lucerno-PC = nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          specialArgs = {
+            inherit inputs;
+            pkgs-unstable = import nixpkgs-unstable {
+              system = "x86_64-linux";
+              config.allowUnfree = true;
+            };
+          };
+          modules = [
+            # твой новый модуль хоста (именно он импортирует старые конфиги)
+            ./modules/hosts/Lucerno-PC
+
+            # musnix
+            musnix.nixosModules.musnix
+
+            # home-manager как модуль NixOS (для бесшовной интеграции)
+            home-manager.nixosModules.home-manager {
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+              home-manager.users.lucerno = import ./home.nix;
+              home-manager.extraSpecialArgs = {
+                inherit inputs;
+                pkgs-unstable = import nixpkgs-unstable {
+                  system = "x86_64-linux";
+                  config.allowUnfree = true;
+                };
+              };
+            }
+          ];
         };
       };
     };
