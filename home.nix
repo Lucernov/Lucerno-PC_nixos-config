@@ -114,6 +114,7 @@ home.sessionVariables = {
 
 
     # ОФИС
+    collabora-online
 
     # ВСЯКОЕ
     bat      # аналог cat с подсветкой синтаксиса
@@ -343,6 +344,8 @@ home.file = {
       sync = "cd /home/lucerno/nixos-config && git add -A && (git commit -m \"$(date '+%Y-%m-%d %H:%M:%S')\" || true) && git push";
       update = "cd /home/lucerno/nixos-config && git add -A && git commit -m \"pre-rebuild\" && git push && sudo nixos-rebuild switch --impure --flake .#Lucerno-PC";
       upgrade = "cd /home/lucerno/nixos-config && nix flake update && git add -A && (git commit -m \"upgrade: $(date)\" || true) && git push && sudo nixos-rebuild switch --impure --flake .#Lucerno-PC";
+      #steam = "taskset -c 0-11 steam";
+      #reaper = "taskset -c 0-11 reaper";
     };
 
     # Дополнительные настройки в .zshrc

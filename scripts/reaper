@@ -1,5 +1,5 @@
 #!/run/current-system/sw/bin/bash
 export GDK_BACKEND=x11
-exec gamemoderun /etc/profiles/per-user/lucerno/bin/reaper "$@"
-#exec /etc/profiles/per-user/lucerno/bin/reaper "$@"
+exec taskset -c 0-11 /etc/profiles/per-user/lucerno/bin/reaper "$@"
 
+#exec gamemoderun /etc/profiles/per-user/lucerno/bin/reaper "$@"

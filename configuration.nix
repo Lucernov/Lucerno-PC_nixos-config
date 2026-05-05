@@ -31,13 +31,13 @@ in
 
 
   # ========== Firewall настройки с nftables ==========
-  networking.nftables.enable = true; # переход на nftables
+  networking.nftables.enable = true;                 # переход на nftables
   networking.firewall = {
     enable = true;
-    allowedTCPPorts = [ 22 ];     # Разрешаем SSH
-    allowPing = true; # Разрешаем ping
+    allowedTCPPorts = [ 22 ];                        # Разрешаем SSH
+    allowPing = true;                                # Разрешаем ping
     # Логирование подозрительных пакетов
-    logRefusedConnections = false; # Не засорять логи
+    logRefusedConnections = false;                   # Не засорять логи
     logRefusedPackets = false;
   };
 
@@ -56,7 +56,9 @@ in
     LC_TIME = "ru_RU.UTF-8";
   };
 
-    # ========== USER ==========
+
+
+  # ========== USER ==========
   # Группа для пользователя
   users.groups.lucerno = {};
   users.users.lucerno = {
@@ -74,11 +76,8 @@ in
   };
 
 
-  nixpkgs.config.allowUnfree = true;      # Разрешение unfree пакетов
-  programs.zsh.enable = true;             # консоль оболочка для всех пользователей
-  programs.amnezia-vpn.enable = true;     # AmneziaVPN
 
-  # Wayland + KDE Plasma 6
+  # ========== Wayland + KDE Plasma 6 ==========
   services.displayManager.sddm.enable = true;                     # Включает SDDM (Simple Desktop Display Manager)
   services.displayManager.sddm.wayland.enable = true;             # Разрешает SDDM работать под Wayland
   #services.displayManager.plasma-login-manager.enable = true;    # Plasma Login Manager (PLM) — это новый менеджер входа
@@ -89,6 +88,11 @@ in
   programs.partition-manager.enable = true;                       # Устанавливает KDE Partition Manager
   #services.tumbler.enable = true;                                 # Включает фоновую службу tumbler
 
+  # --------------------------------------------------------------------------
+  nixpkgs.config.allowUnfree = true;      # Разрешение unfree пакетов
+  programs.zsh.enable = true;             # консоль оболочка для всех пользователей
+  programs.amnezia-vpn.enable = true;     # AmneziaVPN
+
   # ПОДМЕНА ФОНА SDDM
   # файл theme.conf.user внутри темы breeze. SDDM читает этот файл и применяет настройки, не затрагивая оригинальные файлы темы.
   # Параметр background указывает на пакет mySddmBackground.
@@ -97,7 +101,6 @@ in
       [General]
       background=${mySddmBackground}
     '')
-  # --------------------------------------------------------------------------
   ] ++ (with pkgs; [
     home-manager
     git
@@ -116,20 +119,18 @@ in
     glib                      # системная библиотека
     nvidia-vaapi-driver       # драйвера видеокарты
     libva-utils               # системные утилиты VA-API
-      google-chrome           # браузер
+
+    google-chrome             # браузер
   ]);
 
-  # Переменные окружения для менеджера входа
-  environment.sessionVariables = {
+  # ========== Переменные окружения для менеджера входа ==========
+    environment.sessionVariables = {
     LANG = "ru_RU.UTF-8";
     LANGUAGE = "ru_RU.UTF-8";
-
-  # Переменные окружения для Wayland
-    # Принудительно указываем Vulkan-драйвер NVIDIA
-    __GLX_VENDOR_LIBRARY_NAME = "nvidia";
+  # ========== Переменные окружения для Wayland ==========
+    __GLX_VENDOR_LIBRARY_NAME = "nvidia";               # Принудительно указываем Vulkan-драйвер NVIDIA
     __GL_VRR_ALLOWED = "1";
-    # Указываем бэкенд для GBM (Graphics Buffer Manager)
-    GBM_BACKEND = "nvidia-drm";
+    GBM_BACKEND = "nvidia-drm";                         # Указываем бэкенд для GBM (Graphics Buffer Manager)
     CHROME_FLAGS = "--ozone-platform-hint=auto";
     ELECTRON_OZONE_PLATFORM_HINT = "auto";
     QT_QPA_PLATFORM = "wayland";
@@ -138,7 +139,7 @@ in
     QT_QPA_PLATFORM_PLUGIN_PATH = "${pkgs.qt6.qtwayland}/lib/qt-6/plugins/platforms";
   };
 
-  # Звук (PipeWire)
+  # ========== Звук (PipeWire) ==========
   security.rtkit.enable = true;
   services.pipewire = {
     enable = true;
@@ -173,7 +174,7 @@ in
   services.pulseaudio.enable = false;
 
 
-  # STEAM
+  # ========== STEAM ==========
   programs.steam = {
     enable = true;
     remotePlay.openFirewall = true;
@@ -196,19 +197,18 @@ in
 
   # ========== NIX ОПТИМИЗАЦИЯ ==========
   nix = {
-    # Автоматически оптимизировать store (удалять дубликаты)
-    settings.auto-optimise-store = true;
+    settings.auto-optimise-store = true;         # Автоматически оптимизировать store (удалять дубликаты)
 
     # Автоматическая очистка старых поколений
     gc = {
-      automatic = true;      # Автоматически запускать сборку мусора
-      dates = "weekly";      # Раз в неделю
-      options = "--delete-older-than 7d";  # Удалять поколения старше 7 дней
+      automatic = true;                          # Автоматически запускать сборку мусора
+      dates = "weekly";                          # Раз в неделю
+      options = "--delete-older-than 7d";        # Удалять поколения старше 7 дней
     };
 
     # Дополнительные настройки для оптимизации
     settings = {
-      max-jobs = 6;                       # Параллельные сборки
+      max-jobs = 6;                              # Параллельные сборки
       keep-derivations = true;
       keep-outputs = true;
     };
