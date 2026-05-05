@@ -1,16 +1,10 @@
 { config, pkgs, lib, pkgs-unstable, ... }:
-let
-  # НАСТРОЙКА ФОНА ДЛЯ ЭКРАНА ВХОДА (SDDM)
-  mySddmBackground = pkgs.runCommand "my-sddm-bg" {} ''
-    cp ${./dotfiles/wallpapers/Velo_01.JPG} $out
-  '';
-in
-
 
 {
   imports = [
     ./hardware-configuration.nix
     ./hardware.nix
+    ./desktop-plasma.nix
   ];
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
@@ -73,17 +67,6 @@ in
     wheelNeedsPassword = false;
   };
 
-
-  # ========== Wayland + KDE Plasma 6 ==========
-  services.displayManager.sddm.enable = true;                     # Включает SDDM (Simple Desktop Display Manager)
-  services.displayManager.sddm.wayland.enable = true;             # Разрешает SDDM работать под Wayland
-  #services.displayManager.plasma-login-manager.enable = true;    # Plasma Login Manager (PLM) — это новый менеджер входа
-  services.desktopManager.plasma6.enable = true;                  # Включает рабочий стол KDE Plasma 6
-  services.displayManager.defaultSession = "plasma";              # Устанавливает сеанс по умолчанию — Plasma (KDE)
-  services.xserver.enable = false;                                # Отключает X11-сервер полностью
-  programs.dconf.enable = true;                                   # Включает систему хранения настроек dconf
-  programs.partition-manager.enable = true;                       # Устанавливает KDE Partition Manager
-
   # --------------------------------------------------------------------------
   nixpkgs.config.allowUnfree = true;      # Разрешение unfree пакетов
   programs.zsh.enable = true;             # консоль оболочка для всех пользователей
@@ -95,7 +78,7 @@ in
   environment.systemPackages = [
     (pkgs.writeTextDir "share/sddm/themes/breeze/theme.conf.user" ''
       [General]
-      background=${mySddmBackground}
+      background=${pkgs.copyPathToStore ./dotfiles/wallpapers/Velo_01.JPG}
     '')
   ] ++ (with pkgs; [
     home-manager
