@@ -82,6 +82,7 @@ home.sessionVariables = {
   # Пакеты для пользователя
   home.packages = with pkgs; [
     nh
+    lsof
     # KDE приложения
     kdePackages.kde-gtk-config
     kdePackages.ktorrent
