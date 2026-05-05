@@ -119,10 +119,12 @@ home.sessionVariables = {
     winetricks                # для настройки префиксов
     coppwr
 
+
     vital                     # синтезатор FM
     surge-xt                  # синтезатор FM
     geonkick                  # синтезатор барабанов
     drumgizmo               # сэмплер барабанов (0.9.20)
+    neural-amp-modeler-lv2
     dragonfly-reverb
     fretboard
 
