@@ -114,7 +114,6 @@ home.sessionVariables = {
 
 
     # ОФИС
-    collabora-online
 
     # ВСЯКОЕ
     bat      # аналог cat с подсветкой синтаксиса

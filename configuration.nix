@@ -57,7 +57,6 @@ in
   };
 
 
-
   # ========== USER ==========
   # Группа для пользователя
   users.groups.lucerno = {};
@@ -68,13 +67,11 @@ in
     extraGroups = [ "wheel" "networkmanager" "audio" "video" "storage"   ];
     shell = pkgs.zsh;
   };
-
   # Отключаем запрос пароля для sudo для группы wheel
   security.sudo = {
     enable = true;
     wheelNeedsPassword = false;
   };
-
 
 
   # ========== Wayland + KDE Plasma 6 ==========
@@ -86,7 +83,6 @@ in
   services.xserver.enable = false;                                # Отключает X11-сервер полностью
   programs.dconf.enable = true;                                   # Включает систему хранения настроек dconf
   programs.partition-manager.enable = true;                       # Устанавливает KDE Partition Manager
-  #services.tumbler.enable = true;                                 # Включает фоновую службу tumbler
 
   # --------------------------------------------------------------------------
   nixpkgs.config.allowUnfree = true;      # Разрешение unfree пакетов
