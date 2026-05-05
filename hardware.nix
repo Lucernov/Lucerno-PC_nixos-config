@@ -141,24 +141,24 @@ services.udev.extraRules = ''
   # ========== Тонкая настройка ядра (sysctl) ==========
   boot.kernel.sysctl = {
     "kernel.sched_autogroup_enabled" = 0;
-    "kernel.sched_migration_cost_ns" = 250000;      # 0.25 мс
-    "kernel.sched_min_granularity_ns" = 1000000;   # 1 мс
-    "kernel.sched_wakeup_granularity_ns" = 2000000; # 2 мс
+    "kernel.sched_migration_cost_ns" = 250000;             # 0.25 мс
+    "kernel.sched_min_granularity_ns" = 1000000;           # 1 мс
+    "kernel.sched_wakeup_granularity_ns" = 2000000;        # 2 мс
    #"vm.swappiness" = 10;                                  # определено через musnix
-  "vm.vfs_cache_pressure" = 50;
-  "vm.dirty_bytes" = 536870912;            # 512 MiB
-  "vm.dirty_background_bytes" = 134217728; # 128 MiB
-  "vm.stat_interval" = 10;
-  "vm.dirty_writeback_centisecs" = 500;
-  "vm.dirty_expire_centisecs" = 3000;
-  "vm.max_map_count" = 1048576;
+    "vm.vfs_cache_pressure" = 50;
+    "vm.dirty_bytes" = 536870912;                          # 512 MiB
+    "vm.dirty_background_bytes" = 134217728;               # 128 MiB
+    "vm.stat_interval" = 10;
+    "vm.dirty_writeback_centisecs" = 500;
+    "vm.dirty_expire_centisecs" = 3000;
+    "vm.max_map_count" = 1048576;
   };
   # ========== KSM (отключён) ==========
   hardware.ksm.enable = false;
   # ========== Аудио оптимизация (musnix) ==========
   musnix.enable = true;
-  musnix.kernel.realtime = false;         # для совместимости с NVIDIA
- #musnix.snd_hda_intel.enable = false;    # раскомментируйте если нужно
+  musnix.kernel.realtime = false;                          # для совместимости с NVIDIA
+ #musnix.snd_hda_intel.enable = false;                     # раскомментируйте если нужно
 
 
   # ========== NETWORK & SYSTEM ==========
@@ -174,15 +174,15 @@ services.udev.extraRules = ''
   # ========== NVIDIA ==========
   services.xserver.videoDrivers = [ "nvidia" ];
   hardware.graphics = {
-    enable = true;                                   # Включаем поддержку аппаратного ускорения графики
+    enable = true;                                         # Включаем поддержку аппаратного ускорения графики
     enable32Bit = true;
   };
   # Настройка драйвера NVIDIA для Wayland
   hardware.nvidia = {
-    open = true;                      # Используем открытые модули (для RTX 3070 это работает)
-    modesetting.enable = true;        # Обязательно для Wayland: включает режим "Sync & Destroy"
-    nvidiaSettings = false;            # Устанавливает утилиту nvidia-settings
-    powerManagement.enable = false;   # Отключаем управление питанием (на десктопе не нужно, только для ноутбуков)
+    open = true;                                           # Используем открытые модули (для RTX 3070 это работает)
+    modesetting.enable = true;                             # Обязательно для Wayland: включает режим "Sync & Destroy"
+    nvidiaSettings = false;                                # Устанавливает утилиту nvidia-settings
+    powerManagement.enable = false;                        # Отключаем управление питанием (на десктопе не нужно, только для ноутбуков)
     package = config.boot.kernelPackages.nvidiaPackages.stable;
   };
 
