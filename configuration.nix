@@ -1,13 +1,14 @@
 { config, pkgs, lib, pkgs-unstable, ... }:
 
 {
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+
+
   imports = [
     ./hardware-configuration.nix
     ./hardware.nix
-    ./modules/desktop-plasma.nix
+    ./modules/configuration-kde_plasma.nix
   ];
-
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
   # ========== мои симлинки ==========
   systemd.tmpfiles.rules = [

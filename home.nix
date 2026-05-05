@@ -44,10 +44,22 @@ home.activation.createVst3Dir = lib.hm.dag.entryAfter ["writeBoundary"] ''
     # Глобальные клавиши для всех приложений
 
       # Yakuake toggle
-    yakuake = {
-      "toggle-window-state" = "Meta+Z";  # "toggle-window-state" - действие: показать/скрыть окно Yakuake Win + Z
+   # yakuake = {
+   #   "toggle-window-state" = "Meta+Z";  # "toggle-window-state" - действие: показать/скрыть окно Yakuake Win + Z
+    #};
+  };
+
+    hotkeys = {
+    commands = {
+      "kitty-quake" = {
+        name = "Kitty Quake Mode";
+        key = "Meta+Z";
+        command = "kitty --quick-access";
+      };
     };
   };
+
+
   };
 
       # ========== МУЗЫКА НАСТРОЙКА!!!! ==========
@@ -69,11 +81,12 @@ home.sessionVariables = {
   # Пакеты для пользователя
   home.packages = with pkgs; [
     nh
+    kitty
     # KDE приложения
     kdePackages.kde-gtk-config
     kdePackages.ktorrent
     kdePackages.kdenlive
-    kdePackages.yakuake
+    #kdePackages.yakuake
     kdePackages.kcalc
 
     # ГРАФИКА
@@ -162,6 +175,8 @@ programs.mangohud = {
   };
 };
 
+
+
 # ========== УПРАВЛЕНИЕ ФАЙЛАМИ ПОЛЬЗОВАТЕЛЯ ==========
 home.file = {
 
@@ -193,19 +208,54 @@ home.file = {
     Terminal=false
   '';
 
+  # --- Автозапуск Kitty ---
+  ".config/autostart/kitty-quick-access.desktop".text = ''
+  [Desktop Entry]
+  Type=Application
+  Name=Kitty Quick Access
+  Exec=kitty --quick-access
+  Icon=kitty
+  StartupNotify=false
+  Terminal=false
+  X-KDE-autostart-after=panel
+'';
+
+# ========== Kitty ==========
+".config/kitty/quick-access-terminal.conf".text = ''
+  size = 70% 50%
+  position = center, center
+  background_opacity = 0.85
+  hide_window_decorations = yes
+  confirm_os_window_close = 0
+  foreground #eceff4
+  background #2e3440
+'';
+
+".config/kitty/kitty.conf".text = ''
+  # Открыть новую вкладку в текущей директории по Ctrl+Shift+T
+  map ctrl+shift+t new_tab_with_cwd
+
+  # Закрыть текущую вкладку по Ctrl+Shift+Q
+  map ctrl+shift+q close_tab
+
+  # Альтернативная настройка: использовать Super (Windows) + W для закрытия вкладки
+  map super+w close_tab
+'';
+
+
   # --- Автозапуск Yakuake ---
   # Создаёт .desktop-файл для запуска Yakuake (выпадающий терминал).
   # sleep 2 даёт время на полную загрузку KDE перед стартом.
-  ".config/autostart/yakuake.desktop".text = ''
-    [Desktop Entry]
-    Type=Application
-    Name=Yakuake
-    Exec=bash -c "sleep 2 && yakuake"
-    Icon=yakuake
-    X-KDE-autostart-after=panel
-    StartupNotify=false
-    Terminal=false
-  '';
+#  ".config/autostart/yakuake.desktop".text = ''
+#    [Desktop Entry]
+#    Type=Application
+#    Name=Yakuake
+#    Exec=bash -c "sleep 2 && yakuake"
+#    Icon=yakuake
+#    X-KDE-autostart-after=panel
+#    StartupNotify=false
+#    Terminal=false
+#  '';
 
 
   # --- Кастомный запуск REAPER с GDK_BACKEND=x11 ---
@@ -342,7 +392,7 @@ home.file = {
       gb = "git branch";
       sync = "cd /home/lucerno/nixos-config && git add -A && (git commit -m \"$(date '+%Y-%m-%d %H:%M:%S')\" || true) && git push";
       update = "cd /home/lucerno/nixos-config && git add -A && git commit -m \"pre-rebuild\" && git push && sudo nixos-rebuild switch --impure --flake .#Lucerno-PC";
-     upgrade = "cd /home/lucerno/nixos-config && nix flake update && git add -A && (git commit -m \"upgrade: $(date)\" || true) && git push && sudo nixos-rebuild switch --impure --flake .#Lucerno-PC";
+      upgrade = "cd /home/lucerno/nixos-config && nix flake update && git add -A && (git commit -m \"upgrade: $(date)\" || true) && git push && sudo nixos-rebuild switch --impure --flake .#Lucerno-PC";
       #steam = "taskset -c 0-11 steam";
       #reaper = "taskset -c 0-11 reaper";
     };
