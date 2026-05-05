@@ -133,6 +133,9 @@ services.udev.extraRules = ''
     "irqaffinity=0"                                        # перенаправить все IRQ на ядро 0
     "nowatchdog"
     "mce=ignore_ce"
+    # Изоляция только E-ядер
+    #"nohz_full=12-15"
+    #"isolcpus=12-15"
   ];
 
   # ========== Тонкая настройка ядра (sysctl) ==========
