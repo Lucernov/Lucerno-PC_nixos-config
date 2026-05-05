@@ -108,6 +108,14 @@ services.udev.extraRules = ''
   # ========== КОНЕЦ ДОПОЛНИТЕЛЬНЫХ ДИСКОВ ==========
 
 
+  # ========== Обновление микрокода процессора ==========
+  hardware.cpu.intel.updateMicrocode = true;
+
+  # ========== Обновление прошивок  ==========
+  services.fwupd.enable = true;
+    #fwupdmgr get-updates             есть ли реальные обновления
+    #sudo fwupdmgr update             если обновления есть, установить их
+
   # ========== Загрузчик ==========
   boot.loader = {
     systemd-boot.enable = true;
