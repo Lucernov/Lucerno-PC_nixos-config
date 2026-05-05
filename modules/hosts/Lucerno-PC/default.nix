@@ -7,6 +7,10 @@
     ../../../hardware.nix
     ../../../modules/configuration-kde_plasma.nix   # ваш модуль KDE (если есть)
     ../../../configuration.nix
+
+
+    # новые профили
+    ../../../modules/nixos/profiles/firewall.nix
   ];
 
   # все остальные системные настройки (firewall, время, пользователь, звук, steam и т.д.)
