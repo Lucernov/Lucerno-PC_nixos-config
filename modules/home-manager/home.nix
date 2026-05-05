@@ -25,61 +25,20 @@
     ./programs/plasma.nix    # настройки KDE Plasma (горячие клавиши, обои)
     ./programs/zsh.nix
     ./programs/common.nix
+    ./programs/gaming.nix
+    ./programs/git.nix
+    ./programs/obs.nix
+    ./programs/kitty.nix
+    ./music.nix
   ];
 
-# СИМВОЛИЧЕСКАЯ ССЫЛКА, ЧТОБЫ WINETRICKS НЕ РУГАЛСЯ НА ОТСУТСТВИЕ WINЕ64
-home.activation.createWine64Link = lib.hm.dag.entryAfter ["writeBoundary"] ''
-  mkdir -p $HOME/.local/bin
-  ln -sf ${pkgs-unstable.wineWow64Packages.staging}/bin/wine $HOME/.local/bin/wine64
-'';
 
-home.activation.createVst3Dir = lib.hm.dag.entryAfter ["writeBoundary"] ''
-  mkdir -p $HOME/.vst3
-'';
-
-      # ========== МУЗЫКА НАСТРОЙКА!!!! ==========
-    # Устанавливаем переменную окружения для пользовательской папки VST3
-home.sessionVariables = {
-  VST3_PATH = "${config.home.homeDirectory}/.vst3";
-  WINEPREFIX = "/mnt/music/wine-yabridge";
-};
-
-  # ====================================================
 
   # НАСТРОЙКИ HOME MANAGER
   home.username = "lucerno";
   home.homeDirectory = "/home/lucerno";
   home.stateVersion = "25.11";
   programs.home-manager.enable = true;
-
-programs.obs-studio = {
-  enable = true;
-  package = pkgs.obs-studio.override { cudaSupport = true; };
-  plugins = with pkgs.obs-studio-plugins; [
-    wlrobs
-    obs-multi-rtmp
-  ];
-};
-
-# ========== MANGO HUD ==========
-programs.mangohud = {
-  enable = true;
-  enableSessionWide = false;
-  settings = {
-    fps = true;
-    cpu_temp = true;
-    gpu_temp = true;
-    ram = true;
-    vram = true;
-    winesync = true;
-    position = "top-right";
-    font_size = 24;
-    background_alpha = 0.5;
-    full = true;
-  };
-};
-
-
 
 # ========== УПРАВЛЕНИЕ ФАЙЛАМИ ПОЛЬЗОВАТЕЛЯ ==========
 home.file = {
@@ -111,62 +70,6 @@ home.file = {
     StartupNotify=false
     Terminal=false
   '';
-
-  # --- Автозапуск Kitty ---
-".config/autostart/kitty-quick-access.desktop".text = ''
-  [Desktop Entry]
-  Type=Application
-  Name=Kitty Quick Access
-  Exec=${pkgs.kitty}/bin/kitten quick-access-terminal
-  Icon=kitty
-  StartupNotify=false
-  Terminal=false
-  X-KDE-autostart-after=panel
-'';
-
-# ========== Kitty ==========
-".config/kitty/quick-access-terminal.conf".text = ''
-  size = 70% 50%
-  position = center, center
-  background_opacity = 0.85
-  hide_window_decorations = yes
-  confirm_os_window_close = 0
-  foreground #eceff4
-  background #2e3440
-'';
-
-".local/bin/toggle-kitty".source = /home/lucerno/nixos-config/scripts/toggle-kitty.sh;
-".local/bin/toggle-kitty".executable = true;
-
-".config/kitty/kitty.conf".text = ''
-  # Открыть новую вкладку (в текущей рабочей директории)
-  map ctrl+shift+t new_tab_with_cwd
-
-  # Закрыть текущую вкладку
-  map ctrl+shift+q close_tab
-
-  # (Опционально) Переключение между вкладками
-  map ctrl+shift+right next_tab
-  map ctrl+shift+left  previous_tab
-
-  # (Опционально) Привязать Meta (Win) + W для закрытия вкладки (как в браузере)
-  map super+w close_tab
-'';
-
-
-  # --- Автозапуск Yakuake ---
-  # Создаёт .desktop-файл для запуска Yakuake (выпадающий терминал).
-  # sleep 2 даёт время на полную загрузку KDE перед стартом.
-#  ".config/autostart/yakuake.desktop".text = ''
-#    [Desktop Entry]
-#    Type=Application
-#    Name=Yakuake
-#    Exec=bash -c "sleep 2 && yakuake"
-#    Icon=yakuake
-#    X-KDE-autostart-after=panel
-#    StartupNotify=false
-#    Terminal=false
-#  '';
 
 
   # --- Кастомный запуск REAPER с GDK_BACKEND=x11 ---
@@ -241,26 +144,6 @@ home.file = {
   '';
   force = true;
 };
-
-  # Ссылка REAPER для SWS
-  ".config/REAPER/UserPlugins/reaper_sws-x86_64.so".source = "${pkgs-unstable.reaper-sws-extension}/UserPlugins/reaper_sws-x86_64.so";
-
-  # Ссылка REAPER для ReaPack
-  ".config/REAPER/UserPlugins/reaper_reapack-x86_64.so".source = "${pkgs-unstable.reaper-reapack-extension}/UserPlugins/reaper_reapack-x86_64.so";
-};
-# ===================================================
-
-
-
-  programs.git = {
-  enable = true;
-  ignores = [ "*.swp" "*~" ".Trash-*" "result" ];
-  settings = {
-    user = {
-      name = "Lucernov";
-      email = "jin.riv@gmail.com";
-    };
-  };
 };
 
 }

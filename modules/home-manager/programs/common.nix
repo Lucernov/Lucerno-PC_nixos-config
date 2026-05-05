@@ -18,12 +18,6 @@
     blender
     upscaler
 
-    # ИГРЫ
-    (bottles.override { removeWarningPopup = true; })
-    goverlay
-    lutris
-    heroic
-
     # ИНТЕРНЕТ
     parabolic
     discord
@@ -32,22 +26,6 @@
     # МУЛЬТИМЕДИА
     vlc
     qmmp
-
-    # МУЗЫКА
-    yabridge
-    yabridgectl
-    winetricks                # для настройки префиксов
-    coppwr
-
-
-    vital                     # синтезатор FM
-    surge-xt                  # синтезатор FM
-    geonkick                  # синтезатор барабанов
-    drumgizmo               # сэмплер барабанов (0.9.20)
-    neural-amp-modeler-lv2
-    dragonfly-reverb
-    fretboard
-
 
     # ОФИС
 
@@ -65,10 +43,6 @@
   '')
   ] ++ (with pkgs-unstable; [
     # из нестабильного
-    wineWow64Packages.staging
-    reaper
-    reaper-sws-extension
-    reaper-reapack-extension
-    kitty
+    #kitty
   ]);
 }
