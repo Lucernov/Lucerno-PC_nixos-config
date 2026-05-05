@@ -42,7 +42,7 @@
             home-manager.nixosModules.home-manager {
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
-              home-manager.users.lucerno = import ./home.nix;
+              home-manager.users.lucerno = import ./home-manager/home.nix;
               home-manager.extraSpecialArgs = {
                 inherit inputs;
                 pkgs-unstable = import nixpkgs-unstable {
@@ -55,7 +55,7 @@
         };
         homeConfigurations.lucerno = home-manager.lib.homeManagerConfiguration {
           pkgs = nixpkgs.legacyPackages.x86_64-linux;
-          modules = [ ./home.nix ];
+          modules = [ ./home-manager/home.nix ];
           extraSpecialArgs = {
             inherit inputs;
             pkgs-unstable = nixpkgs-unstable.legacyPackages.x86_64-linux;
