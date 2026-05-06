@@ -65,10 +65,6 @@
                 pkgs = pkgsWithOverlay;                                                                    # Передаём pkgs с оверлеем в home-manager
               };
             }
-
-            {
-              nixpkgs.overlays = [ (import ./overlays/default.nix) ];                                     # Оверлей для системы (можно оставить, но pkgsWithOverlay уже передан)
-            }
           ];
         };
 
