@@ -60,9 +60,9 @@
               home-manager.extraSpecialArgs = {
                 inherit inputs;
                 pkgs-unstable = pkgsUnstable;
-                };
                 pkgs = pkgsWithOverlay;
-              }
+              };
+            }
           ];
         };
 
@@ -80,4 +80,3 @@
       perSystem = { config, pkgs, ... }: { };                                                             # Системно-зависимые настройки (пока не используются)
     };
 }
-
