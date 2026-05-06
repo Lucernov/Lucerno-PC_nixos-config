@@ -1,36 +1,8 @@
 { pkgs, ... }:
+
 {
-  nixpkgs.config.allowUnfree = true;      # Разрешение unfree пакетов
-  programs.zsh.enable = true;             # консоль оболочка для всех пользователей
-  programs.amnezia-vpn.enable = true;     # AmneziaVPN
-
-  environment.systemPackages = with pkgs; [
-    home-manager
-    git
-    unzip
-    kdePackages.plasma-desktop
-    kdePackages.breeze-gtk
-    vim                       # консоль системный текстовый редактор
-    nano                      # консоль системный текстовый редактор
-    curl
-    wget
-    htop
-    #carbonyl                 # консольный Браузер
-    nvtopPackages.nvidia      # консоль телеметрия видеокарты
-    wayland-utils             # системные утилиты Wayland
-    gsettings-desktop-schemas # системные схемы
-    glib                      # системная библиотека
-    nvidia-vaapi-driver       # драйвера видеокарты
-    libva-utils               # системные утилиты VA-API
-
-    google-chrome             # браузер
-  ];
-
-  # ========== Переменные окружения для менеджера входа ==========
-  environment.sessionVariables = {
-    LANG = "ru_RU.UTF-8";
-    LANGUAGE = "ru_RU.UTF-8";
   # ========== Переменные окружения для Wayland ==========
+  environment.sessionVariables = {
     __GLX_VENDOR_LIBRARY_NAME = "nvidia";               # Принудительно указываем Vulkan-драйвер NVIDIA
     __GL_VRR_ALLOWED = "1";
     GBM_BACKEND = "nvidia-drm";                         # Указываем бэкенд для GBM (Graphics Buffer Manager)

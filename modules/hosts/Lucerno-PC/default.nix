@@ -19,6 +19,7 @@
     ../../../modules/nixos/profiles/steam.nix
     ../../../modules/nixos/profiles/nix-optimization.nix
     ../../../modules/nixos/profiles/configuration-kde_plasma.nix
+    ../../../modules/nixos/profiles/soft-sys.nix
     #../../../modules/nixos/profiles/programs.nix
   ];
 
