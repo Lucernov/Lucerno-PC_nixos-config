@@ -26,27 +26,28 @@
   # ========== Выходные данные (outputs) ==========
   outputs = inputs@{ flake-parts, nixpkgs, nixpkgs-unstable, home-manager, plasma-manager, musnix, ... }:  # Функция, которая принимает все входы и возвращает результаты сборки
     let
-      # Создаём экземпляр nixpkgs с оверлеем (для использования в системе и home-manager)
       pkgsWithOverlay = import nixpkgs {
         system = "x86_64-linux";
-        config.allowUnfree = true;                                                                         # Разрешает установку проприетарных (не free) пакетов, например, google-chrome, nvidia driver и др.
+        config.allowUnfree = true;
         overlays = [ (import ./overlays/default.nix) ];
+      };
+      pkgsUnstable = import nixpkgs-unstable {
+        system = "x86_64-linux";
+        config.allowUnfree = true;
       };
     in
     flake-parts.lib.mkFlake { inherit inputs; } {                                                          # Используем flake-parts для построения flake
       systems = [ "x86_64-linux" ];                                                                        # Целевая архитектура (один компьютер x86_64)
       imports = [ ];                                                                                       # Список дополнительных модулей flake-parts (пока пуст)
 
+      # Основное содержимое флейка - системные конфигурации, пользовательские конфигурации, оверлеи, пакеты
       flake = {
         nixosConfigurations.Lucerno-PC = nixpkgs.lib.nixosSystem {                                         # Системная конфигурация NixOS для хоста
           system = "x86_64-linux";                                                                         # Архитектура системы
           specialArgs = {                                                                                  # Дополнительные аргументы, передаваемые во все модули
             inherit inputs;
-            pkgs-unstable = import nixpkgs-unstable {                                                      # Создаём экземпляр pkgs-unstable с разрешением проприетарных пакетов
-              system = "x86_64-linux";
-              config.allowUnfree = true;
+            pkgs-unstable = pkgsUnstable;
             };
-          };
 
           modules = [                                                                                      # Список модулей, из которых собирается система
             { nixpkgs.pkgs = pkgsWithOverlay; }
@@ -58,13 +59,10 @@
               home-manager.users.lucerno = import ./modules/home-manager/home.nix;                         # Путь к конфигурации пользователя
               home-manager.extraSpecialArgs = {
                 inherit inputs;
-                pkgs-unstable = import nixpkgs-unstable {
-                  system = "x86_64-linux";
-                  config.allowUnfree = true;
+                pkgs-unstable = pkgsUnstable;
                 };
                 pkgs = pkgsWithOverlay;
-              };
-            }
+              }
           ];
         };
 
