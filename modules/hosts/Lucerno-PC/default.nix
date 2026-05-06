@@ -2,11 +2,11 @@
 { config, pkgs, lib, pkgs-unstable, inputs, ... }:
 
 {
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix.settings.experimental - features = [ "nix - command" "flakes" ] ;
 
   imports = [
-    ../../../hardware-configuration.nix
-    ../../../hardware.nix
+    ../../../nixos/hardware-configuration.nix
+    ../../../nixos/hardware.nix
 
     # новые профили
     ../../../modules/nixos/profiles/locale.nix
@@ -20,7 +20,6 @@
     ../../../modules/nixos/profiles/nix-optimization.nix
     ../../../modules/nixos/profiles/configuration-kde_plasma.nix
     ../../../modules/nixos/profiles/soft-sys.nix
-    #../../../modules/nixos/profiles/programs.nix
   ];
 
   # ========== мои симлинки ==========

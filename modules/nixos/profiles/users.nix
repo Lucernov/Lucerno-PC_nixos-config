@@ -1,16 +1,25 @@
 { pkgs, ... }:
+
 {
-  users.groups.lucerno = {};
-  users.users.lucerno = {
-    isNormalUser = true;
-    hashedPasswordFile = "/home/lucerno/nixos-config/secrets/lucerno-password.hash";
-    group = "lucerno";
+  # ========== Настройка пользователя lucerno ==========
+  users.groups.lucerno = {};                                                         # Объявляем группу пользователя (пустое определение, группа будет создана)
+  users.users.lucerno = {                                                            # Основные настройки учётной записи
+    isNormalUser = true;                                                             # Обычный пользователь (не системный)
+    hashedPasswordFile = "/home/lucerno/nixos-config/secrets/lucerno-password.hash"; # Файл с хешем пароля
+    group = "lucerno";                                                               # Группа, к которой принадлежит пользователь
+    # Дополнительные группы
+    # wheel   – право выполнять команды через sudo
+    # networkmanager – управление сетью
+    # audio   – доступ к звуковым устройствам
+    # video   – доступ к видеодрайверу (GPU)
+    # storage – доступ к дискам и файловым системам
     extraGroups = [ "wheel" "networkmanager" "audio" "video" "storage" ];
-    shell = pkgs.zsh;
+    shell = pkgs.zsh;                                                                # Командная оболочка по умолчанию (Zsh)
   };
-  # Отключаем запрос пароля для sudo для группы wheel
+
+  # ========== Настройка sudo ==========
   security.sudo = {
-    enable = true;
-    wheelNeedsPassword = false;
+    enable = true;                                                                   # Включаем sudo
+    wheelNeedsPassword = false;                                                      # Для членов группы wheel не требовать пароль. Пароль всё равно нужен для входа в систему.
   };
 }

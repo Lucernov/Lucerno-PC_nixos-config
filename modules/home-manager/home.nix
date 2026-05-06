@@ -19,6 +19,15 @@
 { config, pkgs, pkgs-unstable, inputs, lib, ... }:
 
 {
+  # НАСТРОЙКИ HOME MANAGER
+  home.username = "lucerno";
+  home.homeDirectory = "/home/lucerno";
+
+  home.sessionVariables = {
+    VST3_PATH = "${config.home.homeDirectory}/.vst3";  # Устанавливаем переменную окружения для пользовательской папки VST3
+    WINEPREFIX = "/mnt/music/wine-yabridge";
+  };
+
   # Импорт plasma-manager
   imports = [
     inputs.plasma-manager.homeModules.plasma-manager
@@ -30,16 +39,11 @@
     ./programs/obs.nix
     ./programs/kitty.nix
 
-    ./programs/common.nix
-
-    ./misc/desktop-files.nix
+    ./programs/home-packages.nix
+    ./misc/home-file.nix
     ./music.nix
   ];
 
-  # НАСТРОЙКИ HOME MANAGER
-  home.username = "lucerno";
-  home.homeDirectory = "/home/lucerno";
   home.stateVersion = "25.11";
-  programs.home-manager.enable = true;
-
+  programs.home-manager.enable = true;  # Включает Home Manager как системный модуль (управление пользовательским окружением)
 }

@@ -1,48 +1,52 @@
 {
-  description = "Моя основная конфигурация NixOS для домашнего ПК";
+  description = "Моя конфигурация NixOS для домашнего ПК";
 
-  inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.11";
-    nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
+  # ========== Входные данные (inputs) ==========
+  inputs = {                                                                                               # Здесь перечисляются все внешние зависимости (flake-репозитории)
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.11";                                                      # Стабильный канал Nixpkgs (NixOS 25.11)
+    nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";                                          # Нестабильный канал Nixpkgs (последние обновления)
 
-    home-manager = {
+    home-manager = {                                                                                       # Home Manager — управление пользовательским окружением
       url = "github:nix-community/home-manager/release-25.11";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "nixpkgs";                                                                  # Указываем, что home-manager должен использовать тот же экземпляр nixpkgs
     };
 
-    plasma-manager = {
+    plasma-manager = {                                                                                     # Plasma Manager — настройка KDE Plasma через Home Manager
       url = "github:nix-community/plasma-manager/trunk";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.home-manager.follows = "home-manager";
     };
 
-    musnix.url = "github:musnix/musnix";
+    musnix.url = "github:musnix/musnix";                                                                   # Musnix — набор модулей для низкой задержки звука
 
-    flake-parts.url = "github:hercules-ci/flake-parts";
+    flake-parts.url = "github:hercules-ci/flake-parts";                                                    # Flake-parts — фреймворк для модульной организации flake
     flake-parts.inputs.nixpkgs-lib.follows = "nixpkgs";
   };
 
-  outputs = inputs@{ flake-parts, nixpkgs, nixpkgs-unstable, home-manager, plasma-manager, musnix, ... }:
-    flake-parts.lib.mkFlake { inherit inputs; } {
-      systems = [ "x86_64-linux" ];
-      imports = [ ];
+  # ========== Выходные данные (outputs) ==========
+  outputs = inputs@{ flake-parts, nixpkgs, nixpkgs-unstable, home-manager, plasma-manager, musnix, ... }:  # Функция, которая принимает все входы и возвращает результаты сборки
+    flake-parts.lib.mkFlake { inherit inputs; } {                                                          # Используем flake-parts для построения flake
+      systems = [ "x86_64-linux" ];                                                                        # Целевая архитектура (один компьютер x86_64)
+      imports = [ ];                                                                                       # Список дополнительных модулей flake-parts (пока пуст)
+
       flake = {
-        nixosConfigurations.Lucerno-PC = nixpkgs.lib.nixosSystem {
-          system = "x86_64-linux";
-          specialArgs = {
+        nixosConfigurations.Lucerno-PC = nixpkgs.lib.nixosSystem {                                         # Системная конфигурация NixOS для хоста
+          system = "x86_64-linux";                                                                         # Архитектура системы
+          specialArgs = {                                                                                  # Дополнительные аргументы, передаваемые во все модули
             inherit inputs;
-            pkgs-unstable = import nixpkgs-unstable {
+            pkgs-unstable = import nixpkgs-unstable {                                                      # Создаём экземпляр pkgs-unstable с разрешением проприетарных пакетов
               system = "x86_64-linux";
               config.allowUnfree = true;
             };
           };
-          modules = [
-            ./modules/hosts/Lucerno-PC
-            musnix.nixosModules.musnix
-            home-manager.nixosModules.home-manager {
-              home-manager.useGlobalPkgs = true;
-              home-manager.useUserPackages = true;
-              home-manager.users.lucerno = import ./modules/home-manager/home.nix;
+
+          modules = [                                                                                      # Список модулей, из которых собирается система
+            ./modules/hosts/Lucerno-PC                                                                     # Основной модуль хоста (импортирует профили)
+            musnix.nixosModules.musnix                                                                     # Модуль musnix (аудио оптимизация)
+            home-manager.nixosModules.home-manager {                                                       # Home Manager, интегрированный как системный модуль
+              home-manager.useGlobalPkgs = true;                                                           # Использовать глобальные пакеты
+              home-manager.useUserPackages = true;                                                         # Разрешить пользовательские пакеты
+              home-manager.users.lucerno = import ./modules/home-manager/home.nix;                         # Путь к конфигурации пользователя
               home-manager.extraSpecialArgs = {
                 inherit inputs;
                 pkgs-unstable = import nixpkgs-unstable {
@@ -53,7 +57,8 @@
             }
           ];
         };
-        homeConfigurations.lucerno = home-manager.lib.homeManagerConfiguration {
+
+        homeConfigurations.lucerno = home-manager.lib.homeManagerConfiguration {                          # Конфигурация Home-Manager отдельно (для команды home-manager switch)
           pkgs = nixpkgs.legacyPackages.x86_64-linux;
           modules = [ ./modules/home-manager/home.nix ];
           extraSpecialArgs = {
@@ -62,6 +67,9 @@
           };
         };
       };
-      perSystem = { config, pkgs, ... }: { };
+
+
+      perSystem = { config, pkgs, ... }: { };                                                             # Системно-зависимые настройки (пока не используются)
     };
 }
+

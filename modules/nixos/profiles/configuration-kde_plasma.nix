@@ -9,5 +9,6 @@
   # ========== Дополнительные системные пакеты для Plasma ==========
   environment.systemPackages = with pkgs; [
     kdePackages.breeze-gtk                                  # Обеспечивает единый внешний вид GTK-программ в окружении KDE Plasma
+    kdePackages.kde-gtk-config                              # Настройка GTK-тем для KDE
   ];
 }
