@@ -39,11 +39,8 @@
     fastfetch                           # Вывод информации о системе (аналог neofetch)
     nix-tree                            # Просмотр дерева зависимостей Nix
 
-    # Minion обёртка (для управления аддонами в MMORPG)
-    (writeShellScriptBin "minion" ''
-      export JAVA_TOOL_OPTIONS="-Dprism.lcdtext=false -Dprism.text=t2k"
-      exec ${pkgs.minion}/bin/minion "$@"
-    '')
+    my-packages.minion                              # Кастомный пакет minion (обёртка для управления аддонами) – теперь берётся из оверлея
+
   ] ++ (with pkgs-unstable; [
     # Пакеты из нестабильного канала добавлять сюда
   ]);

@@ -25,6 +25,14 @@
 
   # ========== Выходные данные (outputs) ==========
   outputs = inputs@{ flake-parts, nixpkgs, nixpkgs-unstable, home-manager, plasma-manager, musnix, ... }:  # Функция, которая принимает все входы и возвращает результаты сборки
+    let
+      # Создаём экземпляр nixpkgs с нашим оверлеем (для системы и home-manager)
+      pkgsWithOverlay = import nixpkgs {
+        system = "x86_64-linux";
+        config.allowUnfree = true;
+        overlays = [ (import ./overlays/default.nix) ];
+      };
+    in
     flake-parts.lib.mkFlake { inherit inputs; } {                                                          # Используем flake-parts для построения flake
       systems = [ "x86_64-linux" ];                                                                        # Целевая архитектура (один компьютер x86_64)
       imports = [ ];                                                                                       # Список дополнительных модулей flake-parts (пока пуст)
@@ -38,6 +46,7 @@
               system = "x86_64-linux";
               config.allowUnfree = true;
             };
+            pkgs = pkgsWithOverlay;                                                                        # Если какой-то модуль ожидает pkgs с оверлеем, передаём
           };
 
           modules = [                                                                                      # Список модулей, из которых собирается система
@@ -53,13 +62,18 @@
                   system = "x86_64-linux";
                   config.allowUnfree = true;
                 };
+                pkgs = pkgsWithOverlay;                                                                    # Передаём pkgs с оверлеем в home-manager
               };
+            }
+
+            {
+              nixpkgs.overlays = [ (import ./overlays/default.nix) ];                                     # Оверлей для системы (можно оставить, но pkgsWithOverlay уже передан)
             }
           ];
         };
 
         homeConfigurations.lucerno = home-manager.lib.homeManagerConfiguration {                          # Конфигурация Home-Manager отдельно (для команды home-manager switch)
-          pkgs = nixpkgs.legacyPackages.x86_64-linux;
+          pkgs = pkgsWithOverlay;                                                                         # Для отдельной команды home-manager switch используем тот же pkgs с оверлеем
           modules = [ ./modules/home-manager/home.nix ];
           extraSpecialArgs = {
             inherit inputs;
