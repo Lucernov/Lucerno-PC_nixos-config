@@ -9,6 +9,11 @@ let
 in
 
 {
+  # ========== Аудио оптимизация (musnix) ==========
+  musnix.enable = true;
+  musnix.kernel.realtime = false;                          # для совместимости с NVIDIA
+ #musnix.snd_hda_intel.enable = false;                     # раскомментируйте если нужно
+
 services.udev.extraRules = ''
   # Все SSD и NVMe
   ACTION=="add|change", ATTR{queue/rotational}=="0", ATTR{queue/scheduler}="kyber"
@@ -19,7 +24,6 @@ services.udev.extraRules = ''
   # HDD — read-ahead 1024 KB
   ACTION=="add|change", ATTR{queue/rotational}=="1", ATTR{bdi/read_ahead_kb}="1024"
 '';
-
 
   # ========== ДОПОЛНИТЕЛЬНЫЕ ДИСКИ ==========
   # NVMe SSD для игр (ext4)
@@ -163,11 +167,6 @@ services.udev.extraRules = ''
   };
   # ========== KSM (отключён) ==========
   hardware.ksm.enable = false;
-  # ========== Аудио оптимизация (musnix) ==========
-  musnix.enable = true;
-  musnix.kernel.realtime = false;                          # для совместимости с NVIDIA
- #musnix.snd_hda_intel.enable = false;                     # раскомментируйте если нужно
-
 
   # ========== NETWORK & SYSTEM ==========
   networking.hostName = "Lucerno-PC";
@@ -184,6 +183,7 @@ services.udev.extraRules = ''
   hardware.graphics = {
     enable = true;                                         # Включаем поддержку аппаратного ускорения графики
     enable32Bit = true;
+    extraPackages = with pkgs; [ nvidia-vaapi-driver ];
   };
   # Настройка драйвера NVIDIA для Wayland
   hardware.nvidia = {

@@ -1,22 +1,39 @@
 { pkgs, ... }:
+
 {
-  home.packages = with pkgs; [ kitty ];
+  # ========== Kitty терминал ==========
+  programs.kitty = {
+    enable = true;
 
-  xdg.configFile."kitty/kitty.conf".text = ''
-  # Открыть новую вкладку (в текущей рабочей директории)
-  map ctrl+shift+t new_tab_with_cwd
+    # Основные настройки (те, что обычно в kitty.conf)
+    settings = {
+      # Оформление
+      background_opacity = 0.85;
+      hide_window_decorations = "yes";
+      confirm_os_window_close = 0;
+      foreground = "#eceff4";
+      background = "#2e3440";
+      # Позиционирование окна (для обычного режима, не quick-access)
+      # initial_window_width = 800;
+      # initial_window_height = 600;
+    };
 
-  # Закрыть текущую вкладку
-  map ctrl+shift+q close_tab
+    # Привязка клавиш (map)
+    keybindings = {
+      "ctrl+shift+t" = "new_tab_with_cwd";
+      "ctrl+shift+q" = "close_tab";
+      "ctrl+shift+right" = "next_tab";
+      "ctrl+shift+left" = "previous_tab";
+      "super+w" = "close_tab";
+    };
 
-  # (Опционально) Переключение между вкладками
-  map ctrl+shift+right next_tab
-  map ctrl+shift+left  previous_tab
+    # Любые другие строки, которые не поддерживаются settings/keybindings
+    extraConfig = ''
+      # Например, можно оставить комментарии
+    '';
+  };
 
-  # (Опционально) Привязать Meta (Win) + W для закрытия вкладки (как в браузере)
-  map super+w close_tab
-  '';
-
+  # Конфигурация для выпадающего режима (quick-access) – остаётся отдельным файлом
   xdg.configFile."kitty/quick-access-terminal.conf".text = ''
     size = 70% 50%
     position = center, center
@@ -27,15 +44,18 @@
     background #2e3440
   '';
 
+  # Скрипт для переключения Kitty
   home.file.".local/bin/toggle-kitty".source = /home/lucerno/nixos-config/scripts/toggle-kitty.sh;
   home.file.".local/bin/toggle-kitty".executable = true;
 
+  # Systemd-сервис для автозапуска Kitty в режиме quick-access
   systemd.user.services.kitty-quick = {
     Unit.Description = "Kitty Quick Access";
     Service.ExecStart = "${pkgs.kitty}/bin/kitten quick-access-terminal";
     Install.WantedBy = [ "graphical-session.target" ];
   };
 
+  # Автозапуск Kitty в KDE Plasma (через .desktop)
   home.file.".config/autostart/kitty-quick-access.desktop".text = ''
     [Desktop Entry]
     Type=Application
