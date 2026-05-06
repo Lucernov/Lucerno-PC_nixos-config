@@ -26,12 +26,12 @@
   # ========== Выходные данные (outputs) ==========
   outputs = inputs@{ flake-parts, nixpkgs, nixpkgs-unstable, home-manager, plasma-manager, musnix, ... }:  # Функция, которая принимает все входы и возвращает результаты сборки
     let
-      # Создаём экземпляр nixpkgs с нашим оверлеем (для системы и home-manager)
       pkgsWithOverlay = import nixpkgs {
         system = "x86_64-linux";
         config.allowUnfree = true;
         overlays = [ (import ./overlays/default.nix) ];
       };
+      readOnlyPkgsModule = import (nixpkgs + "/nixos/modules/misc/nixpkgs/read-only.nix");
     in
     flake-parts.lib.mkFlake { inherit inputs; } {                                                          # Используем flake-parts для построения flake
       systems = [ "x86_64-linux" ];                                                                        # Целевая архитектура (один компьютер x86_64)
@@ -46,10 +46,11 @@
               system = "x86_64-linux";
               config.allowUnfree = true;
             };
-            pkgs = pkgsWithOverlay;                                                                        # Если какой-то модуль ожидает pkgs с оверлеем, передаём
           };
 
           modules = [                                                                                      # Список модулей, из которых собирается система
+            readOnlyPkgsModule
+            { nixpkgs.pkgs = pkgsWithOverlay; }
             ./modules/hosts/Lucerno-PC                                                                     # Основной модуль хоста (импортирует профили)
             musnix.nixosModules.musnix                                                                     # Модуль musnix (аудио оптимизация)
             home-manager.nixosModules.home-manager {                                                       # Home Manager, интегрированный как системный модуль
