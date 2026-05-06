@@ -29,7 +29,7 @@
       # Создаём экземпляр nixpkgs с оверлеем (для использования в системе и home-manager)
       pkgsWithOverlay = import nixpkgs {
         system = "x86_64-linux";
-        config.allowUnfree = true;
+        config.allowUnfree = true;                                                                         # Разрешает установку проприетарных (не free) пакетов, например, google-chrome, nvidia driver и др.
         overlays = [ (import ./overlays/default.nix) ];
       };
     in
