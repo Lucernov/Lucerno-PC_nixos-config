@@ -2,7 +2,7 @@
 { config, pkgs, lib, pkgs-unstable, inputs, ... }:
 
 {
-  nix.settings.experimental - features = [ "nix - command" "flakes" ] ;
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
   imports = [
     ../../../nixos/hardware-configuration.nix
