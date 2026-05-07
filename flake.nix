@@ -21,6 +21,8 @@
 
     flake-parts.url = "github:hercules-ci/flake-parts";                                                    # Flake-parts — фреймворк для модульной организации flake
     flake-parts.inputs.nixpkgs-lib.follows = "nixpkgs";
+
+    import-tree.url = "github:vic/import-tree";
   };
 
   # ========== Выходные данные (outputs) ==========
@@ -47,6 +49,7 @@
           specialArgs = {                                                                                  # Дополнительные аргументы, передаваемые во все модули
             inherit inputs;
             pkgs-unstable = pkgsUnstable;
+            import-tree = inputs.import-tree;
             };
 
           modules = [                                                                                      # Список модулей, из которых собирается система
@@ -75,7 +78,6 @@
           };
         };
       };
-
 
       perSystem = { config, pkgs, ... }: { };                                                             # Системно-зависимые настройки (пока не используются)
     };
