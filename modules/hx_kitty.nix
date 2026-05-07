@@ -42,11 +42,25 @@
     confirm_os_window_close = 0
     foreground #eceff4
     background #2e3440
+    title quick-access
   '';
 
   # Скрипт для переключения Kitty
-  home.file.".local/bin/toggle-kitty".source = /home/lucerno/nixos-config/scripts/toggle-kitty.sh;
-  home.file.".local/bin/toggle-kitty".executable = true;
+home.file.".local/bin/toggle-kitty" = {
+  executable = true;
+  # Ищем окно Kitty, которое запущено с идентификатором "quick-access"
+  # Можно использовать class или title. Удобнее по классу, который мы сами зададим.
+  text = ''
+    #!${pkgs.bash}/bin/bash
+    if ${pkgs.kitty}/bin/kitty @ ls 2>/dev/null | grep -q "quick-access"; then
+    # Если окно существует, закрываем его
+        ${pkgs.kitty}/bin/kitty @ close-window --match title:"quick-access"
+    else
+    # Иначе запускаем новое окно в выпадающем режиме
+        ${pkgs.kitty}/bin/kitten quick-access-terminal
+    fi
+  '';
+};
 
   # Systemd-сервис для автозапуска Kitty в режиме quick-access
   systemd.user.services.kitty-quick = {
@@ -55,15 +69,4 @@
     Install.WantedBy = [ "graphical-session.target" ];
   };
 
-  # Автозапуск Kitty в KDE Plasma (через .desktop)
-  home.file.".config/autostart/kitty-quick-access.desktop".text = ''
-    [Desktop Entry]
-    Type=Application
-    Name=Kitty Quick Access
-    Exec=${pkgs.kitty}/bin/kitten quick-access-terminal
-    Icon=kitty
-    StartupNotify=false
-    Terminal=false
-    X-KDE-autostart-after=panel
-  '';
 }
