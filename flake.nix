@@ -59,7 +59,7 @@
             home-manager.nixosModules.home-manager {                                                       # Home Manager, интегрированный как системный модуль
               home-manager.useGlobalPkgs = true;                                                           # Использовать глобальные пакеты
               home-manager.useUserPackages = true;                                                         # Разрешить пользовательские пакеты
-              home-manager.users.lucerno = import ./modules/home-manager/home.nix;                         # Путь к конфигурации пользователя
+              home-manager.users.lucerno = import ./modules/home.nix;                         # Путь к конфигурации пользователя
               home-manager.extraSpecialArgs = {
                 inherit inputs;
                 pkgs-unstable = pkgsUnstable;
@@ -71,7 +71,7 @@
 
         homeConfigurations.lucerno = home-manager.lib.homeManagerConfiguration {                          # Конфигурация Home-Manager отдельно (для команды home-manager switch)
           pkgs = pkgsWithOverlay;                                                                         # Для отдельной команды home-manager switch используем тот же pkgs с оверлеем
-          modules = [ ./modules/home-manager/home.nix ];
+          modules = [ ./modules/home.nix ];
           extraSpecialArgs = {
             inherit inputs;
             pkgs-unstable = nixpkgs-unstable.legacyPackages.x86_64-linux;
