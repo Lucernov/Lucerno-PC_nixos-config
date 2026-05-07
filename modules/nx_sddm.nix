@@ -1,5 +1,9 @@
 { pkgs, ... }:
 
+let
+  myLib = import ../lib.nix;
+  wallpaper = myLib.wallpaperPath;
+in
 {
   # ========== Настройка дисплейного менеджера SDDM ==========
   services.displayManager.sddm = {
@@ -13,7 +17,7 @@
     (pkgs.writeTextDir "share/sddm/themes/breeze/theme.conf.user" ''
       [General]
       # Указываем путь к изображению, которое будет фоном экрана входа pkgs.copyPathToStore копирует файл в /nix/store для воспроизводимости
-      background=${pkgs.copyPathToStore (toString /home/lucerno/nixos-config/dotfiles/wallpapers/Velo_01.JPG)}
+      background=${wallpaper}
     '')
   ];
 

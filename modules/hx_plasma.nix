@@ -1,10 +1,14 @@
 { inputs, ... }:
+
+let
+  myLib = import ../lib.nix;
+in
 {
   imports = [ inputs.plasma-manager.homeModules.plasma-manager ];
   programs.plasma = {
     enable = true;
     workspace = {
-      wallpaper = "/home/lucerno/nixos-config/dotfiles/wallpapers/Velo_01.JPG";
+      wallpaper = myLib.wallpaperPath;
     };
     configFile."kxkbrc".Layout = {
       LayoutList = "us,ru";
