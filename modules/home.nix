@@ -32,16 +32,16 @@
   imports = [
     inputs.plasma-manager.homeModules.plasma-manager
 
-    ./programs/plasma.nix    # настройки KDE Plasma (горячие клавиши, обои)
-    ./programs/zsh.nix
-    ./programs/gaming.nix
-    ./programs/git.nix
-    ./programs/obs.nix
-    ./programs/kitty.nix
+    ./home-manager/programs/plasma.nix    # настройки KDE Plasma (горячие клавиши, обои)
+    ./home-manager/programs/zsh.nix
+    ./home-manager/programs/gaming.nix
+    ./home-manager/programs/git.nix
+    ./home-manager/programs/obs.nix
+    ./home-manager/programs/kitty.nix
 
-    ./programs/home-packages.nix
-    ./misc/home-file.nix
-    ./music.nix
+    ./home-manager/programs/home-packages.nix
+    ./home-manager/misc/home-file.nix
+    ./home-manager/music.nix
   ];
 
   home.stateVersion = "25.11";

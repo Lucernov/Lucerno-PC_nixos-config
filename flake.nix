@@ -54,7 +54,7 @@
 
           modules = [                                                                                      # Список модулей, из которых собирается система
             { nixpkgs.pkgs = pkgsWithOverlay; }
-            ./modules/hosts/Lucerno-PC                                                                     # Основной модуль хоста (импортирует профили)
+            ./modules                                                                    # Основной модуль хоста (импортирует профили)
             musnix.nixosModules.musnix                                                                     # Модуль musnix (аудио оптимизация)
             home-manager.nixosModules.home-manager {                                                       # Home Manager, интегрированный как системный модуль
               home-manager.useGlobalPkgs = true;                                                           # Использовать глобальные пакеты
