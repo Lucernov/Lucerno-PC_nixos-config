@@ -34,12 +34,18 @@
     vlc                                 # Универсальный видеоплеер
     qmmp                                # Аудиоплеер (похож на Winamp)
 
+    # ИГРЫ
+    (bottles.override { removeWarningPopup = true; })
+    goverlay
+    lutris
+    heroic
+
     # ВСЯКОЕ
     mission-center                      # Графический монитор системы (альтернатива btop)
     fastfetch                           # Вывод информации о системе (аналог neofetch)
     nix-tree                            # Просмотр дерева зависимостей Nix
 
-    my-packages.minion                              # Кастомный пакет minion (обёртка для управления аддонами) – теперь берётся из оверлея
+    my-packages.minion                  # Кастомный пакет minion (обёртка для управления аддонами) – теперь берётся из оверлея
 
   ] ++ (with pkgs-unstable; [
     # Пакеты из нестабильного канала добавлять сюда

@@ -1,21 +1,3 @@
-#nixos-config/
-#├── flake.nix                     # точка входа для Nix
-#└── modules/
-#    ├── home-manager/             # все модули для home-manager
-#    │   ├── programs/             # ⭐ модули для НАСТРОЙКИ ПРОГРАММ
-#    │   │   ├── zsh.nix
-#    │   │   ├── git.nix
-#    │   │   ├── kitty.nix
-#    │   │   ├── reaper.nix        # здесь всё, что конфигурится через home-manager
-#    │   │   └── gaming.nix        # lutris, heroic и т.д.
-#    │   ├── services/             # ⭐ модули для ФОНОВЫХ СЕРВИСОВ ПОЛЬЗОВАТЕЛЯ
-#    │   │   └── kde-no-file-limit.nix  # systemd сервисы (тот самый fix)
-#    │   ├── misc/                 # ⭐ модули для РАЗНОГО
-#    │   │   └── desktop-files.nix      # XDG, автозапуск, user-dirs
-#    │   ├── music.nix             # "Дикий" модуль, который лежит прямо в папке home-manager
-#    │   └── home.nix              # Корневой модуль, который всё это импортирует
-#    └── nixos/ ...                # системные модули
-
 { config, pkgs, pkgs-unstable, inputs, lib, ... }:
 
 {
@@ -32,16 +14,15 @@
   imports = [
     inputs.plasma-manager.homeModules.plasma-manager
 
-    ./home-manager/programs/plasma.nix    # настройки KDE Plasma (горячие клавиши, обои)
-    ./home-manager/programs/zsh.nix
-    ./home-manager/programs/gaming.nix
-    ./home-manager/programs/git.nix
-    ./home-manager/programs/obs.nix
-    ./home-manager/programs/kitty.nix
+    ./home-packages.nix
+    ./home-file.nix
 
-    ./home-manager/programs/home-packages.nix
-    ./home-manager/misc/home-file.nix
-    ./home-manager/music.nix
+    ./hx_music.nix
+    ./hx_plasma.nix    # настройки KDE Plasma (горячие клавиши, обои)
+    ./hx_zsh.nix
+    ./hx_git.nix
+    ./hx_obs.nix
+    ./hx_kitty.nix
   ];
 
   home.stateVersion = "25.11";
