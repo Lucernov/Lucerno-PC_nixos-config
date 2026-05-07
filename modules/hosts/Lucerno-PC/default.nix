@@ -7,19 +7,6 @@
   imports = (import-tree ../../../modules/nixos/profiles) ++ [
     ../../../nixos/hardware-configuration.nix
     ../../../nixos/hardware.nix
-
-    # новые профили
-    #../../../modules/nixos/profiles/locale.nix
-    #../../../modules/nixos/profiles/users.nix
-    #../../../modules/nixos/profiles/sddm.nix
-    #../../../modules/nixos/profiles/firewall.nix
-    #../../../modules/nixos/profiles/environment.nix
-    #../../../modules/nixos/profiles/pipewire.nix
-    #../../../modules/nixos/profiles/systemd-limits.nix
-    #../../../modules/nixos/profiles/steam.nix
-    #../../../modules/nixos/profiles/nix-optimization.nix
-    #../../../modules/nixos/profiles/configuration-kde_plasma.nix
-    #../../../modules/nixos/profiles/soft-sys.nix
   ];
 
   # ========== мои симлинки ==========
