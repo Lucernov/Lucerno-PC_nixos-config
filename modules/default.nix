@@ -20,6 +20,10 @@
     ./nx_configuration-kde_plasma.nix
   ];
 
+  # ========== Аудио оптимизация (musnix) ==========
+  musnix.enable = true;
+  musnix.kernel.realtime = false;                          # для совместимости с NVIDIA
+
   # ========== Включение системных модулей для программ ==========
   programs.git.enable = true;           # Включает поддержку Git (утилита системы контроля версий)
   programs.dconf.enable = true;         # Включает dconf – базу данных настроек для GTK-приложений (необходим для тем, шрифтов и т.п.)

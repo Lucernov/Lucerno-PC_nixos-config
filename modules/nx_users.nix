@@ -2,7 +2,6 @@
 
 {
   # ========== Настройка пользователя lucerno ==========
-  #users.groups.lucerno = {};                                                         # Объявляем группу пользователя (пустое определение, группа будет создана)
   users.users.lucerno = {                                                            # Основные настройки учётной записи
     isNormalUser = true;                                                             # Обычный пользователь (не системный)
     hashedPasswordFile = "/home/lucerno/nixos-config/secrets/lucerno-password.hash"; # Файл с хешем пароля

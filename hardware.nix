@@ -9,11 +9,6 @@ let
 in
 
 {
-  # ========== Аудио оптимизация (musnix) ==========
-  musnix.enable = true;
-  musnix.kernel.realtime = false;                          # для совместимости с NVIDIA
- #musnix.snd_hda_intel.enable = false;                     # раскомментируйте если нужно
-
 services.udev.extraRules = ''
   # Все SSD и NVMe
   ACTION=="add|change", ATTR{queue/rotational}=="0", ATTR{queue/scheduler}="kyber"
