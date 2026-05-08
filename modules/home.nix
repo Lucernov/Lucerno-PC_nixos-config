@@ -52,6 +52,7 @@ home.stateVersion = "25.11";
     upscaler                            # Увеличение разрешения изображений
 
     # ИНТЕРНЕТ
+    parabolic                           # Загрузчик видео/аудио с YouTube (альтернатива yt-dlp)
     discord                             # Голосовой/текстовый чат
     telegram-desktop                    # Мессенджер Telegram
 
@@ -73,6 +74,6 @@ home.stateVersion = "25.11";
     my-packages.minion                  # Кастомный пакет minion (обёртка для управления аддонами) – теперь берётся из оверлея
 
   ] ++ (with pkgs-unstable; [
-    parabolic                           # Загрузчик видео/аудио с YouTube (альтернатива yt-dlp)
+
   ]);
 }
