@@ -55,7 +55,6 @@
     gsettings-desktop-schemas           # Схемы настроек для GSettings (используются GTK-приложениями)
     glib                                # Базовая библиотека GLib (низкоуровневые структуры данных)
     libva-utils                         # Утилиты для VA-API (аппаратное ускорение видео)
-    pkgs.libsForQt6.kwallet-secrets
 
     google-chrome                       # Браузер Google Chrome
   ];
@@ -76,6 +75,8 @@
     # LD_LIBRARY_PATH = "/run/current-system/sw/lib";
     # QT_PLUGIN_PATH = "/run/current-system/sw/lib/qt-6/plugins";
   };
+
+  security.pam.services.sddm.kwallet.enable = true;
 
   # ========== мои симлинки ==========
   systemd.tmpfiles.rules = [
