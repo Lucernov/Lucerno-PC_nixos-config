@@ -29,8 +29,6 @@
   boot.supportedFilesystems = [ "exfat" ];
   #system.nixos-init.enable = true;                        # иногда проверять, пока проблемы с нвидиа
 
-  services.gnome.gnome-keyring.enable = true;
-
   # ========== Аудио оптимизация (musnix) ==========
   musnix.enable = true;
   musnix.kernel.realtime = false;                          # для совместимости с NVIDIA
@@ -57,6 +55,7 @@
     gsettings-desktop-schemas           # Схемы настроек для GSettings (используются GTK-приложениями)
     glib                                # Базовая библиотека GLib (низкоуровневые структуры данных)
     libva-utils                         # Утилиты для VA-API (аппаратное ускорение видео)
+    pkgs.kdePackages.kwallet-secrets
 
     google-chrome                       # Браузер Google Chrome
   ];
@@ -72,7 +71,7 @@
     GDK_BACKEND = "wayland";                                                               # Указывает GTK-приложениям использовать Wayland
     SDL_VIDEODRIVER = "wayland";                                                           # Задаёт драйвер для SDL (используется в играх и мультимедиа) – Wayland
     QT_QPA_PLATFORM_PLUGIN_PATH = "${pkgs.qt6.qtwayland}/lib/qt-6/plugins/platforms";      # Путь к плагинам Qt для поддержки Wayland. Без этого некоторые Qt-приложения могут не запускаться под Wayland
-    #NIXOS_OZONE_WL = "1";
+    NIXOS_OZONE_WL = "1";
     # (закомментировано) Ручное указание путей к библиотекам — обычно не требуется
     # LD_LIBRARY_PATH = "/run/current-system/sw/lib";
     # QT_PLUGIN_PATH = "/run/current-system/sw/lib/qt-6/plugins";
