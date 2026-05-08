@@ -191,7 +191,7 @@ services.udev.extraRules = ''
     modesetting.enable = true;                             # Обязательно для Wayland: включает режим "Sync & Destroy"
     nvidiaSettings = true;                                 # Устанавливает утилиту nvidia-settings
     powerManagement.enable = false;                        # Отключаем управление питанием (на десктопе не нужно, только для ноутбуков)
-    gsp.enable = false;                                    # отключает GSP firmware
+    gsp.enable = false;                                    # Отключает GSP firmware
     package = pkgs-unstable.linuxPackages.nvidiaPackages.latest;
     #package = config.boot.kernelPackages.nvidiaPackages.stable;
   };
