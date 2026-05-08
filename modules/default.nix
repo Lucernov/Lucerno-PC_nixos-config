@@ -55,7 +55,7 @@
     gsettings-desktop-schemas           # Схемы настроек для GSettings (используются GTK-приложениями)
     glib                                # Базовая библиотека GLib (низкоуровневые структуры данных)
     libva-utils                         # Утилиты для VA-API (аппаратное ускорение видео)
-    pkgs.kdePackages.kwallet-secrets
+    pkgs.libsForQt6.kwallet-secrets
 
     google-chrome                       # Браузер Google Chrome
   ];
