@@ -15,7 +15,7 @@
     ./nx_sddm.nix
     ./nx_firewall.nix
     ./nx_pipewire.nix
-    ./nx_systemd.nix
+    #./nx_systemd.nix
     ./nx_steam.nix
     ./nx_optimization.nix
     ./nx_configuration-kde_plasma.nix
