@@ -8,7 +8,7 @@
     serviceConfig = {
       LimitNOFILE = 16384;            # Увеличиваем мягкий и жёсткий лимит на количество открытых файлов до 16384. Выбрано как безопасный запас (обычно достаточно 1024-4096)
       # Переопределяем PATH для plasmashell, чтобы он мог находить команды из профиля пользователя и системных каталогов. Без этого при запуске из меню KDE некоторые приложения не находились
-      Environment = "PATH=/run/current-system/sw/bin:/etc/profiles/per-user/lucerno/bin:/nix/var/nix/profiles/default/bin:/home/lucerno/.local/bin";
+      #Environment = "PATH=/run/current-system/sw/bin:/etc/profiles/per-user/lucerno/bin:/nix/var/nix/profiles/default/bin:/home/lucerno/.local/bin";
     };
   };
 

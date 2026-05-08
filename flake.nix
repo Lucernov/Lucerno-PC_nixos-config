@@ -44,7 +44,7 @@
 
       # Основное содержимое флейка - системные конфигурации, пользовательские конфигурации, оверлеи, пакеты
       flake = {
-        nixosConfigurations.Lucerno-PC = nixpkgs.lib.nixosSystem {                                         # Системная конфигурация NixOS для хоста
+        nixosConfigurations.Lucerno-PC = nixpkgs.lib.nixosSystem {                                         # Системная конфигурация NixOS
           system = "x86_64-linux";                                                                         # Архитектура системы
           specialArgs = {                                                                                  # Дополнительные аргументы, передаваемые во все модули
             inherit inputs;
@@ -54,12 +54,12 @@
 
           modules = [                                                                                      # Список модулей, из которых собирается система
             { nixpkgs.pkgs = pkgsWithOverlay; }
-            ./modules                                                                    # Основной модуль хоста (импортирует профили)
+            ./modules                                                                                      # Основной модуль хоста (импортирует профили)
             musnix.nixosModules.musnix                                                                     # Модуль musnix (аудио оптимизация)
             home-manager.nixosModules.home-manager {                                                       # Home Manager, интегрированный как системный модуль
               home-manager.useGlobalPkgs = true;                                                           # Использовать глобальные пакеты
               home-manager.useUserPackages = true;                                                         # Разрешить пользовательские пакеты
-              home-manager.users.lucerno = import ./modules/home.nix;                         # Путь к конфигурации пользователя
+              home-manager.users.lucerno = import ./modules/home.nix;                                      # Путь к конфигурации пользователя
               home-manager.extraSpecialArgs = {
                 inherit inputs;
                 pkgs-unstable = pkgsUnstable;

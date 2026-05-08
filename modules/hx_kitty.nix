@@ -20,7 +20,7 @@
 
     # Привязка клавиш (map)
     keybindings = {
-      "ctrl+shift+t" = "new_tab_with_cwd";
+      "ctrl+shift+t" = "new_tab_with_cwd !neighbor";
       "ctrl+shift+q" = "close_tab";
       "ctrl+shift+right" = "next_tab";
       "ctrl+shift+left" = "previous_tab";
