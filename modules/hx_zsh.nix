@@ -6,6 +6,7 @@
     autosuggestion.enable = true;
     syntaxHighlighting.enable = true;
 
+
     # Oh My Zsh
     oh-my-zsh = {
       enable = true;                      # Включает Oh My Zsh (коллекция тем и плагинов)
@@ -66,7 +67,7 @@
       export NIXPKGS_ALLOW_UNFREE=1
 
       # Путь к локальным скриптам
-      export PATH="$HOME/.local/bin:$PATH"
+      #export PATH="$HOME/.local/bin:$PATH"
 
       # Утилиты для удобства
       alias cat="bat"
