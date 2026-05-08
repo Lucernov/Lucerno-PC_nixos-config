@@ -20,6 +20,8 @@
     ./nx_configuration-kde_plasma.nix
   ];
 
+  services.gnome.gnome-keyring.enable = true;
+
   # ========== Аудио оптимизация (musnix) ==========
   musnix.enable = true;
   musnix.kernel.realtime = false;                          # для совместимости с NVIDIA
