@@ -4,6 +4,7 @@
   # НАСТРОЙКИ HOME MANAGER
   home.username = "lucerno";
   home.homeDirectory = "/home/lucerno";
+  home.sessionPath = [ "/run/wrappers/bin" ];
 
   home.sessionVariables = {
     VST3_PATH = "${config.home.homeDirectory}/.vst3";  # Устанавливаем переменную окружения для пользовательской папки VST3
