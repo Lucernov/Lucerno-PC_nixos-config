@@ -23,11 +23,11 @@ add_section() {
     echo "$title" >> "$OUTPUT_FILE"
     echo "" >> "$OUTPUT_FILE"
 
-    # Добавляем содержимое файла, если он существует
-    if [[ -f "$source_file" ]]; then
+    # Добавляем содержимое файла, если он существует и читаем
+    if [[ -f "$source_file" && -r "$source_file" ]]; then
         cat "$source_file" >> "$OUTPUT_FILE"
     else
-        echo "# ОШИБКА: Файл $source_file не найден!" >> "$OUTPUT_FILE"
+        echo "# ОШИБКА: Файл $source_file не найден или недоступен для чтения!" >> "$OUTPUT_FILE"
     fi
 
     # Добавляем две пустые строки
@@ -35,20 +35,43 @@ add_section() {
     echo "" >> "$OUTPUT_FILE"
 }
 
-# 1-3: flake.nix
+# --- Файлы в корне ---
+add_section "flake.lock" "flake.lock"
 add_section "flake.nix" "flake.nix"
-
-# 4-5: configuration.nix
-add_section "configuration.nix" "configuration.nix"
-
-# 6-7: home.nix
-add_section "home.nix" "home.nix"
-
-# 8-9: hardware-configuration.nix
+add_section "flake-modules.nix" "flake-modules.nix"
 add_section "hardware-configuration.nix" "hardware-configuration.nix"
+add_section "lib.nix" "lib.nix"
 
-# 10-11: hardware.nix
-add_section "hardware.nix" "hardware.nix"
+# --- Скрипты (не .nix) ---
+add_section "scripts/qmmp-wayland-fix" "scripts/qmmp-wayland-fix"
+add_section "scripts/reaper" "scripts/reaper"
+
+# --- pkgs/ ---
+add_section "pkgs/default.nix" "pkgs/default.nix"
+add_section "pkgs/minion.nix" "pkgs/minion.nix"
+
+# --- overlays/ ---
+add_section "overlays/default.nix" "overlays/default.nix"
+
+# --- modules/ ---
+add_section "modules/default.nix" "modules/default.nix"
+add_section "modules/home.nix" "modules/home.nix"
+add_section "modules/home-file.nix" "modules/home-file.nix"
+add_section "modules/hx_git.nix" "modules/hx_git.nix"
+add_section "modules/hx_kitty.nix" "modules/hx_kitty.nix"
+add_section "modules/hx_music.nix" "modules/hx_music.nix"
+add_section "modules/hx_obs.nix" "modules/hx_obs.nix"
+add_section "modules/hx_plasma.nix" "modules/hx_plasma.nix"
+add_section "modules/hx_zsh.nix" "modules/hx_zsh.nix"
+add_section "modules/nx_configuration-kde_plasma.nix" "modules/nx_configuration-kde_plasma.nix"
+add_section "modules/nx_firewall.nix" "modules/nx_firewall.nix"
+add_section "modules/nx_locale.nix" "modules/nx_locale.nix"
+add_section "modules/nx_optimization.nix" "modules/nx_optimization.nix"
+add_section "modules/nx_pipewire.nix" "modules/nx_pipewire.nix"
+add_section "modules/nx_sddm.nix" "modules/nx_sddm.nix"
+add_section "modules/nx_steam.nix" "modules/nx_steam.nix"
+add_section "modules/nx_systemd.nix" "modules/nx_systemd.nix"
+add_section "modules/nx_users.nix" "modules/nx_users.nix"
 
 # Удаляем лишние пустые строки в конце файла
 sed -i '/^$/N;/^\n$/D' "$OUTPUT_FILE"
