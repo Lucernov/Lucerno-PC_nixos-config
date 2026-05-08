@@ -71,6 +71,7 @@ home.stateVersion = "25.11";
     fastfetch                           # Вывод информации о системе (аналог neofetch)
     nix-tree                            # Просмотр дерева зависимостей Nix
 
+    my-packages.parabolic               # Кастомный пакет parabolic (обёртка для управления аддонами) – теперь берётся из оверлея
     my-packages.minion                  # Кастомный пакет minion (обёртка для управления аддонами) – теперь берётся из оверлея
 
   ] ++ (with pkgs-unstable; [

@@ -20,6 +20,15 @@
     ./nx_configuration-kde_plasma.nix
   ];
 
+  # ========== Загрузчик ==========
+  boot.loader = {
+    systemd-boot.enable = true;
+    efi.canTouchEfiVariables = true;
+    systemd-boot.consoleMode = "max";
+  };
+  boot.supportedFilesystems = [ "exfat" ];
+  #system.nixos-init.enable = true;                        # иногда проверять, пока проблемы с нвидиа
+
   services.gnome.gnome-keyring.enable = true;
 
   # ========== Аудио оптимизация (musnix) ==========

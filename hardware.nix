@@ -115,14 +115,6 @@ services.udev.extraRules = ''
     #fwupdmgr get-updates             есть ли реальные обновления
     #sudo fwupdmgr update             если обновления есть, установить их
 
-  # ========== Загрузчик ==========
-  boot.loader = {
-    systemd-boot.enable = true;
-    efi.canTouchEfiVariables = true;
-    systemd-boot.consoleMode = "max";
-  };
-  boot.supportedFilesystems = [ "exfat" ];
-  #system.nixos-init.enable = true;                        # иногда проверять, пока проблемы с нвидиа
 
   # ========== Ядро и его модули ==========
   boot.kernelPackages = pkgs.linuxPackages_6_18;
