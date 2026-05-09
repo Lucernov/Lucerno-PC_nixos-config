@@ -76,8 +76,6 @@
     # QT_PLUGIN_PATH = "/run/current-system/sw/lib/qt-6/plugins";
   };
 
-  security.pam.services.sddm.kwallet.enable = true;
-
   # ========== мои симлинки ==========
   systemd.tmpfiles.rules = [
     "L+ /home/lucerno/drum_sklad - - - - /mnt/sys_archiv/samples/drum_sklad"
