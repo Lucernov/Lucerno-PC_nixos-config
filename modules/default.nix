@@ -20,6 +20,8 @@
     ./nx_configuration-kde_plasma.nix
   ];
 
+security.pam.services.sddm.kwallet.enable = true;
+
   # ========== Загрузчик ==========
   boot.loader = {
     systemd-boot.enable = true;
