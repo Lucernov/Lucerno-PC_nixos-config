@@ -44,8 +44,6 @@
 
   # Конфигурация для выпадающего режима (quick-access) – остаётся отдельным файлом
   xdg.configFile."kitty/quick-access-terminal.conf".text = ''
-  allow_remote_control yes
-  listen_on unix:/tmp/kitty-sock
     size = 70% 50%
     position = center, center
     background_opacity = 0.20
@@ -58,7 +56,7 @@
     title quick-access
   '';
 
-  # Скрипт для переключения Kittyz
+  # Скрипт для переключения Kitty
 home.file.".local/bin/toggle-kitty" = {
   executable = true;
   # Ищем окно Kitty, которое запущено с идентификатором "quick-access"
@@ -66,17 +64,20 @@ home.file.".local/bin/toggle-kitty" = {
   text = ''
     #!${pkgs.bash}/bin/bash
     if ${pkgs.kitty}/bin/kitty @ ls 2>/dev/null | grep -q "quick-access"; then
+    # Если окно существует, закрываем его
         ${pkgs.kitty}/bin/kitty @ close-window --match title:"quick-access"
     else
-        ${pkgs.kitty}/bin/kitty --config /home/lucerno/.config/kitty/quick-access-terminal.conf
+    # Иначе запускаем новое окно в выпадающем режиме
+        ${pkgs.kitty}/bin/kitten quick-access-terminal
     fi
   '';
 };
 
   # Systemd-сервис для автозапуска Kitty в режиме quick-access
-systemd.user.services.kitty-quick = {
-  Unit.Description = "Kitty Quick Access";
-  Service.ExecStart = "${pkgs.kitty}/bin/kitty --config /home/lucerno/.config/kitty/quick-access-terminal.conf";
-  Install.WantedBy = [ "graphical-session.target" ];
-};
+  systemd.user.services.kitty-quick = {
+    Unit.Description = "Kitty Quick Access";
+    Service.ExecStart = "${pkgs.kitty}/bin/kitten quick-access-terminal";
+    Install.WantedBy = [ "graphical-session.target" ];
+  };
+
 }
