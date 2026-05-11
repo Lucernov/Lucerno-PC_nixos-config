@@ -9,13 +9,12 @@
     # Основные настройки (те, что обычно в kitty.conf)
     settings = {
       # Оформление
-      background_opacity = 1.00;
+      background_opacity = 0.95;
       #hide_window_decorations = "yes";
       confirm_os_window_close = 0;
 
       foreground = "#eceff4";
-      background = "#000000";
-      #background = "#2e3440";
+      background = "#2e3440";
         allow_remote_control = "yes";
         listen_on = "unix:/tmp/kitty-sock";   # единый сокет для всех окон
       # Позиционирование окна (для обычного режима, не quick-access)
@@ -44,13 +43,14 @@
 
   # Конфигурация для выпадающего режима (quick-access) – остаётся отдельным файлом
   xdg.configFile."kitty/quick-access-terminal.conf".text = ''
-    size 70% 50%
-    position center,center
-    background_opacity 0.30
+  lines 50
+  margin_left 200
+  margin_right 200
+  margin_top 5
+    background_opacity 0.80
     hide_window_decorations yes
-    confirm_os_window_close 0
-    foreground #eceff4
-    background #ff0000
+    start_as_hidden no
+    #confirm_os_window_close 0
     title quick-access
   '';
 
