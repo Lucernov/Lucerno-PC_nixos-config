@@ -24,7 +24,8 @@ in
       "kitty-quake" = {
         name = "Kitty Quake Mode";
         key = "Meta+Z";
-        command = "kitten quick-access-terminal";
+        #command = "kitten quick-access-terminal";
+        command = "kitty --config /home/lucerno/.config/kitty/quick-access-terminal.conf --title quick-access";
       };
     };
   };
