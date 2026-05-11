@@ -44,15 +44,13 @@
 
   # Конфигурация для выпадающего режима (quick-access) – остаётся отдельным файлом
   xdg.configFile."kitty/quick-access-terminal.conf".text = ''
-    size = 70% 50%
-    position = center, center
-    background_opacity = 0.20
-    hide_window_decorations = yes
-    confirm_os_window_close = 0
-    foreground #ff0000
+    size 70% 50%
+    position center,center
+    background_opacity 0.30
+    hide_window_decorations yes
+    confirm_os_window_close 0
+    foreground #eceff4
     background #ff0000
-    #foreground #eceff4
-    #background #2e3440
     title quick-access
   '';
 
