@@ -37,6 +37,11 @@ home.stateVersion = "25.11";
   home.packages = with pkgs; [
     nh                                  # Утилита для удобного управления Nix
     lsof                                # Просмотр открытых файлов и сокетов
+    xfce.thunar
+  # xfce.thunar-unwrapped # если предпочитаете "чистый" вариант
+  # xfce.thunar-vcs-plugin   # для любителей Git
+  # xfce.thunar-dropbox-plugin # для пользователей Dropbox
+  # xfce.thunar-volman       # для удобной работы с USB-накопителями
 
     # KDE приложения (графические, не требующие системной интеграции)
     kdePackages.ktorrent                # Torrent-клиент
