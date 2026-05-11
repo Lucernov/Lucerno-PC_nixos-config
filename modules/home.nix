@@ -10,6 +10,7 @@ home.stateVersion = "25.11";
   home.sessionVariables = {
     VST3_PATH = "${config.home.homeDirectory}/.vst3";  # Устанавливаем переменную окружения для пользовательской папки VST3
     WINEPREFIX = "/mnt/music/wine-yabridge";
+    #KITTY_LISTEN_ON = "unix:/tmp/kitty-sock";
   };
 
   # Импорт plasma-manager

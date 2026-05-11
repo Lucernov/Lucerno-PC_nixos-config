@@ -26,16 +26,6 @@ in
         key = "Meta+Z";
         command = "kitten quick-access-terminal";
       };
-      "kitty-new-tab" = {
-        name = "Kitty New Tab";
-        key = "Ctrl+T";
-        command = "kitty @ --to unix:/tmp/kitty-sock new-tab";
-      };
-      "kitty-close-tab" = {
-        name = "Kitty Close Tab";
-        key = "Ctrl+W";
-        command = "kitty @ --to unix:/tmp/kitty-sock close-tab";
-      };
     };
   };
 }
