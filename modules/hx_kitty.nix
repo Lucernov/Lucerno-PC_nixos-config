@@ -13,19 +13,22 @@
       confirm_os_window_close = 0;
       foreground = "#eceff4";
       background = "#2e3440";
+  allow_remote_control = "yes";
+  listen_on = "unix:/tmp/kitty-sock";   # единый сокет для всех окон
       # Позиционирование окна (для обычного режима, не quick-access)
       # initial_window_width = 800;
       # initial_window_height = 600;
     };
 
     # Привязка клавиш (map)
-    keybindings = {
-      "ctrl+shift+t" = "new_tab_with_cwd !neighbor";
-      "ctrl+shift+q" = "close_tab";
-      "ctrl+shift+right" = "next_tab";
-      "ctrl+shift+left" = "previous_tab";
-      "super+w" = "close_tab";
-    };
+#    keybindings = {
+#      "ctrl+shift+t" = "new_tab_with_cwd !neighbor";
+#      "ctrl+shift+q" = "close_tab";
+#      "ctrl+shift+right" = "next_tab";
+#      "ctrl+shift+left" = "previous_tab";
+#      "super+w" = "close_tab";
+#      "super+t" = "new_tab_with_cwd !neighbor";  # ← новая строка
+#    };
 
     # Любые другие строки, которые не поддерживаются settings/keybindings
     extraConfig = ''
@@ -45,7 +48,7 @@
     title quick-access
   '';
 
-  # Скрипт для переключения Kitty
+  # Скрипт для переключения Kittyz
 home.file.".local/bin/toggle-kitty" = {
   executable = true;
   # Ищем окно Kitty, которое запущено с идентификатором "quick-access"

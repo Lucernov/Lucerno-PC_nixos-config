@@ -44,6 +44,7 @@ home.stateVersion = "25.11";
     kdePackages.kcalc                   # Калькулятор
 
     # ГРАФИКА
+    upscaler
     pinta                               # Простой растровый редактор
     krita                               # Цифровая живопись
     gimp                                # Мощный растровый редактор
@@ -59,6 +60,7 @@ home.stateVersion = "25.11";
     # МУЛЬТИМЕДИА
     vlc                                 # Универсальный видеоплеер
     qmmp                                # Аудиоплеер (похож на Winamp)
+    deadbeef
 
     # ИГРЫ
     (bottles.override { removeWarningPopup = true; })
