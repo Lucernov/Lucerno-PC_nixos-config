@@ -25,7 +25,6 @@ home.stateVersion = "25.11";
     ./hx_git.nix
     ./hx_obs.nix
     ./hx_kitty.nix
-    ./hx_thunar.nix
   ];
 
   # ========== Включение модулей программ (через home-manager) ==========
