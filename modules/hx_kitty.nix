@@ -8,18 +8,17 @@
 
     # Основные настройки (те, что обычно в kitty.conf)
     settings = {
-      shell = "zsh";
-      background_opacity = 0.95;
-      #hide_window_decorations = "yes";
-      confirm_os_window_close = 0;
-        tab_bar_style = "powerline";
-        tab_powerline_style = "slanted";
-        tab_activity_symbol = "*";
-      foreground = "#eceff4";
+      allow_remote_control = "yes";
       background = "#2e3440";
-        allow_remote_control = "yes";
-        listen_on = "unix:/tmp/kitty-sock";   # единый сокет для всех окон
-
+      background_opacity = 0.95;
+      confirm_os_window_close = 0;
+      foreground = "#eceff4";
+      listen_on = "unix:/tmp/kitty-sock";   # единый сокет для всех окон
+      shell = "zsh";
+      tab_bar_style = "powerline";
+      tab_powerline_style = "slanted";
+      tab_activity_symbol = "*";
+      #hide_window_decorations = "yes";
       # Позиционирование окна (для обычного режима, не quick-access)
       # initial_window_width = 800;
       # initial_window_height = 600;
@@ -33,14 +32,13 @@
       "ctrl+ц" = "close_tab";
       "ctrl+right" = "next_tab";
       "ctrl+left" = "previous_tab";
-
-#kitty @ --to $KITTY_LISTEN_ON launch --type=tab --cwd=current
-#kitty @ --to $KITTY_LISTEN_ON close-tab
     };
 
     # Любые другие строки, которые не поддерживаются settings/kecdybindings
     extraConfig = ''
       # Например, можно оставить комментарии
+      #kitty @ --to $KITTY_LISTEN_ON launch --type=tab --cwd=current
+      #kitty @ --to $KITTY_LISTEN_ON close-tab
     '';
   };
 

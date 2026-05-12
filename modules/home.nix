@@ -25,6 +25,7 @@ home.stateVersion = "25.11";
     ./hx_git.nix
     ./hx_obs.nix
     ./hx_kitty.nix
+    ./hx_thunar.nix
   ];
 
   # ========== Включение модулей программ (через home-manager) ==========
@@ -37,11 +38,6 @@ home.stateVersion = "25.11";
   home.packages = with pkgs; [
     nh                                  # Утилита для удобного управления Nix
     lsof                                # Просмотр открытых файлов и сокетов
-    xfce.thunar
-  # xfce.thunar-unwrapped # если предпочитаете "чистый" вариант
-  # xfce.thunar-vcs-plugin   # для любителей Git
-  # xfce.thunar-dropbox-plugin # для пользователей Dropbox
-  # xfce.thunar-volman       # для удобной работы с USB-накопителями
 
     # KDE приложения (графические, не требующие системной интеграции)
     kdePackages.ktorrent                # Torrent-клиент
@@ -78,6 +74,7 @@ home.stateVersion = "25.11";
     mission-center                      # Графический монитор системы (альтернатива btop)
     fastfetch                           # Вывод информации о системе (аналог neofetch)
     nix-tree                            # Просмотр дерева зависимостей Nix
+
 
     my-packages.parabolic               # Кастомный пакет parabolic (обёртка для управления аддонами) – теперь берётся из оверлея
     my-packages.minion                  # Кастомный пакет minion (обёртка для управления аддонами) – теперь берётся из оверлея
