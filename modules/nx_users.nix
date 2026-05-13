@@ -1,8 +1,6 @@
 { pkgs, ... }:
 
 {
-  users.users.root.initialHashedPasswordFile = "/etc/nixos-password.hash";
-
   # ========== Настройка пользователя lucerno ==========
   users.users.lucerno = {                                                            # Основные настройки учётной записи
     isNormalUser = true;                                                             # Обычный пользователь (не системный)
