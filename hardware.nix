@@ -129,6 +129,7 @@ services.udev.extraRules = ''
     "preempt=full"                                         # полное вытеснение ядра – снижает задержки
     "rcupdate.rcu_cpu_stall_timeout=60"
     "usbcore.autosuspend=-1"                               # usb устройства не засыпают
+    "btusb.enable_autosuspend=0"
     "clocksource=tsc"
     "tsc=reliable"
     "irqaffinity=0"                                        # перенаправить все IRQ на ядро 0
