@@ -28,6 +28,10 @@
     systemd-boot.consoleMode = "max";
   };
   boot.supportedFilesystems = [ "exfat" ];
+
+  boot.initrd.systemd.enable = true;
+  system.etc.overlay.enable = true;
+  services.userborn.enable = true;
   system.nixos-init.enable = true;                        # иногда проверять, пока проблемы с нвидиа
 
   # ========== Аудио оптимизация (musnix) ==========
