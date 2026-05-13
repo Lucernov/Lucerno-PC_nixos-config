@@ -2,10 +2,11 @@
 
 {
   # ========== Настройка пользователя lucerno ==========
+  users.groups.lucerno = {};
   users.users.lucerno = {                                                            # Основные настройки учётной записи
     isNormalUser = true;                                                             # Обычный пользователь (не системный)
     hashedPasswordFile = "/home/lucerno/nixos-config/secrets/lucerno-password.hash"; # Файл с хешем пароля
-    description = "lucerno";                                                         # Группа, к которой принадлежит пользователь
+    group = "lucerno";                                                         # Группа, к которой принадлежит пользователь
     # Дополнительные группы
     # wheel   – право выполнять команды через sudo
     # networkmanager – управление сетью

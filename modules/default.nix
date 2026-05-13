@@ -30,11 +30,6 @@
   boot.supportedFilesystems = [ "exfat" ];
   #system.nixos-init.enable = true;                        # иногда проверять, пока проблемы с нвидиа
 
-
-  systemd.services.systemd-tmpfiles-setup = {
-    after = [ "nscd.service" ];
-  };
-
   boot.extraModprobeConfig = ''
     options btusb enable_autosuspend=0
   '';
