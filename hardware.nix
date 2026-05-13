@@ -11,13 +11,17 @@ in
 {
 services.udev.extraRules = ''
   # Все SSD и NVMe
-  ACTION=="add|change", ATTR{queue/rotational}=="0", ATTR{queue/scheduler}="kyber"
+  ACTION=="add|change", KERNEL!="zram*", ATTR{queue/rotational}=="0", ATTR{queue/scheduler}="kyber"
   # Все HDD
   ACTION=="add|change", ATTR{queue/rotational}=="1", ATTR{queue/scheduler}="mq-deadline"
   # NVMe диск для игр
   ACTION=="add|change", KERNEL=="nvme0n1", ATTR{bdi/read_ahead_kb}="512"
   # HDD — read-ahead 1024 KB
   ACTION=="add|change", ATTR{queue/rotational}=="1", ATTR{bdi/read_ahead_kb}="1024"
+
+  # NVIDIA devices
+  KERNEL=="nvidia*", RUN+="${pkgs.coreutils}/bin/mknod -m 666 /dev/nvidiactl c 195 255"
+  KERNEL=="nvidia*", RUN+="${pkgs.bash}/bin/bash -c 'for i in $(cat /proc/driver/nvidia/gpus/*/information | grep Minor | cut -d \\  -f 4); do ${pkgs.coreutils}/bin/mknod -m 666 /dev/nvidia${i} c 195 ${i}; done'"
 '';
 
   # ========== ДОПОЛНИТЕЛЬНЫЕ ДИСКИ ==========
@@ -142,7 +146,7 @@ services.udev.extraRules = ''
   # ========== Тонкая настройка ядра (sysctl) ==========
   boot.kernel.sysctl = {
     "kernel.sched_autogroup_enabled" = 0;
-    "kernel.sched_migration_cost_ns" = 250000;             # 0.25 мс
+    #"kernel.sched_migration_cost_ns" = 250000;             # 0.25 мс Couldn't write '250000' to 'kernel/sched_migration_cost_ns', ignoring
     "kernel.sched_min_granularity_ns" = 1000000;           # 1 мс
     "kernel.sched_wakeup_granularity_ns" = 2000000;        # 2 мс
    #"vm.swappiness" = 10;                                  # определено через musnix
