@@ -31,11 +31,7 @@
 
   boot.initrd.systemd.enable = true;
   system.etc.overlay.enable = true;
-  #services.userborn.enable = true;
-  systemd.services.userborn = {
-  after = [ "home.mount" "local-fs.target" ];
-  wants = [ "home.mount" ];
-};
+  services.userborn.enable = true;
   system.nixos-init.enable = true;                        # иногда проверять, пока проблемы с нвидиа
 
   # ========== Аудио оптимизация (musnix) ==========

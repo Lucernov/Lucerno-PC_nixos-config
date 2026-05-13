@@ -28,6 +28,7 @@
     device = "/dev/disk/by-uuid/1964f286-7b1d-40df-8201-5824671e9631";
     fsType = "btrfs";
     options = [ "subvol=@home" "compress=zstd" "noatime" "space_cache=v2" "ssd" ];
+    neededForBoot = true;
   };
 
   fileSystems."/boot" = {
