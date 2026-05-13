@@ -30,6 +30,12 @@
   boot.supportedFilesystems = [ "exfat" ];
   #system.nixos-init.enable = true;                        # иногда проверять, пока проблемы с нвидиа
 
+
+  systemd.services.systemd-tmpfiles-setup = {
+    after = [ "userborn.service" ];
+  };
+
+
   # ========== Аудио оптимизация (musnix) ==========
   musnix.enable = true;
   musnix.kernel.realtime = false;                          # для совместимости с NVIDIA
