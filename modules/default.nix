@@ -32,8 +32,12 @@
 
 
   systemd.services.systemd-tmpfiles-setup = {
-    after = [ "userborn.service" ];
+    after = [ "nscd.service" ];
   };
+
+  boot.extraModprobeConfig = ''
+    options btusb enable_autosuspend=0
+  '';
 
 
   # ========== Аудио оптимизация (musnix) ==========
