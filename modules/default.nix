@@ -28,7 +28,7 @@
     systemd-boot.consoleMode = "max";
   };
   boot.supportedFilesystems = [ "exfat" ];
-  #system.nixos-init.enable = true;                        # иногда проверять, пока проблемы с нвидиа
+  system.nixos-init.enable = true;                        # иногда проверять, пока проблемы с нвидиа
 
   # ========== Аудио оптимизация (musnix) ==========
   musnix.enable = true;
@@ -73,7 +73,10 @@
     SDL_VIDEODRIVER = "wayland";                                                           # Задаёт драйвер для SDL (используется в играх и мультимедиа) – Wayland
     QT_QPA_PLATFORM_PLUGIN_PATH = "${pkgs.qt6.qtwayland}/lib/qt-6/plugins/platforms";      # Путь к плагинам Qt для поддержки Wayland. Без этого некоторые Qt-приложения могут не запускаться под Wayland
     NIXOS_OZONE_WL = "1";
-    # (закомментировано) Ручное указание путей к библиотекам — обычно не требуется
+    WLR_NO_HARDWARE_CURSORS = "1";
+    EGL_PLATFORM = "wayland";
+    #WLR_RENDERER_ALLOW_SOFTWARE = "1";
+    # Ручное указание путей к библиотекам — обычно не требуется
     # LD_LIBRARY_PATH = "/run/current-system/sw/lib";
     # QT_PLUGIN_PATH = "/run/current-system/sw/lib/qt-6/plugins";
   };

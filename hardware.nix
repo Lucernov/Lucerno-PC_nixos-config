@@ -118,10 +118,12 @@ services.udev.extraRules = ''
 
   # ========== Ядро и его модули ==========
   boot.kernelPackages = pkgs.linuxPackages_6_18;
-  boot.kernelModules = [ "ntsync" ];                       # Автозагрузка модуля NTSync
+  boot.kernelModules = [ "ntsync" "nvidia_uvm" ];          # Автозагрузка модуля NTSync
+  boot.initrd.kernelModules = [ "nvidia" "nvidia_modeset" "nvidia_drm" ];
   boot.kernelParams = [
     "transparent_hugepage=madvise"
     "nvidia_drm.modeset=1"                                 # Загружаем модуль ядра NVIDIA раньше для более гладкой загрузки и Wayland
+    "nvidia_drm.fbdev=1"
     "mitigations=off"
     "threadirqs"                                           # все прерывания в потоки – для лучшего управления приоритетами
     "preempt=full"                                         # полное вытеснение ядра – снижает задержки
