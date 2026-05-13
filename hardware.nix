@@ -21,7 +21,7 @@ services.udev.extraRules = ''
 
   # NVIDIA devices
   KERNEL=="nvidia*", RUN+="${pkgs.coreutils}/bin/mknod -m 666 /dev/nvidiactl c 195 255"
-  KERNEL=="nvidia*", RUN+="${pkgs.bash}/bin/bash -c 'for i in $(cat /proc/driver/nvidia/gpus/*/information | grep Minor | cut -d \\  -f 4); do ${pkgs.coreutils}/bin/mknod -m 666 /dev/nvidia$${i} c 195 $${i}; done'"
+  KERNEL=="nvidia*", RUN+="${pkgs.bash}/bin/bash -c 'for i in $(cat /proc/driver/nvidia/gpus/*/information 2>/dev/null | grep Minor | cut -d \" \" -f 4); do ${pkgs.coreutils}/bin/mknod -m 666 /dev/nvidia$i c 195 $i; done'"
 '';
 
   # ========== ДОПОЛНИТЕЛЬНЫЕ ДИСКИ ==========
