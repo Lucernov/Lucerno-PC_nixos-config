@@ -38,7 +38,7 @@ add_section() {
 # --- Файлы в корне ---
 add_section "flake.lock" "flake.lock"
 add_section "flake.nix" "flake.nix"
-add_section "flake-modules.nix" "flake-modules.nix"
+add_section "hardware.nix" "hardware.nix"
 add_section "hardware-configuration.nix" "hardware-configuration.nix"
 add_section "lib.nix" "lib.nix"
 
@@ -49,6 +49,7 @@ add_section "scripts/reaper" "scripts/reaper"
 # --- pkgs/ ---
 add_section "pkgs/default.nix" "pkgs/default.nix"
 add_section "pkgs/minion.nix" "pkgs/minion.nix"
+add_section "pkgs/parabolic.nix" "pkgs/parabolic.nix"
 
 # --- overlays/ ---
 add_section "overlays/default.nix" "overlays/default.nix"
@@ -57,12 +58,14 @@ add_section "overlays/default.nix" "overlays/default.nix"
 add_section "modules/default.nix" "modules/default.nix"
 add_section "modules/home.nix" "modules/home.nix"
 add_section "modules/home-file.nix" "modules/home-file.nix"
+
 add_section "modules/hx_git.nix" "modules/hx_git.nix"
 add_section "modules/hx_kitty.nix" "modules/hx_kitty.nix"
 add_section "modules/hx_music.nix" "modules/hx_music.nix"
 add_section "modules/hx_obs.nix" "modules/hx_obs.nix"
 add_section "modules/hx_plasma.nix" "modules/hx_plasma.nix"
 add_section "modules/hx_zsh.nix" "modules/hx_zsh.nix"
+
 add_section "modules/nx_configuration-kde_plasma.nix" "modules/nx_configuration-kde_plasma.nix"
 add_section "modules/nx_firewall.nix" "modules/nx_firewall.nix"
 add_section "modules/nx_locale.nix" "modules/nx_locale.nix"
@@ -70,7 +73,7 @@ add_section "modules/nx_optimization.nix" "modules/nx_optimization.nix"
 add_section "modules/nx_pipewire.nix" "modules/nx_pipewire.nix"
 add_section "modules/nx_sddm.nix" "modules/nx_sddm.nix"
 add_section "modules/nx_steam.nix" "modules/nx_steam.nix"
-add_section "modules/nx_systemd.nix" "modules/nx_systemd.nix"
+add_section "modules/nx_thunar.nix" "modules/nx_thunar.nix"
 add_section "modules/nx_users.nix" "modules/nx_users.nix"
 
 # Удаляем лишние пустые строки в конце файла

@@ -2,9 +2,9 @@
 
 {
   # НАСТРОЙКИ HOME MANAGER
+  home.stateVersion = "25.11";
   home.username = "lucerno";
   home.homeDirectory = "/home/lucerno";
-  home.stateVersion = "25.11";
 
   home.sessionVariables = {
     VST3_PATH = "${config.home.homeDirectory}/.vst3";  # Устанавливаем переменную окружения для пользовательской папки VST3

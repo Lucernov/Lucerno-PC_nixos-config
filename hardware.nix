@@ -160,6 +160,8 @@ services.udev.extraRules = ''
   # ========== NETWORK & SYSTEM ==========
   networking.hostName = "Lucerno-PC";
   networking.networkmanager.enable = true;
+  #networking.networkmanager.wifi.backend = "iwd";
+
 
   # ========== Bluetooth ==========
   hardware.bluetooth = {
@@ -170,16 +172,16 @@ services.udev.extraRules = ''
   # ========== NVIDIA ==========
   services.xserver.videoDrivers = [ "nvidia" ];
   hardware.graphics = {
-    enable = true;                                         # Включаем поддержку аппаратного ускорения графики
+    enable = true;                                               # Включаем поддержку аппаратного ускорения графики
     enable32Bit = true;
     extraPackages = with pkgs; [ nvidia-vaapi-driver ];
   };
   # Настройка драйвера NVIDIA для Wayland
   hardware.nvidia = {
-    open = true;                                           # Используем открытые модули (для RTX 3070 это работает)
-    modesetting.enable = true;                             # Обязательно для Wayland: включает режим "Sync & Destroy"
-    nvidiaSettings = true;                                 # Устанавливает утилиту nvidia-settings
-    powerManagement.enable = false;                        # Отключаем управление питанием (на десктопе не нужно, только для ноутбуков)
+    open = true;                                                 # Используем открытые модули (для RTX 3070 это работает)
+    modesetting.enable = true;                                   # Обязательно для Wayland: включает режим "Sync & Destroy"
+    nvidiaSettings = true;                                       # Устанавливает утилиту nvidia-settings
+    powerManagement.enable = false;                              # Отключаем управление питанием (на десктопе не нужно, только для ноутбуков)
     package = config.boot.kernelPackages.nvidiaPackages.stable;
   };
 

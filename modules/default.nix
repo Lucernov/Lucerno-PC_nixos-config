@@ -50,6 +50,8 @@
 
   # ========== Дополнительные системные пакеты (устанавливаются вручную) ==========
   environment.systemPackages = with pkgs; [
+    iw
+    wirelesstools
     lf                                  # "List Files" – быстрый файловый менеджер на Go с vim-подобным управлением
     mc                                  # Midnight Commander – классический двухпанельный файловый менеджер (FTP, просмотр, редактор)
     yazi

@@ -14,6 +14,12 @@
     '';
     ".config/user-dirs.dirs".force = true;
 
+    # --- Указывает количество потоков для компиляции шейдеров в Steam ---
+    ".local/share/Steam/config/steam_dev.cfg".text = ''
+      unShaderBackgroundProcessingThreads 16
+    '';
+    ".local/share/Steam/config/steam_dev.cfg".force = true;
+
     # --- Автозапуск AmneziaVPN ---
     # Создаёт .desktop-файл, который запускает AmneziaVPN при входе в KDE.
     ".config/autostart/amneziavpn.desktop".text = ''
