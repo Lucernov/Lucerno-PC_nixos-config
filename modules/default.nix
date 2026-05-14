@@ -100,6 +100,7 @@
     "L+ /home/lucerno/.config/DecentSampler - - - - /mnt/sys_archiv/samples/DecentSampler"
     "L+ /home/lucerno/.config/REAPER - - - - /home/lucerno/nixos-config/dotfiles/config/REAPER"
     "L+ /home/lucerno/.config/yabridgectl - - - - /home/lucerno/nixos-config/dotfiles/config/yabridgectl"
+    "L+ /home/lucerno/.local/share/Steam/steamapps - - - - /mnt/games/SteamLibrary/steamapps"
   ];
 
 

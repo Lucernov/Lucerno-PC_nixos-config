@@ -142,9 +142,7 @@ services.udev.extraRules = ''
   # ========== Тонкая настройка ядра (sysctl) ==========
   boot.kernel.sysctl = {
     "kernel.sched_autogroup_enabled" = 0;
-    #"kernel.sched_migration_cost_ns" = 250000;             # 0.25 мс Couldn't write '250000' to 'kernel/sched_migration_cost_ns', ignoring
-    "kernel.sched_min_granularity_ns" = 1000000;           # 1 мс
-    "kernel.sched_wakeup_granularity_ns" = 2000000;        # 2 мс
+    "kernel.sched_base_slice_ns" = 2000000;                # 2 мс
    #"vm.swappiness" = 10;                                  # определено через musnix
     "vm.vfs_cache_pressure" = 50;
     "vm.dirty_bytes" = 536870912;                          # 512 MiB
