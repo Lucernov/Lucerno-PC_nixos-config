@@ -1,3 +1,0 @@
-#!/run/current-system/sw/bin/bash
-export QT_QPA_PLATFORM=xcb
-exec /etc/profiles/per-user/lucerno/bin/qmmp "$@"

@@ -15,9 +15,10 @@
     dragonfly-reverb            # Качественная реверберация Dragonfly (VST/LV2)
     fretboard                   # Гитаровый гриф / MIDI-инструмент (возможно, для обучения)
 
+    my-packages.reaper          # REAPER – цифровая звуковая рабочая станция (DAW) БЕРЕТСЯ ИЗ НЕСТАБИЛЬНОГО КАНАЛА!!!!
+
   ] ++ (with pkgs-unstable; [   # Пакеты из нестабильного канала (более свежие версии)
     wineWow64Packages.staging   # Wine с поддержкой 64 и 32 бит (staging‑патчи для аудио)
-    reaper                      # REAPER – цифровая звуковая рабочая станция (DAW)
     reaper-sws-extension        # Расширение SWS для REAPER (дополнительные команды и автоматизация)
     reaper-reapack-extension    # Менеджер скриптов ReaPack для REAPER (установка пользовательских скриптов)
   ]);

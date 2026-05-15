@@ -42,14 +42,12 @@ add_section "hardware.nix" "hardware.nix"
 add_section "hardware-configuration.nix" "hardware-configuration.nix"
 add_section "lib.nix" "lib.nix"
 
-# --- Скрипты (не .nix) ---
-add_section "scripts/qmmp-wayland-fix" "scripts/qmmp-wayland-fix"
-add_section "scripts/reaper" "scripts/reaper"
-
 # --- pkgs/ ---
 add_section "pkgs/default.nix" "pkgs/default.nix"
 add_section "pkgs/minion.nix" "pkgs/minion.nix"
 add_section "pkgs/parabolic.nix" "pkgs/parabolic.nix"
+add_section "pkgs/qmmp.nix" "pkgs/qmmp.nix"
+add_section "pkgs/reaper.nix" "pkgs/reaper.nix"
 
 # --- overlays/ ---
 add_section "overlays/default.nix" "overlays/default.nix"

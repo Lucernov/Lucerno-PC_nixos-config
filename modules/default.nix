@@ -65,6 +65,7 @@
     glib                                # Базовая библиотека GLib (низкоуровневые структуры данных)
     libva-utils                         # Утилиты для VA-API (аппаратное ускорение видео)
 
+    gearlever
     google-chrome                       # Браузер Google Chrome
   ];
 
@@ -83,9 +84,6 @@
     WLR_NO_HARDWARE_CURSORS = "1";
     EGL_PLATFORM = "wayland";
     #WLR_RENDERER_ALLOW_SOFTWARE = "1";
-    # Ручное указание путей к библиотекам — обычно не требуется
-    # LD_LIBRARY_PATH = "/run/current-system/sw/lib";
-    # QT_PLUGIN_PATH = "/run/current-system/sw/lib/qt-6/plugins";
   };
 
   # ========== мои симлинки ==========

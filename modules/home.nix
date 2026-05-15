@@ -52,13 +52,13 @@
     upscaler                            # Увеличение разрешения изображений
 
     # ИНТЕРНЕТ
-    parabolic                           # Загрузчик видео/аудио с YouTube (альтернатива yt-dlp)
+    #parabolic                           # Загрузчик видео/аудио с YouTube (альтернатива yt-dlp)
     discord                             # Голосовой/текстовый чат
     telegram-desktop                    # Мессенджер Telegram
 
     # МУЛЬТИМЕДИА
     vlc                                 # Универсальный видеоплеер
-    qmmp                                # Аудиоплеер (похож на Winamp)
+    #qmmp                                # Аудиоплеер (похож на Winamp)
     deadbeef
 
     # ИГРЫ
@@ -66,6 +66,7 @@
     goverlay
     lutris
     heroic
+    #minion
 
     # ВСЯКОЕ
     mission-center                      # Графический монитор системы (альтернатива btop)
@@ -75,6 +76,7 @@
 
     my-packages.parabolic               # Кастомный пакет parabolic (обёртка для управления аддонами) – теперь берётся из оверлея
     my-packages.minion                  # Кастомный пакет minion (обёртка для управления аддонами) – теперь берётся из оверлея
+    my-packages.qmmp
 
   ] ++ (with pkgs-unstable; [
 

@@ -31,7 +31,7 @@
       pkgsWithOverlay = import nixpkgs {
         system = "x86_64-linux";
         config.allowUnfree = true;
-        overlays = [ (import ./overlays/default.nix) ];
+        overlays = [ (import ./overlays/default.nix { pkgs-unstable = pkgsUnstable; }) ];
       };
       pkgsUnstable = import nixpkgs-unstable {
         system = "x86_64-linux";

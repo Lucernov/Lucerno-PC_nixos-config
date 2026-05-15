@@ -33,18 +33,14 @@
       Terminal=false
     '';
 
-    # --- Кастомный запуск REAPER с GDK_BACKEND=x11 ---
-    ".local/bin/reaper".source = /home/lucerno/nixos-config/scripts/reaper;
-    ".local/bin/reaper".executable = true;
-
-    # --- Ярлык REAPER в меню KDE ---
+    # --- Ярлык REAPER в меню KDE с кастомным запусском ---
     ".local/share/applications/reaper-x11.desktop".text = ''
       [Desktop Entry]
       Version=1.0
       Type=Application
       Name=REAPER
       Comment=ПРОСТО БОЛЬ !!!
-      Exec=/home/lucerno/.local/bin/reaper %F
+      Exec=${pkgs.my-packages.reaper}/bin/reaper %F
       Icon=cockos-reaper
       Categories=Audio;AudioVideo;
       Terminal=false
@@ -67,14 +63,11 @@
     '';
     ".local/share/applications/minion.desktop".force = true;
 
-    # --- Ярлык QMMP ---
-    ".local/bin/qmmp-wayland-fix".source = /home/lucerno/nixos-config/scripts/qmmp-wayland-fix;
-    ".local/bin/qmmp-wayland-fix".executable = true;
-
+    # --- Ярлык QMMP в меню KDE с кастомным запусском ---
     ".local/share/applications/org.qmmp.qmmp.desktop".text = ''
       [Desktop Entry]
       Name=Qmmp
-      Exec=/home/lucerno/.local/bin/qmmp-wayland-fix %F
+      Exec=${pkgs.my-packages.qmmp}/bin/qmmp %F
       Icon=qmmp
       Terminal=false
       Type=Application
