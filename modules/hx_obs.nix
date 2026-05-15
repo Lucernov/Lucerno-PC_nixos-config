@@ -10,7 +10,6 @@
       obs-multi-rtmp
       obs-backgroundremoval
       obs-vintage-filter
-      obs-streamlabs
       obs-source-clone
     ];
   };
