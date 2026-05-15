@@ -19,60 +19,45 @@ add_section() {
     local title="$1"
     local source_file="$2"
 
-    # Добавляем заголовок
     echo "$title" >> "$OUTPUT_FILE"
     echo "" >> "$OUTPUT_FILE"
 
-    # Добавляем содержимое файла, если он существует и читаем
     if [[ -f "$source_file" && -r "$source_file" ]]; then
         cat "$source_file" >> "$OUTPUT_FILE"
     else
         echo "# ОШИБКА: Файл $source_file не найден или недоступен для чтения!" >> "$OUTPUT_FILE"
     fi
 
-    # Добавляем две пустые строки
     echo "" >> "$OUTPUT_FILE"
     echo "" >> "$OUTPUT_FILE"
 }
 
-# --- Файлы в корне ---
+# --- Файлы в корне (перечисляем вручную) ---
 add_section "flake.lock" "flake.lock"
 add_section "flake.nix" "flake.nix"
 add_section "hardware.nix" "hardware.nix"
 add_section "hardware-configuration.nix" "hardware-configuration.nix"
 add_section "lib.nix" "lib.nix"
 
-# --- pkgs/ ---
-add_section "pkgs/default.nix" "pkgs/default.nix"
-add_section "pkgs/minion.nix" "pkgs/minion.nix"
-add_section "pkgs/parabolic.nix" "pkgs/parabolic.nix"
-add_section "pkgs/qmmp.nix" "pkgs/qmmp.nix"
-add_section "pkgs/reaper.nix" "pkgs/reaper.nix"
+# --- pkgs/ (автоматически все .nix файлы) ---
+echo "# --- Пакеты (pkgs/) ---" >> "$OUTPUT_FILE"
+echo "" >> "$OUTPUT_FILE"
+for file in $(find pkgs -maxdepth 1 -name "*.nix" | sort); do
+    filename=$(basename "$file" .nix)
+    add_section "pkgs/$filename.nix" "$file"
+done
 
-# --- overlays/ ---
-add_section "overlays/default.nix" "overlays/default.nix"
+# --- overlays/ (автоматически все .nix файлы) ---
+for file in $(find overlays -maxdepth 1 -name "*.nix" | sort); do
+    filename=$(basename "$file" .nix)
+    add_section "overlays/$filename.nix" "$file"
+done
 
-# --- modules/ ---
-add_section "modules/default.nix" "modules/default.nix"
-add_section "modules/home.nix" "modules/home.nix"
-add_section "modules/home-file.nix" "modules/home-file.nix"
-
-add_section "modules/hx_git.nix" "modules/hx_git.nix"
-add_section "modules/hx_kitty.nix" "modules/hx_kitty.nix"
-add_section "modules/hx_music.nix" "modules/hx_music.nix"
-add_section "modules/hx_obs.nix" "modules/hx_obs.nix"
-add_section "modules/hx_plasma.nix" "modules/hx_plasma.nix"
-add_section "modules/hx_zsh.nix" "modules/hx_zsh.nix"
-
-add_section "modules/nx_configuration-kde_plasma.nix" "modules/nx_configuration-kde_plasma.nix"
-add_section "modules/nx_firewall.nix" "modules/nx_firewall.nix"
-add_section "modules/nx_locale.nix" "modules/nx_locale.nix"
-add_section "modules/nx_optimization.nix" "modules/nx_optimization.nix"
-add_section "modules/nx_pipewire.nix" "modules/nx_pipewire.nix"
-add_section "modules/nx_sddm.nix" "modules/nx_sddm.nix"
-add_section "modules/nx_steam.nix" "modules/nx_steam.nix"
-add_section "modules/nx_thunar.nix" "modules/nx_thunar.nix"
-add_section "modules/nx_users.nix" "modules/nx_users.nix"
+# --- modules/ (автоматически все .nix файлы) ---
+for file in $(find modules -maxdepth 1 -name "*.nix" | sort); do
+    filename=$(basename "$file" .nix)
+    add_section "modules/$filename.nix" "$file"
+done
 
 # Удаляем лишние пустые строки в конце файла
 sed -i '/^$/N;/^\n$/D' "$OUTPUT_FILE"

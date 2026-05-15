@@ -7,12 +7,10 @@
 
   imports = [
     ../hardware-configuration.nix
-    ../hardware.nix
 
-    # новые профили
+    ./nx_sddm.nix
     ./nx_locale.nix
     ./nx_users.nix
-    ./nx_sddm.nix
     ./nx_firewall.nix
     ./nx_pipewire.nix
     ./nx_steam.nix

@@ -1,4 +1,4 @@
-{ config, pkgs, lib, pkgs-unstable, ... }:
+{ config, pkgs, lib, pkgs-unstable, modulesPath, ... }:
 
 let
   # UUID дисков
@@ -9,6 +9,16 @@ let
 in
 
 {
+  imports =
+    [ (modulesPath + "/installer/scan/not-detected.nix")
+    ];
+
+
+  boot.initrd.availableKernelModules = [ "vmd" "xhci_pci" "ahci" "nvme" "usbhid" "usb_storage" "sd_mod" ];
+  boot.initrd.kernelModules = [ ];
+  boot.kernelModules = [ "kvm-intel" ];
+  boot.extraModulePackages = [ ];
+
 services.udev.extraRules = ''
   # Все SSD и NVMe
   ACTION=="add|change", KERNEL!="zram*", ATTR{queue/rotational}=="0", ATTR{queue/scheduler}="kyber"
@@ -19,6 +29,34 @@ services.udev.extraRules = ''
   # HDD — read-ahead 1024 KB
   ACTION=="add|change", ATTR{queue/rotational}=="1", ATTR{bdi/read_ahead_kb}="1024"
 '';
+
+  # ========== ОСНОВНОЙ ДИСК ==========
+  fileSystems."/" = {
+    device = "/dev/disk/by-uuid/1964f286-7b1d-40df-8201-5824671e9631";
+    fsType = "btrfs";
+    options = [ "subvol=@" "compress=zstd" "noatime" "space_cache=v2" "ssd" ];
+  };
+
+  fileSystems."/nix" = {
+    device = "/dev/disk/by-uuid/1964f286-7b1d-40df-8201-5824671e9631";
+    fsType = "btrfs";
+    options = [ "subvol=@nix" "compress=zstd" "noatime" "space_cache=v2" "ssd" ];
+  };
+
+  fileSystems."/home" = {
+    device = "/dev/disk/by-uuid/1964f286-7b1d-40df-8201-5824671e9631";
+    fsType = "btrfs";
+    options = [ "subvol=@home" "compress=zstd" "noatime" "space_cache=v2" "ssd" ];
+    neededForBoot = true;
+  };
+
+  fileSystems."/boot" = {
+    device = "/dev/disk/by-uuid/59A7-C7F6";
+    fsType = "vfat";
+    options = [ "fmask=0077" "dmask=0077" ];
+  };
+
+  swapDevices = [ ];
 
   # ========== ДОПОЛНИТЕЛЬНЫЕ ДИСКИ ==========
   # NVMe SSD для игр (ext4)
@@ -108,7 +146,8 @@ services.udev.extraRules = ''
 
 
   # ========== Обновление микрокода процессора ==========
-  hardware.cpu.intel.updateMicrocode = true;
+  hardware.cpu.intel.updateMicrocode = true;      # явно включает обновления микрокода Intel
+  hardware.enableRedistributableFirmware = true;  # включает все перераспространяемые прошивки
 
   # ========== Обновление прошивок  ==========
   services.fwupd.enable = true;
@@ -183,5 +222,5 @@ services.udev.extraRules = ''
     package = config.boot.kernelPackages.nvidiaPackages.stable;
   };
 
-
+  nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
 }
