@@ -15,5 +15,14 @@ in symlinkJoin {
   postBuild = ''
     mkdir -p $out/share/krita/pykrita
     cp -r ${krita-ai-plugin}/ai_diffusion $out/share/krita/pykrita/
+    # Создаём .desktop-файл для регистрации плагина
+    cat > $out/share/krita/pykrita/ai_diffusion.desktop << EOF
+    [Desktop Entry]
+    Name=AI Image Generation
+    Type=Service
+    ServiceTypes=Krita/PyPlugin
+    X-KDE-Library=kritapykrita
+    X-Py-PluginLocation=ai_diffusion
+    EOF
   '';
 }
