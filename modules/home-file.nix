@@ -56,7 +56,8 @@
       Name=Minion
       Comment=Управление аддонами для MMORPG
       Exec=minion
-      Icon=/mnt/images/sys-icons/icon-minion.png
+      #Icon=/mnt/images/sys-icons/icon-minion.png
+      Icon=minion
       Categories=Game;
       Terminal=false
       StartupWMClass=Minion

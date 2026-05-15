@@ -1,6 +1,11 @@
 # pkgs/minion.nix
-{ pkgs, writeShellScriptBin }:
-writeShellScriptBin "minion" ''
-  export JAVA_TOOL_OPTIONS="-Dprism.lcdtext=false -Dprism.text=t2k"
-  exec ${pkgs.minion}/bin/minion "$@"
-''
+{ symlinkJoin, makeWrapper, minion }:
+symlinkJoin {
+  name = "minion-wrapped";
+  paths = [ minion ];
+  buildInputs = [ makeWrapper ];
+  postBuild = ''
+    wrapProgram $out/bin/minion \
+      --set JAVA_TOOL_OPTIONS "-Dprism.lcdtext=false -Dprism.text=t2k"
+  '';
+}
