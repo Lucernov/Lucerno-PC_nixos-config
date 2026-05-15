@@ -6,7 +6,7 @@ let
     owner = "Acly";
     repo = "krita-ai-diffusion";
     rev = "v1.50.0";               # актуальная версия
-    sha256 = lib.fakeSha256;       # после первой сборки замените на реальный хеш
+    sha256 = "P17iGCHdWxymn+y6ezQkgTRakb6VVjKeUAqz6OkKrKI=";
   };
 in symlinkJoin {
   name = "krita-ai";
