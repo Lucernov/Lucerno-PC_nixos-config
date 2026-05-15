@@ -45,6 +45,7 @@
     # ГРАФИКА
     upscaler
     pinta                               # Простой растровый редактор
+      my-packages.krita-ai                 # Кастомный пакет Krita цифровая живопись – теперь берётся из оверлея
     gimp                                # Мощный растровый редактор
     inkscape                            # Векторная графика
     blender                             # 3D-моделирование
@@ -56,10 +57,12 @@
     telegram-desktop                    # Мессенджер Telegram
 
     # МУЛЬТИМЕДИА
+        my-packages.qmmp                  # Кастомный пакет qmmp – теперь берётся из оверлея
     vlc                                 # Универсальный видеоплеер
     deadbeef
 
     # ИГРЫ
+        my-packages.minion                  # Кастомный пакет minion (обёртка для управления аддонами) – теперь берётся из оверлея
     (bottles.override { removeWarningPopup = true; })
     goverlay
     lutris
@@ -71,8 +74,7 @@
     nix-tree                            # Просмотр дерева зависимостей Nix
 
 
-    my-packages.minion                  # Кастомный пакет minion (обёртка для управления аддонами) – теперь берётся из оверлея
-    my-packages.qmmp
+
 
   ] ++ (with pkgs-unstable; [
 
