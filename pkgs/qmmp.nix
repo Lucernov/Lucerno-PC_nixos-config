@@ -1,6 +1,10 @@
 # pkgs/qmmp.nix
-{ writeShellScriptBin, qmmp }:
-writeShellScriptBin "qmmp" ''
-  export QT_QPA_PLATFORM=xcb
-  exec ${qmmp}/bin/qmmp "$@"
-''
+{ symlinkJoin, makeWrapper, qmmp }:
+symlinkJoin {
+  name = "qmmp-wrapped";
+  paths = [ qmmp ];
+  buildInputs = [ makeWrapper ];
+  postBuild = ''
+    wrapProgram $out/bin/qmmp --set QT_QPA_PLATFORM xcb
+  '';
+}
