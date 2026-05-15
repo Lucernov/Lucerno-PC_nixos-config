@@ -2,7 +2,7 @@
 
 let
   # UUID дисков
-  buutUUID = "59A7-C7F6";
+  bootUUID = "59A7-C7F6";
   sysUUID = "1964f286-7b1d-40df-8201-5824671e9631";
   sysBackupUUID = "67a25908-e1e2-4e53-a04b-909418c0eff8";     # второй раздел системного диска @nixos-config, @ai, @sys-archiv
 
@@ -27,7 +27,7 @@ in
 
   # ========== ОСНОВНОЙ ДИСК ==========
   fileSystems."/boot" = {
-    device = "/dev/disk/by-uuid/${buutUUID}";
+    device = "/dev/disk/by-uuid/${bootUUID}";
     fsType = "vfat";
     options = [ "fmask=0077" "dmask=0077" ];
   };

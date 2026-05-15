@@ -5,7 +5,13 @@
     package = pkgs.obs-studio.override { cudaSupport = true; };
     plugins = with pkgs.obs-studio-plugins; [
       wlrobs
+      obs-vaapi
+      obs-pipewire-audio-capture
       obs-multi-rtmp
+      obs-backgroundremoval
+      obs-vintage-filter
+      obs-streamlabs
+      obs-source-clone
     ];
   };
 

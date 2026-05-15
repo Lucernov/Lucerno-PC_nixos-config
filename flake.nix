@@ -19,6 +19,9 @@
 
     musnix.url = "github:musnix/musnix";                                                                   # Musnix — набор модулей для низкой задержки звука
 
+    nix-comfyui.url = "github:dyscorv/nix-comfyui";
+    nix-comfyui.inputs.nixpkgs.follows = "nixpkgs";
+
     flake-parts.url = "github:hercules-ci/flake-parts";                                                    # Flake-parts — фреймворк для модульной организации flake
     flake-parts.inputs.nixpkgs-lib.follows = "nixpkgs";
 
@@ -26,13 +29,16 @@
   };
 
   # ========== Выходные данные (outputs) ==========
-  outputs = inputs@{ flake-parts, nixpkgs, nixpkgs-unstable, home-manager, plasma-manager, musnix, ... }:  # Функция, которая принимает все входы и возвращает результаты сборки
+  outputs = inputs@{ flake-parts, nixpkgs, nixpkgs-unstable, home-manager, plasma-manager, musnix, nix-comfyui, ... }:  # Функция, которая принимает все входы и возвращает результаты сборки
     let
-      pkgsWithOverlay = import nixpkgs {
-        system = "x86_64-linux";
-        config.allowUnfree = true;
-        overlays = [ (import ./overlays/default.nix { pkgs-unstable = pkgsUnstable; }) ];
-      };
+    pkgsWithOverlay = import nixpkgs {
+      system = "x86_64-linux";
+      config.allowUnfree = true;
+      overlays = [
+        (import ./overlays/default.nix { pkgs-unstable = pkgsUnstable; })
+        nix-comfyui.overlays.default
+      ];
+    };
       pkgsUnstable = import nixpkgs-unstable {
         system = "x86_64-linux";
         config.allowUnfree = true;
@@ -66,6 +72,9 @@
                 pkgs = pkgsWithOverlay;
               };
             }
+              {
+              environment.systemPackages = with pkgsWithOverlay; [ comfyuiPackages.krita-with-extensions ];
+              }
           ];
         };
 

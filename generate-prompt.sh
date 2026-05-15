@@ -35,7 +35,6 @@ add_section() {
 # --- Файлы в корне (перечисляем вручную) ---
 add_section "flake.lock" "flake.lock"
 add_section "flake.nix" "flake.nix"
-add_section "hardware.nix" "hardware.nix"
 add_section "hardware-configuration.nix" "hardware-configuration.nix"
 add_section "lib.nix" "lib.nix"
 
