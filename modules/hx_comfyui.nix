@@ -12,6 +12,7 @@ let
     pkgs.glib
     pkgs.gtk3
     pkgs.opencv
+    pkgs.libGL
   ];
 in
 {
