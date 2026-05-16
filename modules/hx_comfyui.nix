@@ -18,7 +18,7 @@ in
       RestartSec = 5;
       Environment = [
         "PATH=/run/current-system/sw/bin:/usr/bin"
-        "LD_LIBRARY_PATH=/run/current-system/sw/lib"
+        "LD_LIBRARY_PATH=${pkgs.stdenv.cc.cc.lib}/lib:/run/current-system/sw/lib:/run/opengl-driver/lib"
       ];
     };
     Install = {
