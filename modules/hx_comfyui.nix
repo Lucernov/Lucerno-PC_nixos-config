@@ -3,17 +3,15 @@
 let
   comfyuiPython = "/mnt/ai/ComfyUI/.venv/bin/python";
   comfyuiMain = "/mnt/ai/ComfyUI/main.py";
-  # Формируем единый путь к библиотекам
   libraryPath = pkgs.lib.makeLibraryPath [
-    pkgs.stdenv.cc.cc.lib   # libstdc++.so
-    pkgs.libxcb             # libxcb.so
-    pkgs.libX11
-    pkgs.libXext
-    pkgs.libXrender
+    pkgs.stdenv.cc.cc.lib
+    pkgs.libxcb
+    pkgs.libx11
+    pkgs.libxext
+    pkgs.libxrender
     pkgs.glib
-    pkgs.gtk3               # некоторые части OpenCV могут требовать GTK
-    pkgs.opencv             # если понадобятся дополнительные libopencv_*
-    # При необходимости добавьте другие библиотеки (например, libGL, libGLU)
+    pkgs.gtk3
+    pkgs.opencv
   ];
 in
 {
