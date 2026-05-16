@@ -16,7 +16,10 @@ in
       WorkingDirectory = "/mnt/ai/ComfyUI";
       Restart = "on-failure";
       RestartSec = 5;
-      Environment = [ "PATH=/run/current-system/sw/bin:/usr/bin" ];
+      Environment = [
+        "PATH=/run/current-system/sw/bin:/usr/bin"
+        "LD_LIBRARY_PATH=/run/current-system/sw/lib"
+      ];
     };
     Install = {
       WantedBy = [ "default.target" ];
