@@ -23,6 +23,8 @@
     ./hx_git.nix
     ./hx_obs.nix
     ./hx_kitty.nix
+
+    ./hx_comfyui.nix
   ];
 
   # ========== Включение модулей программ (через home-manager) ==========
