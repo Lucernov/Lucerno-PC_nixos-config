@@ -67,6 +67,13 @@
     google-chrome                       # Браузер Google Chrome
   ];
 
+  programs.nix-ld = {
+  enable = true;
+  libraries = with pkgs; [
+    krita   # добавляем Krita, чтобы плагин видел libkritaui.so
+  ];
+};
+
   # ========== Переменные окружения для Wayland и NVIDIA ==========
   environment.sessionVariables = {
     __GLX_VENDOR_LIBRARY_NAME = "nvidia";                                                  # Принудительно указываем Vulkan-драйвер NVIDIA для OpenGL/GLX приложений (чтобы программы использовали NVidia, а не, например, llvmpipe)
