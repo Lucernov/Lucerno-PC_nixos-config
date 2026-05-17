@@ -45,8 +45,8 @@
   programs.nano.enable = true;          # Устанавливает Nano (простой текстовый редактор) системно
   programs.htop.enable = true;          # Устанавливает htop (интерактивный монитор процессов) системно
   programs.amnezia-vpn.enable = true;   # Включает сервис AmneziaVPN (VPN-клиент)
-  programs.btop.enable = true;          # Монитор ресурсов с графическим интерфейсом в терминале
-  programs.bat.enable = true;           # Улучшенный аналог cat с подсветкой синтаксиса
+  #programs.btop.enable = true;          # Монитор ресурсов с графическим интерфейсом в терминале
+  #programs.bat.enable = true;           # Улучшенный аналог cat с подсветкой синтаксиса
 
   # ========== Дополнительные системные пакеты (устанавливаются вручную) ==========
   environment.systemPackages = with pkgs; [
@@ -64,6 +64,8 @@
     gsettings-desktop-schemas           # Схемы настроек для GSettings (используются GTK-приложениями)
     glib                                # Базовая библиотека GLib (низкоуровневые структуры данных)
     libva-utils                         # Утилиты для VA-API (аппаратное ускорение видео)
+    btop                                # Монитор ресурсов с графическим интерфейсом в терминале
+    bat                                 # Улучшенный аналог cat с подсветкой синтаксиса
 
     gearlever
 
