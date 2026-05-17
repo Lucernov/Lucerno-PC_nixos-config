@@ -2,6 +2,7 @@
 {
   programs.git = {
     enable = true;
+    package = null;
     ignores = [ "*.swp" "*~" ".Trash-*" "result" ];
     settings = {
       user = {

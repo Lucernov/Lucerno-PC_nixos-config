@@ -17,14 +17,13 @@
 
     ./home-file.nix
 
+    ./hx_comfyui.nix
+    ./hx_git.nix
+    ./hx_kitty.nix
+    ./hx_mangohud.nix
     ./hx_music.nix
     ./hx_plasma.nix    # настройки KDE Plasma (горячие клавиши, обои)
     ./hx_zsh.nix
-    ./hx_git.nix
-    ./hx_obs.nix
-    ./hx_kitty.nix
-
-    ./hx_comfyui.nix
   ];
 
   # ========== Включение модулей программ (через home-manager) ==========
@@ -32,9 +31,5 @@
   programs.home-manager.enable = true;  # Включает Home Manager как системный модуль (управление пользовательским окружением)
 
   # ========== Пакеты, устанавливаемые простым способом ==========
-  home.packages = with pkgs; [
-
-  ] ++ (with pkgs-unstable; [
-
-  ]);
+  home.packages = with pkgs; [ ] ++ (with pkgs-unstable; [ ]);
 }

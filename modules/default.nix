@@ -13,10 +13,12 @@
     ./nx_users.nix
     ./nx_firewall.nix
     ./nx_pipewire.nix
-    ./nx_steam.nix
-    ./nx_thunar.nix
     ./nx_optimization.nix
     ./nx_configuration-kde_plasma.nix
+
+    ./nx_steam.nix
+    ./nx_obs.nix
+    ./nx_thunar.nix
   ];
 
   # ========== Загрузчик ==========
@@ -45,8 +47,6 @@
   programs.nano.enable = true;          # Устанавливает Nano (простой текстовый редактор) системно
   programs.htop.enable = true;          # Устанавливает htop (интерактивный монитор процессов) системно
   programs.amnezia-vpn.enable = true;   # Включает сервис AmneziaVPN (VPN-клиент)
-  #programs.btop.enable = true;          # Монитор ресурсов с графическим интерфейсом в терминале
-  #programs.bat.enable = true;           # Улучшенный аналог cat с подсветкой синтаксиса
 
   # ========== Дополнительные системные пакеты (устанавливаются вручную) ==========
   environment.systemPackages = with pkgs; [
@@ -66,6 +66,7 @@
     libva-utils                         # Утилиты для VA-API (аппаратное ускорение видео)
     btop                                # Монитор ресурсов с графическим интерфейсом в терминале
     bat                                 # Улучшенный аналог cat с подсветкой синтаксиса
+    kitty
 
     gearlever
 
@@ -104,6 +105,7 @@
     goverlay
     lutris
     heroic
+    mangohud
 
     # ВСЯКОЕ
     mission-center                      # Графический монитор системы (альтернатива btop)
@@ -130,13 +132,6 @@
     reaper-sws-extension        # Расширение SWS для REAPER (дополнительные команды и автоматизация)
     reaper-reapack-extension    # Менеджер скриптов ReaPack для REAPER (установка пользовательских скриптов)
   ]);
-
-  programs.nix-ld = {
-  enable = true;
-  libraries = with pkgs; [
-    krita   # добавляем Krita, чтобы плагин видел libkritaui.so
-  ];
-};
 
   # ========== Переменные окружения для Wayland и NVIDIA ==========
   environment.sessionVariables = {

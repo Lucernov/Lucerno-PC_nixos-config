@@ -32,8 +32,8 @@ in
         "LD_LIBRARY_PATH=${libraryPath}:/run/current-system/sw/lib:/run/opengl-driver/lib"
       ];
     };
-    Install = {
-      WantedBy = [ "default.target" ];
-    };
+#    Install = {
+#      WantedBy = [ "default.target" ];                     # автозапуск
+#    };
   };
 }

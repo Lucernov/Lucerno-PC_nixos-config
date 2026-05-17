@@ -4,7 +4,8 @@
 {
   # ========== Kitty терминал ==========
   programs.kitty = {
-    enable = true;
+    enable = true;                     # Включает генерацию конфигурации
+    package = null;                    # отключает установку пакета
 
     # Основные настройки (те, что обычно в kitty.conf)
     settings = {
