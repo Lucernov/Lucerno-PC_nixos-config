@@ -45,6 +45,8 @@
   programs.nano.enable = true;          # Устанавливает Nano (простой текстовый редактор) системно
   programs.htop.enable = true;          # Устанавливает htop (интерактивный монитор процессов) системно
   programs.amnezia-vpn.enable = true;   # Включает сервис AmneziaVPN (VPN-клиент)
+  programs.btop.enable = true;          # Монитор ресурсов с графическим интерфейсом в терминале
+  programs.bat.enable = true;           # Улучшенный аналог cat с подсветкой синтаксиса
 
   # ========== Дополнительные системные пакеты (устанавливаются вручную) ==========
   environment.systemPackages = with pkgs; [
@@ -64,8 +66,68 @@
     libva-utils                         # Утилиты для VA-API (аппаратное ускорение видео)
 
     gearlever
+
+    nh                                  # Утилита для удобного управления Nix
+    lsof                                # Просмотр открытых файлов и сокетов
+
+    # KDE приложения (графические, не требующие системной интеграции)
+    kdePackages.ktorrent                # Torrent-клиент
+    kdePackages.kdenlive                # Видеоредактор
+    # kdePackages.yakuake               # Выпадающий терминал (закомментирован, не используется)
+    kdePackages.kcalc                   # Калькулятор
+
+    # ГРАФИКА
+    upscaler
+    pinta                               # Простой растровый редактор
+    krita                               # Кастомный пакет Krita цифровая живопись – теперь берётся из оверлея
+    gimp                                # Мощный растровый редактор
+    inkscape                            # Векторная графика
+    blender                             # 3D-моделирование
+    upscaler                            # Увеличение разрешения изображений
+
+    # ИНТЕРНЕТ
     google-chrome                       # Браузер Google Chrome
-  ];
+    parabolic                           # Загрузчик видео/аудио с YouTube (альтернатива yt-dlp)
+    discord                             # Голосовой/текстовый чат
+    telegram-desktop                    # Мессенджер Telegram
+
+    # МУЛЬТИМЕДИА
+    my-packages.qmmp                  # Кастомный пакет qmmp – теперь берётся из оверлея
+    vlc                                 # Универсальный видеоплеер
+    deadbeef
+
+    # ИГРЫ
+    my-packages.minion                  # Кастомный пакет minion (обёртка для управления аддонами) – теперь берётся из оверлея
+    (bottles.override { removeWarningPopup = true; })
+    goverlay
+    lutris
+    heroic
+
+    # ВСЯКОЕ
+    mission-center                      # Графический монитор системы (альтернатива btop)
+    fastfetch                           # Вывод информации о системе (аналог neofetch)
+    nix-tree                            # Просмотр дерева зависимостей Nix
+
+
+    yabridge                    # Мост для запуска Windows VST-плагинов в Linux (через Wine)
+    yabridgectl                 # Утилита для управления yabridge (сканирование, синхронизация)
+    winetricks                  # Вспомогательный скрипт для настройки Wine (установка DLL, зависимостей)
+    coppwr                      # Графическая утилита для управления PipeWire (альтернатива pw-top)
+    vital                       # Популярный синтезатор FM (VST-плагин)
+    surge-xt                    # Синтезатор Surge XT (открытый код, мощный)
+    geonkick                    # Синтезатор барабанов для создания ударных партий
+    drumgizmo                   # Многоканальный сэмплер барабанов (реалистичные ударные)
+    neural-amp-modeler-lv2      # Плагин LV2 для моделирования гитарных усилителей (Neural Amp Modeler)
+    dragonfly-reverb            # Качественная реверберация Dragonfly (VST/LV2)
+    fretboard                   # Гитаровый гриф / MIDI-инструмент (возможно, для обучения)
+
+    my-packages.reaper          # REAPER – цифровая звуковая рабочая станция (DAW) БЕРЕТСЯ ИЗ НЕСТАБИЛЬНОГО КАНАЛА!!!!
+
+  ] ++ (with pkgs-unstable; [   # Пакеты из нестабильного канала (более свежие версии)
+    wineWow64Packages.staging   # Wine с поддержкой 64 и 32 бит (staging‑патчи для аудио)
+    reaper-sws-extension        # Расширение SWS для REAPER (дополнительные команды и автоматизация)
+    reaper-reapack-extension    # Менеджер скриптов ReaPack для REAPER (установка пользовательских скриптов)
+  ]);
 
   programs.nix-ld = {
   enable = true;
