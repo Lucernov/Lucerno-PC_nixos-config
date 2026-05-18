@@ -13,8 +13,6 @@
 
   # Импорт plasma-manager
   imports = [
-    inputs.plasma-manager.homeModules.plasma-manager
-
     ./home-file.nix
 
     ./hx_comfyui.nix
