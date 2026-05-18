@@ -20,12 +20,12 @@ in
       Use = "true";
       VariantList = "";
     };
-    hotkeys.commands = {
-      "kitty-quake" = {
-        name = "Kitty Quake Mode";
-        key = "Meta+Z";
-        command = "kitten quick-access-terminal";
-      };
-    };
+#    hotkeys.commands = {
+#      "kitty-quake" = {
+#        name = "Kitty Quake Mode";
+#        key = "Meta+Z";
+#        command = "kitten quick-access-terminal";
+#      };
+#    };
   };
 }

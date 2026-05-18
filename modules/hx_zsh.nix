@@ -50,7 +50,8 @@
       gc = "git commit -m";
       gco = "git checkout";
       gb = "git branch";
-      hm = "export NIXPKGS_ALLOW_UNFREE=1 && nix run github:nix-community/home-manager -- switch --flake .#lucerno --impure";
+      hm = "cd /home/lucerno/nixos-config && git add -A && (git commit -m \"hm: $(date '+%Y-%m-%d %H:%M:%S')\" || true) && git push && export NIXPKGS_ALLOW_UNFREE=1 && home-manager switch --flake .#lucerno";
+      #hm = "cd /home/lucerno/nixos-config && git add -A && (git commit -m \"hm: $(date '+%Y-%m-%d %H:%M:%S')\" || true) && git push && export NIXPKGS_ALLOW_UNFREE=1 && nix run github:nix-community/home-manager -- switch --flake .#lucerno --impure";
       sync = "cd /home/lucerno/nixos-config && git add -A && (git commit -m \"$(date '+%Y-%m-%d %H:%M:%S')\" || true) && git push";
       update = "cd /home/lucerno/nixos-config && git add -A && git commit -m \"pre-rebuild\" && git push && sudo nixos-rebuild switch --impure --flake .#Lucerno-PC";
       upgrade = "cd /home/lucerno/nixos-config && nix flake update && git add -A && (git commit -m \"upgrade: $(date)\" || true) && git push && sudo nixos-rebuild switch --impure --flake .#Lucerno-PC";

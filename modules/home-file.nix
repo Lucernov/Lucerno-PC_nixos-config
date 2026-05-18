@@ -2,6 +2,9 @@
 {
   # XDG пользовательские директории
   home.file = {
+    ".config/kglobalshortcutsrc".source = ../dotfiles/config/KDE/config-kglobalshortcutsrc;
+    ".local/share/applications/net.local.kitten".source = ../dotfiles/config/KDE/local-share-applications-net.local.kitten;
+
     ".config/user-dirs.dirs".text = ''
       XDG_DESKTOP_DIR="$HOME/Desktop"
       XDG_DOWNLOAD_DIR="$HOME/Загрузки"

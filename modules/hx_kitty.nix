@@ -90,10 +90,10 @@ home.file.".local/bin/toggle-kitty" = {
 };
 
   # Systemd-сервис для автозапуска Kitty в режиме quick-access
-  systemd.user.services.kitty-quick = {
-    Unit.Description = "Kitty Quick Access";
-    Service.ExecStart = "${pkgs.kitty}/bin/kitten quick-access-terminal";
-    Install.WantedBy = [ "graphical-session.target" ];
-  };
+#  systemd.user.services.kitty-quick = {
+#    Unit.Description = "Kitty Quick Access";
+#    Service.ExecStart = "${pkgs.kitty}/bin/kitten quick-access-terminal";
+#    Install.WantedBy = [ "graphical-session.target" ];
+#  };
 
 }
