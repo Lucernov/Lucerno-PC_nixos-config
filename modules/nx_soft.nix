@@ -22,6 +22,7 @@
   # ========== Дополнительные системные пакеты ==========
   environment.systemPackages = with pkgs; [
     nh                                  # Утилита для удобного управления Nix
+    home-manager
     iw
     wirelesstools
     kitty
