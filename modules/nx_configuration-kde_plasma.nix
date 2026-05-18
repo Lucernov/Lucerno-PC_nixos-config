@@ -12,15 +12,6 @@ in
   #};
   services.displayManager.plasma-login-manager.enable = true;     # менеджер входа Plasma Login Manager
 
-  # ========== Настройка фона SDDM ==========
-  environment.systemPackages = [                                    # Создаём пакет с пользовательским конфигурационным файлом для темы Breeze
-    (pkgs.writeTextDir "share/sddm/themes/breeze/theme.conf.user" ''
-      [General]
-      # Указываем путь к изображению, которое будет фоном экрана входа pkgs.copyPathToStore копирует файл в /nix/store для воспроизводимости
-      background=${wallpaper}
-    '')
-  ];
-
   # ========== Переменные окружения для сессии SDDM ==========
   environment.sessionVariables = {                                   # Локаль для интерфейса SDDM (русский язык)
     LANG = "ru_RU.UTF-8";
@@ -38,5 +29,11 @@ in
   environment.systemPackages = with pkgs; [
     kdePackages.breeze-gtk                                  # Обеспечивает единый внешний вид GTK-программ в окружении KDE Plasma
     kdePackages.kde-gtk-config                              # Настройка GTK-тем для KDE
+
+    # ========== Настройка фона SDDM ==========
+    (writeTextDir "share/sddm/themes/breeze/theme.conf.user" ''
+      [General]
+      background=${wallpaper}
+    '')
   ];
 }
