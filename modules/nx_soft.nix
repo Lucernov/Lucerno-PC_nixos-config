@@ -34,6 +34,7 @@
     wget                                    # Утилита для загрузки файлов из интернета
     fastfetch                               # Вывод информации о системе (аналог neofetch)
     # carbonyl                              # Консольный браузер
+    uv
     nvtopPackages.nvidia                    # Монитор использования видеокарты NVIDIA в консоли nvtop
     wayland-utils                           # Набор утилит для диагностики Wayland (например, wayland-info)
     gsettings-desktop-schemas               # Схемы настроек для GSettings (используются GTK-приложениями)
