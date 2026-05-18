@@ -115,7 +115,7 @@
 
   # ========== Настройки звука (PipeWire) ==========
   services.pulseaudio.enable = false;                       # Отключаем старый звуковой сервер PulseAudio (полностью заменяем на PipeWire)
-  security.rtkit.enable = true;                                        # Включаем rtkit (Realtime Kit) — демон, дающий процессам приоритет реального времени. Необходим для низких задержек в аудио.
+  security.rtkit.enable = false;                                        # Включаем rtkit (Realtime Kit) — демон, дающий процессам приоритет реального времени. Необходим для низких задержек в аудио.
 
   services.pipewire = {                                     # Основные настройки PipeWire
     enable = true;                                          # Включаем PipeWire как основной звуковой сервер
