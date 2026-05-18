@@ -39,7 +39,10 @@
     gsettings-desktop-schemas               # Схемы настроек для GSettings (используются GTK-приложениями)
     glib                                    # Базовая библиотека GLib (низкоуровневые структуры данных)
     libva-utils                             # Утилиты для VA-API (аппаратное ускорение видео)
-    (btop.override { withGPU = true; })     # Монитор ресурсов с графическим интерфейсом в терминале
+    (btop.overrideAttrs (oldAttrs: {        # Монитор ресурсов с графическим интерфейсом в терминале
+      cmakeFlags = (oldAttrs.cmakeFlags or []) ++ [ "-DGPU_SUPPORT=ON" ];
+      buildInputs = (oldAttrs.buildInputs or []) ++ [ pkgs.nvidia_x11 ];
+    }))
     bat                                     # Улучшенный аналог cat с подсветкой синтаксиса
     mission-center                          # Графический монитор системы (альтернатива btop)
     nix-tree                                # Просмотр дерева зависимостей Nix
