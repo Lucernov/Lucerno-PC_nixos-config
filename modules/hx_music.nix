@@ -1,43 +1,5 @@
 { pkgs, pkgs-unstable, lib, ... }:
 {
-  systemd.user.services.pipewire = {
-    overrideStrategy = "asDropin";
-    serviceConfig = {
-      CPUSchedulingPolicy = "fifo";
-      CPUSchedulingPriority = 85;
-      Nice = -11;
-      LimitRTPRIO = 98;
-    };
-  };
-  systemd.user.services.pipewire-pulse = {
-    overrideStrategy = "asDropin";
-    serviceConfig = {
-      CPUSchedulingPolicy = "fifo";
-      CPUSchedulingPriority = 85;
-      Nice = -11;
-      LimitRTPRIO = 98;
-    };
-  };
-  systemd.user.services.wireplumber = {
-    overrideStrategy = "asDropin";
-    serviceConfig = {
-      CPUSchedulingPolicy = "fifo";
-      CPUSchedulingPriority = 85;
-      Nice = -11;
-      LimitRTPRIO = 98;
-    };
-  };
-
-
-
-
-
-
-
-
-
-
-
   # ========== Активационные скрипты (выполняются при каждом переключении поколения home-manager) ==========
   # Создаёт символическую ссылку wine64 в ~/.local/bin, чтобы winetricks не ругался на отсутствие wine64
   home.activation.createWine64Link = lib.hm.dag.entryAfter ["writeBoundary"] ''
