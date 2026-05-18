@@ -116,12 +116,6 @@
   # ========== Настройки звука (PipeWire) ==========
   services.pulseaudio.enable = false;                       # Отключаем старый звуковой сервер PulseAudio (полностью заменяем на PipeWire)
   security.rtkit.enable = true;                                        # Включаем rtkit (Realtime Kit) — демон, дающий процессам приоритет реального времени. Необходим для низких задержек в аудио.
-#  security.pam.loginLimits = [
-#    { domain = "@audio"; item = "rtprio"; type = "soft"; value = "99"; }
-#    { domain = "@audio"; item = "rtprio"; type = "hard"; value = "99"; }
-#    { domain = "@audio"; item = "memlock"; type = "soft"; value = "unlimited"; }
-#    { domain = "@audio"; item = "memlock"; type = "hard"; value = "unlimited"; }
-#  ];
 
   services.pipewire = {                                     # Основные настройки PipeWire
     enable = true;                                          # Включаем PipeWire как основной звуковой сервер
@@ -144,7 +138,7 @@
             name = "libpipewire-module-rt";
             args = {
               "nice.level" = -15;                           # Приоритет (nice) – отрицательное значение даёт более высокий приоритет
-              "rt.prio" = 75;                               # Приоритет реального времени (rtprio) – 88 (требует прав через rtkit)
+              "rt.prio" = 85;                               # Приоритет реального времени (rtprio) – 88 (требует прав через rtkit)
             };
           }
         ];
