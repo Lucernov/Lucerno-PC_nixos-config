@@ -16,6 +16,8 @@
   programs.nano.enable = true;          # Устанавливает Nano (простой текстовый редактор) системно
   programs.htop.enable = true;          # Устанавливает htop (интерактивный монитор процессов) системно
   programs.amnezia-vpn.enable = true;   # Включает сервис AmneziaVPN (VPN-клиент)
+  # KDE приложения
+  programs.partition-manager.enable = true;                 # Включает модуль для утилиты управления разделами диска (KDE Partition Manager)
 
   # ========== Дополнительные системные пакеты ==========
   environment.systemPackages = with pkgs; [
@@ -48,7 +50,6 @@
     # KDE приложения (графические, не требующие системной интеграции)
     kdePackages.ktorrent                # Torrent-клиент
     kdePackages.kdenlive                # Видеоредактор
-    # kdePackages.yakuake               # Выпадающий терминал (закомментирован, не используется)
     kdePackages.kcalc                   # Калькулятор
 
     # ИНТЕРНЕТ
