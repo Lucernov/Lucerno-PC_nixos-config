@@ -8,12 +8,17 @@
         email = jin.riv@gmail.com
       [core]
         excludesfile = ~/.gitignore
+      [credential]
+        helper = store
     '';
+    ".gitconfig".force = true;
+
     ".gitignore".text = ''
       *.swp
       *~
       .Trash-*
       result
     '';
+    ".gitignore".force = true;
   };
 }
