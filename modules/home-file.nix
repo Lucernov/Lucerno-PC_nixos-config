@@ -5,6 +5,17 @@
     ".config/kglobalshortcutsrc".source = ../dotfiles/config/KDE/config-kglobalshortcutsrc;
     ".local/share/applications/net.local.kitten".source = ../dotfiles/config/KDE/local-share-applications-net.local.kitten;
 
+    "drum_sklad".source = "/mnt/sys_archiv/samples/drum_sklad";
+    ".local/share/Steam/userdata".source = "/home/lucerno/nixos-config/dotfiles/config/Steam/userdata";
+    ".local/share/vital".source = "/mnt/sys_archiv/samples/vital";
+    ".config/AmneziaVPN.ORG".source = "/home/lucerno/nixos-config/dotfiles/config/AmneziaVPN.ORG";
+    ".config/obs-studio".source = "/home/lucerno/nixos-config/dotfiles/config/obs-studio";
+    ".config/DecentSampler".source = "/mnt/sys_archiv/samples/DecentSampler";
+    ".config/REAPER".source = "/home/lucerno/nixos-config/dotfiles/config/REAPER";
+    ".config/yabridgectl".source = "/home/lucerno/nixos-config/dotfiles/config/yabridgectl";
+    ".config/MangoHud".source = "/home/lucerno/nixos-config/dotfiles/config/MangoHud";
+    ".local/share/Steam/steamapps".source = "/mnt/games/SteamLibrary/steamapps";
+
     ".config/user-dirs.dirs".text = ''
       XDG_DESKTOP_DIR="$HOME/Desktop"
       XDG_DOWNLOAD_DIR="$HOME/Загрузки"
