@@ -1,5 +1,6 @@
 # modules/default.nix
 { config, pkgs, lib, pkgs-unstable, inputs, ... }:
+                                                                                                                          # НАДО ДОРАЗОБРАТЬСЯ С ГИТ
 
 {
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
@@ -7,19 +8,27 @@
 
   imports = [
     ../hardware-configuration.nix
-
-    ./nx_sddm.nix
-    ./nx_locale.nix
-    ./nx_users.nix
-    ./nx_firewall.nix
-    ./nx_pipewire.nix
-    ./nx_optimization.nix
     ./nx_configuration-kde_plasma.nix
-
-    ./nx_steam.nix
-    ./nx_obs.nix
-    ./nx_thunar.nix
+    ./nx_soft.nix
   ];
+
+
+    # ========== мои симлинки ==========
+  systemd.tmpfiles.rules = [
+    "L+ /home/lucerno/drum_sklad - - - - /mnt/sys_archiv/samples/drum_sklad"
+    "d /home/lucerno/.local/share 0755 lucerno lucerno -"
+    "L+ /home/lucerno/.local/share/Steam/userdata - - - - /home/lucerno/nixos-config/dotfiles/config/Steam/userdata"
+    "L+ /home/lucerno/.local/share/vital - - - - /mnt/sys_archiv/samples/vital"
+    "d /home/lucerno/.config 0755 lucerno lucerno -"
+    "L+ /home/lucerno/.config/AmneziaVPN.ORG - - - - /home/lucerno/nixos-config/dotfiles/config/AmneziaVPN.ORG"
+    "L+ /home/lucerno/.config/obs-studio - - - - /home/lucerno/nixos-config/dotfiles/config/obs-studio"
+    "L+ /home/lucerno/.config/DecentSampler - - - - /mnt/sys_archiv/samples/DecentSampler"
+    "L+ /home/lucerno/.config/REAPER - - - - /home/lucerno/nixos-config/dotfiles/config/REAPER"
+    "L+ /home/lucerno/.config/yabridgectl - - - - /home/lucerno/nixos-config/dotfiles/config/yabridgectl"
+    "L+ /home/lucerno/.config/MangoHud - - - - /home/lucerno/nixos-config/dotfiles/config/MangoHud"
+    "L+ /home/lucerno/.local/share/Steam/steamapps - - - - /mnt/games/SteamLibrary/steamapps"
+  ];
+
 
   # ========== Загрузчик ==========
   boot.loader = {
@@ -35,103 +44,37 @@
   '';
 
 
-  # ========== Аудио оптимизация (musnix) ==========
-  musnix.enable = true;
-  musnix.kernel.realtime = false;                          # для совместимости с NVIDIA
-
-  # ========== Включение системных модулей для программ ==========
-  #programs.git.enable = true;           # Включает поддержку Git (утилита системы контроля версий)
-  programs.dconf.enable = true;         # Включает dconf – базу данных настроек для GTK-приложений (необходим для тем, шрифтов и т.п.)
-  programs.zsh.enable = true;           # Устанавливает Zsh как системную оболочку (для всех пользователей)
-  programs.vim.enable = true;           # Устанавливает Vim (текстовый редактор) системно
-  programs.nano.enable = true;          # Устанавливает Nano (простой текстовый редактор) системно
-  programs.htop.enable = true;          # Устанавливает htop (интерактивный монитор процессов) системно
-  programs.amnezia-vpn.enable = true;   # Включает сервис AmneziaVPN (VPN-клиент)
-
-  # ========== Дополнительные системные пакеты (устанавливаются вручную) ==========
-  environment.systemPackages = with pkgs; [
-    iw
-    wirelesstools
-    lf                                  # "List Files" – быстрый файловый менеджер на Go с vim-подобным управлением
-    mc                                  # Midnight Commander – классический двухпанельный файловый менеджер (FTP, просмотр, редактор)
-    yazi
-    unzip                               # Утилита для распаковки ZIP-архивов
-    curl                                # Инструмент для передачи данных по сети (HTTP, FTP и др.)
-    wget                                # Утилита для загрузки файлов из интернета
-    # carbonyl                          # Консольный браузер
-    nvtopPackages.nvidia                # Монитор использования видеокарты NVIDIA в консоли
-    wayland-utils                       # Набор утилит для диагностики Wayland (например, wayland-info)
-    gsettings-desktop-schemas           # Схемы настроек для GSettings (используются GTK-приложениями)
-    glib                                # Базовая библиотека GLib (низкоуровневые структуры данных)
-    libva-utils                         # Утилиты для VA-API (аппаратное ускорение видео)
-    btop                                # Монитор ресурсов с графическим интерфейсом в терминале
-    bat                                 # Улучшенный аналог cat с подсветкой синтаксиса
-    kitty
-
-    gearlever
-
-    nh                                  # Утилита для удобного управления Nix
-    lsof                                # Просмотр открытых файлов и сокетов
-
-    # KDE приложения (графические, не требующие системной интеграции)
-    kdePackages.ktorrent                # Torrent-клиент
-    kdePackages.kdenlive                # Видеоредактор
-    # kdePackages.yakuake               # Выпадающий терминал (закомментирован, не используется)
-    kdePackages.kcalc                   # Калькулятор
-
-    # ГРАФИКА
-    upscaler
-    pinta                               # Простой растровый редактор
-    krita                               # Кастомный пакет Krita цифровая живопись – теперь берётся из оверлея
-    gimp                                # Мощный растровый редактор
-    inkscape                            # Векторная графика
-    blender                             # 3D-моделирование
-    upscaler                            # Увеличение разрешения изображений
-
-    # ИНТЕРНЕТ
-    google-chrome                       # Браузер Google Chrome
-    parabolic                           # Загрузчик видео/аудио с YouTube (альтернатива yt-dlp)
-    discord                             # Голосовой/текстовый чат
-    telegram-desktop                    # Мессенджер Telegram
-
-    # МУЛЬТИМЕДИА
-    my-packages.qmmp                  # Кастомный пакет qmmp – теперь берётся из оверлея
-    vlc                                 # Универсальный видеоплеер
-    deadbeef
-
-    # ИГРЫ
-    my-packages.minion                  # Кастомный пакет minion (обёртка для управления аддонами) – теперь берётся из оверлея
-    (bottles.override { removeWarningPopup = true; })
-    goverlay
-    lutris
-    heroic
-    mangohud
-
-    # ВСЯКОЕ
-    mission-center                      # Графический монитор системы (альтернатива btop)
-    fastfetch                           # Вывод информации о системе (аналог neofetch)
-    nix-tree                            # Просмотр дерева зависимостей Nix
+  # ========== Настройки времени и локали ==========
+  time.timeZone = "Europe/Moscow";      # Часовой пояс (Europe/Moscow)
+  i18n.defaultLocale = "ru_RU.UTF-8";   # Основная локаль системы – русская, кодировка UTF-8
+  i18n.extraLocaleSettings = {          # Дополнительные настройки локализации для отдельных категорий
+    LC_ADDRESS = "ru_RU.UTF-8";         # Формат адресов
+    LC_IDENTIFICATION = "ru_RU.UTF-8";  # Метаданные локали
+    LC_MEASUREMENT = "ru_RU.UTF-8";     # Единицы измерения (метрическая система)
+    LC_MONETARY = "ru_RU.UTF-8";        # Формат денежных единиц (рубли)
+    LC_NAME = "ru_RU.UTF-8";            # Формат имён
+    LC_NUMERIC = "ru_RU.UTF-8";         # Формат чисел (разделители десятичной части и тысяч)
+    LC_PAPER = "ru_RU.UTF-8";           # Формат бумаги (A4)
+    LC_TELEPHONE = "ru_RU.UTF-8";       # Формат телефонных номеров
+    LC_TIME = "ru_RU.UTF-8";            # Формат времени (24-часовой, день.месяц.год)
+  };
 
 
-    yabridge                    # Мост для запуска Windows VST-плагинов в Linux (через Wine)
-    yabridgectl                 # Утилита для управления yabridge (сканирование, синхронизация)
-    winetricks                  # Вспомогательный скрипт для настройки Wine (установка DLL, зависимостей)
-    coppwr                      # Графическая утилита для управления PipeWire (альтернатива pw-top)
-    vital                       # Популярный синтезатор FM (VST-плагин)
-    surge-xt                    # Синтезатор Surge XT (открытый код, мощный)
-    geonkick                    # Синтезатор барабанов для создания ударных партий
-    drumgizmo                   # Многоканальный сэмплер барабанов (реалистичные ударные)
-    neural-amp-modeler-lv2      # Плагин LV2 для моделирования гитарных усилителей (Neural Amp Modeler)
-    dragonfly-reverb            # Качественная реверберация Dragonfly (VST/LV2)
-    fretboard                   # Гитаровый гриф / MIDI-инструмент (возможно, для обучения)
+  # ========== Настройка пользователя lucerno ==========
+  users.groups.lucerno = {};
+  users.users.lucerno = {                                                            # Основные настройки учётной записи
+    isNormalUser = true;                                                             # Обычный пользователь (не системный)
+    hashedPasswordFile = "/home/lucerno/nixos-config/secrets/lucerno-password.hash"; # Файл с хешем пароля
+    group = "lucerno";                                                               # Группа, к которой принадлежит пользователь
+    extraGroups = [ "wheel" "networkmanager" "audio" "video" "storage" "render" ];
+    shell = pkgs.zsh;                                                                # Командная оболочка по умолчанию (Zsh)
+  };
+  # ========== Настройка sudo ==========
+  security.sudo = {
+    enable = true;                                                                   # Включаем sudo
+    wheelNeedsPassword = false;                                                      # Для членов группы wheel не требовать пароль. Пароль всё равно нужен для входа в систему.
+  };
 
-    my-packages.reaper          # REAPER – цифровая звуковая рабочая станция (DAW) БЕРЕТСЯ ИЗ НЕСТАБИЛЬНОГО КАНАЛА!!!!
-
-  ] ++ (with pkgs-unstable; [   # Пакеты из нестабильного канала (более свежие версии)
-    wineWow64Packages.staging   # Wine с поддержкой 64 и 32 бит (staging‑патчи для аудио)
-    reaper-sws-extension        # Расширение SWS для REAPER (дополнительные команды и автоматизация)
-    reaper-reapack-extension    # Менеджер скриптов ReaPack для REAPER (установка пользовательских скриптов)
-  ]);
 
   # ========== Переменные окружения для Wayland и NVIDIA ==========
   environment.sessionVariables = {
@@ -150,20 +93,68 @@
     #WLR_RENDERER_ALLOW_SOFTWARE = "1";
   };
 
-  # ========== мои симлинки ==========
-  systemd.tmpfiles.rules = [
-    "L+ /home/lucerno/drum_sklad - - - - /mnt/sys_archiv/samples/drum_sklad"
-    "d /home/lucerno/.local/share 0755 lucerno lucerno -"
-    "L+ /home/lucerno/.local/share/Steam/userdata - - - - /home/lucerno/nixos-config/dotfiles/config/Steam/userdata"
-    "L+ /home/lucerno/.local/share/vital - - - - /mnt/sys_archiv/samples/vital"
-    "d /home/lucerno/.config 0755 lucerno lucerno -"
-    "L+ /home/lucerno/.config/AmneziaVPN.ORG - - - - /home/lucerno/nixos-config/dotfiles/config/AmneziaVPN.ORG"
-    "L+ /home/lucerno/.config/obs-studio - - - - /home/lucerno/nixos-config/dotfiles/config/obs-studio"
-    "L+ /home/lucerno/.config/DecentSampler - - - - /mnt/sys_archiv/samples/DecentSampler"
-    "L+ /home/lucerno/.config/REAPER - - - - /home/lucerno/nixos-config/dotfiles/config/REAPER"
-    "L+ /home/lucerno/.config/yabridgectl - - - - /home/lucerno/nixos-config/dotfiles/config/yabridgectl"
-    "L+ /home/lucerno/.local/share/Steam/steamapps - - - - /mnt/games/SteamLibrary/steamapps"
-  ];
+
+  # ========== Настройки файервола с nftables ==========
+  networking.nftables.enable = true;           # Переход на nftables (современная замена iptables)
+  networking.firewall = {                      # Основные настройки межсетевого экрана
+    enable = true;                             # Включаем файервол
+    allowedTCPPorts = [ 22 ];                  # Разрешаем входящие TCP-соединения на порт 22 (SSH)
+    allowPing = true;                          # Разрешаем ICMP-запросы (ping) – полезно для диагностики сети
+    logRefusedConnections = false;             # Логирование отклонённых подключений (refused connections) Отключаем, чтобы не засорять логи
+    logRefusedPackets = false;                 # Логирование отклонённых пакетов (refused packets) Отключаем для снижения шума
+  };
+
+
+  # ========== Настройки звука (PipeWire) ==========
+  services.pulseaudio.enable = false;                       # Отключаем старый звуковой сервер PulseAudio (полностью заменяем на PipeWire)
+  security.rtkit.enable = true;                             # Включаем rtkit (Realtime Kit) — демон, дающий процессам приоритет реального времени. Необходим для низких задержек в аудио.
+
+  services.pipewire = {                                     # Основные настройки PipeWire
+    enable = true;                                          # Включаем PipeWire как основной звуковой сервер
+    alsa.enable = true;                                     # Поддержка ALSA (эмуляция для старых приложений)
+    alsa.support32Bit = true;                               # Поддержка 32-битных ALSA-клиентов (для игр и старого софта)
+    jack.enable = true;                                     # Поддержка JACK (для профессиональных аудио-приложений)
+    pulse.enable = true;                                    # Эмуляция PulseAudio (чтобы приложения, ожидающие PulseAudio, работали)
+    wireplumber.enable = true;                              # WirePlumber — менеджер сессий для PipeWire (более современный, чем старый media-session)
+    extraConfig = {                                         # Дополнительная конфигурация для низкой задержки (low-latency)
+      pipewire."99-low-latency" = {                         # Создаём профиль с именем "99-low-latency"
+        "context.properties" = {                            # Основные свойства контекста PipeWire
+          "default.clock.rate" = 48000;                     # Частота дискретизации по умолчанию (48 кГц)
+          "default.clock.quantum" = 512;                    # Размер кванта (буфера) по умолчанию – 512 семплов (~10,6 мс при 48 кГц)
+          "default.clock.min-quantum" = 256;                # Минимальный размер кванта – 256 семплов (~5,3 мс) – для снижения задержки
+          "default.clock.max-quantum" = 2048;               # Максимальный размер кванта – 2048 семплов (~42,7 мс) – для стабильности
+          "default.clock.allowed-rates" = [ 44100 48000 ];  # Разрешённые частоты дискретизации (44.1 и 48 кГц)
+        };
+        "context.modules" = [                               # Загружаемые модули с параметрами реального времени
+          {
+            name = "libpipewire-module-rt";
+            args = {
+              "nice.level" = -15;                           # Приоритет (nice) – отрицательное значение даёт более высокий приоритет
+              "rt.prio" = 88;                               # Приоритет реального времени (rtprio) – 88 (требует прав через rtkit)
+            };
+          }
+        ];
+      };
+    };
+  };
+
+
+  # ========== Настройки сборки Nix ==========
+  nix = {
+    settings.auto-optimise-store = true;   # Автоматически оптимизировать store (удалять дубликаты файлов)
+    gc = {                                 # Настройки автоматической очистки старых поколений (garbage collection)
+      automatic = true;                    # Включить автоматическую сборку мусора
+      dates = "weekly";                    # Расписание: еженедельно (можно изменить на "daily", "monthly")
+      options = "--delete-older-than 7d";  # Удалять поколения старше 7 дней
+    };
+
+    # Дополнительные параметры оптимизации и поведения
+    settings = {
+      max-jobs = 6;                         # Максимальное количество параллельных сборок (задач Nix)
+      keep-derivations = true;              # Сохранять деривации (промежуточные результаты сборки) – полезно для кэширования
+      keep-outputs = true;                  # Сохранять готовые outputs пакетов (обычно всегда true)
+    };
+  };
 
 
 }

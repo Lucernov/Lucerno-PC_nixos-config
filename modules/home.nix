@@ -20,7 +20,6 @@
     ./hx_comfyui.nix
     ./hx_git.nix
     ./hx_kitty.nix
-    ./hx_mangohud.nix
     ./hx_music.nix
     ./hx_plasma.nix    # настройки KDE Plasma (горячие клавиши, обои)
     ./hx_zsh.nix

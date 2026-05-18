@@ -1,13 +1,19 @@
+# modules/hx_git.nix
 { ... }:
 {
-  programs.git = {
-    enable = true;
-    ignores = [ "*.swp" "*~" ".Trash-*" "result" ];
-    settings = {
-      user = {
-        name = "Lucernov";
-        email = "jin.riv@gmail.com";
-      };
-    };
+  home.file = {
+    ".gitconfig".text = ''
+      [user]
+        name = Lucernov
+        email = jin.riv@gmail.com
+      [core]
+        excludesfile = ~/.gitignore
+    '';
+    ".gitignore".text = ''
+      *.swp
+      *~
+      .Trash-*
+      result
+    '';
   };
 }

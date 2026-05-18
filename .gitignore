@@ -3,13 +3,8 @@
 *.hash
 *.key
 
-# Большие папки Steam (не должны быть в Git)
-/dotfiles/config/Steam/userdata/
-/dotfiles/config/Steam/userdata/**/*
-
 # Результаты сборок Nix
 /result
-.result-*
 /result-*
 
 # Временные файлы редакторов
@@ -25,7 +20,10 @@
 # Логи
 *.log
 
+# Большие папки Steam (не должны быть в Git)
+/dotfiles/config/Steam/userdata/
+
 # Игнорировать все файлы в dotfiles, кроме wallpapers
 /dotfiles/*
 !/dotfiles/wallpapers/
-!/dotfiles/wallpapers/*.JPG
+!/dotfiles/wallpapers/**/*
