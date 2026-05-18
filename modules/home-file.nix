@@ -89,5 +89,30 @@
       Terminal=false
     '';
     ".local/share/applications/ampero2.desktop".force = true;
+
+
+
+
+  ".config/systemd/user/pipewire.service.d/99-realtime.conf".text = ''
+    [Service]
+    CPUSchedulingPolicy=fifo
+    CPUSchedulingPriority=85
+    Nice=-11
+    LimitRTPRIO=98
+  '';
+  ".config/systemd/user/pipewire-pulse.service.d/99-realtime.conf".text = ''
+    [Service]
+    CPUSchedulingPolicy=fifo
+    CPUSchedulingPriority=85
+    Nice=-11
+    LimitRTPRIO=98
+  '';
+  ".config/systemd/user/wireplumber.service.d/99-realtime.conf".text = ''
+    [Service]
+    CPUSchedulingPolicy=fifo
+    CPUSchedulingPriority=85
+    Nice=-11
+    LimitRTPRIO=98
+  '';
   };
 }
