@@ -141,7 +141,7 @@ in
   # ========== КОНЕЦ РАЗДЕЛА ДИСКОВ ==========
 
 
-  # ========== Обновление микрокода процессора и прошивок ==========
+  # ========== Обновление микрокода процессора i5 13400f и прошивок ==========
   hardware.cpu.intel.updateMicrocode = true;
   hardware.enableRedistributableFirmware = true;
   services.fwupd.enable = true;
@@ -157,7 +157,7 @@ in
     "transparent_hugepage=madvise"
     "nvidia_drm.modeset=1"                                 # Загружаем модуль ядра NVIDIA раньше для более гладкой загрузки и Wayland
     "nvidia_drm.fbdev=1"
-    "mitigations=off"
+    "mitigations=auto"
     "threadirqs"                                           # все прерывания в потоки – для лучшего управления приоритетами
     "preempt=full"                                         # полное вытеснение ядра – снижает задержки
     "rcupdate.rcu_cpu_stall_timeout=60"
