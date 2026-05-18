@@ -116,9 +116,11 @@
   # ========== Настройки звука (PipeWire) ==========
   services.pulseaudio.enable = false;                       # Отключаем старый звуковой сервер PulseAudio (полностью заменяем на PipeWire)
   #security.rtkit.enable = true;                                        # Включаем rtkit (Realtime Kit) — демон, дающий процессам приоритет реального времени. Необходим для низких задержек в аудио.
-    security.rtkit = {
-    enable = true;
-    args = [ "--max-realtime-priority=99" ];
+  systemd.services.rtkit-daemon = {
+    serviceConfig.ExecStart = [
+      ""   # очищаем стандартный ExecStart
+      "${pkgs.rtkit}/libexec/rtkit-daemon --our-realtime-priority=99 --max-realtime-priority=99"
+    ];
   };
 
   services.pipewire = {                                     # Основные настройки PipeWire
