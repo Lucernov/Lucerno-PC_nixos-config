@@ -46,20 +46,29 @@
       cursor_trail_decay 0.1 0.4
       # Минимальное расстояние (в ячейках) для начала анимации
       cursor_trail_start_threshold 2
-      # cursor_trail_color #a6e3a1               # (опционально) Цвет следа (закомментировано)
+      # (опционально) Цвет следа (закомментировано)
+      # cursor_trail_color #a6e3a1
     '';
   };
 
   # Конфигурация для выпадающего режима (quick-access) – отдельный файл
   xdg.configFile."kitty/quick-access-terminal.conf".text = ''
-    lines 50                                     # Количество строк в выпадающем окне
-    margin_left 200                              # Отступ слева (для центрирования)
-    margin_right 200                             # Отступ справа
-    margin_top 5                                 # Отступ сверху
-    background_opacity 0.80                      # Прозрачность фона 80%
-    hide_window_decorations yes                  # Убрать рамку окна
-    start_as_hidden no                           # Не скрывать при запуске (показывать сразу)
-    title quick-access                           # Заголовок окна (используется для поиска)
+    # Количество строк в выпадающем окне
+    lines 50
+    # Отступ слева (для центрирования)
+    margin_left 200
+    # Отступ справа
+    margin_right 200
+    # Отступ сверху
+    margin_top 5
+    # Прозрачность фона 80%
+    background_opacity 0.80
+    # Убрать рамку окна
+    hide_window_decorations yes
+    # Не скрывать при запуске (показывать сразу)
+    start_as_hidden no
+    # Заголовок окна (используется для поиска)
+    title quick-access
   '';
 
   # Скрипт для переключения Kitty (открыть/закрыть выпадающее окно)

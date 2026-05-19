@@ -7,21 +7,29 @@
     # Конфигурационный файл Git (~/.gitconfig)
     ".gitconfig".text = ''
       [user]
-        name = Lucernov                      # Имя автора коммитов
-        email = jin.riv@gmail.com            # Email автора коммитов
+        # Имя автора коммитов
+        name = Lucernov
+        # Email автора коммитов
+        email = jin.riv@gmail.com
       [core]
-        excludesfile = ~/.gitignore          # Глобальный файл с игнорируемыми паттернами
+        # Глобальный файл с игнорируемыми паттернами
+        excludesfile = ~/.gitignore
       [credential]
-        helper = store                       # Сохранять учётные данные в открытом виде (небезопасно, но удобно)
+        # Сохранять учётные данные в открытом виде (небезопасно, но удобно)
+        helper = store
     '';
     ".gitconfig".force = true;               # Принудительно перезаписывать файл при каждом применении
 
     # Глобальный файл игнорирования Git (~/.gitignore)
     ".gitignore".text = ''
-      *.swp                                  # Файлы swap Vim
-      *~                                     # Резервные копии
-      .Trash-*                               # Корзина KDE
-      result                                 # Симлинк результата сборки Nix
+      # Файлы swap Vim
+      *.swp
+      # Резервные копии
+      *~
+      # Корзина KDE
+      .Trash-*
+      # Симлинк результата сборки Nix
+      result
     '';
     ".gitignore".force = true;               # Принудительно перезаписывать файл при каждом применении
   };
