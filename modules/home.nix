@@ -19,7 +19,7 @@
     ./hx_git.nix
     ./hx_kitty.nix
     ./hx_music.nix
-    ./hx_plasma.nix    # настройки KDE Plasma (горячие клавиши, обои)
+    ./hx_plasma.nix
     ./hx_zsh.nix
   ];
 

@@ -1,99 +1,74 @@
-
 { pkgs, ... }:
-
 {
   # ========== Kitty терминал ==========
   programs.kitty = {
-    enable = true;                     # Включает генерацию конфигурации
-    package = null;                    # отключает установку пакета
+    enable = true;                               # Включает генерацию конфигурации Kitty
+    package = null;                              # Не устанавливаем Kitty через home-manager (пакет уже установлен системно)
 
     # Основные настройки (те, что обычно в kitty.conf)
     settings = {
-      allow_remote_control = "yes";
-      background = "#2e3440";
-      background_opacity = 0.95;
-      confirm_os_window_close = 0;
-      foreground = "#eceff4";
-      listen_on = "unix:/tmp/kitty-sock";   # единый сокет для всех окон
-      shell = "zsh";
-      tab_bar_style = "powerline";
-      tab_powerline_style = "round";
-      tab_activity_symbol = "*";
-      cursor_shape = "beam";                # Форма курсора (block, beam, underline)
-      cursor_shape_unfocused = "hollow";
-      cursor_blink_interval = 0.5;          # Интервал мигания (секунды)
-      cursor_stop_blinking_after = 15.0;    # Через сколько секунд бездействия остановить мига
-      #hide_window_decorations = "yes";
+      allow_remote_control = "yes";              # Разрешает управление Kitty через внешние команды (kitty @)
+      background = "#2e3440";                    # Цвет фона (тёмно-серый, как в Nord)
+      background_opacity = 0.95;                 # Прозрачность фона (0.95 = почти непрозрачный)
+      confirm_os_window_close = 0;               # Не спрашивать подтверждение при закрытии окна
+      foreground = "#eceff4";                    # Цвет текста (светло-серый)
+      listen_on = "unix:/tmp/kitty-sock";        # Единый сокет для управления всеми окнами Kitty
+      shell = "zsh";                             # Оболочка по умолчанию
+      tab_bar_style = "powerline";               # Стиль панели вкладок (powerline)
+      tab_powerline_style = "round";             # Стиль углов вкладок (скруглённые)
+      tab_activity_symbol = "*";                 # Символ, показывающий активность во вкладке
+      cursor_shape = "beam";                     # Форма курсора (beam = вертикальная черта)
+      cursor_shape_unfocused = "hollow";         # Форма курсора в неактивном окне (полый блок)
+      cursor_blink_interval = 0.5;               # Интервал мигания курсора (0.5 секунды)
+      cursor_stop_blinking_after = 15.0;         # Остановить мигание после 15 секунд бездействия
+      #hide_window_decorations = "yes";          # Убрать рамку окна
       # Позиционирование окна (для обычного режима, не quick-access)
-      # initial_window_width = 800;
-      # initial_window_height = 600;
+      initial_window_width = 1024;
+      initial_window_height = 768;
     };
 
     # Привязка клавиш (map)
     keybindings = {
-      "ctrl+t" = "new_tab_with_cwd !neighbor";
-      "ctrl+е" = "new_tab_with_cwd !neighbor";
-      "ctrl+w" = "close_tab";
-      "ctrl+ц" = "close_tab";
-      "ctrl+right" = "next_tab";
-      "ctrl+left" = "previous_tab";
+      "ctrl+t" = "new_tab_with_cwd !neighbor";   # Ctrl+T – новая вкладка с текущей рабочей папкой (игнорируя соседнюю)
+      "ctrl+е" = "new_tab_with_cwd !neighbor";   # То же самое для русской раскладки (буква 'е')
+      "ctrl+w" = "close_tab";                    # Ctrl+W – закрыть текущую вкладку
+      "ctrl+ц" = "close_tab";                    # То же для русской раскладки (буква 'ц')
+      "ctrl+right" = "next_tab";                 # Ctrl+Right – следующая вкладка
+      "ctrl+left" = "previous_tab";              # Ctrl+Left – предыдущая вкладка
     };
 
-    # Любые другие строки, которые не поддерживаются settings/kecdybindings
+    # Любые другие строки, которые не поддерживаются settings/keybindings
     extraConfig = ''
       # ========== Настройка анимации Cursor Trail (появилось в Kitty 0.37.0) ==========
-      # Включаем анимацию
-      cursor_trail 200
-
-      # Скорость затухания следа (быстрое — 0.1, медленное — 0.4)
-      cursor_trail_decay 0.1 0.4
-
-      # Минимальное расстояние для запуска анимации (в ячейках)
-      cursor_trail_start_threshold 2
-
-      # Цвет следа (необязательно, можно не указывать)
-      # cursor_trail_color #a6e3a1
-
-      #kitty @ --to $KITTY_LISTEN_ON launch --type=tab --cwd=current
-      #kitty @ --to $KITTY_LISTEN_ON close-tab
+      cursor_trail 200                           # Включает след курсора длиной 200 ячеек
+      cursor_trail_decay 0.1 0.4                 # Скорость затухания: быстрое 0.1, медленное 0.4
+      cursor_trail_start_threshold 2             # Минимальное расстояние (в ячейках) для начала анимации
+      # cursor_trail_color #a6e3a1               # (опционально) Цвет следа (закомментировано)
     '';
   };
 
-  # Конфигурация для выпадающего режима (quick-access) – остаётся отдельным файлом
+  # Конфигурация для выпадающего режима (quick-access) – отдельный файл
   xdg.configFile."kitty/quick-access-terminal.conf".text = ''
-  lines 50
-  margin_left 200
-  margin_right 200
-  margin_top 5
-    background_opacity 0.80
-    hide_window_decorations yes
-    start_as_hidden no
-    #confirm_os_window_close 0
-    title quick-access
+    lines 50                                     # Количество строк в выпадающем окне
+    margin_left 200                              # Отступ слева (для центрирования)
+    margin_right 200                             # Отступ справа
+    margin_top 5                                 # Отступ сверху
+    background_opacity 0.80                      # Прозрачность фона 80%
+    hide_window_decorations yes                  # Убрать рамку окна
+    start_as_hidden no                           # Не скрывать при запуске (показывать сразу)
+    title quick-access                           # Заголовок окна (используется для поиска)
   '';
 
-  # Скрипт для переключения Kitty
-home.file.".local/bin/toggle-kitty" = {
-  executable = true;
-  # Ищем окно Kitty, которое запущено с идентификатором "quick-access"
-  # Можно использовать class или title. Удобнее по классу, который мы сами зададим.
-  text = ''
-    #!${pkgs.bash}/bin/bash
-    if ${pkgs.kitty}/bin/kitty @ ls 2>/dev/null | grep -q "quick-access"; then
-    # Если окно существует, закрываем его
-        ${pkgs.kitty}/bin/kitty @ close-window --match title:"quick-access"
-    else
-    # Иначе запускаем новое окно в выпадающем режиме
-        ${pkgs.kitty}/bin/kitten quick-access-terminal
-    fi
-  '';
-};
-
-  # Systemd-сервис для автозапуска Kitty в режиме quick-access
-#  systemd.user.services.kitty-quick = {
-#    Unit.Description = "Kitty Quick Access";
-#    Service.ExecStart = "${pkgs.kitty}/bin/kitten quick-access-terminal";
-#    Install.WantedBy = [ "graphical-session.target" ];
-#  };
-
+  # Скрипт для переключения Kitty (открыть/закрыть выпадающее окно)
+  home.file.".local/bin/toggle-kitty" = {
+    executable = true;                           # Делаем файл исполняемым
+    text = ''
+      #!${pkgs.bash}/bin/bash
+      if ${pkgs.kitty}/bin/kitty @ ls 2>/dev/null | grep -q "quick-access"; then
+          ${pkgs.kitty}/bin/kitty @ close-window --match title:"quick-access"
+      else
+          ${pkgs.kitty}/bin/kitten quick-access-terminal
+      fi
+    '';
+  };
 }

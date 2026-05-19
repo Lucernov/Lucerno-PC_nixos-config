@@ -1,10 +1,11 @@
 { ... }:
 {
-  programs.zsh = {
-    enable = true;
-    enableCompletion = true;
-    autosuggestion.enable = true;
-    syntaxHighlighting.enable = true;
+programs.zsh = {
+  enable = true;                          # Включает настройку Zsh через home-manager (генерирует ~/.zshrc)
+  enableCompletion = true;                # Включает автодополнение команд (обычные completion)
+  autosuggestion.enable = true;           # Включает автоматические подсказки (as-you-type) на основе истории
+  syntaxHighlighting.enable = true;       # Включает подсветку синтаксиса команд в терминале
+};
 
 
     # Oh My Zsh
@@ -51,13 +52,11 @@
       gco = "git checkout";
       gb = "git branch";
       hm = "cd /home/lucerno/nixos-config && git add -A && (git commit -m \"hm: $(date '+%Y-%m-%d %H:%M:%S')\" || true) && git push && export NIXPKGS_ALLOW_UNFREE=1 && home-manager switch --flake .#lucerno";
-      #hm = "cd /home/lucerno/nixos-config && git add -A && (git commit -m \"hm: $(date '+%Y-%m-%d %H:%M:%S')\" || true) && git push && export NIXPKGS_ALLOW_UNFREE=1 && nix run github:nix-community/home-manager -- switch --flake .#lucerno --impure";
       sync = "cd /home/lucerno/nixos-config && git add -A && (git commit -m \"$(date '+%Y-%m-%d %H:%M:%S')\" || true) && git push";
       update = "cd /home/lucerno/nixos-config && git add -A && git commit -m \"pre-rebuild\" && git push && sudo nixos-rebuild switch --impure --flake .#Lucerno-PC";
       upgrade = "cd /home/lucerno/nixos-config && nix flake update && git add -A && (git commit -m \"upgrade: $(date)\" || true) && git push && sudo nixos-rebuild switch --impure --flake .#Lucerno-PC";
       parabolic = "org.nickvision.tubeconverter";
       #steam = "taskset -c 0-11 steam";
-      #reaper = "taskset -c 0-11 reaper";
     };
 
     initContent = ''

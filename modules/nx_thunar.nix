@@ -4,9 +4,9 @@
 {
   programs.thunar.enable = true;
   programs.thunar.plugins = with pkgs.xfce; [
-    thunar-archive-plugin   # контекстное меню для архивов
-    thunar-volman           # автоматическое монтирование USB‑накопителей
-    thunar-vcs-plugin      # ← поддержка Git и Subversion
+    thunar-archive-plugin                       # контекстное меню для архивов
+    thunar-volman                               # автоматическое монтирование USB‑накопителей
+    thunar-vcs-plugin                           # поддержка Git и Subversion
   ];
 
   # Если понадобится корзина, сетевые папки и миниатюры,

@@ -3,6 +3,7 @@
   # XDG пользовательские директории
   home.file = {
 
+    # --- Переопределение путей пдомашних папок ---
     ".config/user-dirs.dirs".text = ''
       XDG_DESKTOP_DIR="$HOME/Desktop"
       XDG_DOWNLOAD_DIR="$HOME/Загрузки"
@@ -92,27 +93,27 @@
 
 
 
-
-  ".config/systemd/user/pipewire.service.d/99-realtime.conf".text = ''
-    [Service]
-    CPUSchedulingPolicy=fifo
-    CPUSchedulingPriority=85
-    Nice=-11
-    LimitRTPRIO=98
-  '';
-  ".config/systemd/user/pipewire-pulse.service.d/99-realtime.conf".text = ''
-    [Service]
-    CPUSchedulingPolicy=fifo
-    CPUSchedulingPriority=85
-    Nice=-11
-    LimitRTPRIO=98
-  '';
-  ".config/systemd/user/wireplumber.service.d/99-realtime.conf".text = ''
-    [Service]
-    CPUSchedulingPolicy=fifo
-    CPUSchedulingPriority=85
-    Nice=-11
-    LimitRTPRIO=98
-  '';
+    # --- Включение RT приоритета для музыки ---
+    ".config/systemd/user/pipewire.service.d/99-realtime.conf".text = ''
+      [Service]
+      CPUSchedulingPolicy=fifo
+      CPUSchedulingPriority=85
+      Nice=-11
+      LimitRTPRIO=98
+    '';
+    ".config/systemd/user/pipewire-pulse.service.d/99-realtime.conf".text = ''
+      [Service]
+      CPUSchedulingPolicy=fifo
+      CPUSchedulingPriority=85
+      Nice=-11
+      LimitRTPRIO=98
+    '';
+    ".config/systemd/user/wireplumber.service.d/99-realtime.conf".text = ''
+      [Service]
+      CPUSchedulingPolicy=fifo
+      CPUSchedulingPriority=85
+      Nice=-11
+      LimitRTPRIO=98
+    '';
   };
 }
