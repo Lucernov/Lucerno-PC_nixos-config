@@ -60,7 +60,7 @@
     # Отступ справа
     margin_right 200
     # Отступ сверху
-    margin_top 5
+    margin_top 2
     # Прозрачность фона 80%
     background_opacity 0.80
     # Убрать рамку окна
