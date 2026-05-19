@@ -29,4 +29,14 @@
 
   # ========== Пакеты, устанавливаемые простым способом ==========
   home.packages = with pkgs; [ ] ++ (with pkgs-unstable; [ ]);
+
+home.activation.maskWireplumberForPlasmalogin = lib.hm.dag.entryAfter ["writeBoundary"] ''
+  # Код для проверки и маскирования сервиса
+  if [ -d "/run/systemd/system" ]; then
+    if ! systemctl -q is-enabled wireplumber.service 2>/dev/null; then
+      echo "Маскирование wireplumber.service для плавного входа в KDE..."
+      systemctl mask --user wireplumber.service >/dev/null 2>&1 || true
+    fi
+  fi
+'';
 }

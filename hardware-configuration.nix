@@ -147,41 +147,86 @@ in
   services.fwupd.enable = true;
 
 
-  # ========== ЯДРО И ЕГО МОДУЛИ ==========
-  boot.kernelPackages = pkgs.linuxPackages_6_18;
-  boot.kernelModules = [ "kvm-intel" "ntsync" "nvidia_uvm" ];          # Автозагрузка модуля NTSync
-  boot.initrd.kernelModules = [ "nvidia" "nvidia_modeset" "nvidia_drm" ];
-  boot.initrd.availableKernelModules = [ "vmd" "xhci_pci" "ahci" "nvme" "usbhid" "usb_storage" "sd_mod" ];
-  boot.extraModulePackages = [ ];
-  boot.kernelParams = [
-    "transparent_hugepage=madvise"
-    "nvidia_drm.modeset=1"                                 # Загружаем модуль ядра NVIDIA раньше для более гладкой загрузки и Wayland
-    "nvidia_drm.fbdev=1"
-    "mitigations=auto"
-    "threadirqs"                                           # все прерывания в потоки – для лучшего управления приоритетами
-    "preempt=full"                                         # полное вытеснение ядра – снижает задержки
-    "rcupdate.rcu_cpu_stall_timeout=60"
-    "usbcore.autosuspend=-1"                               # usb устройства не засыпают
-    "clocksource=tsc"
-    "tsc=reliable"
-    "irqaffinity=0"                                        # перенаправить все IRQ на ядро 0
-    "nowatchdog"
-    "mce=ignore_ce"
-  ];
+# ========== ЯДРО И ЕГО МОДУЛИ ==========
 
-  # ========== Тонкая настройка ядра (sysctl) ==========
-  boot.kernel.sysctl = {
-    "kernel.sched_autogroup_enabled" = 0;
-    "kernel.sched_base_slice_ns" = 2000000;                # 2 мс
-   #"vm.swappiness" = 10;                                  # определено через musnix
-    "vm.vfs_cache_pressure" = 50;
-    "vm.dirty_bytes" = 536870912;                          # 512 MiB
-    "vm.dirty_background_bytes" = 134217728;               # 128 MiB
-    "vm.stat_interval" = 10;
-    "vm.dirty_writeback_centisecs" = 500;
-    "vm.dirty_expire_centisecs" = 3000;
-    "vm.max_map_count" = 1048576;
-  };
+boot.kernelPackages = pkgs.linuxPackages_6_18;      # Выбор конкретной версии ядра (6.18)
+
+# Модули ядра, загружаемые на основном этапе (после initrd)
+boot.kernelModules = [
+#  "kvm-intel"       # Модуль аппаратной виртуализации KVM для процессоров Intel
+  "ntsync"          # Модуль для улучшения синхронизации в Wine/Proton (игры)
+  "nvidia_uvm"      # Unified Virtual Memory для NVIDIA (CUDA, OpenCL, AI)
+];
+
+# Модули, загружаемые на раннем этапе (в initrd) – до монтирования корневой ФС
+boot.initrd.kernelModules = [
+  "nvidia"          # Основной драйвер NVIDIA
+  "nvidia_modeset"  # Управление режимами видеовыхода (необходимо для Wayland)
+  "nvidia_drm"      # Интеграция NVIDIA с DRM (Direct Rendering Manager)
+];
+
+# Модули, которые могут быть загружены динамически при обнаружении оборудования
+boot.initrd.availableKernelModules = [
+  "vmd"             # Intel Volume Management Device (для NVMe и RAID)
+  "xhci_pci"        # USB 3.0/3.1 контроллеры
+  "ahci"            # SATA контроллеры (AHCI)
+  "nvme"            # NVMe SSD
+  "usbhid"          # USB HID-устройства (клавиатуры, мыши)
+  "usb_storage"     # USB Mass Storage (флешки, внешние диски)
+  "sd_mod"          # SCSI диск (SD-карты, некоторые HDD/SSD)
+];
+
+boot.extraModulePackages = [ ];                   # Дополнительные пакеты модулей ядра (пусто – не используются)
+
+# Параметры, передаваемые ядру при загрузке (через командную строку)
+boot.kernelParams = [
+  "transparent_hugepage=madvise"                  # Использовать прозрачные огромные страницы только по запросу madvise
+  "nvidia_drm.modeset=1"                          # Включить режимный сет DRM NVIDIA (нужен для Wayland)
+  "nvidia_drm.fbdev=1"                            # Включить фреймбуфер через DRM (для консоли и раннего вывода)
+  "mitigations=auto"                              # включать смягчение уязвимостей CPU (авто = отключено)
+  "threadirqs"                                    # Превратить все прерывания в потоки (улучшает отзывчивость при аудио)
+  "preempt=full"                                  # Полная вытесняемость ядра (снижает задержки, полезно для реального времени)
+  "rcupdate.rcu_cpu_stall_timeout=60"             # Таймаут ожидания RCU (60 сек) – диагностика зависаний
+  "usbcore.autosuspend=-1"                        # Отключить автоматическую приостановку USB-устройств
+  "clocksource=tsc"                               # Использовать TSC (Time Stamp Counter) как источник времени
+  "tsc=reliable"                                  # Считать TSC надёжным (не сбрасывается при состояниях сна)
+  "irqaffinity=0"                                 # Перенаправить все аппаратные прерывания на процессор 0
+  "nowatchdog"                                    # Отключить сторожевые таймеры (watchdog)
+  "mce=ignore_ce"                                 # Игнорировать корректируемые ошибки памяти (Machine Check Exception)
+];
+
+# ========== Тонкая настройка ядра (sysctl) ==========
+boot.kernel.sysctl = {
+  # Отключить автогруппировку процессов (автоматическое объединение задач в группы)
+  "kernel.sched_autogroup_enabled" = 0;
+
+  # Базовая длительность кванта времени для планировщика (2 мс) – влияет на отзывчивость
+  "kernel.sched_base_slice_ns" = 2000000;
+
+  # (закомментировано) – параметр vm.swappiness задаётся через musnix
+  # "vm.swappiness" = 10;
+
+  # Давление на кэш VFS (50 – уменьшает вытеснение inode/dentry из памяти, повышает производительность)
+  "vm.vfs_cache_pressure" = 50;
+
+  # Максимальное количество "грязных" данных (кэш записи) в байтах (512 MiB)
+  "vm.dirty_bytes" = 536870912;
+
+  # Порог для фоновой записи грязных данных (128 MiB) – когда начинается сброс на диск
+  "vm.dirty_background_bytes" = 134217728;
+
+  # Интервал статистики VM (10 секунд)
+  "vm.stat_interval" = 10;
+
+  # Интервал сброса грязных данных (500 сотых секунды = 5 секунд)
+  "vm.dirty_writeback_centisecs" = 500;
+
+  # Время жизни грязных данных (3000 сотых секунды = 30 секунд) – по истечении принудительный сброс
+  "vm.dirty_expire_centisecs" = 3000;
+
+  # Максимальное количество отображений памяти (memory maps) для процесса (полезно для игр и больших приложений)
+  "vm.max_map_count" = 1048576;
+};
   # ========== KSM (отключён) ==========
   hardware.ksm.enable = false;
 
