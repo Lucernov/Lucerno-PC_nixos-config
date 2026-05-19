@@ -10,6 +10,7 @@
     ../hardware-configuration.nix
     ./nx_configuration-kde_plasma.nix
     ./nx_soft.nix
+    ./nx_samba.nix
   ];
 
 

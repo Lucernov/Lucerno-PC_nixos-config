@@ -154,6 +154,7 @@ zramSwap = {
   #  "kvm-intel"                                                          # Модуль аппаратной виртуализации KVM для процессоров Intel
     "ntsync"                                                              # Модуль для улучшения синхронизации в Wine/Proton (игры)
     "nvidia_uvm"                                                          # Unified Virtual Memory для NVIDIA (CUDA, OpenCL, AI)
+    "intel_rapl_msr"                                                      # Модуль для чтения энергопотребления процессора (RAPL). Нужен для btop, powertop и других утилит.
   ];
   boot.initrd.kernelModules = [                                           # Модули, загружаемые на раннем этапе (в initrd) – до монтирования корневой ФС
     "nvidia"                                                              # Основной драйвер NVIDIA
