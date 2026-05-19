@@ -5,7 +5,6 @@ programs.zsh = {
   enableCompletion = true;                # Включает автодополнение команд (обычные completion)
   autosuggestion.enable = true;           # Включает автоматические подсказки (as-you-type) на основе истории
   syntaxHighlighting.enable = true;       # Включает подсветку синтаксиса команд в терминале
-};
 
 
     # Oh My Zsh
