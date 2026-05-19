@@ -79,5 +79,5 @@ programs.zsh = {
       PROMPT='%F{green}%n@%m%f:%F{blue}%~%f$ '
       RPROMPT='%F{red}$(git branch --show-current 2>/dev/null)%f'
     '';
-  };
+
 }
