@@ -72,16 +72,23 @@
     extraGroups = [ "wheel" "networkmanager" "audio" "video" "storage" "render" ];
     shell = pkgs.zsh;                                                                # Командная оболочка по умолчанию (Zsh)
   };
+
+  security.pam.loginLimits = [
+    { domain = "@audio"; item = "rtprio"; type = "soft"; value = "99"; }
+    { domain = "@audio"; item = "rtprio"; type = "hard"; value = "99"; }
+    { domain = "@audio"; item = "memlock"; type = "soft"; value = "unlimited"; }
+    { domain = "@audio"; item = "memlock"; type = "hard"; value = "unlimited"; }
+  ];
+  services.udev.extraRules = ''
+    KERNEL=="rtc0", GROUP="audio"
+    KERNEL=="hpet", GROUP="audio"
+  '';
+
   # ========== Настройка sudo ==========
   security.sudo = {
     enable = true;                                                                   # Включаем sudo
     wheelNeedsPassword = false;                                                      # Для членов группы wheel не требовать пароль. Пароль всё равно нужен для входа в систему.
   };
-
-
-  # ========== Аудио оптимизация (musnix) ==========
-  musnix.enable = true;
-  musnix.kernel.realtime = false;                          # для совместимости с NVIDIA
 
 
   # ========== Переменные окружения для Wayland и NVIDIA ==========

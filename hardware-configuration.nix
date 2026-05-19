@@ -148,38 +148,32 @@ in
 
 
 # ========== ЯДРО И ЕГО МОДУЛИ ==========
-
-boot.kernelPackages = pkgs.linuxPackages_6_18;      # Выбор конкретной версии ядра (6.18)
-
-# Модули ядра, загружаемые на основном этапе (после initrd)
-boot.kernelModules = [
-#  "kvm-intel"       # Модуль аппаратной виртуализации KVM для процессоров Intel
-  "ntsync"          # Модуль для улучшения синхронизации в Wine/Proton (игры)
-  "nvidia_uvm"      # Unified Virtual Memory для NVIDIA (CUDA, OpenCL, AI)
+boot.kernelPackages = pkgs.linuxPackages_6_18;     # Выбор конкретной версии ядра (6.18)
+boot.kernelModules = [                             # Модули ядра, загружаемые на основном этапе (после initrd)
+#  "kvm-intel"                                     # Модуль аппаратной виртуализации KVM для процессоров Intel
+  "ntsync"                                         # Модуль для улучшения синхронизации в Wine/Proton (игры)
+  "nvidia_uvm"                                     # Unified Virtual Memory для NVIDIA (CUDA, OpenCL, AI)
+];
+boot.initrd.kernelModules = [                      # Модули, загружаемые на раннем этапе (в initrd) – до монтирования корневой ФС
+  "nvidia"                                         # Основной драйвер NVIDIA
+  "nvidia_modeset"                                 # Управление режимами видеовыхода (необходимо для Wayland)
+  "nvidia_drm"                                    # Интеграция NVIDIA с DRM (Direct Rendering Manager)
 ];
 
-# Модули, загружаемые на раннем этапе (в initrd) – до монтирования корневой ФС
-boot.initrd.kernelModules = [
-  "nvidia"          # Основной драйвер NVIDIA
-  "nvidia_modeset"  # Управление режимами видеовыхода (необходимо для Wayland)
-  "nvidia_drm"      # Интеграция NVIDIA с DRM (Direct Rendering Manager)
-];
 
-# Модули, которые могут быть загружены динамически при обнаружении оборудования
-boot.initrd.availableKernelModules = [
-  "vmd"             # Intel Volume Management Device (для NVMe и RAID)
-  "xhci_pci"        # USB 3.0/3.1 контроллеры
-  "ahci"            # SATA контроллеры (AHCI)
-  "nvme"            # NVMe SSD
-  "usbhid"          # USB HID-устройства (клавиатуры, мыши)
-  "usb_storage"     # USB Mass Storage (флешки, внешние диски)
-  "sd_mod"          # SCSI диск (SD-карты, некоторые HDD/SSD)
+boot.initrd.availableKernelModules = [            # Модули, которые могут быть загружены динамически при обнаружении оборудования
+  "vmd"                                           # Intel Volume Management Device (для NVMe и RAID)
+  "xhci_pci"                                      # USB 3.0/3.1 контроллеры
+  "ahci"                                          # SATA контроллеры (AHCI)
+  "nvme"                                          # NVMe SSD
+  "usbhid"                                        # USB HID-устройства (клавиатуры, мыши)
+  "usb_storage"                                   # USB Mass Storage (флешки, внешние диски)
+  "sd_mod"                                        # SCSI диск (SD-карты, некоторые HDD/SSD)
 ];
 
 boot.extraModulePackages = [ ];                   # Дополнительные пакеты модулей ядра (пусто – не используются)
 
-# Параметры, передаваемые ядру при загрузке (через командную строку)
-boot.kernelParams = [
+boot.kernelParams = [                             # Параметры, передаваемые ядру при загрузке (через командную строку)
   "transparent_hugepage=madvise"                  # Использовать прозрачные огромные страницы только по запросу madvise
   "nvidia_drm.modeset=1"                          # Включить режимный сет DRM NVIDIA (нужен для Wayland)
   "nvidia_drm.fbdev=1"                            # Включить фреймбуфер через DRM (для консоли и раннего вывода)
@@ -199,7 +193,7 @@ boot.kernelParams = [
 boot.kernel.sysctl = {
   "kernel.sched_autogroup_enabled" = 0;           # Отключить автогруппировку процессов (автоматическое объединение задач в группы)
   "kernel.sched_base_slice_ns" = 2000000;         # Базовая длительность кванта времени для планировщика (2 мс) – влияет на отзывчивость
-  # "vm.swappiness" = 10;                         # (закомментировано) – параметр vm.swappiness задаётся через musnix
+  "vm.swappiness" = 10;                           # Предпочтение подкачке: 0..100. 10 – система будет почти всегда держать данные в ОЗУ
   "vm.vfs_cache_pressure" = 50;                   # Давление на кэш VFS (50 – уменьшает вытеснение inode/dentry из памяти, повышает производительность)
   "vm.dirty_bytes" = 536870912;                   # Максимальное количество "грязных" данных (кэш записи) в байтах (512 MiB)
   "vm.dirty_background_bytes" = 134217728;        # Порог для фоновой записи грязных данных (128 MiB) – когда начинается сброс на диск
