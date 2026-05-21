@@ -24,9 +24,6 @@ in
     # HDD — увеличенный read-ahead для повышения производительности при чтении больших файлов
     ACTION=="add|change", ATTR{queue/rotational}=="1", ATTR{bdi/read_ahead_kb}="1024"
 
-    # --- Доступ к RAPL для btop ---
-    KERNEL=="intel-rapl*", GROUP="powercap", MODE="0640"
-
     # --- Устройства реального времени для аудио ---
     KERNEL=="rtc0", GROUP="audio"
     KERNEL=="hpet", GROUP="audio"
@@ -145,6 +142,7 @@ zramSwap = {
     "d /home/lucerno/nixos-config 0755 lucerno lucerno -"
     "d /mnt/ai 0755 lucerno lucerno -"
     "d /mnt/sys_archiv 0755 lucerno lucerno -"
+    "z /sys/class/powercap/intel-rapl:*/energy_uj 0640 root powercap -"
   ];
   # ========== КОНЕЦ РАЗДЕЛА ДИСКОВ ==========
 
