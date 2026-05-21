@@ -35,10 +35,10 @@
       "ctrl+ц" = "close_tab";                    # То же для русской раскладки (буква 'ц')
       "ctrl+right" = "next_tab";                 # Ctrl+Right – следующая вкладка
       "ctrl+left" = "previous_tab";              # Ctrl+Left – предыдущая вкладка
-      "ctrl+shift+e" = "launch --location=hsplit";  # Разделение окна по горизонтали (верх/низ)
-      "ctrl+shift+у" = "launch --location=hsplit";  # Разделение окна по горизонтали (верх/низ)
-      "ctrl+shift+d" = "launch --location=vsplit";  # Разделение окна по вертикали (лево/право)
-      "ctrl+shift+в" = "launch --location=vsplit";  # Разделение окна по вертикали (лево/право)
+      "ctrl+alt+e" = "launch --location=hsplit";  # Разделение окна по горизонтали (верх/низ)
+      "ctrl+alt+у" = "launch --location=hsplit";  # Разделение окна по горизонтали (верх/низ)
+      "ctrl+alt+d" = "launch --location=vsplit";  # Разделение окна по вертикали (лево/право)
+      "ctrl+alt+в" = "launch --location=vsplit";  # Разделение окна по вертикали (лево/право)
     };
 
     # Любые другие строки, которые не поддерживаются settings/keybindings
