@@ -18,7 +18,6 @@
   systemd.tmpfiles.rules = [
     "d /home/lucerno/.local/share 0755 lucerno lucerno -"
     "d /home/lucerno/.config 0755 lucerno lucerno -"
-    "d /home/lucerno/.config/btop/themes 0755 lucerno lucerno -"
     "L+ /home/lucerno/drum_sklad - - - - /mnt/sys_archiv/samples/drum_sklad"
     "L+ /home/lucerno/.local/share/Steam/userdata - - - - /home/lucerno/nixos-config/dotfiles/config/Steam/userdata"
     "L+ /home/lucerno/.local/share/vital - - - - /mnt/sys_archiv/samples/vital"
@@ -32,7 +31,6 @@
 
     "L+ /home/lucerno/.config/kglobalshortcutsrc - - - - /home/lucerno/nixos-config/dotfiles/config/KDE/config-kglobalshortcutsrc"
     "L+ /home/lucerno/.local/share/applications/net.local.kitten - - - - /home/lucerno/nixos-config/dotfiles/config/KDE/local-share-applications-net.local.kitten"
-    "L+ /home/lucerno/.config/btop/themes/adapta.theme - - - - /home/lucerno/nixos-config/dotfiles/config/btop/adapta.theme"
   ];
 
 
@@ -117,8 +115,8 @@ environment.sessionVariables = {
   services.pulseaudio.enable = false;                                                       # Отключаем старый звуковой сервер PulseAudio (полностью заменяем на PipeWire)
 
   security.pam.loginLimits = [                                                              # Лимиты для аудио-группы (чтобы приложения имели приоритет реального времени и блокировку памяти)
-    { domain = "@audio"; item = "rtprio"; type = "soft"; value = "99"; }                    # Мягкий лимит приоритета RT
-    { domain = "@audio"; item = "rtprio"; type = "hard"; value = "99"; }                    # Жёсткий лимит приоритета RT
+    { domain = "@audio"; item = "rtprio"; type = "soft"; value = "89"; }                    # Мягкий лимит приоритета RT
+    { domain = "@audio"; item = "rtprio"; type = "hard"; value = "89"; }                    # Жёсткий лимит приоритета RT
     { domain = "@audio"; item = "memlock"; type = "soft"; value = "unlimited"; }            # Мягкий лимит блокировки памяти
     { domain = "@audio"; item = "memlock"; type = "hard"; value = "unlimited"; }            # Жёсткий лимит блокировки памяти
   ];
@@ -137,7 +135,7 @@ environment.sessionVariables = {
         "context.properties" = {                                                            # Основные свойства контекста PipeWire
           "default.clock.rate" = 48000;                                                     # Частота дискретизации по умолчанию (48 кГц)
           "default.clock.quantum" = 512;                                                    # Размер кванта (буфера) по умолчанию – 512 семплов (~10,6 мс при 48 кГц)
-          "default.clock.min-quantum" = 256;                                                # Минимальный размер кванта – 256 семплов (~5,3 мс) – для снижения задержки
+          "default.clock.min-quantum" = 128;                                                # Минимальный размер кванта – 128 семплов (~2,7 мс при 48 кГц) – для снижения задержки (256 семплов (~5,3 мс))
           "default.clock.max-quantum" = 2048;                                               # Максимальный размер кванта – 2048 семплов (~42,7 мс) – для стабильности
           "default.clock.allowed-rates" = [ 44100 48000 ];                                  # Разрешённые частоты дискретизации (44.1 и 48 кГц)
         };
