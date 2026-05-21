@@ -18,6 +18,7 @@
   systemd.tmpfiles.rules = [
     "d /home/lucerno/.local/share 0755 lucerno lucerno -"
     "d /home/lucerno/.config 0755 lucerno lucerno -"
+    "d /home/lucerno/.config/btop/themes 0755 lucerno lucerno -"
     "L+ /home/lucerno/drum_sklad - - - - /mnt/sys_archiv/samples/drum_sklad"
     "L+ /home/lucerno/.local/share/Steam/userdata - - - - /home/lucerno/nixos-config/dotfiles/config/Steam/userdata"
     "L+ /home/lucerno/.local/share/vital - - - - /mnt/sys_archiv/samples/vital"
@@ -31,6 +32,7 @@
 
     "L+ /home/lucerno/.config/kglobalshortcutsrc - - - - /home/lucerno/nixos-config/dotfiles/config/KDE/config-kglobalshortcutsrc"
     "L+ /home/lucerno/.local/share/applications/net.local.kitten - - - - /home/lucerno/nixos-config/dotfiles/config/KDE/local-share-applications-net.local.kitten"
+    "L+ /home/lucerno/.config/btop/themes/adapta.theme - - - - /home/lucerno/nixos-config/dotfiles/config/btop/adapta.theme"
   ];
 
 
