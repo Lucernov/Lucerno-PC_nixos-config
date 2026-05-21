@@ -25,6 +25,8 @@
       # Позиционирование окна (для обычного режима, не quick-access)
       initial_window_width = 1024;
       initial_window_height = 768;
+      enabled_layouts = "splits,fat,grid,stack,tall,horizontal,vertical";
+      default_layout = "splits";
     };
 
     # Привязка клавиш (map)
