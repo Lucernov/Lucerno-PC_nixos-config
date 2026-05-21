@@ -23,6 +23,13 @@ in
     ACTION=="add|change", KERNEL=="nvme0n1", ATTR{bdi/read_ahead_kb}="512"
     # HDD — увеличенный read-ahead для повышения производительности при чтении больших файлов
     ACTION=="add|change", ATTR{queue/rotational}=="1", ATTR{bdi/read_ahead_kb}="1024"
+
+    # --- Доступ к RAPL для btop ---
+    KERNEL=="intel-rapl*", GROUP="powercap", MODE="0640"
+
+    # --- Устройства реального времени для аудио ---
+    KERNEL=="rtc0", GROUP="audio"
+    KERNEL=="hpet", GROUP="audio"
   '';
 
   # ========== ОСНОВНОЙ ДИСК ==========

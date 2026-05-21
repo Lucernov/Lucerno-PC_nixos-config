@@ -66,11 +66,12 @@
 
   # ========== Настройка пользователя lucerno ==========
   users.groups.lucerno = {};                                                                # Создаём группу lucerno (явно не задаём параметры)
+  users.groups.powercap = {};
   users.users.lucerno = {                                                                   # Основные настройки учётной записи
     isNormalUser = true;                                                                    # Обычный пользователь (не системный)
     hashedPasswordFile = "/home/lucerno/nixos-config/secrets/lucerno-password.hash";        # Файл с хешем пароля
     group = "lucerno";                                                                      # Группа, к которой принадлежит пользователь
-    extraGroups = [ "wheel" "networkmanager" "audio" "video" "storage" "render" ];          # Дополнительные группы
+    extraGroups = [ "wheel" "networkmanager" "audio" "video" "storage" "render" "powercap" ];          # Дополнительные группы
     shell = pkgs.zsh;                                                                       # Командная оболочка по умолчанию (Zsh)
   };
   # ========== Настройка sudo ==========
@@ -120,11 +121,6 @@ environment.sessionVariables = {
     { domain = "@audio"; item = "memlock"; type = "hard"; value = "unlimited"; }            # Жёсткий лимит блокировки памяти
   ];
 
-  # Правила udev для устройств реального времени (RTC, HPET) – передаём их в группу audio
-  services.udev.extraRules = ''
-    KERNEL=="rtc0", GROUP="audio"
-    KERNEL=="hpet", GROUP="audio"
-  '';
 
   environment.pathsToLink = [ "/share/wireplumber" ];                                       # Добавляем путь к конфигурационным файлам WirePlumber в окружение (workaround для NixOS)
   services.pipewire = {                                                                     # Основные настройки PipeWire
