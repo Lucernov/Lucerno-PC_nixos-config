@@ -63,17 +63,6 @@ stylix = {
             { nixpkgs.pkgs = pkgsWithOverlay; }                                                            # Переопределяем pkgs для всей системы (с оверлеем)
             ./modules
             inputs.stylix.nixosModules.stylix
-            # Основной модуль хоста (импортирует профили)
-            # home-manager.nixosModules.home-manager {                                                     # (закомментировано) Home Manager как системный модуль
-            #   home-manager.useGlobalPkgs = true;                                                         # Использовать глобальные пакеты
-            #   home-manager.useUserPackages = true;                                                       # Разрешить пользовательские пакеты
-            #   home-manager.users.lucerno = import ./modules/home.nix;                                    # Путь к конфигурации пользователя
-            #   home-manager.extraSpecialArgs = {
-            #     inherit inputs;
-            #     pkgs-unstable = pkgsUnstable;
-            #     pkgs = pkgsWithOverlay;
-            #   };
-            # }
           ];
         };
 
