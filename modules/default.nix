@@ -44,7 +44,8 @@
   #system.nixos-init.enable = true;                                                         # (закомментировано) Альтернативная система инициализации (пока не используется)
 
   boot.extraModprobeConfig = ''
-    options btusb enable_autosuspend=0                                                      # Отключаем авто-отключение питания Bluetooth-адаптера (чтобы не терял связь)
+    # Отключаем авто-отключение питания Bluetooth-адаптера (чтобы не терял связь)
+    options btusb enable_autosuspend=0
   '';
 
 
