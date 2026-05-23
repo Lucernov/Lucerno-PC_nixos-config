@@ -1,7 +1,5 @@
 # modules/nx_stylix.nix
-{ config, pkgs, lib, ... }:
-
-let myLib = import ../lib.nix; in
+{ config, pkgs, lib, myLib, ... }:
 
 {
   config = {
@@ -9,7 +7,8 @@ let myLib = import ../lib.nix; in
       enable = true;
       image = myLib.wallpaperPath;
       polarity = "dark";
-      base16Scheme = "${pkgs.base16-schemes}/share/themes/gruvbox-dark-medium.yaml";
+      #base16Scheme = "${pkgs.base16-schemes}/share/themes/gruvbox-dark-medium.yaml";
+      base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-mocha.yaml";
     };
   };
 }

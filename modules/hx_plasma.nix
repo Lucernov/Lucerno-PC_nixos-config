@@ -1,6 +1,4 @@
-{ inputs, ... }:
-
-#let myLib = import ../lib.nix; in                                       # Импортируем библиотеку с общими переменными (путь к обоям и т.д.)
+{ inputs, myLib, ... }:
 
 {
   imports = [ inputs.plasma-manager.homeModules.plasma-manager ];  # Подключаем модуль plasma-manager, который позволяет настраивать KDE Plasma через home-manager

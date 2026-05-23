@@ -43,6 +43,8 @@ stylix = {
         system = "x86_64-linux";
         config.allowUnfree = true;
       };
+
+    myLib = import ./lib.nix;
     in
 
     flake-parts.lib.mkFlake { inherit inputs; } {                                                          # Используем flake-parts для построения flake
@@ -57,6 +59,7 @@ stylix = {
             inherit inputs;
             pkgs-unstable = pkgsUnstable;                                                                  # Передаём нестабильные пакеты
             import-tree = inputs.import-tree;                                                              # Передаём утилиту import-tree
+            inherit myLib;
           };
 
           modules = [                                                                                      # Список модулей, из которых собирается система
@@ -73,6 +76,7 @@ stylix = {
           extraSpecialArgs = {
             inherit inputs;
             pkgs-unstable = nixpkgs-unstable.legacyPackages.x86_64-linux;                                 # Нестабильные пакеты для home-manager
+            inherit myLib;
           };
         };
       };

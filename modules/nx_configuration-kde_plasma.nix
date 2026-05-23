@@ -1,9 +1,5 @@
-{ config, pkgs, ... }:
+{ config, pkgs, myLib, ... }:
 
-let
-  myLib = import ../lib.nix;
-  wallpaper = myLib.wallpaperPath;
-in
 {
   # ========== Настройка дисплейного менеджера SDDM ==========
   services.displayManager.sddm = {
@@ -30,7 +26,7 @@ in
     # ========== Настройка фона SDDM ==========
     (writeTextDir "share/sddm/themes/breeze/theme.conf.user" ''
       [General]
-      background=${wallpaper}
+      background=${myLib.wallpaperPath}
     '')
   ];
 }
