@@ -8,9 +8,9 @@
   programs.plasma = {                                              # Блок настроек KDE Plasma
     enable = true;                                                 # Включаем управление Plasma через home-manager
 
-#    workspace = {                                                  # Настройки рабочего стола (workspace)
-#      wallpaper = myLib.wallpaperPath;                             # Путь к файлу обоев (берётся из библиотеки lib.nix)
-#    };
+    workspace = {                                                  # Настройки рабочего стола (workspace)
+      wallpaper = myLib.wallpaperPath;                             # Путь к файлу обоев (берётся из библиотеки lib.nix)
+    };
 
     configFile."kxkbrc".Layout = {                                 # Файл конфигурации клавиатуры kxkbrc (раскладки, переключение)
       LayoutList = "us,ru";                                        # Список доступных раскладок: английская (us) и русская (ru)

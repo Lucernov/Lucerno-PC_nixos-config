@@ -10,10 +10,6 @@ let myLib = import ../lib.nix; in
       image = myLib.wallpaperPath;
       polarity = "dark";
       base16Scheme = "${pkgs.base16-schemes}/share/themes/gruvbox-dark-medium.yaml";
-
-      targets = {
-        sddm.enable = true;        # SDDM (экран входа)
-      };
     };
   };
 }
