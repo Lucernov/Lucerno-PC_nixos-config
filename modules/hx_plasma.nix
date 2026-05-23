@@ -1,16 +1,16 @@
 { inputs, ... }:
-let
-  myLib = import ../lib.nix;                                       # Импортируем библиотеку с общими переменными (путь к обоям и т.д.)
-in
+
+#let myLib = import ../lib.nix; in                                       # Импортируем библиотеку с общими переменными (путь к обоям и т.д.)
+
 {
   imports = [ inputs.plasma-manager.homeModules.plasma-manager ];  # Подключаем модуль plasma-manager, который позволяет настраивать KDE Plasma через home-manager
 
   programs.plasma = {                                              # Блок настроек KDE Plasma
     enable = true;                                                 # Включаем управление Plasma через home-manager
 
-    workspace = {                                                  # Настройки рабочего стола (workspace)
-      wallpaper = myLib.wallpaperPath;                             # Путь к файлу обоев (берётся из библиотеки lib.nix)
-    };
+#    workspace = {                                                  # Настройки рабочего стола (workspace)
+#      wallpaper = myLib.wallpaperPath;                             # Путь к файлу обоев (берётся из библиотеки lib.nix)
+#    };
 
     configFile."kxkbrc".Layout = {                                 # Файл конфигурации клавиатуры kxkbrc (раскладки, переключение)
       LayoutList = "us,ru";                                        # Список доступных раскладок: английская (us) и русская (ru)

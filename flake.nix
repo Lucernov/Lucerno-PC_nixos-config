@@ -17,10 +17,17 @@
       inputs.home-manager.follows = "home-manager";                                                        # Следовать за home-manager
     };
 
+    stylix = {
+      url = "github:nix-community/stylix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     flake-parts.url = "github:hercules-ci/flake-parts";                                                    # Flake-parts — фреймворк для модульной организации flake
     flake-parts.inputs.nixpkgs-lib.follows = "nixpkgs";                                                    # Зависимости flake-parts также используют основной nixpkgs
 
     import-tree.url = "github:vic/import-tree";                                                            # Утилита для рекурсивного импорта файлов (экспериментально)
+
+    # fufexan/nix-gaming nickm8/nix-gaming TophC7/play.nix
   };
 
   # ========== Выходные данные (outputs) ==========
@@ -54,7 +61,9 @@
 
           modules = [                                                                                      # Список модулей, из которых собирается система
             { nixpkgs.pkgs = pkgsWithOverlay; }                                                            # Переопределяем pkgs для всей системы (с оверлеем)
-            ./modules                                                                                      # Основной модуль хоста (импортирует профили)
+            ./modules
+            inputs.stylix.nixosModules.stylix
+            # Основной модуль хоста (импортирует профили)
             # home-manager.nixosModules.home-manager {                                                     # (закомментировано) Home Manager как системный модуль
             #   home-manager.useGlobalPkgs = true;                                                         # Использовать глобальные пакеты
             #   home-manager.useUserPackages = true;                                                       # Разрешить пользовательские пакеты

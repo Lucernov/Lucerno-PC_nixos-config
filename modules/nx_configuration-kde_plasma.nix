@@ -1,9 +1,9 @@
 { config, pkgs, ... }:
 
-let
-  myLib = import ../lib.nix;
-  wallpaper = myLib.wallpaperPath;
-in
+#let
+#  myLib = import ../lib.nix;
+#  wallpaper = myLib.wallpaperPath;
+#in
 {
   # ========== Настройка дисплейного менеджера SDDM ==========
   services.displayManager.sddm = {
@@ -28,9 +28,9 @@ in
     kdePackages.kde-gtk-config                              # Настройка GTK-тем для KDE
 
     # ========== Настройка фона SDDM ==========
-    (writeTextDir "share/sddm/themes/breeze/theme.conf.user" ''
-      [General]
-      background=${wallpaper}
-    '')
+#    (writeTextDir "share/sddm/themes/breeze/theme.conf.user" ''
+#      [General]
+#      background=${wallpaper}
+#    '')
   ];
 }

@@ -1,15 +1,15 @@
 # modules/default.nix
 { config, pkgs, lib, pkgs-unstable, inputs, ... }:
                                                                                                                           # НАДО ДОРАЗОБРАТЬСЯ С ГИТ
-
 {
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   system.stateVersion = "25.11";
 
   imports = [
     ../hardware-configuration.nix
-    ./nx_configuration-kde_plasma.nix
     ./nx_soft.nix
+    ./nx_stylix.nix
+    ./nx_configuration-kde_plasma.nix
     ./nx_samba.nix
   ];
 
@@ -105,7 +105,7 @@ environment.sessionVariables = {
   networking.firewall = {                                                                   # Основные настройки межсетевого экрана
     enable = true;                                                                          # Включаем файервол
     allowedTCPPorts = [ 22 ];                                                               # Разрешаем входящие TCP-соединения на порт 22 (SSH)
-    allowPing = true;                                                                       # Разрешаем ICMP-запросы (ping) – полезно для диагностики сети
+    allowPing = false;                                                                       # Отключить ICMP-запросы (ping)
     logRefusedConnections = false;                                                          # Логирование отклонённых подключений (refused connections) Отключаем, чтобы не засорять логи
     logRefusedPackets = false;                                                              # Логирование отклонённых пакетов (refused packets) Отключаем для снижения шума
   };
