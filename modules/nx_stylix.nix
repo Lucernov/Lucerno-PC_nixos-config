@@ -15,4 +15,11 @@ let myLib = import ../lib.nix; in
       sddm.enable = true;          # Включаем явную поддержку SDDM
     };
   };
+
+    options.services.displayManager.generic = lib.mkOption {
+    type = lib.types.attrs;
+    default = {};
+    description = "Legacy option required by stylix GNOME module";
+  };
+
 }
