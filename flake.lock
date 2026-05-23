@@ -337,7 +337,6 @@
       },
       "original": {
         "owner": "nix-community",
-        "ref": "master",
         "repo": "stylix",
         "type": "github"
       }
