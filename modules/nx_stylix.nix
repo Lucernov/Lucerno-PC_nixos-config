@@ -10,7 +10,7 @@ let myLib = import ../lib.nix; in
     base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-mocha.yaml";
     targets = {
       generic.enable = false;      # Отключаем настройку generic display manager
-      sddm.enable = true;          # Включаем явную поддержку SDDM
+      sddm.enable = false;          # Включаем явную поддержку SDDM
     };
   };
 }
