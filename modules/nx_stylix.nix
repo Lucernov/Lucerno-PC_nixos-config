@@ -8,5 +8,9 @@ let myLib = import ../lib.nix; in
     image = myLib.wallpaperPath;
     polarity = "dark";             # "light" или "dark"
     base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-mocha.yaml";
+    targets = {
+      generic.enable = true;      # Отключаем настройку generic display manager
+      sddm.enable = true;          # Включаем явную поддержку SDDM
+    };
   };
 }
