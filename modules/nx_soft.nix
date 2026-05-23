@@ -30,6 +30,7 @@
     home-manager                                        # Управление пользовательским окружением (конфиги, пакеты, службы)
     iw                                                  # Утилита для настройки беспроводных сетей (Wi-Fi)
     wirelesstools                                       # Набор инструментов для работы с Wi-Fi (iwconfig, iwlist и др.)
+    base16-schemes
     curl                                                # Инструмент для передачи данных по сети (HTTP, FTP и др.)
     uv                                                  # Менеджер Python-проектов (альтернатива pip + virtualenv)
     gsettings-desktop-schemas                           # Схемы настроек для GSettings (используются GTK-приложениями)
