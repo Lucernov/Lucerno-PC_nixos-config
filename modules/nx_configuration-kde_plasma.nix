@@ -28,9 +28,9 @@ in
     kdePackages.kde-gtk-config                              # Настройка GTK-тем для KDE
 
     # ========== Настройка фона SDDM ==========
-    (writeTextDir "share/sddm/themes/breeze/theme.conf.user" ''
-      [General]
-      background=${wallpaper}
-    '')
+#    (writeTextDir "share/sddm/themes/breeze/theme.conf.user" ''
+#      [General]
+#      background=${wallpaper}
+#    '')
   ];
 }
