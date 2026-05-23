@@ -18,7 +18,8 @@
     };
 
     stylix = {
-      url = "github:nix-community/stylix/master";
+      url = "github:nix-community/stylix";
+      #url = "github:nix-community/stylix/master";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -68,6 +69,7 @@
             { nixpkgs.pkgs = pkgsWithOverlay; }                                                            # Переопределяем pkgs для всей системы (с оверлеем)
             ./modules
             inputs.stylix.nixosModules.stylix
+            catppuccin.nixosModules.catppuccin
             # Основной модуль хоста (импортирует профили)
             # home-manager.nixosModules.home-manager {                                                     # (закомментировано) Home Manager как системный модуль
             #   home-manager.useGlobalPkgs = true;                                                         # Использовать глобальные пакеты
