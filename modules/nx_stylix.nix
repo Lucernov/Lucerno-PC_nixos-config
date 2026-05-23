@@ -4,14 +4,14 @@
 let myLib = import ../lib.nix; in
 
 {
-  # Объявляем недостающую опцию, которую требует stylix (GNOME target)
+  # Объявляем недостающую опцию для stylix GNOME
   options.services.displayManager.generic = lib.mkOption {
     type = lib.types.attrs;
     default = {};
     description = "Legacy option required by stylix GNOME module";
   };
 
-  # Настройки stylix
+  # Конфигурация stylix
   config = {
     stylix = {
       enable = true;
@@ -20,7 +20,6 @@ let myLib = import ../lib.nix; in
       base16Scheme = "${pkgs.base16-schemes}/share/themes/gruvbox-dark-medium.yaml";
       targets = {
         gnome.enable = false;   # отключаем GNOME
-        sddm.enable = true;     # включаем SDDM
       };
     };
   };
