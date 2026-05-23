@@ -5,6 +5,8 @@
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   system.stateVersion = "25.11";
 
+   services.displayManager.generic = lib.mkIf false { };
+
   imports = [
     ../hardware-configuration.nix
     ./nx_soft.nix
