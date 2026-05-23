@@ -17,11 +17,10 @@
       inputs.home-manager.follows = "home-manager";                                                        # Следовать за home-manager
     };
 
-    stylix = {
-      #url = "github:nix-community/stylix";
-      url = "github:nix-community/stylix/master";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+stylix = {
+  url = "github:nix-community/stylix/release-25.11";
+  inputs.nixpkgs.follows = "nixpkgs";
+};
 
     flake-parts.url = "github:hercules-ci/flake-parts";                                                    # Flake-parts — фреймворк для модульной организации flake
     flake-parts.inputs.nixpkgs-lib.follows = "nixpkgs";                                                    # Зависимости flake-parts также используют основной nixpkgs
