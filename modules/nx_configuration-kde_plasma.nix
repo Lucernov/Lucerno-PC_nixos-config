@@ -1,9 +1,9 @@
 { config, pkgs, ... }:
 
-#let
-#  myLib = import ../lib.nix;
-#  wallpaper = myLib.wallpaperPath;
-#in
+let
+  myLib = import ../lib.nix;
+  wallpaper = myLib.wallpaperPath;
+in
 {
   # ========== Настройка дисплейного менеджера SDDM ==========
   services.displayManager.sddm = {
