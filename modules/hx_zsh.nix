@@ -1,4 +1,4 @@
-{ ... }:
+{ myLib, ... }:
 {
   programs.zsh = {
     enable = true;                          # Включает настройку Zsh через home-manager (генерирует ~/.zshrc)
@@ -6,6 +6,26 @@
     autosuggestion.enable = true;           # Включает автоматические подсказки (as-you-type) на основе истории
     syntaxHighlighting.enable = true;       # Включает подсветку синтаксиса команд в терминале
 
+    shellAliases = {
+      ll = "ls -la";
+      la = "ls -a";
+      l = "ls -l";
+      gs = "git status";
+      gp = "git pull";
+      gc = "git commit -m";
+      gco = "git checkout";
+      gb = "git branch";
+      mon = "kitty @ launch --location=vsplit -- pw-top; sleep 0.2; kitty @ launch --location=hsplit -- nvtop";
+      sync = "cd /home/lucerno/${myLib.configDirName} && git add -A && (git commit -m \"$(date '+%Y-%m-%d %H:%M:%S')\" || true) && git push";
+      hm="cd /home/lucerno/${myLib.configDirName} && git add -A && (git commit -m \"hm: $(date '+%Y-%m-%d %H:%M:%S')\" || true) && git push && export NIXPKGS_ALLOW_UNFREE=1 && nh home switch";
+      update="cd /home/lucerno/${myLib.configDirName} && git add -A && git commit -m \"pre-rebuild\" && git push && sudo nh os switch";
+      upgrade="cd /home/lucerno/${myLib.configDirName} && git add -A && (git commit -m \"upgrade: $(date '+%Y-%m-%d %H:%M:%S')\" || true) && git push && sudo nh os switch --update";
+      parabolic = "org.nickvision.tubeconverter";
+      #hm = "cd /home/lucerno/${myLib.configDirName} && git add -A && (git commit -m \"hm: $(date '+%Y-%m-%d %H:%M:%S')\" || true) && git push && export NIXPKGS_ALLOW_UNFREE=1 && home-manager switch --flake .#lucerno";
+      #update = "cd /home/lucerno/${myLib.configDirName} && git add -A && git commit -m \"pre-rebuild\" && git push && sudo nixos-rebuild switch --flake .#Lucerno-PC";
+      #upgrade = "cd /home/lucerno/${myLib.configDirName} && nix flake update && git add -A && (git commit -m \"upgrade: $(date)\" || true) && git push && sudo nixos-rebuild switch --flake .#Lucerno-PC";
+      #steam = "taskset -c 0-11 steam";
+    };
 
     # Oh My Zsh
     oh-my-zsh = {
@@ -39,24 +59,6 @@
     # выполнить команду под номером 123 - !123
     # выполнить последнюю команду начинающуюся с ls - !ls
     # поиск по истории - Ctrl+R
-    };
-
-    shellAliases = {
-      ll = "ls -la";
-      la = "ls -a";
-      l = "ls -l";
-      gs = "git status";
-      gp = "git pull";
-      gc = "git commit -m";
-      gco = "git checkout";
-      gb = "git branch";
-      mon = "kitty @ launch --location=vsplit -- pw-top; sleep 0.2; kitty @ launch --location=hsplit -- nvtop";
-      hm = "cd /home/lucerno/nixos-config && git add -A && (git commit -m \"hm: $(date '+%Y-%m-%d %H:%M:%S')\" || true) && git push && export NIXPKGS_ALLOW_UNFREE=1 && home-manager switch --flake .#lucerno";
-      sync = "cd /home/lucerno/nixos-config && git add -A && (git commit -m \"$(date '+%Y-%m-%d %H:%M:%S')\" || true) && git push";
-      update = "cd /home/lucerno/nixos-config && git add -A && git commit -m \"pre-rebuild\" && git push && sudo nixos-rebuild switch --flake .#Lucerno-PC";
-      upgrade = "cd /home/lucerno/nixos-config && nix flake update && git add -A && (git commit -m \"upgrade: $(date)\" || true) && git push && sudo nixos-rebuild switch --flake .#Lucerno-PC";
-      parabolic = "org.nickvision.tubeconverter";
-      #steam = "taskset -c 0-11 steam";
     };
 
     initContent = ''

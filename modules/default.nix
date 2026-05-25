@@ -1,5 +1,5 @@
 # modules/default.nix
-{ config, pkgs, lib, pkgs-unstable, inputs, ... }:
+{ config, pkgs, lib, pkgs-unstable, inputs, myLib, ... }:
                                                                                                                           # НАДО ДОРАЗОБРАТЬСЯ С ГИТ
 {
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
@@ -19,18 +19,18 @@
     "d /home/lucerno/.local/share 0755 lucerno lucerno -"
     "d /home/lucerno/.config 0755 lucerno lucerno -"
     "L+ /home/lucerno/drum_sklad - - - - /mnt/sys_archiv/samples/drum_sklad"
-    "L+ /home/lucerno/.local/share/Steam/userdata - - - - /home/lucerno/nixos-config/dotfiles/config/Steam/userdata"
+    "L+ /home/lucerno/.local/share/Steam/userdata - - - - /home/lucerno/${myLib.configDirName}/dotfiles/config/Steam/userdata"
     "L+ /home/lucerno/.local/share/vital - - - - /mnt/sys_archiv/samples/vital"
-    "L+ /home/lucerno/.config/AmneziaVPN.ORG - - - - /home/lucerno/nixos-config/dotfiles/config/AmneziaVPN.ORG"
-    "L+ /home/lucerno/.config/obs-studio - - - - /home/lucerno/nixos-config/dotfiles/config/obs-studio"
+    "L+ /home/lucerno/.config/AmneziaVPN.ORG - - - - /home/lucerno/${myLib.configDirName}/dotfiles/config/AmneziaVPN.ORG"
+    "L+ /home/lucerno/.config/obs-studio - - - - /home/lucerno/${myLib.configDirName}/dotfiles/config/obs-studio"
     "L+ /home/lucerno/.config/DecentSampler - - - - /mnt/sys_archiv/samples/DecentSampler"
-    "L+ /home/lucerno/.config/REAPER - - - - /home/lucerno/nixos-config/dotfiles/config/REAPER"
-    "L+ /home/lucerno/.config/yabridgectl - - - - /home/lucerno/nixos-config/dotfiles/config/yabridgectl"
-    "L+ /home/lucerno/.config/MangoHud - - - - /home/lucerno/nixos-config/dotfiles/config/MangoHud"
+    "L+ /home/lucerno/.config/REAPER - - - - /home/lucerno/${myLib.configDirName}/dotfiles/config/REAPER"
+    "L+ /home/lucerno/.config/yabridgectl - - - - /home/lucerno/${myLib.configDirName}/dotfiles/config/yabridgectl"
+    "L+ /home/lucerno/.config/MangoHud - - - - /home/lucerno/${myLib.configDirName}/dotfiles/config/MangoHud"
     "L+ /home/lucerno/.local/share/Steam/steamapps - - - - /mnt/games/SteamLibrary/steamapps"
 
-    "L+ /home/lucerno/.config/kglobalshortcutsrc - - - - /home/lucerno/nixos-config/dotfiles/config/KDE/config-kglobalshortcutsrc"
-    "L+ /home/lucerno/.local/share/applications/net.local.kitten - - - - /home/lucerno/nixos-config/dotfiles/config/KDE/local-share-applications-net.local.kitten"
+    "L+ /home/lucerno/.config/kglobalshortcutsrc - - - - /home/lucerno/${myLib.configDirName}/dotfiles/config/KDE/config-kglobalshortcutsrc"
+    "L+ /home/lucerno/.local/share/applications/net.local.kitten - - - - /home/lucerno/${myLib.configDirName}/dotfiles/config/KDE/local-share-applications-net.local.kitten"
   ];
 
 
@@ -70,7 +70,7 @@
   users.groups.powercap = {};
   users.users.lucerno = {                                                                   # Основные настройки учётной записи
     isNormalUser = true;                                                                    # Обычный пользователь (не системный)
-    hashedPasswordFile = "/home/lucerno/nixos-config/secrets/lucerno-password.hash";        # Файл с хешем пароля
+    hashedPasswordFile = "/home/lucerno/${myLib.configDirName}/secrets/lucerno-password.hash";        # Файл с хешем пароля
     group = "lucerno";                                                                      # Группа, к которой принадлежит пользователь
     extraGroups = [ "wheel" "networkmanager" "audio" "video" "storage" "render" "powercap" ]; # Дополнительные группы
     shell = pkgs.zsh;                                                                       # Командная оболочка по умолчанию (Zsh)
@@ -168,6 +168,11 @@
       keep-outputs = true;                                                                  # Сохранять готовые outputs пакетов (обычно всегда true)
     };
   };
+
+  programs.nh = {
+  enable = true;
+  flake = "/home/lucerno/${myLib.configDirName}";
+};
 
 
 }

@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, myLib, ... }:
 {
   # XDG пользовательские директории
   home.file = {
@@ -58,7 +58,7 @@
       Name=Minion
       Comment=Управление аддонами для MMORPG
       Exec=minion
-      Icon=/mnt/images/sys-icons/icon-minion.png
+      Icon=/home/lucerno/${myLib.configDirName}/dotfiles/sys-icons/icon-minion.png
       Categories=Game;
       Terminal=false
       StartupWMClass=Minion
@@ -84,7 +84,7 @@
       Name=Ampero II
       Comment=Hotone Ampero II Editor
       Exec=env WINEPREFIX="/mnt/music/wine/wine-guitar" wine "/mnt/music/wine/wine-guitar/drive_c/Program Files/Hotone/Ampero II/Ampero II.exe"
-      Icon=/home/lucerno/nixos-config/dotfiles/sys-icons/icon-hotone.png
+      Icon=/home/lucerno/${myLib.configDirName}/dotfiles/sys-icons/icon-hotone.png
       Categories=Audio;AudioVideo;
       StartupNotify=true
       Terminal=false

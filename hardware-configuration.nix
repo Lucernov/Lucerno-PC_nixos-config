@@ -1,10 +1,10 @@
-{ config, pkgs, lib, modulesPath, ... }:
+{ config, pkgs, lib, modulesPath, myLib, ... }:
 
 let
   # UUID дисков
   bootUUID = "59A7-C7F6";
   sysUUID = "1964f286-7b1d-40df-8201-5824671e9631";
-  sysBackupUUID = "67a25908-e1e2-4e53-a04b-909418c0eff8";     # второй раздел системного диска @nixos-config, @ai, @sys-archiv
+  sysBackupUUID = "67a25908-e1e2-4e53-a04b-909418c0eff8";     # второй раздел системного диска @nixos-config (${myLib.configDirName}), @ai, @sys-archiv
 
   gamesUUID = "897f0999-d31e-45d1-b186-6822c7d17477";
   musicUUID = "3615f1b6-bb2e-4254-b795-f08e9a542523";
@@ -58,10 +58,10 @@ in
 
   # ========== ДОПОЛНИТЕЛЬНЫЕ ДИСКИ ==========
   # SSD раздел бэкапа с несколькими подтомами
-  fileSystems."/home/lucerno/nixos-config" = {
+  fileSystems."/home/lucerno/${myLib.configDirName}" = {
     device = "/dev/disk/by-uuid/${sysBackupUUID}";
     fsType = "btrfs";
-    options = [ "subvol=@nixos-config" "compress=zstd" "noatime" "space_cache=v2" "ssd" ];
+    options = [ "subvol=@${myLib.configDirName}" "compress=zstd" "noatime" "space_cache=v2" "ssd" ];
   };
 
   fileSystems."/mnt/sys_archiv" = {
@@ -139,7 +139,7 @@ in
     "L+ /home/lucerno/Документы - - - - /mnt/docs"
     "L+ /home/lucerno/Музыка - - - - /mnt/music"
     "L+ /home/lucerno/Изображения - - - - /mnt/images"
-    "d /home/lucerno/nixos-config 0755 lucerno lucerno -"
+    "d /home/lucerno/${myLib.configDirName} 0755 lucerno lucerno -"
     "d /mnt/ai 0755 lucerno lucerno -"
     "d /mnt/sys_archiv 0755 lucerno lucerno -"
     "z /sys/class/powercap/intel-rapl:*/energy_uj 0640 root powercap -"
