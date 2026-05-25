@@ -17,10 +17,10 @@
       inputs.home-manager.follows = "home-manager";                                                        # Следовать за home-manager
     };
 
-stylix = {
-  url = "github:nix-community/stylix/release-25.11";
-  inputs.nixpkgs.follows = "nixpkgs";
-};
+    stylix = {
+      url = "github:nix-community/stylix/release-25.11";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     flake-parts.url = "github:hercules-ci/flake-parts";                                                    # Flake-parts — фреймворк для модульной организации flake
     flake-parts.inputs.nixpkgs-lib.follows = "nixpkgs";                                                    # Зависимости flake-parts также используют основной nixpkgs
@@ -33,18 +33,18 @@ stylix = {
   # ========== Выходные данные (outputs) ==========
   outputs = inputs@{ flake-parts, nixpkgs, nixpkgs-unstable, home-manager, plasma-manager, ... }:          # Функция, которая принимает все входы и возвращает результаты сборки
     let
+      pkgsUnstable = import nixpkgs-unstable {                                                             # Создаём экземпляр нестабильного nixpkgs (для свежих пакетов)
+        system = "x86_64-linux";
+        config.allowUnfree = true;
+      };
+
       pkgsWithOverlay = import nixpkgs {                                                                   # Создаём экземпляр nixpkgs с оверлеем (кастомные пакеты)
         system = "x86_64-linux";
         config.allowUnfree = true;
         overlays = [ (import ./overlays/default.nix { pkgs-unstable = pkgsUnstable; }) ];
       };
 
-      pkgsUnstable = import nixpkgs-unstable {                                                             # Создаём экземпляр нестабильного nixpkgs (для свежих пакетов)
-        system = "x86_64-linux";
-        config.allowUnfree = true;
-      };
-
-    myLib = import ./lib.nix;
+      myLib = import ./lib.nix;
     in
 
     flake-parts.lib.mkFlake { inherit inputs; } {                                                          # Используем flake-parts для построения flake
@@ -75,7 +75,7 @@ stylix = {
           modules = [ ./modules/home.nix ];                                                               # Основной модуль home-manager
           extraSpecialArgs = {
             inherit inputs;
-            pkgs-unstable = nixpkgs-unstable.legacyPackages.x86_64-linux;                                 # Нестабильные пакеты для home-manager
+            pkgs-unstable = pkgsUnstable;                                                                 # Нестабильные пакеты для home-manager
             inherit myLib;
           };
         };

@@ -1,10 +1,10 @@
 { ... }:
 {
-programs.zsh = {
-  enable = true;                          # Включает настройку Zsh через home-manager (генерирует ~/.zshrc)
-  enableCompletion = true;                # Включает автодополнение команд (обычные completion)
-  autosuggestion.enable = true;           # Включает автоматические подсказки (as-you-type) на основе истории
-  syntaxHighlighting.enable = true;       # Включает подсветку синтаксиса команд в терминале
+  programs.zsh = {
+    enable = true;                          # Включает настройку Zsh через home-manager (генерирует ~/.zshrc)
+    enableCompletion = true;                # Включает автодополнение команд (обычные completion)
+    autosuggestion.enable = true;           # Включает автоматические подсказки (as-you-type) на основе истории
+    syntaxHighlighting.enable = true;       # Включает подсветку синтаксиса команд в терминале
 
 
     # Oh My Zsh
@@ -33,12 +33,12 @@ programs.zsh = {
       share = true;                       # Общая история между всеми терминалами
       save = 10000;                       # Сколько команд сохранять в файл
       extended = true;                    # Включает расширенный формат истории с временными метками
-# Полезные команды:
-# показать историю - history
-# повторить последнюю команду - !!
-# выполнить команду под номером 123 - !123
-# выполнить последнюю команду начинающуюся с ls - !ls
-# поиск по истории - Ctrl+R
+    # Полезные команды:
+    # показать историю - history
+    # повторить последнюю команду - !!
+    # выполнить команду под номером 123 - !123
+    # выполнить последнюю команду начинающуюся с ls - !ls
+    # поиск по истории - Ctrl+R
     };
 
     shellAliases = {
@@ -79,5 +79,6 @@ programs.zsh = {
       PROMPT='%F{green}%n@%m%f:%F{blue}%~%f$ '
       RPROMPT='%F{red}$(git branch --show-current 2>/dev/null)%f'
     '';
+
   };
 }

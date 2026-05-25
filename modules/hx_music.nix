@@ -2,13 +2,13 @@
 {
   # ========== Активационные скрипты (выполняются при каждом переключении поколения home-manager) ==========
   # Создаёт символическую ссылку wine64 в ~/.local/bin, чтобы winetricks не ругался на отсутствие wine64
-  home.activation.createWine64Link = lib.hm.dag.entryAfter ["writeBoundary"] ''
+  home.activation.createWine64Link = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
     mkdir -p $HOME/.local/bin
     ln -sf ${pkgs-unstable.wineWow64Packages.staging}/bin/wine $HOME/.local/bin/wine64
   '';
 
   # Создаёт каталог ~/.vst3 для пользовательских VST-плагинов (стандартная папка для VST3)
-  home.activation.createVst3Dir = lib.hm.dag.entryAfter ["writeBoundary"] ''
+  home.activation.createVst3Dir = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
     mkdir -p $HOME/.vst3
   '';
 

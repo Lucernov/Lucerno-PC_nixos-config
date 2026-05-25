@@ -72,7 +72,7 @@
     isNormalUser = true;                                                                    # Обычный пользователь (не системный)
     hashedPasswordFile = "/home/lucerno/nixos-config/secrets/lucerno-password.hash";        # Файл с хешем пароля
     group = "lucerno";                                                                      # Группа, к которой принадлежит пользователь
-    extraGroups = [ "wheel" "networkmanager" "audio" "video" "storage" "render" "powercap" ];          # Дополнительные группы
+    extraGroups = [ "wheel" "networkmanager" "audio" "video" "storage" "render" "powercap" ]; # Дополнительные группы
     shell = pkgs.zsh;                                                                       # Командная оболочка по умолчанию (Zsh)
   };
   # ========== Настройка sudo ==========
@@ -83,21 +83,21 @@
 
 
 # ========== Переменные окружения для Wayland и NVIDIA ==========
-environment.sessionVariables = {
-  __GLX_VENDOR_LIBRARY_NAME = "nvidia";                                                     # Принудительно указываем Vulkan-драйвер NVIDIA для OpenGL/GLX приложений
-  __GL_VRR_ALLOWED = "1";                                                                   # Разрешает Variable Refresh Rate (VRR / G-Sync / FreeSync) Включает адаптивную синхронизацию для совместимых мониторов
-  GBM_BACKEND = "nvidia-drm";                                                               # Указывает бэкенд Graphics Buffer Manager (GBM) от NVIDIA. Необходимо для корректной работы Wayland с проприетарным драйвером
-  CHROME_FLAGS = "--ozone-platform-hint=auto";                                              # Флаги для браузеров на базе Chromium (Chrome, Edge, Brave и др.) Принудительно включает поддержку Wayland через Ozone
-  ELECTRON_OZONE_PLATFORM_HINT = "auto";                                                    # Для приложений на Electron (VS Code, Discord, Telegram и др.) Заставляет их использовать Wayland вместо XWayland
-  QT_QPA_PLATFORM = "wayland";                                                              # Задаёт бэкенд Qt для работы через Wayland (вместо X11)
-  GDK_BACKEND = "wayland";                                                                  # Указывает GTK-приложениям использовать Wayland
-  SDL_VIDEODRIVER = "wayland";                                                              # Задаёт драйвер для SDL (используется в играх и мультимедиа) – Wayland
-  QT_QPA_PLATFORM_PLUGIN_PATH = "${pkgs.qt6.qtwayland}/lib/qt-6/plugins/platforms";         # Путь к плагинам Qt для поддержки Wayland. Без этого некоторые Qt-приложения могут не запускаться под Wayland
-  NIXOS_OZONE_WL = "1";                                                                     # Включает поддержку Ozone Wayland для Chromium/Electron (флаг NIXOS_OZONE_WL)
-  WLR_NO_HARDWARE_CURSORS = "1";                                                            # Отключает аппаратные курсоры в wlroots (помогает избежать проблем с мерцанием курсора на NVIDIA)
-  EGL_PLATFORM = "wayland";                                                                 # Указывает EGL использовать Wayland (необходимо для некоторых приложений)
-  #WLR_RENDERER_ALLOW_SOFTWARE = "1";                                                       # Разрешить программный рендеринг в wlroots (может помочь при проблемах с драйвером)
-};
+  environment.sessionVariables = {
+    __GLX_VENDOR_LIBRARY_NAME = "nvidia";                                                    # Принудительно указываем Vulkan-драйвер NVIDIA для OpenGL/GLX приложений
+    __GL_VRR_ALLOWED = "1";                                                                  # Разрешает Variable Refresh Rate (VRR / G-Sync / FreeSync) Включает адаптивную синхронизацию для совместимых мониторов
+    GBM_BACKEND = "nvidia-drm";                                                              # Указывает бэкенд Graphics Buffer Manager (GBM) от NVIDIA. Необходимо для корректной работы Wayland с проприетарным драйвером
+    CHROME_FLAGS = "--ozone-platform-hint=auto";                                             # Флаги для браузеров на базе Chromium (Chrome, Edge, Brave и др.) Принудительно включает поддержку Wayland через Ozone
+    ELECTRON_OZONE_PLATFORM_HINT = "auto";                                                   # Для приложений на Electron (VS Code, Discord, Telegram и др.) Заставляет их использовать Wayland вместо XWayland
+    QT_QPA_PLATFORM = "wayland";                                                             # Задаёт бэкенд Qt для работы через Wayland (вместо X11)
+    GDK_BACKEND = "wayland";                                                                 # Указывает GTK-приложениям использовать Wayland
+    SDL_VIDEODRIVER = "wayland";                                                             # Задаёт драйвер для SDL (используется в играх и мультимедиа) – Wayland
+    QT_QPA_PLATFORM_PLUGIN_PATH = "${pkgs.qt6.qtwayland}/lib/qt-6/plugins/platforms";        # Путь к плагинам Qt для поддержки Wayland. Без этого некоторые Qt-приложения могут не запускаться под Wayland
+    NIXOS_OZONE_WL = "1";                                                                    # Включает поддержку Ozone Wayland для Chromium/Electron (флаг NIXOS_OZONE_WL)
+    WLR_NO_HARDWARE_CURSORS = "1";                                                           # Отключает аппаратные курсоры в wlroots (помогает избежать проблем с мерцанием курсора на NVIDIA)
+    EGL_PLATFORM = "wayland";                                                                # Указывает EGL использовать Wayland (необходимо для некоторых приложений)
+    #WLR_RENDERER_ALLOW_SOFTWARE = "1";                                                      # Разрешить программный рендеринг в wlroots (может помочь при проблемах с драйвером)
+  };
 
 
   # ========== Настройки файервола с nftables ==========
@@ -105,7 +105,7 @@ environment.sessionVariables = {
   networking.firewall = {                                                                   # Основные настройки межсетевого экрана
     enable = true;                                                                          # Включаем файервол
     allowedTCPPorts = [ 22 ];                                                               # Разрешаем входящие TCP-соединения на порт 22 (SSH)
-    allowPing = false;                                                                       # Отключить ICMP-запросы (ping)
+    allowPing = false;                                                                      # Отключить ICMP-запросы (ping)
     logRefusedConnections = false;                                                          # Логирование отклонённых подключений (refused connections) Отключаем, чтобы не засорять логи
     logRefusedPackets = false;                                                              # Логирование отклонённых пакетов (refused packets) Отключаем для снижения шума
   };
