@@ -68,7 +68,7 @@
     pinta                                               # Простой растровый редактор
     gimp                                                # Мощный растровый редактор
     inkscape                                            # Векторная графика
-    blender                                             # 3D-моделирование
+    (blender.override { cudaSupport = true; })          # 3D-моделирование
     upscaler                                            # Увеличение разрешения изображений
     krita                                               # Кастомный пакет Krita (цифровая живопись)
 
@@ -105,6 +105,7 @@
     wineWow64Packages.staging                           # Wine с поддержкой 64 и 32 бит (staging‑патчи для аудио)
     reaper-sws-extension                                # Расширение SWS для REAPER (дополнительные команды и автоматизация)
     reaper-reapack-extension                            # Менеджер скриптов ReaPack для REAPER (установка пользовательских скриптов)
+    lsp-plugins
   ]);
 
 #nix run nixpkgs#genact
