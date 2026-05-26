@@ -46,4 +46,6 @@
     };
     Install.WantedBy = [ "default.target" ];
   };
+
+  # инструкция обновления токена для гуглдрайва если что туточки ../dotfiles/config/rclone/обновление токена гуглдрайва.txt
 }
