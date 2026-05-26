@@ -11,7 +11,7 @@
 
     settings = {
       global = {
-        "disable netbios" = "yes"                           # Отключает старый NetBIOS (для Windows‑клиентов до Windows 10)
+        "disable netbios" = "yes";                           # Отключает старый NetBIOS (для Windows‑клиентов до Windows 10)
         "workgroup" = "pautinko";                           # Рабочая группа (должна совпадать с настройками клиентов)
         "server string" = "lucerno-pc";                     # Описание сервера в сети
         "netbios name" = "lucerno-pc";                      # Имя сервера в NetBIOS
