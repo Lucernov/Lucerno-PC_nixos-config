@@ -41,6 +41,8 @@
       "ctrl+alt+у" = "launch --location=hsplit";  # Разделение окна по горизонтали (верх/низ)
       "ctrl+alt+d" = "launch --location=vsplit";  # Разделение окна по вертикали (лево/право)
       "ctrl+alt+в" = "launch --location=vsplit";  # Разделение окна по вертикали (лево/право)
+      "ctrl+shift+w" = "close_window";          # Закрыть текущее окно/сплит
+      "ctrl+shift+ц" = "close_window";          # Русская раскладка (буква 'ц')
     };
 
     # Любые другие строки, которые не поддерживаются settings/keybindings

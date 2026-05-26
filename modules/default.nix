@@ -14,7 +14,7 @@
   ];
 
 
-    # ========== мои симлинки ==========
+  # ========== мои симлинки ==========
   systemd.tmpfiles.rules = [
     "d /mnt/www-GoogleDrive 0755 lucerno users -"
     "d /mnt/www-OneDrive 0755 lucerno users -"
@@ -85,7 +85,7 @@
   };
 
 
-# ========== Переменные окружения для Wayland и NVIDIA ==========
+  # ========== Переменные окружения для Wayland и NVIDIA ==========
   environment.sessionVariables = {
     __GLX_VENDOR_LIBRARY_NAME = "nvidia";                                                    # Принудительно указываем Vulkan-драйвер NVIDIA для OpenGL/GLX приложений
     __GL_VRR_ALLOWED = "1";                                                                  # Разрешает Variable Refresh Rate (VRR / G-Sync / FreeSync) Включает адаптивную синхронизацию для совместимых мониторов
@@ -159,9 +159,9 @@
 
   # ========== Настройки FUSE для rclone (и других FUSE-файловых систем) ==========
   programs.fuse = {
-    enable = true;               # Включает поддержку FUSE в системе
-    userAllowOther = true;       # Разрешает опцию allow_other для обычных пользователей
-    mountMax = 1000;             # Максимальное количество FUSE-монтирований на пользователя
+    enable = true;                                                                          # Включает поддержку FUSE в системе
+    userAllowOther = true;                                                                  # Разрешает опцию allow_other для обычных пользователей
+    mountMax = 1000;                                                                        # Максимальное количество FUSE-монтирований на пользователя
   };
 
 

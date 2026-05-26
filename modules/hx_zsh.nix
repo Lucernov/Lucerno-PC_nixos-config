@@ -22,9 +22,6 @@
       upgrade = "cd /home/lucerno/${myLib.configDirName} && git add -A && (git commit -m \"upgrade: $(date '+%Y-%m-%d %H:%M:%S')\" || true) && git push && nh os switch --update";
       clean = "nh clean all --keep 2 && nh os boot --update";
       parabolic = "org.nickvision.tubeconverter";
-      #hm = "cd /home/lucerno/${myLib.configDirName} && git add -A && (git commit -m \"hm: $(date '+%Y-%m-%d %H:%M:%S')\" || true) && git push && export NIXPKGS_ALLOW_UNFREE=1 && home-manager switch --flake .#lucerno";
-      #update = "cd /home/lucerno/${myLib.configDirName} && git add -A && git commit -m \"pre-rebuild\" && git push && sudo nixos-rebuild switch --flake .#Lucerno-PC";
-      #upgrade = "cd /home/lucerno/${myLib.configDirName} && nix flake update && git add -A && (git commit -m \"upgrade: $(date)\" || true) && git push && sudo nixos-rebuild switch --flake .#Lucerno-PC";
       #steam = "taskset -c 0-11 steam";
     };
 

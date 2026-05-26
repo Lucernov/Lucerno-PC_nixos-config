@@ -2,7 +2,7 @@
 { config, pkgs, ... }:
 
 {
-  # Системные сервисы (запускаются от пользователя, но монтируются в /mnt)
+  # Системные сервисы (монтируются в /mnt)
   systemd.user.services.rclone-gdrive = {
     Unit = {
       Description = "RClone Mount for Google Drive";
