@@ -17,9 +17,10 @@
       gb = "git branch";
       mon = "kitty @ launch --location=vsplit -- pw-top; sleep 0.2; kitty @ launch --location=hsplit -- nvtop";
       sync = "cd /home/lucerno/${myLib.configDirName} && git add -A && (git commit -m \"$(date '+%Y-%m-%d %H:%M:%S')\" || true) && git push";
-      hm="cd /home/lucerno/${myLib.configDirName} && git add -A && (git commit -m \"hm: $(date '+%Y-%m-%d %H:%M:%S')\" || true) && git push && export NIXPKGS_ALLOW_UNFREE=1 && nh home switch";
-      update="cd /home/lucerno/${myLib.configDirName} && git add -A && git commit -m \"pre-rebuild\" && git push && sudo nh os switch";
-      upgrade="cd /home/lucerno/${myLib.configDirName} && git add -A && (git commit -m \"upgrade: $(date '+%Y-%m-%d %H:%M:%S')\" || true) && git push && sudo nh os switch --update";
+      hm = "cd /home/lucerno/${myLib.configDirName} && git add -A && (git commit -m \"hm: $(date '+%Y-%m-%d %H:%M:%S')\" || true) && git push && export NIXPKGS_ALLOW_UNFREE=1 && nh home switch";
+      update = "cd /home/lucerno/${myLib.configDirName} && git add -A && git commit -m \"pre-rebuild\" && git push && sudo nh os switch";
+      upgrade = "cd /home/lucerno/${myLib.configDirName} && git add -A && (git commit -m \"upgrade: $(date '+%Y-%m-%d %H:%M:%S')\" || true) && git push && sudo nh os switch --update";
+      clean = "nh clean all --keep 2 && nh os boot --update";
       parabolic = "org.nickvision.tubeconverter";
       #hm = "cd /home/lucerno/${myLib.configDirName} && git add -A && (git commit -m \"hm: $(date '+%Y-%m-%d %H:%M:%S')\" || true) && git push && export NIXPKGS_ALLOW_UNFREE=1 && home-manager switch --flake .#lucerno";
       #update = "cd /home/lucerno/${myLib.configDirName} && git add -A && git commit -m \"pre-rebuild\" && git push && sudo nixos-rebuild switch --flake .#Lucerno-PC";

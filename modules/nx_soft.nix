@@ -57,6 +57,7 @@
 
     # ИНТЕРНЕТ
     iw                                                  # Утилита для настройки беспроводных сетей (Wi-Fi)
+    rclone
     wirelesstools                                       # Набор инструментов для работы с Wi-Fi (iwconfig, iwlist и др.)
     wget                                                # Утилита для загрузки файлов из интернета
     google-chrome                                       # Браузер Google Chrome

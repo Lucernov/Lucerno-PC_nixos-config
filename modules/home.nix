@@ -21,6 +21,7 @@
     ./hx_music.nix
     ./hx_plasma.nix
     ./hx_zsh.nix
+    ./hx_rclone.nix
   ];
 
   # ========== Включение модулей программ (через home-manager) ==========

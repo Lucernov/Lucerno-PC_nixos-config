@@ -36,7 +36,7 @@ add_section() {
 add_section "flake.lock" "flake.lock"
 add_section "flake.nix" "flake.nix"
 add_section "hardware-configuration.nix" "hardware-configuration.nix"
-add_section "lib.nix" "lib.nix"
+add_section "mylib.nix" "mylib.nix"
 
 # --- pkgs/ (автоматически все .nix файлы) ---
 echo "# --- Пакеты (pkgs/) ---" >> "$OUTPUT_FILE"

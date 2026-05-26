@@ -44,7 +44,7 @@
         overlays = [ (import ./overlays/default.nix { pkgs-unstable = pkgsUnstable; }) ];
       };
 
-      myLib = import ./lib.nix;
+      myLib = import ./mylib.nix;
     in
 
     flake-parts.lib.mkFlake { inherit inputs; } {                                                          # Используем flake-parts для построения flake

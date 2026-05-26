@@ -16,11 +16,14 @@
 
     # ========== мои симлинки ==========
   systemd.tmpfiles.rules = [
+    "d /mnt/www-GoogleDrive 0755 lucerno users -"
+    "d /mnt/www-OneDrive 0755 lucerno users -"
     "d /home/lucerno/.local/share 0755 lucerno lucerno -"
     "d /home/lucerno/.config 0755 lucerno lucerno -"
     "L+ /home/lucerno/drum_sklad - - - - /mnt/sys_archiv/samples/drum_sklad"
     "L+ /home/lucerno/.local/share/Steam/userdata - - - - /home/lucerno/${myLib.configDirName}/dotfiles/config/Steam/userdata"
     "L+ /home/lucerno/.local/share/vital - - - - /mnt/sys_archiv/samples/vital"
+    "L+ /home/lucerno/.config/rclone - - - - /home/lucerno/${myLib.configDirName}/dotfiles/config/rclone"
     "L+ /home/lucerno/.config/AmneziaVPN.ORG - - - - /home/lucerno/${myLib.configDirName}/dotfiles/config/AmneziaVPN.ORG"
     "L+ /home/lucerno/.config/obs-studio - - - - /home/lucerno/${myLib.configDirName}/dotfiles/config/obs-studio"
     "L+ /home/lucerno/.config/DecentSampler - - - - /mnt/sys_archiv/samples/DecentSampler"
@@ -151,6 +154,14 @@
         ];
       };
     };
+  };
+
+
+  # ========== Настройки FUSE для rclone (и других FUSE-файловых систем) ==========
+  programs.fuse = {
+    enable = true;               # Включает поддержку FUSE в системе
+    userAllowOther = true;       # Разрешает опцию allow_other для обычных пользователей
+    mountMax = 1000;             # Максимальное количество FUSE-монтирований на пользователя
   };
 
 
