@@ -180,6 +180,11 @@
     };
   };
 
+  systemd.services.systemd-tmpfiles-clean = {                                               # служба отчистки временных файлов
+    wantedBy = lib.mkForce [];                                                              # Отключаем запуск при загрузке (оставляем только таймер)
+    serviceConfig.TimeoutSec = "30s";                                                       # Ограничиваем время выполнения на случай, если служба всё же запустится
+  };
+
   programs.nh = {
   enable = true;
   flake = "/home/lucerno/${myLib.configDirName}";

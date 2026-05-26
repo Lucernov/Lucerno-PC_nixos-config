@@ -68,7 +68,6 @@
     # ГРАФИКА
     switcheroo
     pinta                                               # Простой растровый редактор
-    gimp                                                # Мощный растровый редактор
     inkscape                                            # Векторная графика
     (blender.override { cudaSupport = true; })          # 3D-моделирование
     upscaler                                            # Увеличение разрешения изображений

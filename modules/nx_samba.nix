@@ -7,9 +7,11 @@
   services.samba = {
     enable = true;                                          # Включаем сервер Samba
     openFirewall = true;                                    # Открываем порты 139, 445 в фаерволе
+    nmbd.enable = false;                                    # Отключаем демон NetBIOS (nmbd)
 
     settings = {
       global = {
+        "disable netbios" = "yes"                           # Отключает старый NetBIOS (для Windows‑клиентов до Windows 10)
         "workgroup" = "pautinko";                           # Рабочая группа (должна совпадать с настройками клиентов)
         "server string" = "lucerno-pc";                     # Описание сервера в сети
         "netbios name" = "lucerno-pc";                      # Имя сервера в NetBIOS
