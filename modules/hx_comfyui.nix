@@ -31,8 +31,8 @@
         Restart = "on-failure";                                                               # Перезапускать при сбое
         RestartSec = 5;                                                                       # Ждать 5 секунд перед перезапуском
         Environment = [                                                                       # Переменные окружения для процесса
-          "PATH=/run/current-system/sw/bin:/usr/bin"                                          # Пути поиска исполняемых файлов
-          "LD_LIBRARY_PATH=${libraryPath}:/run/current-system/sw/lib:/run/opengl-driver/lib"  # Пути поиска библиотек
+          "PATH=/run/current-system/sw/bin:/usr/bin:${pkgs.uv}/bin"                           # Пути поиска исполняемых файлов
+          "LD_LIBRARY_PATH=${libraryPath}:/run/opengl-driver/lib"                             # Пути поиска библиотек
         ];
       };
   #    Install = {
