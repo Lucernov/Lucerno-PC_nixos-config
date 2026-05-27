@@ -8,6 +8,7 @@
     enable = true;                                          # Включаем сервер Samba
     openFirewall = true;                                    # Открываем порты 139, 445 в фаерволе
     nmbd.enable = false;                                    # Отключаем демон NetBIOS (nmbd)
+    winbindd.enable = false;                                # Отключаем интеграцию в домен Active Directory (AD) Windows
 
     settings = {
       global = {

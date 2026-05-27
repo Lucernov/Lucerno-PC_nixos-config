@@ -17,47 +17,51 @@
   programs.htop.enable = true;                          # Устанавливает htop (интерактивный монитор процессов) системно
   programs.amnezia-vpn.enable = true;                   # Включает сервис AmneziaVPN (VPN-клиент)
   programs.appimage = {
-    enable = true;
-    binfmt = true; # Эта опция автоматически настраивает загрузчик.
+    enable = true;                                      # Включает поддержку запуска AppImage-файлов (бинарные образы приложений)
+    binfmt = true;                                      # Эта опция автоматически настраивает загрузчик.
   };
   # KDE приложения
   programs.partition-manager.enable = true;             # Включает модуль для утилиты управления разделами диска (KDE Partition Manager)
 
   # ========== Дополнительные системные пакеты ==========
   environment.systemPackages = with pkgs; [
-    nh                                                  # Утилита для удобного управления Nix (аналог nix-env, nix profile)
+    # СИСТЕМНЫЕ
+    nh                                                  # Утилита для управления Nix
     nix-tree                                            # Просмотр дерева зависимостей Nix
     home-manager                                        # Управление пользовательским окружением (конфиги, пакеты, службы)
-    base16-schemes
-    curl                                                # Инструмент для передачи данных по сети (HTTP, FTP и др.)
+    glib                                                # Базовая библиотека GLib (низкоуровневые структуры данных)
     uv                                                  # Менеджер Python-проектов (альтернатива pip + virtualenv)
     gsettings-desktop-schemas                           # Схемы настроек для GSettings (используются GTK-приложениями)
-    glib                                                # Базовая библиотека GLib (низкоуровневые структуры данных)
+    ffmpeg-full                                         # Полная версия FFmpeg (кодирование/декодирование аудио/видео)
+    base16-schemes                                      # Набор цветовых схем Base16 (для терминалов, редакторов)
+    curl                                                # Инструмент для передачи данных по сети (HTTP, FTP и др.)
     libva-utils                                         # Утилиты для VA-API (аппаратное ускорение видео)
     lsof                                                # Просмотр открытых файлов и сокетов
-    kitty                                               # Терминал с поддержкой GPU, вкладок и широкими возможностями кастомизации
-    lf                                                  # Быстрый файловый менеджер на Go с vim-подобным управлением
+    wayland-utils                                       # Набор утилит для диагностики Wayland (например, wayland-info)
+    gearlever                                           # Менеджер обновлений для графических приложений (например, AppImages)
+
+    # КОНСОЛЬНЫЕ
+    kitty                                               # Терминал
     mc                                                  # Midnight Commander – классический двухпанельный файловый менеджер (FTP, просмотр, редактор)
     yazi                                                # Современный файловый менеджер на Rust с предпросмотром изображений и видео
     unzip                                               # Утилита для распаковки ZIP-архивов
     fastfetch                                           # Вывод информации о системе (аналог neofetch, но быстрее)
-    # carbonyl                                          # Консольный браузер на движке Chromium (закомментирован)
+    # carbonyl                                          # Консольный браузер на движке Chromium
     nvtopPackages.nvidia                                # Монитор использования видеокарты NVIDIA в консоли (nvtop)
-    wayland-utils                                       # Набор утилит для диагностики Wayland (например, wayland-info)
     my-packages.btop                                    # Монитор ресурсов с графическим интерфейсом в терминале (аналог htop)
-
     bat                                                 # Улучшенный аналог cat с подсветкой синтаксиса
     mission-center                                      # Графический монитор системы (альтернатива btop)
-    gearlever                                           # Менеджер обновлений для графических приложений (например, Flatpak)
+    cava                                                # Консольный аудиовизуализатор (спектроанализатор)
+
 
     # KDE приложения
+    kdePackages.kcalc                                   # Калькулятор
     kdePackages.ktorrent                                # Torrent-клиент
     kdePackages.kdenlive                                # Видеоредактор
-    kdePackages.kcalc                                   # Калькулятор
 
     # ИНТЕРНЕТ
     iw                                                  # Утилита для настройки беспроводных сетей (Wi-Fi)
-    rclone
+    rclone                                              # Утилита для синхронизации и монтирования облачных хранилищ (Google Drive, OneDrive и др.)
     wirelesstools                                       # Набор инструментов для работы с Wi-Fi (iwconfig, iwlist и др.)
     wget                                                # Утилита для загрузки файлов из интернета
     google-chrome                                       # Браузер Google Chrome
@@ -66,26 +70,24 @@
     telegram-desktop                                    # Мессенджер Telegram
 
     # ГРАФИКА
-    switcheroo
+    upscaler                                            # Увеличение разрешения изображений
+    switcheroo                                          # простое и приложение для конвертации изображений
     pinta                                               # Простой растровый редактор
+    krita                                               # Кастомный пакет Krita (цифровая живопись)
     inkscape                                            # Векторная графика
     (blender.override { cudaSupport = true; })          # 3D-моделирование
-    upscaler                                            # Увеличение разрешения изображений
-    krita                                               # Кастомный пакет Krita (цифровая живопись)
 
     # МУЛЬТИМЕДИА
-    ffmpeg-full
     my-packages.qmmp                                    # Аудиоплеер
     vlc                                                 # Универсальный видеоплеер
-    cava
 
     # ИГРЫ
     my-packages.minion                                  # Менеджер аддонов для TESO
     (bottles.override { removeWarningPopup = true; })   # Запуск Windows-приложений через Wine (без всплывающих предупреждений)
-    lutris                                              # Игровой лаунчер для управления играми
-    heroic                                              # Лаунчер для Epic Games Store и GOG
     goverlay                                            # Оверлей для мониторинга системы и FPS (MangoHud, vkBasalt)
     mangohud                                            # Оверлей для отображения FPS и мониторинга системы в играх
+    #lutris                                             # Игровой лаунчер для управления играми
+    #heroic                                             # Лаунчер для Epic Games Store и GOG
 
     # МУЗЫКА
     my-packages.reaper                                  # REAPER – цифровая звуковая рабочая станция (DAW) БЕРЕТСЯ ИЗ НЕСТАБИЛЬНОГО КАНАЛА!!!!
@@ -93,7 +95,7 @@
     yabridgectl                                         # Утилита для управления yabridge (сканирование, синхронизация)
     winetricks                                          # Вспомогательный скрипт для настройки Wine (установка DLL, зависимостей)
     coppwr                                              # Графическая утилита для управления PipeWire (альтернатива pw-top)
-    vital                                               # Популярный синтезатор FM (VST-плагин)
+    vital                                               # Синтезатор FM (VST-плагин)
     surge-xt                                            # Синтезатор Surge XT
     geonkick                                            # Синтезатор барабанов для создания ударных партий
     drumgizmo                                           # Многоканальный сэмплер барабанов (реалистичные ударные)
@@ -106,7 +108,7 @@
     wineWow64Packages.staging                           # Wine с поддержкой 64 и 32 бит (staging‑патчи для аудио)
     reaper-sws-extension                                # Расширение SWS для REAPER (дополнительные команды и автоматизация)
     reaper-reapack-extension                            # Менеджер скриптов ReaPack для REAPER (установка пользовательских скриптов)
-    lsp-plugins
+    lsp-plugins                                         # Набор VST/LV2-плагинов для обработки звука (LSP)
   ]);
 
 #nix run nixpkgs#genact

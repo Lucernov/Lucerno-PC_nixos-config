@@ -1,30 +1,39 @@
 # modules/hx_rclone.nix
+# Модуль home-manager для настройки автоматического монтирования облачных дисков (Google Drive, OneDrive) через rclone
 { config, pkgs, ... }:
 
 {
-  # Системные сервисы (монтируются в /mnt)
+  # ========== Сервис монтирования Google Drive ==========
+  # Запускается от пользователя, монтирует диск в /mnt/www-GoogleDrive
   systemd.user.services.rclone-gdrive = {
     Unit = {
-      Description = "RClone Mount for Google Drive";
-      After = [ "network-online.target" ];
-      Wants = [ "network-online.target" ];
+      Description = "RClone Mount for Google Drive";                                  # Описание сервиса
+      After = [ "network-online.target" ];                                            # Запускать после того, как сеть поднята
+      Wants = [ "network-online.target" ];                                            # Желательно дождаться готовности сети
     };
     Service = {
-      Type = "simple";
+      Type = "simple";                                                                # Простой процесс (не разветвляется)
       ExecStart = ''${pkgs.rclone}/bin/rclone mount gdrive: /mnt/www-GoogleDrive \
         --config=/home/lucerno/.config/rclone/rclone.conf \
+        # Полное кэширование файлов
         --vfs-cache-mode full \
+        # Разрешить доступ другим пользователям
         --allow-other \
+        # Разрешить монтирование в непустую папку
         --allow-non-empty \
+        # Один параллельный поток передачи
         --transfers=1 \
+        # Один поток проверки
         --checkers=1'';
-      ExecStop = "/run/current-system/sw/bin/fusermount -u /mnt/www-GoogleDrive";
-      Restart = "on-failure";
-      RestartSec = "5";
+      ExecStop = "/run/current-system/sw/bin/fusermount -u /mnt/www-GoogleDrive";     # Команда размонтирования
+      Restart = "on-failure";                                                         # Перезапускать при сбое
+      RestartSec = "5";                                                               # Ждать 5 секунд перед перезапуском
     };
-    Install.WantedBy = [ "default.target" ];
+    Install.WantedBy = [ "default.target" ];                                          # Автоматически запускать при старте пользовательской сессии
   };
 
+  # ========== Сервис монтирования OneDrive ==========
+  # Запускается от пользователя, монтирует диск в /mnt/www-OneDrive
   systemd.user.services.rclone-onedrive = {
     Unit = {
       Description = "RClone Mount for OneDrive";
