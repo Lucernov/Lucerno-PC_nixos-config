@@ -15,13 +15,13 @@
   imports = [
     ./home-file.nix
 
-    #./hx_comfyui.nix
     ./hx_git.nix
     ./hx_kitty.nix
     ./hx_music.nix
     ./hx_plasma.nix
     ./hx_zsh.nix
     ./hx_rclone.nix
+    ./hx_comfyui.nix
   ];
 
   # ========== Включение модулей программ (через home-manager) ==========
