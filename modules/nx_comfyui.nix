@@ -16,13 +16,6 @@
     user = "lucerno";                             # Запускать сервис от пользователя
     group = "lucerno";                            # Группа пользователя
     createUser = false;                           # Не создавать системного пользователя — используем существующего
-
-    extraPackages = with pkgs.comfyuiPackages; [  # Включаем недостающие кастомные ноды
-      comfyui-controlnet-aux                      # ControlNet Preprocessors
-      comfyui-ipadapter-plus                      # IP-Adapter
-      comfyui-tooling-nodes                       # External Tooling Nodes
-      comfyui-inpaint-nodes                       # Inpaint Nodes
-    ];
   };
 
   # Отключаем автоматический запуск сервиса при загрузке системы.
@@ -30,4 +23,15 @@
   # lib.mkForce [] переопределяет стандартное значение wantedBy на пустой список,
   # что означает: сервис не будет запущен автоматически, но останется доступен для ручного управления.
   systemd.services.comfyui.wantedBy = lib.mkForce [];
+
+
+  systemd.tmpfiles.rules = lib.mkAfter [          # Добавляем правила tmpfiles к существующим (не перезаписываем!)
+    # Создаём папку custom_nodes, если её нет
+    "d /mnt/ai/ComfyUI/custom_nodes 0755 lucerno lucerno -"
+    # Симлинки для кастомных нод из отдельной папки
+    "L+ /mnt/ai/ComfyUI/custom_nodes/comfyui_controlnet_aux - - - - /mnt/ai/ComfyUI_krita-ai-diffusion/comfyui_controlnet_aux"
+    "L+ /mnt/ai/ComfyUI/custom_nodes/comfyui-inpaint-nodes - - - - /mnt/ai/ComfyUI_krita-ai-diffusion/comfyui-inpaint-nodes"
+    "L+ /mnt/ai/ComfyUI/custom_nodes/ComfyUI_IPAdapter_plus - - - - /mnt/ai/ComfyUI_krita-ai-diffusion/ComfyUI_IPAdapter_plus"
+    "L+ /mnt/ai/ComfyUI/custom_nodes/comfyui-tooling-nodes - - - - /mnt/ai/ComfyUI_krita-ai-diffusion/comfyui-tooling-nodes"
+  ];
 }
