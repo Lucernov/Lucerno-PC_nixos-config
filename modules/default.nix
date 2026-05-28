@@ -168,23 +168,33 @@
 
   # ========== Настройки сборки Nix ==========
   nix = {
-    settings.auto-optimise-store = true;                                                        # Автоматически оптимизировать store (удалять дубликаты файлов)
     gc = {                                                                                      # Настройки автоматической очистки старых поколений (garbage collection)
       automatic = true;                                                                         # Включить автоматическую сборку мусора
       dates = "weekly";                                                                         # Расписание: еженедельно (можно изменить на "daily", "monthly")
       options = "--delete-older-than 7d";                                                       # Удалять поколения старше 7 дней
     };
     settings = {                                                                                # Дополнительные параметры оптимизации и поведения
+      auto-optimise-store = true;                                                               # Автоматически оптимизировать store (удалять дубликаты файлов)
       max-jobs = 6;                                                                             # Максимальное количество параллельных сборок (задач Nix)
       keep-derivations = true;                                                                  # Сохранять деривации (промежуточные результаты сборки) – полезно для кэширования
       keep-outputs = true;                                                                      # Сохранять готовые outputs пакетов (обычно всегда true)
+      substituters = [                                                                          # Список дополнительных кэшей (substituters), откуда Nix может скачивать готовые бинарные сборки
+        "https://cache.nixos.org"                                                               # Основной кэш NixOS
+        "https://cache.flox.dev"                                                                # Официальный кэш NVIDIA/CUDA (предотвращает компиляцию CUDA из исходников)
+      ];
+      trusted-public-keys = [                                                                   # Публичные ключи для проверки подписей пакетов из соответствующих кэшей
+        "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="                        # Ключ основного кэша
+        "flox-cache-public-1:7F4OyH7ZCnFhcze3fJdfyXYLQw/aV7GEed86nQ7IsOs="                      # Ключ кэша flox (CUDA)
+      ];
     };
   };
+
 
   systemd.services.systemd-tmpfiles-clean = {                                                   # служба отчистки временных файлов
     wantedBy = lib.mkForce [];                                                                  # Отключаем запуск при загрузке (оставляем только таймер)
     serviceConfig.TimeoutSec = "30s";                                                           # Ограничиваем время выполнения на случай, если служба всё же запустится
   };
+
 
   programs.nh = {
   enable = true;
