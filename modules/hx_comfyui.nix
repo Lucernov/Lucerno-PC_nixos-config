@@ -1,7 +1,5 @@
 { pkgs, ... }:
-let
-  argostranslateEnv = pkgs.python312.withPackages (ps: [ ps.argostranslate ]);
-in {
+{
   systemd.user.services.comfyui = {
     Unit.Description = "ComfyUI server (user)";
     Service = {
@@ -9,9 +7,6 @@ in {
       WorkingDirectory = "/mnt/ai/ComfyUI";
       Restart = "on-failure";
       RestartSec = 5;
-      Environment = [
-        "PYTHONPATH=${argostranslateEnv}/${argostranslateEnv.sitePackages}"
-      ];
     };
     Install.WantedBy = [];
   };
