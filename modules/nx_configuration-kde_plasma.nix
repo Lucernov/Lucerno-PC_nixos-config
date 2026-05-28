@@ -12,6 +12,7 @@
   environment.sessionVariables = {                                  # Локаль для интерфейса SDDM (русский язык)
     LANG = "ru_RU.UTF-8";
     LANGUAGE = "ru_RU.UTF-8";
+    QT_QPA_PLATFORMTHEME = "kde";
   };
 
   services.desktopManager.plasma6.enable = true;                    # Подключает все необходимые системные службы, компоненты и настройки, чтобы KDE Plasma 6 могла работать в качестве основной графической среды

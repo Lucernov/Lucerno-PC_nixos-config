@@ -1,7 +1,7 @@
 { pkgs, pkgs-unstable }:
 {
-  minion = pkgs.callPackage ./minion.nix { };
-  qmmp = pkgs.callPackage ./qmmp.nix { };
-  reaper = pkgs.callPackage ./reaper.nix { reaper = pkgs-unstable.reaper; };
-  btop = pkgs.callPackage ./btop.nix { };
+  minion = pkgs.callPackage ./pkg_minion.nix { };
+  qmmp = pkgs.callPackage ./pkg_qmmp.nix { };
+  reaper = pkgs.callPackage ./pkg_reaper.nix { reaper = pkgs-unstable.reaper; };
+  btop = pkgs.callPackage ./pkg_btop.nix { };
 }

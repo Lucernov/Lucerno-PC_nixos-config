@@ -18,7 +18,7 @@
     };
 
     stylix = {
-      url = "github:nix-community/stylix/release-25.11";
+      url = "github:nix-community/stylix/release-25.11";                                                   # Единая настройка тем
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -27,11 +27,16 @@
 
     import-tree.url = "github:vic/import-tree";                                                            # Утилита для рекурсивного импорта файлов (экспериментально)
 
+    comfyui-nix = {
+      url = "github:utensils/comfyui-nix";
+      inputs.nixpkgs.follows = "nixpkgs";                                                                  # Чтобы не плодить лишние версии nixpkgs, скажем flake'y использовать основной канал nixpkgs
+    };
+
     # fufexan/nix-gaming nickm8/nix-gaming TophC7/play.nix
   };
 
   # ========== Выходные данные (outputs) ==========
-  outputs = inputs@{ flake-parts, nixpkgs, nixpkgs-unstable, home-manager, plasma-manager, ... }:          # Функция, которая принимает все входы и возвращает результаты сборки
+  outputs = inputs@{ flake-parts, nixpkgs, nixpkgs-unstable, home-manager, plasma-manager, comfyui-nix, ... }:          # Функция, которая принимает все входы и возвращает результаты сборки
     let
       pkgsUnstable = import nixpkgs-unstable {                                                             # Создаём экземпляр нестабильного nixpkgs (для свежих пакетов)
         system = "x86_64-linux";
@@ -41,10 +46,10 @@
       pkgsWithOverlay = import nixpkgs {                                                                   # Создаём экземпляр nixpkgs с оверлеем (кастомные пакеты)
         system = "x86_64-linux";
         config.allowUnfree = true;
-        overlays = [ (import ./overlays/default.nix { pkgs-unstable = pkgsUnstable; }) ];
+        overlays = [ (import ./pkgs/overlays.nix { pkgs-unstable = pkgsUnstable; }) ];
       };
 
-      myLib = import ./mylib.nix;
+      myLib = import ./mylib.nix;                                                                          # Импорт моего файла библиотеки
     in
 
     flake-parts.lib.mkFlake { inherit inputs; } {                                                          # Используем flake-parts для построения flake
@@ -66,6 +71,7 @@
             { nixpkgs.pkgs = pkgsWithOverlay; }                                                            # Переопределяем pkgs для всей системы (с оверлеем)
             ./modules
             inputs.stylix.nixosModules.stylix
+            comfyui-nix.nixosModules.default
           ];
         };
 

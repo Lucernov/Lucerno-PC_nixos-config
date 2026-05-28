@@ -15,7 +15,7 @@
   imports = [
     ./home-file.nix
 
-    ./hx_comfyui.nix
+    #./hx_comfyui.nix
     ./hx_git.nix
     ./hx_kitty.nix
     ./hx_music.nix

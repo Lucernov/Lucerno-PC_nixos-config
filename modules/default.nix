@@ -11,6 +11,7 @@
     ./nx_stylix.nix
     ./nx_configuration-kde_plasma.nix
     ./nx_samba.nix
+    ./nx_comfyui.nix
   ];
 
 
@@ -23,6 +24,7 @@
     "L+ /home/lucerno/drum_sklad - - - - /mnt/sys_archiv/samples/drum_sklad"
     "L+ /home/lucerno/.local/share/Steam/userdata - - - - /home/lucerno/${myLib.configDirName}/dotfiles/config/Steam/userdata"
     "L+ /home/lucerno/.local/share/vital - - - - /mnt/sys_archiv/samples/vital"
+    "L+ /home/lucerno/.config/comfy-ui - - - - /mnt/ai/ComfyUI"
     "L+ /home/lucerno/.config/rclone - - - - /home/lucerno/${myLib.configDirName}/dotfiles/config/rclone"
     "L+ /home/lucerno/.config/AmneziaVPN.ORG - - - - /home/lucerno/${myLib.configDirName}/dotfiles/config/AmneziaVPN.ORG"
     "L+ /home/lucerno/.config/obs-studio - - - - /home/lucerno/${myLib.configDirName}/dotfiles/config/obs-studio"
@@ -99,7 +101,6 @@
     NIXOS_OZONE_WL = "1";                                                                       # Включает поддержку Ozone Wayland для Chromium/Electron (флаг NIXOS_OZONE_WL)
     WLR_NO_HARDWARE_CURSORS = "1";                                                              # Отключает аппаратные курсоры в wlroots (помогает избежать проблем с мерцанием курсора на NVIDIA)
     EGL_PLATFORM = "wayland";                                                                   # Указывает EGL использовать Wayland (необходимо для некоторых приложений)
-    #WLR_RENDERER_ALLOW_SOFTWARE = "1";                                                         # Разрешить программный рендеринг в wlroots (может помочь при проблемах с драйвером)
   };
 
 
