@@ -46,7 +46,10 @@
       pkgsWithOverlay = import nixpkgs {                                                                   # Создаём экземпляр nixpkgs с оверлеем (кастомные пакеты)
         system = "x86_64-linux";
         config.allowUnfree = true;
-        overlays = [ (import ./pkgs/overlays.nix { pkgs-unstable = pkgsUnstable; }) ];
+        overlays = [
+          (import ./pkgs/overlays.nix { pkgs-unstable = pkgsUnstable; })
+          comfyui-nix.overlays.default
+        ];
       };
 
       myLib = import ./mylib.nix;                                                                          # Импорт моего файла библиотеки
@@ -71,7 +74,6 @@
             { nixpkgs.pkgs = pkgsWithOverlay; }                                                            # Переопределяем pkgs для всей системы (с оверлеем)
             ./modules
             inputs.stylix.nixosModules.stylix
-            comfyui-nix.nixosModules.default
           ];
         };
 

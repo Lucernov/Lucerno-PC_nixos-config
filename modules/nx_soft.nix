@@ -77,6 +77,7 @@
     krita                                               # Кастомный пакет Krita (цифровая живопись)
     inkscape                                            # Векторная графика
     (blender.override { cudaSupport = true; })          # 3D-моделирование
+    comfy-ui-cuda
 
     # МУЛЬТИМЕДИА
     my-packages.qmmp                                    # Аудиоплеер
