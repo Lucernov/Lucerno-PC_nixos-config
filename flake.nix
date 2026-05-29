@@ -32,11 +32,15 @@
       inputs.nixpkgs.follows = "nixpkgs";                                                                  # Чтобы не плодить лишние версии nixpkgs, скажем flake'y использовать основной канал nixpkgs
     };
 
+    nixpkgs-krita-25-11 = {
+      url = "github:NixOS/nixpkgs/b77b3de8775677f84492abe84635f87b0e153f0f";
+    };
+
     # fufexan/nix-gaming nickm8/nix-gaming TophC7/play.nix
   };
 
   # ========== Выходные данные (outputs) ==========
-  outputs = inputs@{ flake-parts, nixpkgs, nixpkgs-unstable, home-manager, plasma-manager, comfyui-nix, ... }:          # Функция, которая принимает все входы и возвращает результаты сборки
+  outputs = inputs@{ flake-parts, nixpkgs, nixpkgs-unstable, home-manager, plasma-manager, comfyui-nix, nixpkgs-krita-25-11, ... }:          # Функция, которая принимает все входы и возвращает результаты сборки
     let
       pkgsUnstable = import nixpkgs-unstable {                                                             # Создаём экземпляр нестабильного nixpkgs (для свежих пакетов)
         system = "x86_64-linux";
@@ -68,9 +72,17 @@
             pkgs-unstable = pkgsUnstable;                                                                  # Передаём нестабильные пакеты
             import-tree = inputs.import-tree;                                                              # Передаём утилиту import-tree
             inherit myLib;
+            nixpkgs-krita-25-11 = nixpkgs-krita-25-11;
           };
 
           modules = [                                                                                      # Список модулей, из которых собирается система
+            ({ config, pkgs, lib, nixpkgs-krita-25-11, ... }: {
+              nixpkgs.overlays = [
+                (final: prev: {
+                krita = nixpkgs-krita-25-11.legacyPackages.${final.system}.krita;
+                })
+              ];
+            })
             { nixpkgs.pkgs = pkgsWithOverlay; }                                                            # Переопределяем pkgs для всей системы (с оверлеем)
             ./modules
             inputs.stylix.nixosModules.stylix
