@@ -2,11 +2,11 @@
 
 {
   # ========== Настройка дисплейного менеджера SDDM ==========
+  services.displayManager.plasma-login-manager.enable = true;      # менеджер входа Plasma Login Manager
 #  services.displayManager.sddm = {
 #    enable = true;                                                  # Включаем SDDM (Simple Desktop Display Manager)
 #    wayland.enable = true;                                          # Разрешаем SDDM работать под Wayland (иначе будет X11)
 #  };
-  services.displayManager.plasma-login-manager.enable = true;      # менеджер входа Plasma Login Manager
 
   # ========== Переменные окружения для сессии SDDM ==========
   environment.sessionVariables = {                                  # Локаль для интерфейса SDDM (русский язык)

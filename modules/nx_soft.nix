@@ -58,6 +58,9 @@
     kdePackages.kcalc                                   # Калькулятор
     kdePackages.ktorrent                                # Torrent-клиент
     kdePackages.kdenlive                                # Видеоредактор
+    tesseract5
+    tesseract5.eng                                      # Английский язык
+    tesseract5.rus                                      # Русский язык
 
     # ИНТЕРНЕТ
     iw                                                  # Утилита для настройки беспроводных сетей (Wi-Fi)
@@ -93,6 +96,7 @@
 
     # МУЗЫКА
     my-packages.reaper                                  # REAPER – цифровая звуковая рабочая станция (DAW) БЕРЕТСЯ ИЗ НЕСТАБИЛЬНОГО КАНАЛА!!!!
+    wineWow64Packages.staging                           # Wine с поддержкой 64 и 32 бит (staging‑патчи для аудио)
     yabridge                                            # Мост для запуска Windows VST-плагинов в Linux (через Wine)
     yabridgectl                                         # Утилита для управления yabridge (сканирование, синхронизация)
     winetricks                                          # Вспомогательный скрипт для настройки Wine (установка DLL, зависимостей)
@@ -107,7 +111,6 @@
 
   ] ++ (with pkgs-unstable; [                           # Пакеты из нестабильного канала (более свежие версии)
     # МУЗЫКА
-    wineWow64Packages.staging                           # Wine с поддержкой 64 и 32 бит (staging‑патчи для аудио)
     reaper-sws-extension                                # Расширение SWS для REAPER (дополнительные команды и автоматизация)
     reaper-reapack-extension                            # Менеджер скриптов ReaPack для REAPER (установка пользовательских скриптов)
     lsp-plugins                                         # Набор VST/LV2-плагинов для обработки звука (LSP)

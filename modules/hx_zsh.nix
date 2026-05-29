@@ -23,6 +23,8 @@
       clean = "nh clean all --keep 2 && nh os boot --update";
       parabolic = "org.nickvision.tubeconverter";
       chrome = "google-chrome-stable --ozone-platform=x11";
+      cat="bat";
+      top="btop";
       #steam = "taskset -c 0-11 steam";
     };
 
@@ -61,20 +63,11 @@
     };
 
     initContent = ''
-      # Переменные окружения для игр
-      export PROTON_USE_NTSYNC=1
-      export PROTON_NO_ESYNC=1
-      export PROTON_NO_FSYNC=1
-
       # Разрешение unfree пакетов для home-manager
       export NIXPKGS_ALLOW_UNFREE=1
 
       # Путь к локальным скриптам
       #export PATH="$HOME/.local/bin:$PATH"
-
-      # Утилиты для удобства
-      alias cat="bat"
-      alias top="btop"
 
       # Промпт
       PROMPT='%F{green}%n@%m%f:%F{blue}%~%f$ '
