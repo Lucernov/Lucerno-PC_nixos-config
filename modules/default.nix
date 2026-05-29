@@ -102,7 +102,6 @@
     NIXOS_OZONE_WL = "1";                                                                       # Включает поддержку Ozone Wayland для Chromium/Electron (флаг NIXOS_OZONE_WL)
     WLR_NO_HARDWARE_CURSORS = "1";                                                              # Отключает аппаратные курсоры в wlroots (помогает избежать проблем с мерцанием курсора на NVIDIA)
     EGL_PLATFORM = "wayland";                                                                   # Указывает EGL использовать Wayland (необходимо для некоторых приложений)
-    NIXOS_OZONE_WL = "1";
   };
 
 
