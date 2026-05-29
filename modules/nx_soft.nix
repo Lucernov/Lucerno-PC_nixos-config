@@ -75,7 +75,7 @@
     pinta                                               # Простой растровый редактор
     krita                                               # Кастомный пакет Krita (цифровая живопись)
     inkscape                                            # Векторная графика
-    #(blender.override { cudaSupport = true; })          # 3D-моделирование
+    (blender.override { cudaSupport = true; })          # 3D-моделирование
     #comfy-ui-cuda
 
     # МУЛЬТИМЕДИА
