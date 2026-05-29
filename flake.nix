@@ -27,10 +27,7 @@
 
     import-tree.url = "github:vic/import-tree";                                                            # Утилита для рекурсивного импорта файлов (экспериментально)
 
-#    comfyui-nix = {
-#      url = "github:utensils/comfyui-nix";
-#      #inputs.nixpkgs.follows = "nixpkgs";                                                                  # Чтобы не плодить лишние версии nixpkgs, скажем flake'y использовать основной канал nixpkgs
-#    };
+    #comfyui-nix.url = "github:utensils/comfyui-nix";
 
     nixpkgs-krita-25-11 = {
       url = "github:NixOS/nixpkgs/b77b3de8775677f84492abe84635f87b0e153f0f";
@@ -40,7 +37,8 @@
   };
 
   # ========== Выходные данные (outputs) ==========
-  outputs = inputs@{ flake-parts, nixpkgs, nixpkgs-unstable, home-manager, plasma-manager, comfyui-nix, nixpkgs-krita-25-11, ... }:          # Функция, которая принимает все входы и возвращает результаты сборки
+  #outputs = inputs@{ flake-parts, nixpkgs, nixpkgs-unstable, home-manager, plasma-manager, comfyui-nix, nixpkgs-krita-25-11, ... }:          # Функция, которая принимает все входы и возвращает результаты сборки
+  outputs = inputs@{ flake-parts, nixpkgs, nixpkgs-unstable, home-manager, plasma-manager, nixpkgs-krita-25-11, ... }:          # Функция, которая принимает все входы и возвращает результаты сборки
     let
       pkgsUnstable = import nixpkgs-unstable {                                                             # Создаём экземпляр нестабильного nixpkgs (для свежих пакетов)
         system = "x86_64-linux";
