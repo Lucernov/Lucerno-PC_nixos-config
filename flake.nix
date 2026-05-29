@@ -52,7 +52,7 @@
         config.allowUnfree = true;
         overlays = [
           (import ./pkgs/overlays.nix { pkgs-unstable = pkgsUnstable; })
-          comfyui-nix.overlays.default
+          #comfyui-nix.overlays.default
         ];
       };
 
