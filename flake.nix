@@ -3,11 +3,11 @@
 
   # ========== Входные данные (inputs) ==========
   inputs = {                                                                                               # Здесь перечисляются все внешние зависимости (flake-репозитории)
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.11";                                                      # Стабильный канал Nixpkgs (NixOS 25.11)
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-26.05";                                                      # Стабильный канал Nixpkgs (NixOS 26.05)
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";                                          # Нестабильный канал Nixpkgs (последние обновления)
 
     home-manager = {                                                                                       # Home Manager — управление пользовательским окружением
-      url = "github:nix-community/home-manager/release-25.11";
+      url = "github:nix-community/home-manager/release-26.05";
       inputs.nixpkgs.follows = "nixpkgs";                                                                  # Использовать тот же nixpkgs, что и основной (единая версия)
     };
 
@@ -18,7 +18,7 @@
     };
 
     stylix = {
-      url = "github:nix-community/stylix/release-25.11";                                                   # Единая настройка тем
+      url = "github:nix-community/stylix/release-26.05";                                                   # Единая настройка тем
       inputs.nixpkgs.follows = "nixpkgs";
     };
 

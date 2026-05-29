@@ -2,7 +2,8 @@
 
 {
   # НАСТРОЙКИ HOME MANAGER
-  home.stateVersion = "25.11";
+  #home.stateVersion = "25.11";
+  home.stateVersion = myLib.channelVersion;
   home.username = "lucerno";
   home.homeDirectory = "/home/lucerno";
 

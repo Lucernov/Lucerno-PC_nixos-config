@@ -3,6 +3,11 @@
 { config, pkgs, lib, ... }:
 
 {
+  # ========== Создание и настройка общей папки через systemd-tmpfiles ==========
+  systemd.tmpfiles.rules = lib.mkAfter [
+    "d /mnt/archiv/FTP/ 0775 lucerno users - -"              # Создать папку с указанными правами и владельцем
+  ];
+
   # ========== Samba (общий доступ к файлам по протоколу SMB) ==========
   services.samba = {
     enable = true;                                          # Включаем сервер Samba
@@ -50,8 +55,4 @@
     };
   };
 
-  # ========== Создание и настройка общей папки через systemd-tmpfiles ==========
-  systemd.tmpfiles.rules = [
-    "d /mnt/archiv/FTP/ 0775 lucerno users - -"              # Создать папку с указанными правами и владельцем
-  ];
 }
