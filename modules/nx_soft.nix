@@ -59,8 +59,6 @@
     kdePackages.ktorrent                                # Torrent-клиент
     kdePackages.kdenlive                                # Видеоредактор
     tesseract5
-    tesseract5.eng                                      # Английский язык
-    tesseract5.rus                                      # Русский язык
 
     # ИНТЕРНЕТ
     iw                                                  # Утилита для настройки беспроводных сетей (Wi-Fi)
