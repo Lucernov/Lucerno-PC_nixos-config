@@ -58,7 +58,7 @@
     kdePackages.kcalc                                   # Калькулятор
     kdePackages.ktorrent                                # Torrent-клиент
     kdePackages.kdenlive                                # Видеоредактор
-    (tesseract5.withLanguages ["eng" "rus"])
+    (tesseract5.withPackages (tpkgs: [ tpkgs.eng tpkgs.rus ]))
 
     # ИНТЕРНЕТ
     iw                                                  # Утилита для настройки беспроводных сетей (Wi-Fi)

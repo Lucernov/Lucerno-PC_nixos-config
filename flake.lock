@@ -68,6 +68,25 @@
         "type": "github"
       }
     },
+    "comfyui-nix": {
+      "inputs": {
+        "flake-parts": "flake-parts",
+        "nixpkgs": "nixpkgs"
+      },
+      "locked": {
+        "lastModified": 1776979072,
+        "narHash": "sha256-1BUQDAMWGVcUhPuI5JFQmCTYlBmN/Fmon6MGmaKXrCk=",
+        "owner": "utensils",
+        "repo": "comfyui-nix",
+        "rev": "8a90889efc8fae81a8e03b8d9a8406c9f8ff425b",
+        "type": "github"
+      },
+      "original": {
+        "owner": "utensils",
+        "repo": "comfyui-nix",
+        "type": "github"
+      }
+    },
     "firefox-gnome-theme": {
       "flake": false,
       "locked": {
@@ -85,6 +104,24 @@
       }
     },
     "flake-parts": {
+      "inputs": {
+        "nixpkgs-lib": "nixpkgs-lib"
+      },
+      "locked": {
+        "lastModified": 1767609335,
+        "narHash": "sha256-feveD98mQpptwrAEggBQKJTYbvwwglSbOv53uCfH9PY=",
+        "owner": "hercules-ci",
+        "repo": "flake-parts",
+        "rev": "250481aafeb741edfe23d29195671c19b36b6dca",
+        "type": "github"
+      },
+      "original": {
+        "owner": "hercules-ci",
+        "repo": "flake-parts",
+        "type": "github"
+      }
+    },
+    "flake-parts_2": {
       "inputs": {
         "nixpkgs-lib": [
           "nixpkgs"
@@ -104,7 +141,7 @@
         "type": "github"
       }
     },
-    "flake-parts_2": {
+    "flake-parts_3": {
       "inputs": {
         "nixpkgs-lib": [
           "stylix",
@@ -198,16 +235,16 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1779971959,
-        "narHash": "sha256-R5nauXyqyfRUFiZycFFZdkF7wl6eaUpPLst35+2nJQY=",
+        "lastModified": 1766902085,
+        "narHash": "sha256-coBu0ONtFzlwwVBzmjacUQwj3G+lybcZ1oeNSQkgC0M=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "ec942ba042dad5ef097e2ef3a3effc034241f011",
+        "rev": "c0b0e0fddf73fd517c3471e546c0df87a42d53f4",
         "type": "github"
       },
       "original": {
         "owner": "NixOS",
-        "ref": "nixos-26.05",
+        "ref": "nixos-unstable",
         "repo": "nixpkgs",
         "type": "github"
       }
@@ -228,6 +265,21 @@
         "type": "github"
       }
     },
+    "nixpkgs-lib": {
+      "locked": {
+        "lastModified": 1765674936,
+        "narHash": "sha256-k00uTP4JNfmejrCLJOwdObYC9jHRrr/5M/a/8L2EIdo=",
+        "owner": "nix-community",
+        "repo": "nixpkgs.lib",
+        "rev": "2075416fcb47225d9b68ac469a5c4801a9c4dd85",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "repo": "nixpkgs.lib",
+        "type": "github"
+      }
+    },
     "nixpkgs-unstable": {
       "locked": {
         "lastModified": 1779560665,
@@ -240,6 +292,22 @@
       "original": {
         "owner": "NixOS",
         "ref": "nixos-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "nixpkgs_2": {
+      "locked": {
+        "lastModified": 1779971959,
+        "narHash": "sha256-R5nauXyqyfRUFiZycFFZdkF7wl6eaUpPLst35+2nJQY=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "ec942ba042dad5ef097e2ef3a3effc034241f011",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixos-26.05",
         "repo": "nixpkgs",
         "type": "github"
       }
@@ -295,10 +363,11 @@
     },
     "root": {
       "inputs": {
-        "flake-parts": "flake-parts",
+        "comfyui-nix": "comfyui-nix",
+        "flake-parts": "flake-parts_2",
         "home-manager": "home-manager",
         "import-tree": "import-tree",
-        "nixpkgs": "nixpkgs",
+        "nixpkgs": "nixpkgs_2",
         "nixpkgs-krita-25-11": "nixpkgs-krita-25-11",
         "nixpkgs-unstable": "nixpkgs-unstable",
         "plasma-manager": "plasma-manager",
@@ -312,7 +381,7 @@
         "base16-helix": "base16-helix",
         "base16-vim": "base16-vim",
         "firefox-gnome-theme": "firefox-gnome-theme",
-        "flake-parts": "flake-parts_2",
+        "flake-parts": "flake-parts_3",
         "gnome-shell": "gnome-shell",
         "nixpkgs": [
           "nixpkgs"
