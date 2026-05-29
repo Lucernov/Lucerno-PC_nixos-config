@@ -22,12 +22,4 @@
     };
   };
 
-  extraEnv = {
-    VK_ICD_FILENAMES = "/run/opengl-driver/share/vulkan/icd.d/nvidia_icd.json";
-    VK_LAYER_DISABLE = "steam_fossilize";
-    PROTON_USE_NTSYNC = "1";
-    PROTON_NO_ESYNC = "1";
-    PROTON_NO_FSYNC = "1";
-  };
-
 }

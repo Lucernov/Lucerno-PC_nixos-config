@@ -102,6 +102,11 @@
     NIXOS_OZONE_WL = "1";                                                                       # Включает поддержку Ozone Wayland для Chromium/Electron (флаг NIXOS_OZONE_WL)
     WLR_NO_HARDWARE_CURSORS = "1";                                                              # Отключает аппаратные курсоры в wlroots (помогает избежать проблем с мерцанием курсора на NVIDIA)
     EGL_PLATFORM = "wayland";                                                                   # Указывает EGL использовать Wayland (необходимо для некоторых приложений)
+    VK_ICD_FILENAMES = "/run/opengl-driver/share/vulkan/icd.d/nvidia_icd.json";
+    VK_LAYER_DISABLE = "steam_fossilize";
+    PROTON_USE_NTSYNC = "1";
+    PROTON_NO_ESYNC = "1";
+    PROTON_NO_FSYNC = "1";
   };
 
 

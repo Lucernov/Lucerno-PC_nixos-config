@@ -154,7 +154,8 @@ in
 
 
   # ========== ЯДРО И ЕГО МОДУЛИ ==========
-  boot.kernelPackages = pkgs.linuxPackages_latest;                        # Выбор конкретной версии ядра (6.18)
+  #boot.kernelPackages = pkgs.linuxPackages_latest;                        # Выбор конкретной версии ядра (6.18)
+  boot.kernelPackages = pkgs.linuxPackages_zen;
   boot.kernelModules = [                                                  # Модули ядра, загружаемые на основном этапе (после initrd)
   #  "kvm-intel"                                                          # Модуль аппаратной виртуализации KVM для процессоров Intel
     "ntsync"                                                              # Модуль для улучшения синхронизации в Wine/Proton (игры)
