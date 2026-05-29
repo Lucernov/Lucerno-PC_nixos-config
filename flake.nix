@@ -27,18 +27,18 @@
 
     import-tree.url = "github:vic/import-tree";                                                            # Утилита для рекурсивного импорта файлов (экспериментально)
 
-    #comfyui-nix.url = "github:utensils/comfyui-nix";
+    comfyui-nix.url = "github:utensils/comfyui-nix";
 
     nixpkgs-krita-25-11 = {
       url = "github:NixOS/nixpkgs/b77b3de8775677f84492abe84635f87b0e153f0f";
     };
 
-    # fufexan/nix-gaming nickm8/nix-gaming TophC7/play.nix
+    #fufexan/nix-gaming nickm8/nix-gaming TophC7/play.nix
   };
 
   # ========== Выходные данные (outputs) ==========
-  #outputs = inputs@{ flake-parts, nixpkgs, nixpkgs-unstable, home-manager, plasma-manager, comfyui-nix, nixpkgs-krita-25-11, ... }:          # Функция, которая принимает все входы и возвращает результаты сборки
-  outputs = inputs@{ flake-parts, nixpkgs, nixpkgs-unstable, home-manager, plasma-manager, nixpkgs-krita-25-11, ... }:          # Функция, которая принимает все входы и возвращает результаты сборки
+  outputs = inputs@{ flake-parts, nixpkgs, nixpkgs-unstable, home-manager, plasma-manager, comfyui-nix, nixpkgs-krita-25-11, ... }:          # Функция, которая принимает все входы и возвращает результаты сборки
+  #outputs = inputs@{ flake-parts, nixpkgs, nixpkgs-unstable, home-manager, plasma-manager, nixpkgs-krita-25-11, ... }:          # Функция, которая принимает все входы и возвращает результаты сборки
     let
       pkgsUnstable = import nixpkgs-unstable {                                                             # Создаём экземпляр нестабильного nixpkgs (для свежих пакетов)
         system = "x86_64-linux";
@@ -50,7 +50,7 @@
         config.allowUnfree = true;
         overlays = [
           (import ./pkgs/overlays.nix { pkgs-unstable = pkgsUnstable; })
-          #comfyui-nix.overlays.default
+          comfyui-nix.overlays.default
         ];
       };
 

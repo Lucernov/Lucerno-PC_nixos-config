@@ -3,7 +3,6 @@
 
 {
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
-  #system.stateVersion = "25.11";
   system.stateVersion = myLib.channelVersion;
 
   imports = [
@@ -12,7 +11,7 @@
     ./nx_stylix.nix
     ./nx_configuration-kde_plasma.nix
     ./nx_samba.nix
-    #./nx_comfyui.nix
+    ./nx_comfyui.nix
   ];
 
 
@@ -47,7 +46,7 @@
     systemd-boot.consoleMode = "max";                                                           # Максимальная детализация вывода загрузчика (отладка)
   };
   boot.supportedFilesystems = [ "exfat" ];                                                      # Поддержка файловой системы exFAT (для флешек и внешних дисков)
-  #system.nixos-init.enable = true;                                                             # (закомментировано) Альтернативная система инициализации (пока не используется)
+  #system.nixos-init.enable = true;                                                             # Альтернативная система инициализации (пока не используется)
 
   boot.extraModprobeConfig = ''
     # Отключаем авто-отключение питания Bluetooth-адаптера (чтобы не терял связь)

@@ -2,7 +2,6 @@
 
 {
   # НАСТРОЙКИ HOME MANAGER
-  #home.stateVersion = "25.11";
   home.stateVersion = myLib.channelVersion;
   home.username = "lucerno";
   home.homeDirectory = "/home/lucerno";
@@ -22,7 +21,7 @@
     ./hx_plasma.nix
     ./hx_zsh.nix
     ./hx_rclone.nix
-    #./hx_comfyui.nix
+    ./hx_comfyui.nix
   ];
 
   # ========== Включение модулей программ (через home-manager) ==========
