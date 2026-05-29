@@ -12,7 +12,7 @@
     ./nx_stylix.nix
     ./nx_configuration-kde_plasma.nix
     ./nx_samba.nix
-    ./nx_comfyui.nix
+    #./nx_comfyui.nix
   ];
 
 
