@@ -27,10 +27,10 @@
 
     import-tree.url = "github:vic/import-tree";                                                            # Утилита для рекурсивного импорта файлов (экспериментально)
 
-    comfyui-nix = {
-      url = "github:utensils/comfyui-nix";
-      #inputs.nixpkgs.follows = "nixpkgs";                                                                  # Чтобы не плодить лишние версии nixpkgs, скажем flake'y использовать основной канал nixpkgs
-    };
+#    comfyui-nix = {
+#      url = "github:utensils/comfyui-nix";
+#      #inputs.nixpkgs.follows = "nixpkgs";                                                                  # Чтобы не плодить лишние версии nixpkgs, скажем flake'y использовать основной канал nixpkgs
+#    };
 
     nixpkgs-krita-25-11 = {
       url = "github:NixOS/nixpkgs/b77b3de8775677f84492abe84635f87b0e153f0f";
