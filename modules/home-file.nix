@@ -91,6 +91,20 @@
     '';
     ".local/share/applications/ampero2.desktop".force = true;
 
+    # --- Ярлык Google Chrome с принудительным X11 ---
+    ".local/share/applications/google-chrome.desktop".text = ''
+      [Desktop Entry]
+      Version=1.0
+      Type=Application
+      Name=Google Chrome
+      Exec=google-chrome-stable --ozone-platform=x11 %U
+      Icon=google-chrome
+      Categories=Network;WebBrowser;
+      Terminal=false
+      StartupWMClass=Google-chrome-stable
+    '';
+    ".local/share/applications/google-chrome.desktop".force = true;
+
 
 
     # --- Включение RT приоритета для музыки ---

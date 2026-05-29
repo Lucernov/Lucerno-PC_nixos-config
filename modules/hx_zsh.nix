@@ -22,6 +22,7 @@
       upgrade = "cd /home/lucerno/${myLib.configDirName} && git add -A && (git commit -m \"upgrade: $(date '+%Y-%m-%d %H:%M:%S')\" || true) && git push && nh os switch --update";
       clean = "nh clean all --keep 2 && nh os boot --update";
       parabolic = "org.nickvision.tubeconverter";
+      chrome = "google-chrome-stable --ozone-platform=x11";
       #steam = "taskset -c 0-11 steam";
     };
 
