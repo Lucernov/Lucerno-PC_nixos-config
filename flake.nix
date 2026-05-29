@@ -29,7 +29,7 @@
 
     comfyui-nix = {
       url = "github:utensils/comfyui-nix";
-      inputs.nixpkgs.follows = "nixpkgs";                                                                  # Чтобы не плодить лишние версии nixpkgs, скажем flake'y использовать основной канал nixpkgs
+      #inputs.nixpkgs.follows = "nixpkgs";                                                                  # Чтобы не плодить лишние версии nixpkgs, скажем flake'y использовать основной канал nixpkgs
     };
 
     nixpkgs-krita-25-11 = {
