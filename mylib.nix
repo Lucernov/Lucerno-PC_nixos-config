@@ -1,5 +1,5 @@
 {
-  wallpaperPath = ./dotfiles/wallpapers/Velo_01.jpg;
+  wallpaperPath = ./dotfiles/wallpapers/Velo_03.png;
   userName = "lucerno";
   hostName = "Lucerno-PC";
   channelVersion = "26.05";
