@@ -18,7 +18,7 @@
     };
 
     stylix = {
-      url = "github:nix-community/stylix/release-25.11";                                                   # Единая настройка тем
+      url = "github:nix-community/stylix";                                                                 # Единая настройка тем
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -38,7 +38,6 @@
 
   # ========== Выходные данные (outputs) ==========
   outputs = inputs@{ flake-parts, nixpkgs, nixpkgs-unstable, home-manager, plasma-manager, comfyui-nix, nixpkgs-krita-25-11, ... }:          # Функция, которая принимает все входы и возвращает результаты сборки
-  #outputs = inputs@{ flake-parts, nixpkgs, nixpkgs-unstable, home-manager, plasma-manager, nixpkgs-krita-25-11, ... }:          # Функция, которая принимает все входы и возвращает результаты сборки
     let
       pkgsUnstable = import nixpkgs-unstable {                                                             # Создаём экземпляр нестабильного nixpkgs (для свежих пакетов)
         system = "x86_64-linux";

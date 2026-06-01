@@ -51,7 +51,6 @@
   boot.extraModprobeConfig = ''
     # Отключаем авто-отключение питания Bluetooth-адаптера (чтобы не терял связь)
     options btusb enable_autosuspend=0
-    options efifb resolution=2560x1440
   '';
 
 
