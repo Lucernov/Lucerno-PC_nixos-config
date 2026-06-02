@@ -27,6 +27,7 @@
   environment.systemPackages = with pkgs; [
     # СИСТЕМНЫЕ
     nh                                                  # Утилита для управления Nix
+    optinix                                             # Инструмент для поиска опций в Nix
     nix-tree                                            # Просмотр дерева зависимостей Nix
     home-manager                                        # Управление пользовательским окружением (конфиги, пакеты, службы)
     glib                                                # Базовая библиотека GLib (низкоуровневые структуры данных)
@@ -74,7 +75,8 @@
 
     # ГРАФИКА
     upscaler                                            # Увеличение разрешения изображений
-    switcheroo                                          # простое и приложение для конвертации изображений
+    switcheroo                                          # приложение для конвертации изображений
+    optipng                                             # Оптимизатор PNG файлов
     pinta                                               # Простой растровый редактор
     krita                                               # Кастомный пакет Krita (цифровая живопись)
     inkscape                                            # Векторная графика
@@ -83,8 +85,17 @@
 
     # МУЛЬТИМЕДИА
     my-packages.qmmp                                    # Аудиоплеер
-    audacious                                           # Аудиоплеер
     vlc                                                 # Универсальный видеоплеер
+
+    # ОФИС
+    eloquent                                            # Проверка текста
+    planify                                             # Менеджер задач
+    libreoffice-qt-still
+    hunspellDicts.ru_RU
+    hyphenDicts.ru_RU
+    hunspellDicts.en_GB
+    hyphenDicts.en_GB
+    papers
 
     # ИГРЫ
     my-packages.minion                                  # Менеджер аддонов для TESO
