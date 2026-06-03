@@ -17,8 +17,8 @@
       inputs.home-manager.follows = "home-manager";                                                        # Следовать за home-manager
     };
 
-    stylix = {
-      url = "github:nix-community/stylix";                                                                 # Единая настройка тем
+    stylix = {                                                                                             # Единая настройка тем
+      url = "github:nix-community/stylix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -27,9 +27,9 @@
 
     import-tree.url = "github:vic/import-tree";                                                            # Утилита для рекурсивного импорта файлов (экспериментально)
 
-    comfyui-nix.url = "github:utensils/comfyui-nix";
+    comfyui-nix.url = "github:utensils/comfyui-nix";                                                       # Flake для ComfyUI
 
-    nixpkgs-krita-25-11 = {
+    nixpkgs-krita-25-11 = {                                                                                # Фиксированная версия nixpkgs для Krita (новая версия пока не работает с ComfyUI)
       url = "github:NixOS/nixpkgs/b77b3de8775677f84492abe84635f87b0e153f0f";
     };
 
@@ -39,13 +39,15 @@
   # ========== Выходные данные (outputs) ==========
   outputs = inputs@{ flake-parts, nixpkgs, nixpkgs-unstable, home-manager, plasma-manager, comfyui-nix, nixpkgs-krita-25-11, ... }:          # Функция, которая принимает все входы и возвращает результаты сборки
     let
+      # ─────────────────────────────────────────────────────────────
+
       pkgsUnstable = import nixpkgs-unstable {                                                             # Создаём экземпляр нестабильного nixpkgs (для свежих пакетов)
-        localSystem = { system = "x86_64-linux"; };
+        localSystem = { system = "x86_64-linux"; };                                                        # Новый синтаксис с атрибутом localSystem вместо устаревшего `system`
         config.allowUnfree = true;
       };
 
       pkgsWithOverlay = import nixpkgs {                                                                   # Создаём экземпляр nixpkgs с оверлеем (кастомные пакеты)
-        localSystem = { system = "x86_64-linux"; };
+        localSystem = { system = "x86_64-linux"; };                                                        # Здесь также используем localSystem
         config.allowUnfree = true;
         overlays = [
           (import ./pkgs/overlays.nix { pkgs-unstable = pkgsUnstable; })
@@ -63,7 +65,7 @@
       # Основное содержимое флейка - системные конфигурации, пользовательские конфигурации, оверлеи, пакеты
       flake = {
         nixosConfigurations.Lucerno-PC = nixpkgs.lib.nixosSystem {                                         # Системная конфигурация NixOS (для пересборки всей ОС)
-          localSystem = { system = "x86_64-linux"; };                                                                         # Архитектура системы
+          system = "x86_64-linux";                                                                         # Архитектура системы. Для nixosSystem ВСЁ ЕЩЁ используется параметр `system` (требование API NixOS)
           specialArgs = {                                                                                  # Дополнительные аргументы, передаваемые во все модули
             inherit inputs;
             pkgs-unstable = pkgsUnstable;                                                                  # Передаём нестабильные пакеты
@@ -73,16 +75,16 @@
           };
 
           modules = [                                                                                      # Список модулей, из которых собирается система
-            ({ config, pkgs, lib, nixpkgs-krita-25-11, ... }: {
+            ({ config, pkgs, lib, nixpkgs-krita-25-11, ... }: {                                            # Переопределяем krita из фиксированного набора пакетов
               nixpkgs.overlays = [
                 (final: prev: {
-                krita = nixpkgs-krita-25-11.legacyPackages.${final.system}.krita;
+                krita = nixpkgs-krita-25-11.legacyPackages.${final.stdenv.hostPlatform.system}.krita;      # Используем final.stdenv.hostPlatform.system вместо final.system, чтобы избежать deprecated warning внутри оверлея
                 })
               ];
             })
             { nixpkgs.pkgs = pkgsWithOverlay; }                                                            # Переопределяем pkgs для всей системы (с оверлеем)
             ./modules
-            inputs.stylix.nixosModules.stylix
+            inputs.stylix.nixosModules.stylix                                                              # Модуль стилизации (stylix)
           ];
         };
 
