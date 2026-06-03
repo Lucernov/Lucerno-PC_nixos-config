@@ -21,6 +21,7 @@
     "d /mnt/www-OneDrive 0755 lucerno users -"
     "d /home/lucerno/.local/share 0755 lucerno lucerno -"
     "d /home/lucerno/.config 0755 lucerno lucerno -"
+    "d /home/lucerno/${myLib.configDirName}/secrets 0750 lucerno lucerno -"
     "L+ /home/lucerno/drum_sklad - - - - /mnt/sys_archiv/samples/drum_sklad"
     "L+ /home/lucerno/.local/share/Steam/userdata - - - - /home/lucerno/${myLib.configDirName}/dotfiles/config/Steam/userdata"
     "L+ /home/lucerno/.local/share/vital - - - - /mnt/sys_archiv/samples/vital"
@@ -43,7 +44,7 @@
   boot.loader = {
     systemd-boot.enable = true;                                                                 # Используем systemd-boot (простой UEFI загрузчик)
     efi.canTouchEfiVariables = true;                                                            # Разрешить запись в EFI-переменные (нужно для добавления записей загрузки)
-    systemd-boot.consoleMode = "max";                                                           # Максимальная детализация вывода загрузчика (отладка)
+    systemd-boot.consoleMode = "auto";                                                          # детализация вывода загрузчика
   };
   boot.supportedFilesystems = [ "exfat" ];                                                      # Поддержка файловой системы exFAT (для флешек и внешних дисков)
   #system.nixos-init.enable = true;                                                             # Альтернативная система инициализации (пока не используется)
@@ -94,10 +95,11 @@
     GBM_BACKEND = "nvidia-drm";                                                                 # Указывает бэкенд Graphics Buffer Manager (GBM) от NVIDIA. Необходимо для корректной работы Wayland с проприетарным драйвером
     CHROME_FLAGS = "--ozone-platform-hint=auto";                                                # Флаги для браузеров на базе Chromium (Chrome, Edge, Brave и др.) Принудительно включает поддержку Wayland через Ozone
     ELECTRON_OZONE_PLATFORM_HINT = "auto";                                                      # Для приложений на Electron (VS Code, Discord, Telegram и др.) Заставляет их использовать Wayland вместо XWayland
+    ELECTRON_FORCE_WAYLAND = "1";
     QT_QPA_PLATFORM = "wayland";                                                                # Задаёт бэкенд Qt для работы через Wayland (вместо X11)
+    QT_QPA_PLATFORM_PLUGIN_PATH = "${pkgs.qt6.qtwayland}/lib/qt-6/plugins/platforms";           # Путь к плагинам Qt для поддержки Wayland. Без этого некоторые Qt-приложения могут не запускаться под Wayland
     GDK_BACKEND = "wayland";                                                                    # Указывает GTK-приложениям использовать Wayland
     SDL_VIDEODRIVER = "wayland";                                                                # Задаёт драйвер для SDL (используется в играх и мультимедиа) – Wayland
-    QT_QPA_PLATFORM_PLUGIN_PATH = "${pkgs.qt6.qtwayland}/lib/qt-6/plugins/platforms";           # Путь к плагинам Qt для поддержки Wayland. Без этого некоторые Qt-приложения могут не запускаться под Wayland
     NIXOS_OZONE_WL = "1";                                                                       # Включает поддержку Ozone Wayland для Chromium/Electron (флаг NIXOS_OZONE_WL)
     WLR_NO_HARDWARE_CURSORS = "1";                                                              # Отключает аппаратные курсоры в wlroots (помогает избежать проблем с мерцанием курсора на NVIDIA)
     EGL_PLATFORM = "wayland";                                                                   # Указывает EGL использовать Wayland (необходимо для некоторых приложений)
@@ -106,6 +108,7 @@
     PROTON_USE_NTSYNC = "1";
     PROTON_NO_ESYNC = "1";
     PROTON_NO_FSYNC = "1";
+    LIBVA_DRIVER_NAME = "nvidia";
   };
 
 
@@ -132,7 +135,9 @@
   ];
 
 
-  environment.pathsToLink = [ "/share/wireplumber" ];                                           # Добавляем путь к конфигурационным файлам WirePlumber в окружение (workaround для NixOS)
+  #environment.pathsToLink = [ "/share/wireplumber" ];                                           # Добавляем путь к конфигурационным файлам WirePlumber в окружение (workaround для NixOS)
+  #Этот workaround использовался в старых версиях NixOS (до 23.11). На 26.05 WirePlumber должен работать без него. Проверь – если без этой строки WirePlumber нормально стартует, можешь её удалить. Оставить – не ошибка, но лишнее.
+
   services.pipewire = {                                                                         # Основные настройки PipeWire
     enable = true;                                                                              # Включаем PipeWire как основной звуковой сервер
     alsa.enable = true;                                                                         # Поддержка ALSA (эмуляция для старых приложений)
@@ -194,12 +199,6 @@
         "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
       ];
     };
-  };
-
-
-  systemd.services.systemd-tmpfiles-clean = {                                                   # служба отчистки временных файлов
-    wantedBy = lib.mkForce [];                                                                  # Отключаем запуск при загрузке (оставляем только таймер)
-    serviceConfig.TimeoutSec = "30s";                                                           # Ограничиваем время выполнения на случай, если служба всё же запустится
   };
 
 
