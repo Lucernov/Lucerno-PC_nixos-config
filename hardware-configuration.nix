@@ -184,7 +184,10 @@ in
   boot.kernelParams = [                                                   # Параметры, передаваемые ядру при загрузке (через командную строку)
     "nvidia_drm.modeset=1"                                                # Включить режимный сет DRM NVIDIA (нужен для Wayland)
     "nvidia_drm.fbdev=1"                                                  # ОТКЛЮЧИТЬ фреймбуфер через DRM (для консоли и раннего вывода)
-    "video=DP-1:2560x1440@60"                                             # принудительно устанавливает разрешение консоли
+    "video=DP-1:2560x1440@60,video=HDMI-A-1:1920x1080@60"                                             # принудительно устанавливает разрешение консоли
+    "fbcon=map:1"
+    "fbcon=font:TER16x32"
+    "vt.global_cursor_default=0"
     "transparent_hugepage=madvise"                                        # Использовать прозрачные огромные страницы только по запросу madvise
     "threadirqs"                                                          # Превратить все прерывания в потоки (улучшает отзывчивость при аудио)
     "preempt=full"                                                        # Полная вытесняемость ядра (снижает задержки, полезно для реального времени)
@@ -233,7 +236,7 @@ in
   };
   # Настройка драйвера NVIDIA для Wayland
   hardware.nvidia = {
-    open = true;                                                          # Используем открытые модули
+    open = false;                                                          # Используем открытые модули
     modesetting.enable = true;                                            # Обязательно для Wayland: включает режим "Sync & Destroy"
     nvidiaSettings = true;                                                # Устанавливает утилиту nvidia-settings
     powerManagement.enable = false;                                       # Отключаем управление питанием (на десктопе не нужно)
