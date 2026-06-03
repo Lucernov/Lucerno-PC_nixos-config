@@ -169,6 +169,7 @@ in
     "nvidia_drm"                                                          # Интеграция NVIDIA с DRM (Direct Rendering Manager)
   ];
 
+  boot.blacklistedKernelModules = [ "simpledrm" ];                        # Отключаем упрощенный DRM-драйвер, который конфликтует с Nvidia
 
   boot.initrd.availableKernelModules = [                                  # Модули, которые могут быть загружены динамически при обнаружении оборудования
     "vmd"                                                                 # Intel Volume Management Device (для NVMe и RAID)
@@ -196,6 +197,7 @@ in
     "irqaffinity=0"                                                       # Перенаправить все аппаратные прерывания на процессор 0
     "nowatchdog"                                                          # Отключить сторожевые таймеры (watchdog)
   ];
+
 
   # ========== Тонкая настройка ядра (sysctl) ==========
   boot.kernel.sysctl = {
