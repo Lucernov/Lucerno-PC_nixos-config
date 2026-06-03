@@ -18,7 +18,8 @@
     };
 
     stylix = {                                                                                             # Единая настройка тем
-      url = "github:nix-community/stylix";
+      url = "github:nix-community/stylix/release-26.05";
+      #url = "github:nix-community/stylix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
