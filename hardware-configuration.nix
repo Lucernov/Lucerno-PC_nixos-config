@@ -169,8 +169,6 @@ in
     "nvidia_drm"                                                          # Интеграция NVIDIA с DRM (Direct Rendering Manager)
   ];
 
-  boot.blacklistedKernelModules = [ "simpledrm" ];                        # Отключаем упрощенный DRM-драйвер, который конфликтует с Nvidia
-
   boot.initrd.availableKernelModules = [                                  # Модули, которые могут быть загружены динамически при обнаружении оборудования
     "vmd"                                                                 # Intel Volume Management Device (для NVMe и RAID)
     "xhci_pci"                                                            # USB 3.0/3.1 контроллеры
@@ -185,7 +183,7 @@ in
 
   boot.kernelParams = [                                                   # Параметры, передаваемые ядру при загрузке (через командную строку)
     "nvidia_drm.modeset=1"                                                # Включить режимный сет DRM NVIDIA (нужен для Wayland)
-    "nvidia_drm.fbdev=0"                                                  # ОТКЛЮЧИТЬ фреймбуфер через DRM (для консоли и раннего вывода)
+    "nvidia_drm.fbdev=1"                                                  # ОТКЛЮЧИТЬ фреймбуфер через DRM (для консоли и раннего вывода)
     "video=DP-1:2560x1440@60"                                             # принудительно устанавливает разрешение консоли
     "transparent_hugepage=madvise"                                        # Использовать прозрачные огромные страницы только по запросу madvise
     "threadirqs"                                                          # Превратить все прерывания в потоки (улучшает отзывчивость при аудио)
