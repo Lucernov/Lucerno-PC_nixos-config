@@ -236,7 +236,7 @@ in
   };
   # Настройка драйвера NVIDIA для Wayland
   hardware.nvidia = {
-    open = false;                                                          # Используем открытые модули
+    open = true;                                                          # Используем открытые модули
     modesetting.enable = true;                                            # Обязательно для Wayland: включает режим "Sync & Destroy"
     nvidiaSettings = true;                                                # Устанавливает утилиту nvidia-settings
     powerManagement.enable = false;                                       # Отключаем управление питанием (на десктопе не нужно)
