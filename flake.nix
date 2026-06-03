@@ -40,12 +40,12 @@
   outputs = inputs@{ flake-parts, nixpkgs, nixpkgs-unstable, home-manager, plasma-manager, comfyui-nix, nixpkgs-krita-25-11, ... }:          # Функция, которая принимает все входы и возвращает результаты сборки
     let
       pkgsUnstable = import nixpkgs-unstable {                                                             # Создаём экземпляр нестабильного nixpkgs (для свежих пакетов)
-        system = "x86_64-linux";
+        localSystem = { system = "x86_64-linux"; };
         config.allowUnfree = true;
       };
 
       pkgsWithOverlay = import nixpkgs {                                                                   # Создаём экземпляр nixpkgs с оверлеем (кастомные пакеты)
-        system = "x86_64-linux";
+        localSystem = { system = "x86_64-linux"; };
         config.allowUnfree = true;
         overlays = [
           (import ./pkgs/overlays.nix { pkgs-unstable = pkgsUnstable; })
@@ -63,7 +63,7 @@
       # Основное содержимое флейка - системные конфигурации, пользовательские конфигурации, оверлеи, пакеты
       flake = {
         nixosConfigurations.Lucerno-PC = nixpkgs.lib.nixosSystem {                                         # Системная конфигурация NixOS (для пересборки всей ОС)
-          system = "x86_64-linux";                                                                         # Архитектура системы
+          localSystem = { system = "x86_64-linux"; };                                                                         # Архитектура системы
           specialArgs = {                                                                                  # Дополнительные аргументы, передаваемые во все модули
             inherit inputs;
             pkgs-unstable = pkgsUnstable;                                                                  # Передаём нестабильные пакеты
