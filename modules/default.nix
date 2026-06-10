@@ -27,6 +27,7 @@
     "L+ /home/lucerno/.local/share/vital - - - - /mnt/sys_archiv/samples/vital"
     "L+ /home/lucerno/.config/comfy-ui - - - - /mnt/ai/ComfyUI"
     "L+ /home/lucerno/.config/rclone - - - - /home/lucerno/${myLib.configDirName}/dotfiles/config/rclone"
+    "L+ /home/lucerno/.config/btop - - - - /home/lucerno/${myLib.configDirName}/dotfiles/config/btop"
     "L+ /home/lucerno/.config/AmneziaVPN.ORG - - - - /home/lucerno/${myLib.configDirName}/dotfiles/config/AmneziaVPN.ORG"
     "L+ /home/lucerno/.config/obs-studio - - - - /home/lucerno/${myLib.configDirName}/dotfiles/config/obs-studio"
     "L+ /home/lucerno/.config/DecentSampler - - - - /mnt/sys_archiv/samples/DecentSampler"
