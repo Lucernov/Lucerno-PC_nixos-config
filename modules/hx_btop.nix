@@ -1,9 +1,6 @@
 { config, pkgs, ... }:
 
 {
-  # Создаём симлинк на тему
-  home.file.".config/btop/themes/adapta.theme".source = ../dotfiles/config/btop/adapta.theme;
-
   # Настраиваем btop декларативно
   programs.btop = {
     enable = true;
