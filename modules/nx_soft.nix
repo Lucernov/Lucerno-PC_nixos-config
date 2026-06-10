@@ -40,6 +40,10 @@
     lsof                                                # Просмотр открытых файлов и сокетов
     wayland-utils                                       # Набор утилит для диагностики Wayland (например, wayland-info)
     gearlever                                           # Менеджер обновлений для графических приложений (например, AppImages)
+    zip
+    unzip
+    rar
+    gnutar
 
     # КОНСОЛЬНЫЕ
     kitty                                               # Терминал
