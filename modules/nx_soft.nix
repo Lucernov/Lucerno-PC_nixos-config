@@ -42,9 +42,6 @@
     wayland-utils                                       # Набор утилит для диагностики Wayland (например, wayland-info)
     gearlever                                           # Менеджер обновлений для графических приложений (например, AppImages)
     rar
-    #zip
-    #unzip
-    #gnutar
 
     # КОНСОЛЬНЫЕ
     kitty                                               # Терминал
@@ -123,6 +120,7 @@
     neural-amp-modeler-lv2                              # Плагин LV2 для моделирования гитарных усилителей (Neural Amp Modeler)
     dragonfly-reverb                                    # Качественная реверберация Dragonfly (VST/LV2)
     fretboard                                           # Гитаровый гриф / MIDI-инструмент (возможно, для обучения)
+    lingot                                              # гитарный тюнер
 
   ] ++ (with pkgs-unstable; [                           # Пакеты из нестабильного канала (более свежие версии)
     # МУЗЫКА
