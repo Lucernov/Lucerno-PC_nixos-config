@@ -77,8 +77,6 @@
     discord                                             # Голосовой/текстовый чат
     telegram-desktop                                    # Мессенджер Telegram
     proton-authenticator
-    google-authenticator
-    otpauth
 
     # ГРАФИКА
     upscaler                                            # Увеличение разрешения изображений
