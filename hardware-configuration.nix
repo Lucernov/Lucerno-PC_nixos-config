@@ -154,14 +154,14 @@ in
 
 
   # ========== ЯДРО И ЕГО МОДУЛИ ==========
-  #boot.kernelPackages = pkgs.linuxPackages;                              # Выбор стабильной версии стандартного ядра
   boot.kernelPackages = pkgs.linuxPackages_zen;                           # Установка кастомного ZEN ядра
+  #boot.kernelPackages = pkgs.linuxPackages;                              # Выбор стабильной версии стандартного ядра
 
   boot.kernelModules = [                                                  # Модули ядра, загружаемые на основном этапе (после initrd)
-  #  "kvm-intel"                                                          # Модуль аппаратной виртуализации KVM для процессоров Intel
     "ntsync"                                                              # Модуль для улучшения синхронизации в Wine/Proton (игры)
     "nvidia_uvm"                                                          # Unified Virtual Memory для NVIDIA (CUDA, OpenCL, AI)
     "intel_rapl_msr"                                                      # Модуль для чтения энергопотребления процессора (RAPL). Нужен для btop, powertop и других утилит.
+  # "kvm-intel"                                                           # Модуль аппаратной виртуализации KVM для процессоров Intel
   ];
   boot.initrd.kernelModules = [                                           # Модули, загружаемые на раннем этапе (в initrd) – до монтирования корневой ФС
     "nvidia"                                                              # Основной драйвер NVIDIA
@@ -184,7 +184,7 @@ in
   boot.kernelParams = [                                                   # Параметры, передаваемые ядру при загрузке (через командную строку)
     "nvidia_drm.modeset=1"                                                # Включить режимный сет DRM NVIDIA (нужен для Wayland)
     "nvidia_drm.fbdev=1"                                                  # ОТКЛЮЧИТЬ фреймбуфер через DRM (для консоли и раннего вывода)
-    "video=DP-1:2560x1440@60,video=HDMI-A-1:1920x1080@60"                                             # принудительно устанавливает разрешение консоли
+    "video=DP-1:2560x1440@60,video=HDMI-A-1:1920x1080@60"                 # принудительно устанавливает разрешение консоли
     "fbcon=map:1"
     "fbcon=font:TER16x32"
     "vt.global_cursor_default=0"
