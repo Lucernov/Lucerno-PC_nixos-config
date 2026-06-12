@@ -22,6 +22,7 @@
   };
   # KDE приложения
   programs.partition-manager.enable = true;             # Включает модуль для утилиты управления разделами диска (KDE Partition Manager)
+  programs.kdeconnect.enable = true;
 
   # ========== Дополнительные системные пакеты ==========
   environment.systemPackages = with pkgs; [
@@ -72,11 +73,11 @@
     rclone                                              # Утилита для синхронизации и монтирования облачных хранилищ (Google Drive, OneDrive и др.)
     wirelesstools                                       # Набор инструментов для работы с Wi-Fi (iwconfig, iwlist и др.)
     wget                                                # Утилита для загрузки файлов из интернета
+    authenticator
     google-chrome                                       # Браузер Google Chrome
     parabolic                                           # Загрузчик видео/аудио с YouTube (альтернатива yt-dlp)
     discord                                             # Голосовой/текстовый чат
     telegram-desktop                                    # Мессенджер Telegram
-    proton-authenticator
 
     # ГРАФИКА
     upscaler                                            # Увеличение разрешения изображений
