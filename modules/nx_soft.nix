@@ -60,6 +60,7 @@
     kdePackages.kcalc                                   # Калькулятор
     kdePackages.ktorrent                                # Torrent-клиент
     kdePackages.kdenlive                                # Видеоредактор
+    kdePackages.alpaka
     (tesseract5.override {
       enableLanguages = [ "eng" "rus" ];
     })
@@ -123,7 +124,6 @@
     # ИИ
     comfy-ui-cuda
     ollama-cuda
-    (alpaca.override { ollama = ollama-cuda; })         # Переопределённый alpaca, использующий ollama-cuda
     #open-webui
 
   ] ++ (with pkgs-unstable; [                           # Пакеты из нестабильного канала (более свежие версии)
