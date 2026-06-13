@@ -124,7 +124,7 @@
     # ИИ
     comfy-ui-cuda
     ollama-cuda
-    #open-webui
+    open-webui
 
   ] ++ (with pkgs-unstable; [                           # Пакеты из нестабильного канала (более свежие версии)
     # МУЗЫКА
