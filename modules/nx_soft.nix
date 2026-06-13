@@ -55,8 +55,6 @@
     bat                                                 # Улучшенный аналог cat с подсветкой синтаксиса
     mission-center                                      # Графический монитор системы (альтернатива btop)
     cava                                                # Консольный аудиовизуализатор (спектроанализатор)
-    ollama-cuda
-
 
     # KDE приложения
     kdePackages.kcalc                                   # Калькулятор
@@ -85,7 +83,6 @@
     krita                                               # Кастомный пакет Krita (цифровая живопись)
     inkscape                                            # Векторная графика
     (blender.override { cudaSupport = true; })          # 3D-моделирование
-    comfy-ui-cuda
 
     # МУЛЬТИМЕДИА
     my-packages.qmmp                                    # Аудиоплеер
@@ -122,6 +119,12 @@
     dragonfly-reverb                                    # Качественная реверберация Dragonfly (VST/LV2)
     fretboard                                           # Гитаровый гриф / MIDI-инструмент (возможно, для обучения)
     lingot                                              # гитарный тюнер
+
+    # ИИ
+    comfy-ui-cuda
+    ollama-cuda
+    (alpaca.override { ollama = ollama-cuda; })         # Переопределённый alpaca, использующий ollama-cuda
+    #open-webui
 
   ] ++ (with pkgs-unstable; [                           # Пакеты из нестабильного канала (более свежие версии)
     # МУЗЫКА
