@@ -22,7 +22,6 @@
     ./hx_zsh.nix
     ./hx_rclone.nix
     ./hx_comfyui.nix
-    #./hx_btop.nix
   ];
 
   # ========== Включение модулей программ (через home-manager) ==========

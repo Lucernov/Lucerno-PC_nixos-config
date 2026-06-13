@@ -60,14 +60,13 @@
     kdePackages.kcalc                                   # Калькулятор
     kdePackages.ktorrent                                # Torrent-клиент
     kdePackages.kdenlive                                # Видеоредактор
-    (tesseract5.override {
+    (tesseract.override {
       enableLanguages = [ "eng" "rus" ];
     })
 
     # ИНТЕРНЕТ
     iw                                                  # Утилита для настройки беспроводных сетей (Wi-Fi)
     rclone                                              # Утилита для синхронизации и монтирования облачных хранилищ (Google Drive, OneDrive и др.)
-    wirelesstools                                       # Набор инструментов для работы с Wi-Fi (iwconfig, iwlist и др.)
     wget                                                # Утилита для загрузки файлов из интернета
     authenticator
     google-chrome                                       # Браузер Google Chrome

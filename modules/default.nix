@@ -204,11 +204,10 @@
     };
   };
 
-
   programs.nh = {
-  enable = true;
-  flake = "/home/lucerno/${myLib.configDirName}";
-};
-
+    enable = true;
+    osFlake = myLib.nhFlake;
+    homeFlake = myLib.nhFlake;
+  };
 
 }
