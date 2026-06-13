@@ -2,12 +2,12 @@
 
 let
   # UUID дисков
-  bootUUID = "59A7-C7F6";
-  sysUUID = "1964f286-7b1d-40df-8201-5824671e9631";
+  bootUUID = "59A7-C7F6";                                     # EFI раздел
+  sysUUID = "1964f286-7b1d-40df-8201-5824671e9631";           # корень системы + библиотека NIX + home
   sysBackupUUID = "67a25908-e1e2-4e53-a04b-909418c0eff8";     # второй раздел системного диска @nixos-config (${myLib.configDirName}), @ai, @sys-archiv
 
-  gamesUUID = "897f0999-d31e-45d1-b186-6822c7d17477";
-  musicUUID = "3615f1b6-bb2e-4254-b795-f08e9a542523";
+  gamesUUID = "897f0999-d31e-45d1-b186-6822c7d17477";         # игры
+  musicUUID = "3615f1b6-bb2e-4254-b795-f08e9a542523";         # музыка
   dataUUID = "09024d77-6155-4db0-ae3c-5655858a83ad";          # 1.8TB общий для всех подтомов btrfs
 in
 
@@ -185,9 +185,9 @@ in
     "nvidia_drm.modeset=1"                                                # Включить режимный сет DRM NVIDIA (нужен для Wayland)
     "nvidia_drm.fbdev=1"                                                  # включает фреймбуфер через DRM (для консоли и раннего вывода)
     "video=DP-1:2560x1440@60,video=HDMI-A-1:1920x1080@60"                 # принудительно устанавливает разрешение консоли
-    "fbcon=map:1"
-    "fbcon=font:TER16x32"
-    "vt.global_cursor_default=0"
+    "fbcon=map:1"                                                         # Привязывает фреймбуфер консоли к первому видеовыходу (обычно основному монитору)
+    "fbcon=font:TER16x32"                                                 # Устанавливает шрифт консоли: TER16x32 (высокое разрешение, 16x32 пикселя)
+    "vt.global_cursor_default=0"                                          # Отключает мигающий курсор в виртуальных консолях (tty)
     "transparent_hugepage=madvise"                                        # Использовать прозрачные огромные страницы только по запросу madvise
     "threadirqs"                                                          # Превратить все прерывания в потоки (улучшает отзывчивость при аудио)
     "preempt=full"                                                        # Полная вытесняемость ядра (снижает задержки, полезно для реального времени)
@@ -219,7 +219,7 @@ in
   # ========== NETWORK & SYSTEM ==========
   networking.hostName = "Lucerno-PC";                                     # Имя компьютера в сети
   networking.networkmanager.enable = true;                                # Включает NetworkManager (управление сетями, Wi‑Fi, VPN)
-  #networking.networkmanager.wifi.backend = "iwd";                        # (закомментировано) Альтернативный бэкенд Wi‑Fi – iwd (вместо wpa_supplicant)
+  #networking.networkmanager.wifi.backend = "iwd";                        # Альтернативный бэкенд Wi‑Fi – iwd (вместо wpa_supplicant)
 
   # ========== Bluetooth ==========
   hardware.bluetooth = {
@@ -244,5 +244,5 @@ in
   };
 
 
-  nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
+  nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";                    # Определяет архитектуру системы (x86_64). mkDefault позволяет переопределить извне, если потребуется
 }

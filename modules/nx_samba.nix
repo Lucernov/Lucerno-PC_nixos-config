@@ -5,7 +5,7 @@
 {
   # ========== Создание и настройка общей папки через systemd-tmpfiles ==========
   systemd.tmpfiles.rules = lib.mkAfter [
-    "d /mnt/archiv/FTP/ 0775 lucerno users - -"              # Создать папку с указанными правами и владельцем
+    "d /mnt/archiv/FTP/ 0775 lucerno users - -"             # Создать папку с указанными правами и владельцем
   ];
 
   # ========== Samba (общий доступ к файлам по протоколу SMB) ==========
@@ -17,7 +17,7 @@
 
     settings = {
       global = {
-        "disable netbios" = "yes";                           # Отключает старый NetBIOS (для Windows‑клиентов до Windows 10)
+        "disable netbios" = "yes";                          # Отключает старый NetBIOS (для Windows‑клиентов до Windows 10)
         "workgroup" = "pautinko";                           # Рабочая группа (должна совпадать с настройками клиентов)
         "server string" = "lucerno-pc";                     # Описание сервера в сети
         "netbios name" = "lucerno-pc";                      # Имя сервера в NetBIOS
@@ -41,17 +41,17 @@
 
   # ========== WSDD (Web Services Dynamic Discovery) – обнаружение SMB-сервера в сети Windows ==========
   services.samba-wsdd = {
-    enable = true;                                           # Включаем службу WSDD
-    openFirewall = true;                                     # Открываем порт 3702 (UDP)
+    enable = true;                                          # Включаем службу WSDD
+    openFirewall = true;                                    # Открываем порт 3702 (UDP)
   };
 
   # ========== Avahi (mDNS / Bonjour) – обнаружение сервера в сети macOS и Linux ==========
   services.avahi = {
-    enable = true;                                           # Включаем сервис Avahi (Zeroconf)
-    nssmdns4 = true;                                         # Добавляем поддержку .local доменов в NSS
+    enable = true;                                          # Включаем сервис Avahi (Zeroconf)
+    nssmdns4 = true;                                        # Добавляем поддержку .local доменов в NSS
     publish = {
-      enable = true;                                         # Публиковать службы
-      userServices = true;                                   # Публиковать пользовательские .service файлы
+      enable = true;                                        # Публиковать службы
+      userServices = true;                                  # Публиковать пользовательские .service файлы
     };
   };
 

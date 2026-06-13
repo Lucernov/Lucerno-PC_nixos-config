@@ -74,7 +74,7 @@
 
   # ========== Настройка пользователя lucerno ==========
   users.groups.lucerno = {};                                                                    # Создаём группу lucerno (явно не задаём параметры)
-  users.groups.powercap = {};
+  users.groups.powercap = {};                                                                   # Группа для доступа к энергопотреблению CPU (RAPL) нужна для отображения в btop
   users.users.lucerno = {                                                                       # Основные настройки учётной записи
     isNormalUser = true;                                                                        # Обычный пользователь (не системный)
     hashedPasswordFile = "/home/lucerno/${myLib.configDirName}/secrets/lucerno-password.hash";  # Файл с хешем пароля
@@ -96,7 +96,7 @@
     GBM_BACKEND = "nvidia-drm";                                                                 # Указывает бэкенд Graphics Buffer Manager (GBM) от NVIDIA. Необходимо для корректной работы Wayland с проприетарным драйвером
     CHROME_FLAGS = "--ozone-platform-hint=auto";                                                # Флаги для браузеров на базе Chromium (Chrome, Edge, Brave и др.) Принудительно включает поддержку Wayland через Ozone
     ELECTRON_OZONE_PLATFORM_HINT = "auto";                                                      # Для приложений на Electron (VS Code, Discord, Telegram и др.) Заставляет их использовать Wayland вместо XWayland
-    ELECTRON_FORCE_WAYLAND = "1";
+    ELECTRON_FORCE_WAYLAND = "1";                                                               # Принудительно запускает Electron-приложения в нативном режиме Wayland вместо XWayland
     QT_QPA_PLATFORM = "wayland";                                                                # Задаёт бэкенд Qt для работы через Wayland (вместо X11)
     QT_QPA_PLATFORM_PLUGIN_PATH = "${pkgs.qt6.qtwayland}/lib/qt-6/plugins/platforms";           # Путь к плагинам Qt для поддержки Wayland. Без этого некоторые Qt-приложения могут не запускаться под Wayland
     GDK_BACKEND = "wayland";                                                                    # Указывает GTK-приложениям использовать Wayland
@@ -104,12 +104,12 @@
     NIXOS_OZONE_WL = "1";                                                                       # Включает поддержку Ozone Wayland для Chromium/Electron (флаг NIXOS_OZONE_WL)
     WLR_NO_HARDWARE_CURSORS = "1";                                                              # Отключает аппаратные курсоры в wlroots (помогает избежать проблем с мерцанием курсора на NVIDIA)
     EGL_PLATFORM = "wayland";                                                                   # Указывает EGL использовать Wayland (необходимо для некоторых приложений)
-    VK_ICD_FILENAMES = "/run/opengl-driver/share/vulkan/icd.d/nvidia_icd.json";
-    VK_LAYER_DISABLE = "steam_fossilize";
-    PROTON_USE_NTSYNC = "1";
-    PROTON_NO_ESYNC = "1";
-    PROTON_NO_FSYNC = "1";
-    LIBVA_DRIVER_NAME = "nvidia";
+    VK_ICD_FILENAMES = "/run/opengl-driver/share/vulkan/icd.d/nvidia_icd.json";                 # Указывает Vulkan Loader использовать драйвер NVIDIA вместо Mesa (например, для игр через Proton)
+    VK_LAYER_DISABLE = "steam_fossilize";                                                       # Отключает слой Steam Fossilize, который иногда вызывает вылеты или тормоза в играх
+    PROTON_USE_NTSYNC = "1";                                                                    # Включает улучшенную синхронизацию NTSync (вместо устаревших esync/fsync) для лучшей производительности в Proton
+    PROTON_NO_ESYNC = "1";                                                                      # Отключает старую синхронизацию esync (Eventfd), так как используется NTSync
+    PROTON_NO_FSYNC = "1";                                                                      # Отключает старую синхронизацию fsync (Futex), так как используется NTSync
+    LIBVA_DRIVER_NAME = "nvidia";                                                               # Указывает FFmpeg и браузерам использовать аппаратное кодирование/декодирование через NVIDIA (VA-API)
   };
 
 
@@ -135,9 +135,6 @@
     { domain = "@audio"; item = "memlock"; type = "hard"; value = "unlimited"; }                # Жёсткий лимит блокировки памяти
   ];
 
-
-  #environment.pathsToLink = [ "/share/wireplumber" ];                                           # Добавляем путь к конфигурационным файлам WirePlumber в окружение (workaround для NixOS)
-  #Этот workaround использовался в старых версиях NixOS (до 23.11). На 26.05 WirePlumber должен работать без него. Проверь – если без этой строки WirePlumber нормально стартует, можешь её удалить. Оставить – не ошибка, но лишнее.
 
   services.pipewire = {                                                                         # Основные настройки PipeWire
     enable = true;                                                                              # Включаем PipeWire как основной звуковой сервер
@@ -204,10 +201,11 @@
     };
   };
 
+
   programs.nh = {
-    enable = true;
-    osFlake = myLib.nhFlake;
-    homeFlake = myLib.nhFlake;
+    enable = true;                                                                              # Включает утилиту nh (Nix Helper) для удобного управления системой и home-менеджером
+    flake = "/home/lucerno/${myLib.configDirName}";                                             # Указывает путь к flake, содержащему конфигурации NixOS и home-manager
   };
+
 
 }

@@ -25,7 +25,6 @@
       chrome = "google-chrome-stable --ozone-platform=x11";
       cat="bat";
       top="btop";
-      #steam = "taskset -c 0-11 steam";
     };
 
     # Oh My Zsh

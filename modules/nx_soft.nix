@@ -22,7 +22,7 @@
   };
   # KDE приложения
   programs.partition-manager.enable = true;             # Включает модуль для утилиты управления разделами диска (KDE Partition Manager)
-  programs.kdeconnect.enable = true;
+  programs.kdeconnect.enable = true;                    # Включает интеграцию с телефоном: синхронизация уведомлений, буфера обмена, управление презентациями и т.д.
 
   # ========== Дополнительные системные пакеты ==========
   environment.systemPackages = with pkgs; [
@@ -41,7 +41,7 @@
     lsof                                                # Просмотр открытых файлов и сокетов
     wayland-utils                                       # Набор утилит для диагностики Wayland (например, wayland-info)
     gearlever                                           # Менеджер обновлений для графических приложений (например, AppImages)
-    rar
+    rar                                                 # Архиватор для работы с форматом RAR (сжатие и распаковка)
 
     # КОНСОЛЬНЫЕ
     kitty                                               # Терминал
@@ -60,15 +60,15 @@
     kdePackages.kcalc                                   # Калькулятор
     kdePackages.ktorrent                                # Torrent-клиент
     kdePackages.kdenlive                                # Видеоредактор
-    (tesseract.override {
-      enableLanguages = [ "eng" "rus" ];
+    (tesseract.override {                               # Tesseract — движок оптического распознавания символов (OCR)
+      enableLanguages = [ "eng" "rus" ];                # Добавляет языковые пакеты: английский и русский (НЕ РАБОТАЕТ СЦУКО! НАДО РАЗБИРАТЬСЯ С ЭТИМ)
     })
 
     # ИНТЕРНЕТ
     iw                                                  # Утилита для настройки беспроводных сетей (Wi-Fi)
     rclone                                              # Утилита для синхронизации и монтирования облачных хранилищ (Google Drive, OneDrive и др.)
     wget                                                # Утилита для загрузки файлов из интернета
-    authenticator
+    authenticator                                       # Приложение для двухфакторной аутентификации (TOTP, HOTP), например, для аккаунтов Google, GitHub и т.д.
     google-chrome                                       # Браузер Google Chrome
     parabolic                                           # Загрузчик видео/аудио с YouTube (альтернатива yt-dlp)
     discord                                             # Голосовой/текстовый чат

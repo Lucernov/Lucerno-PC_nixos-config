@@ -20,7 +20,7 @@
     stylix = {                                                                                             # Единая настройка тем
       url = "github:nix-community/stylix/release-26.05";
       #url = "github:nix-community/stylix";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "nixpkgs";                                                                  # Следовать за nixpkgs
     };
 
     flake-parts.url = "github:hercules-ci/flake-parts";                                                    # Flake-parts — фреймворк для модульной организации flake

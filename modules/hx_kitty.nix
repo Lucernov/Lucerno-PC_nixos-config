@@ -23,10 +23,10 @@
       cursor_stop_blinking_after = 15.0;                                          # Остановить мигание после 15 секунд бездействия
       #hide_window_decorations = "yes";                                           # Убрать рамку окна
       # Позиционирование окна (для обычного режима, не quick-access)
-      initial_window_width = 1024;
-      initial_window_height = 768;
-      enabled_layouts = "splits,fat,grid,stack,tall,horizontal,vertical";
-      default_layout = "splits";
+      initial_window_width = 1024;                                                # Ширина нового окна терминала по умолчанию (в пикселях)
+      initial_window_height = 768;                                                # Высота нового окна терминала по умолчанию
+      enabled_layouts = "splits,fat,grid,stack,tall,horizontal,vertical";         # Список доступных вариантов раскладки окон (можно переключать)
+      default_layout = "splits";                                                  # Раскладка по умолчанию (разделение на панели, как в tmux)
     };
 
     # Привязка клавиш (map)

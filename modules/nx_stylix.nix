@@ -1,14 +1,14 @@
 # modules/nx_stylix.nix
+# Модуль настройки темы оформления (stylix) для всей системы: цвета, обои, темы приложений
 { config, pkgs, lib, myLib, ... }:
 
 {
   config = {
     stylix = {
-      enable = true;
-      image = myLib.wallpaperPath;
-      polarity = "dark";
-      #base16Scheme = "${pkgs.base16-schemes}/share/themes/gruvbox-dark-medium.yaml";
-      base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-mocha.yaml";
+      enable = true;                                                                      # Включает глобальное управление темами через stylix
+      image = myLib.wallpaperPath;                                                        # Путь к изображению для обоев рабочего стола и экрана входа
+      polarity = "dark";                                                                  # Цветовая направленность: "dark" (тёмная) или "light" (светлая)
+      base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-mocha.yaml";         # Активная цветовая схема в формате base16 (Catppuccin Mocha)
     };
   };
 }
