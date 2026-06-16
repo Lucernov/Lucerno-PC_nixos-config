@@ -113,11 +113,13 @@
     surge-xt                                                    # Синтезатор Surge XT
     geonkick                                                    # Синтезатор барабанов для создания ударных партий
     drumgizmo                                                   # Многоканальный сэмплер барабанов (реалистичные ударные)
-    neural-amp-modeler-lv2                                      # Плагин LV2 для моделирования гитарных усилителей (Neural Amp Modeler)
-    dragonfly-reverb                                            # Качественная реверберация Dragonfly (VST/LV2)
-    fretboard                                                   # Гитаровый гриф / MIDI-инструмент (возможно, для обучения)
+    dragonfly-reverb                                            # Реверберация Dragonfly (VST/LV2)
+    fretboard                                                   # Гитаровый гриф / MIDI-инструмент
     lingot                                                      # гитарный тюнер
-    guitarix
+    neural-amp-modeler-lv2                                      # Плагин LV2 для моделирования гитарных усилителей (Neural Amp Modeler)
+    guitarix                                                    # виртуальная гитарная станция с эффектами, усилителями, кабинетами и поддержкой NAM-моделей
+    guitarix-vst                                                # экспорт движка Guitarix в виде VST3-плагина для использования внутри DAW
+    gxplugins-lv2                                               # набор дополнительных LV2-плагинов от разработчиков Guitarix
 
     # ИИ
     comfy-ui-cuda
