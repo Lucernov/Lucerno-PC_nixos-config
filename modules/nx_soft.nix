@@ -98,6 +98,7 @@
     (bottles.override { removeWarningPopup = true; })           # Запуск Windows-приложений через Wine (без всплывающих предупреждений)
     goverlay                                                    # Оверлей для мониторинга системы и FPS (MangoHud, vkBasalt)
     mangohud                                                    # Оверлей для отображения FPS и мониторинга системы в играх
+    retroarch                                                   # Эмулятор приставок
     #lutris                                                     # Игровой лаунчер для управления играми
     #heroic                                                     # Лаунчер для Epic Games Store и GOG
 
