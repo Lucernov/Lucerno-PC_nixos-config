@@ -117,6 +117,7 @@
     dragonfly-reverb                                            # Качественная реверберация Dragonfly (VST/LV2)
     fretboard                                                   # Гитаровый гриф / MIDI-инструмент (возможно, для обучения)
     lingot                                                      # гитарный тюнер
+    guitarix
 
     # ИИ
     comfy-ui-cuda
