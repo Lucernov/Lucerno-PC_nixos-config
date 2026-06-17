@@ -105,7 +105,8 @@
     '';
     ".local/share/applications/google-chrome.desktop".force = true;
 
-
+    # --- Симлинк на ядра RetroArch ---
+    ".config/retroarch/cores".source = "${config.home.homeDirectory}/.nix-profile/lib/retroarch/cores";
 
     # --- Включение RT приоритета для музыки ---
     ".config/systemd/user/pipewire.service.d/99-realtime.conf".text = ''
