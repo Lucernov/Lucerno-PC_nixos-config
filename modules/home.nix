@@ -34,15 +34,12 @@
   libretro.mesen                     # NES
   libretro.bsnes                     # SNES
   libretro.parallel-n64              # N64 (Vulkan)
-  libretro.desmume                   # DS
   libretro.genesis-plus-gx           # Sega Genesis / Mega Drive (плюс Master System, Game Gear, Sega CD)
   libretro.beetle-saturn             # Sega Saturn
   libretro.beetle-psx-hw             # PlayStation 1
   libretro.pcsx2                     # PlayStation 2
   libretro.ppsspp                    # PSP
-  libretro.fbneo                     # Arcade
   libretro.flycast                   # Dreamcast
-
 
   ] ++ (with pkgs-unstable; [ ]);
 }
