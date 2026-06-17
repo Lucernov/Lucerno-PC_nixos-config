@@ -34,6 +34,7 @@
     "L+ /home/lucerno/.config/REAPER - - - - /home/lucerno/${myLib.configDirName}/dotfiles/config/REAPER"
     "L+ /home/lucerno/.config/yabridgectl - - - - /home/lucerno/${myLib.configDirName}/dotfiles/config/yabridgectl"
     "L+ /home/lucerno/.config/MangoHud - - - - /home/lucerno/${myLib.configDirName}/dotfiles/config/MangoHud"
+    "L+ /home/lucerno/.config/retroarch/cores - - - - /home/lucerno/.nix-profile/lib/retroarch/cores"
     "L+ /home/lucerno/.local/share/Steam/steamapps - - - - /mnt/games/SteamLibrary/steamapps"
 
     "L+ /home/lucerno/.config/kglobalshortcutsrc - - - - /home/lucerno/${myLib.configDirName}/dotfiles/config/KDE/config-kglobalshortcutsrc"
