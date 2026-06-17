@@ -29,5 +29,20 @@
   programs.home-manager.enable = true;                 # Включает Home Manager как системный модуль (управление пользовательским окружением)
 
   # ========== Пакеты, устанавливаемые простым способом ==========
-  home.packages = with pkgs; [ ] ++ (with pkgs-unstable; [ ]);
+  home.packages = with pkgs; [
+  # --- Ретро-ядра для RetroArch ---
+  libretro.mesen                     # NES
+  libretro.bsnes                     # SNES
+  libretro.parallel-n64              # N64 (Vulkan)
+  libretro.desmume                   # DS
+  libretro.genesis-plus-gx           # Sega Genesis / Mega Drive (плюс Master System, Game Gear, Sega CD)
+  libretro.beetle-saturn             # Sega Saturn
+  libretro.beetle-psx-hw             # PlayStation 1
+  libretro.pcsx2                     # PlayStation 2
+  libretro.ppsspp                    # PSP
+  libretro.fbneo                     # Arcade
+  libretro.flycast                   # Dreamcast
+
+
+  ] ++ (with pkgs-unstable; [ ]);
 }

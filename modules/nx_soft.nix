@@ -114,6 +114,7 @@
     geonkick                                                    # Синтезатор барабанов для создания ударных партий
     drumgizmo                                                   # Многоканальный сэмплер барабанов (реалистичные ударные)
     dragonfly-reverb                                            # Реверберация Dragonfly (VST/LV2)
+    calf                                                        # Calf Studio Gear один из самых известных и полных наборов аудио-плагинов для Linux
     fretboard                                                   # Гитаровый гриф / MIDI-инструмент
     lingot                                                      # гитарный тюнер
     neural-amp-modeler-lv2                                      # Плагин LV2 для моделирования гитарных усилителей (Neural Amp Modeler)
