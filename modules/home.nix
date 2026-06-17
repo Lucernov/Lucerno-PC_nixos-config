@@ -42,4 +42,9 @@
   libretro.flycast                   # Dreamcast
 
   ] ++ (with pkgs-unstable; [ ]);
+
+  home.activation.createRetroArchCoresLink = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+  mkdir -p "$HOME/.config/retroarch"
+  ln -sfn "$HOME/.nix-profile/lib/retroarch/cores" "$HOME/.config/retroarch/cores"
+'';
 }
