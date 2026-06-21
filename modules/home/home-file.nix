@@ -91,6 +91,21 @@
     '';
     ".local/share/applications/ampero2.desktop".force = true;
 
+    # --- Ярлык SocialStreamNinja приложение AppImage в меню KDE ---
+    ".local/share/applications/socialstreamninja.desktop".text = ''
+      [Desktop Entry]
+      Version=1.0
+      Type=Application
+      Name=SocialStreamNinja
+      Comment=Управление социальными сетями
+      Exec=/mnt/sys_archiv/pkgs/AppImages/socialstreamninja_linux_v0.3.113_x86_64.AppImage
+      Icon=internet-web-browser
+      Categories=Network;
+      Terminal=false
+      StartupNotify=true
+    '';
+    ".local/share/applications/socialstreamninja.desktop".force = true;
+
     # --- Ярлык Google Chrome с принудительным X11 ---
     ".local/share/applications/google-chrome.desktop".text = ''
       [Desktop Entry]
