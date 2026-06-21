@@ -31,7 +31,7 @@
     };
 
     comfyui-nix.url = "github:utensils/comfyui-nix";                                                       # Flake для ComfyUI
-    import-tree.url = "github:vic/import-tree";                                                            # Утилита для рекурсивного импорта файлов (экспериментально)
+    import-tree.url = "github:vic/import-tree";                                                            # Утилита для рекурсивного импорта файлов
 
     #fufexan/nix-gaming nickm8/nix-gaming TophC7/play.nix
   };

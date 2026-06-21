@@ -38,7 +38,6 @@ add_section() {
 add_section "flake.lock" "flake.lock"
 add_section "flake.nix" "flake.nix"
 add_section "mylib.nix" "mylib.nix"
-# hardware-configuration.nix теперь находится в modules/nixos/, поэтому не включаем отдельно
 
 # --- Пакеты (pkgs/) ---
 echo "# --- Пакеты (pkgs/) ---" >> "$OUTPUT_FILE"
