@@ -105,8 +105,6 @@
     guitarix-vst                                                # экспорт движка Guitarix в виде VST3-плагина для использования внутри DAW
     gxplugins-lv2                                               # набор дополнительных LV2-плагинов от разработчиков Guitarix
 
-    # ИИ
-    comfy-ui-cuda
 
   ] ++ (with pkgs-unstable; [                                   # Пакеты из нестабильного канала (более свежие версии)
     # МУЗЫКА
@@ -127,6 +125,10 @@
     libretro.ppsspp                    # PSP
     libretro.beetle-psx-hw             # PlayStation 1
     libretro.pcsx2                     # PlayStation 2
+
+    # ИИ
+    comfy-ui-cuda
+
   ] ++ (with pkgs-unstable; [ ]);
 
 
