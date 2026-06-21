@@ -14,7 +14,7 @@
     Service = {
       Type = "simple";                                                                # Простой процесс (не разветвляется)
       ExecStart = ''${pkgs.rclone}/bin/rclone mount gdrive: /mnt/www-GoogleDrive \
-        --config=/home/lucerno/.config/rclone/rclone.conf \
+        --config=${myLib.home}/.config/rclone/rclone.conf \
         # Полное кэширование файлов
         --vfs-cache-mode full \
         # Разрешить доступ другим пользователям
@@ -43,7 +43,7 @@
     Service = {
       Type = "simple";
       ExecStart = ''${pkgs.rclone}/bin/rclone mount onedrive: /mnt/www-OneDrive \
-        --config=/home/lucerno/.config/rclone/rclone.conf \
+        --config=${myLib.home}/.config/rclone/rclone.conf \
         --vfs-cache-mode full \
         --allow-other \
         --allow-non-empty \

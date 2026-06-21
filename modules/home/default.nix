@@ -1,6 +1,7 @@
 { config, pkgs, pkgs-unstable, inputs, lib, myLib, ... }:
 
 let
+  links = import ../links.nix { inherit pkgs lib myLib; };
   packages = import ../packages.nix { inherit pkgs pkgs-unstable; };
 in
 
@@ -9,6 +10,11 @@ in
   home.stateVersion = myLib.channelVersion;            # Версия NixOS, на которой были созданы настройки home-manager. Используется для миграции конфигурации
   home.username = myLib.userName;                      # Имя пользователя, для которого применяется конфигурация
   home.homeDirectory = "/home/${myLib.userName}";      # Домашняя директория
+
+
+  home.activation = {                                  # Добавляем активацию (создание директорий и симлинков)
+    createLinks = lib.hm.dag.entryAfter [ "writeBoundary" ] links.activationScript;
+  };
 
   home.sessionVariables = {
     VST3_PATH = "${config.home.homeDirectory}/.vst3";  # Устанавливаем переменную окружения для пользовательской папки VST3
@@ -21,9 +27,4 @@ in
 
   home.packages = packages.homePackages;               # Импорт пакетов, установленных через Home Manager
 
-  # Перенаправления ядер в дирректорию РетроАрч
-  home.activation.createRetroArchCoresLink = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-  mkdir -p "$HOME/.config/retroarch"
-  ln -sfn "${config.home.path}/lib/retroarch/cores" "$HOME/.config/retroarch/cores"
-  '';
 }

@@ -1,35 +1,17 @@
 # modules/default.nix
 { config, pkgs, lib, pkgs-unstable, inputs, myLib, ... }:
 
+let
+  links = import ../links.nix { inherit pkgs lib myLib; };
+in
+
 {
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   system.stateVersion = myLib.channelVersion;
 
 
   # ========== мои симлинки ==========
-  systemd.tmpfiles.rules = [
-    "d /mnt/www-GoogleDrive 0755 lucerno users -"
-    "d /mnt/www-OneDrive 0755 lucerno users -"
-    "d /home/lucerno/.local/share 0755 lucerno lucerno -"
-    "d /home/lucerno/.config 0755 lucerno lucerno -"
-    "d /home/lucerno/${myLib.configDirName}/secrets 0750 lucerno lucerno -"
-    "L+ /home/lucerno/drum_sklad - - - - /mnt/sys_archiv/samples/drum_sklad"
-    "L+ /home/lucerno/.local/share/Steam/userdata - - - - /home/lucerno/${myLib.configDirName}/dotfiles/config/Steam/userdata"
-    "L+ /home/lucerno/.local/share/vital - - - - /mnt/sys_archiv/samples/vital"
-    "L+ /home/lucerno/.config/comfy-ui - - - - /mnt/ai/ComfyUI"
-    "L+ /home/lucerno/.config/rclone - - - - /home/lucerno/${myLib.configDirName}/dotfiles/config/rclone"
-    "L+ /home/lucerno/.config/btop - - - - /home/lucerno/${myLib.configDirName}/dotfiles/config/btop"
-    "L+ /home/lucerno/.config/AmneziaVPN.ORG - - - - /home/lucerno/${myLib.configDirName}/dotfiles/config/AmneziaVPN.ORG"
-    "L+ /home/lucerno/.config/obs-studio - - - - /home/lucerno/${myLib.configDirName}/dotfiles/config/obs-studio"
-    "L+ /home/lucerno/.config/DecentSampler - - - - /mnt/sys_archiv/samples/DecentSampler"
-    "L+ /home/lucerno/.config/REAPER - - - - /home/lucerno/${myLib.configDirName}/dotfiles/config/REAPER"
-    "L+ /home/lucerno/.config/yabridgectl - - - - /home/lucerno/${myLib.configDirName}/dotfiles/config/yabridgectl"
-    "L+ /home/lucerno/.config/MangoHud - - - - /home/lucerno/${myLib.configDirName}/dotfiles/config/MangoHud"
-    "L+ /home/lucerno/.local/share/Steam/steamapps - - - - /mnt/games/SteamLibrary/steamapps"
-
-    "L+ /home/lucerno/.config/kglobalshortcutsrc - - - - /home/lucerno/${myLib.configDirName}/dotfiles/config/KDE/config-kglobalshortcutsrc"
-    "L+ /home/lucerno/.local/share/applications/net.local.kitten - - - - /home/lucerno/${myLib.configDirName}/dotfiles/config/KDE/local-share-applications-net.local.kitten"
-  ];
+  systemd.tmpfiles.rules = links.systemRules;
 
 
   # ========== Загрузчик ==========
@@ -68,7 +50,7 @@
   users.groups.powercap = {};                                                                   # Группа для доступа к энергопотреблению CPU (RAPL) нужна для отображения в btop
   users.users.lucerno = {                                                                       # Основные настройки учётной записи
     isNormalUser = true;                                                                        # Обычный пользователь (не системный)
-    hashedPasswordFile = "/home/lucerno/${myLib.configDirName}/secrets/lucerno-password.hash";  # Файл с хешем пароля
+    hashedPasswordFile = "${myLib.home}/${myLib.configDirName}/secrets/lucerno-password.hash";  # Файл с хешем пароля
     group = "lucerno";                                                                          # Группа, к которой принадлежит пользователь
     extraGroups = [ "wheel" "networkmanager" "audio" "video" "storage" "render" "powercap" ];   # Дополнительные группы
     shell = pkgs.zsh;                                                                           # Командная оболочка по умолчанию (Zsh)
@@ -196,7 +178,7 @@
 
   programs.nh = {
     enable = true;                                                                              # Включает утилиту nh (Nix Helper) для удобного управления системой и home-менеджером
-    flake = "/home/lucerno/${myLib.configDirName}";                                             # Указывает путь к flake, содержащему конфигурации NixOS и home-manager
+    flake = "${myLib.home}/${myLib.configDirName}";                                             # Указывает путь к flake, содержащему конфигурации NixOS и home-manager
   };
 
 

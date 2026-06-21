@@ -1,0 +1,1 @@
+/home/lucerno/nixos-config/modules/home/hx_zsh-aliases.nix
