@@ -81,7 +81,7 @@
               ];
             })
             { nixpkgs.pkgs = pkgsWithOverlay; }                                                            # Переопределяем pkgs для всей системы (с оверлеем)
-            ./modules/nixos
+            (inputs.import-tree ./modules/nixos)
             inputs.stylix.nixosModules.stylix                                                              # Модуль стилизации (stylix)
           ];
         };
@@ -89,7 +89,9 @@
         # Конфигурация Home-Manager отдельно (для команды home-manager switch без sudo)
         homeConfigurations.lucerno = home-manager.lib.homeManagerConfiguration {
           pkgs = pkgsWithOverlay;                                                                         # Для отдельной команды home-manager используем тот же pkgs с оверлеем
-          modules = [ ./modules/home ];                                                               # Основной модуль home-manager
+          modules = [
+          (inputs.import-tree ./modules/home)
+          ];                                                               # Основной модуль home-manager
           extraSpecialArgs = {
             inherit inputs;
             pkgs-unstable = pkgsUnstable;                                                                 # Нестабильные пакеты для home-manager

@@ -12,17 +12,17 @@
   };
 
   # Импорт plasma-manager
-  imports = [
-    ./home-file.nix
-
-    ./hx_git.nix
-    ./hx_kitty.nix
-    ./hx_music.nix
-    ./hx_plasma.nix
-    ./hx_zsh.nix
-    ./hx_rclone.nix
-    ./hx_comfyui.nix
-  ];
+#  imports = [
+#    ./home-file.nix
+#
+#    ./hx_git.nix
+#    ./hx_kitty.nix
+#    ./hx_music.nix
+#    ./hx_plasma.nix
+#    ./hx_zsh.nix
+#    ./hx_rclone.nix
+#    ./hx_comfyui.nix
+#  ];
 
   # ========== Включение модулей программ (через home-manager) ==========
   # Эти модули не только устанавливают пакеты, но и позволяют централизованно настраивать их через атрибуты (например, programs.btop.settings).
