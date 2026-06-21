@@ -3,6 +3,8 @@
 # Скрипт для генерации файла с содержимым конфигурации NixOS
 # Путь: /home/lucerno/nixos-config/generate-prompt.sh
 
+set -euo pipefail
+
 # Переходим в директорию скрипта
 cd "$(dirname "$0")" || exit 1
 
@@ -35,28 +37,24 @@ add_section() {
 # --- Файлы в корне (перечисляем вручную) ---
 add_section "flake.lock" "flake.lock"
 add_section "flake.nix" "flake.nix"
-add_section "hardware-configuration.nix" "hardware-configuration.nix"
 add_section "mylib.nix" "mylib.nix"
+# hardware-configuration.nix теперь находится в modules/nixos/, поэтому не включаем отдельно
 
-# --- pkgs/ (автоматически все .nix файлы) ---
+# --- Пакеты (pkgs/) ---
 echo "# --- Пакеты (pkgs/) ---" >> "$OUTPUT_FILE"
 echo "" >> "$OUTPUT_FILE"
-for file in $(find pkgs -maxdepth 1 -name "*.nix" | sort); do
-    filename=$(basename "$file" .nix)
-    add_section "pkgs/$filename.nix" "$file"
-done
+while IFS= read -r file; do
+    rel_path="${file#./}"
+    add_section "$rel_path" "$file"
+done < <(find pkgs -type f -name "*.nix" | sort)
 
-# --- overlays/ (автоматически все .nix файлы) ---
-for file in $(find overlays -maxdepth 1 -name "*.nix" | sort); do
-    filename=$(basename "$file" .nix)
-    add_section "overlays/$filename.nix" "$file"
-done
-
-# --- modules/ (автоматически все .nix файлы) ---
-for file in $(find modules -maxdepth 1 -name "*.nix" | sort); do
-    filename=$(basename "$file" .nix)
-    add_section "modules/$filename.nix" "$file"
-done
+# --- Модули (modules/) ---
+echo "# --- Модули (modules/) ---" >> "$OUTPUT_FILE"
+echo "" >> "$OUTPUT_FILE"
+while IFS= read -r file; do
+    rel_path="${file#./}"
+    add_section "$rel_path" "$file"
+done < <(find modules -type f -name "*.nix" | sort)
 
 # Удаляем лишние пустые строки в конце файла
 sed -i '/^$/N;/^\n$/D' "$OUTPUT_FILE"

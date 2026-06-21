@@ -5,15 +5,6 @@
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   system.stateVersion = myLib.channelVersion;
 
-#  imports = [
-#    ./hardware-configuration.nix
-#    ./nx_soft.nix
-#    ./nx_stylix.nix
-#    ./nx_configuration-kde_plasma.nix
-#    ./nx_samba.nix
-#    ./nx_comfyui.nix
-#  ];
-
 
   # ========== мои симлинки ==========
   systemd.tmpfiles.rules = [

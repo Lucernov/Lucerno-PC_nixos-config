@@ -2,10 +2,9 @@
 { config, pkgs, pkgs-unstable, ... }:
 
 {
-#  imports = [
-#    ./nx_steam.nix
-#    ./nx_obs.nix
-#  ];
+
+# nx_steam.nix
+# nx_obs.nix
 
   # ========== Включение системных модулей для программ ==========
   programs.git.enable = true;                                   # Включает поддержку Git (утилита системы контроля версий)
