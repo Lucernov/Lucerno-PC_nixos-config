@@ -20,6 +20,8 @@ in
     "d /mnt/ai/ComfyUI/models/text_encoders 0755 lucerno lucerno -"
     "d /mnt/ai/ComfyUI/models/upscale_models 0755 lucerno lucerno -"
     "d /mnt/ai/ComfyUI/models/vae 0755 lucerno lucerno -"
+
+  # sudo systemd-tmpfiles --create
   ];
 
   # ========== Скрипт для home.activation ==========
@@ -34,7 +36,6 @@ in
     ln -sfn /mnt/sys_archiv/samples/drum_sklad ${home}/drum_sklad
     ln -sfn ${home}/${configDir}/dotfiles/config/Steam/userdata ${home}/.local/share/Steam/userdata
     ln -sfn /mnt/sys_archiv/samples/vital ${home}/.local/share/vital
-    ln -sfn /mnt/ai/ComfyUI ${home}/.config/comfy-ui
     ln -sfn ${home}/${configDir}/dotfiles/config/rclone ${home}/.config/rclone
     ln -sfn ${home}/${configDir}/dotfiles/config/btop ${home}/.config/btop
     ln -sfn ${home}/${configDir}/dotfiles/config/AmneziaVPN.ORG ${home}/.config/AmneziaVPN.ORG
@@ -54,7 +55,9 @@ in
 
 
     # ----- СИСТЕМНЫЕ СИМЛИНКИ ДЛЯ COMFYUI (в /mnt/ai) -----
-    # Удаляем старые папки и создаём симлинки (принудительно)
+    rm -rf ${home}/.config/comfy-ui
+    ln -sfn /mnt/ai/ComfyUI ${home}/.config/comfy-ui
+
     rm -rf /mnt/ai/ComfyUI/custom_nodes/comfyui_controlnet_aux
     ln -sfn /mnt/ai/ComfyUI_krita-ai-diffusion/comfyui_controlnet_aux /mnt/ai/ComfyUI/custom_nodes/comfyui_controlnet_aux
 
