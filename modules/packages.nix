@@ -115,19 +115,20 @@
 
   # ========== Пакеты, устанавливаемые через Home Manager ==========
   homePackages = with pkgs; [
-    # --- Ретро-ядра для RetroArch ---
-    libretro.mesen                     # Nintendo NES
-    libretro.bsnes                     # Nintendo SNES
-    libretro.parallel-n64              # Nintendo 64 (Vulkan)
-    libretro.genesis-plus-gx           # Sega Genesis / Mega Drive (плюс Master System, Game Gear, Sega CD)
-    libretro.beetle-saturn             # Sega Saturn
-    libretro.flycast                   # Sega Dreamcast
-    libretro.ppsspp                    # PSP
-    libretro.beetle-psx-hw             # PlayStation 1
-    libretro.pcsx2                     # PlayStation 2
 
     # ИИ
     comfy-ui-cuda
+
+    # --- Ретро-ядра для RetroArch ---
+    libretro.mesen                                              # Nintendo NES
+    libretro.bsnes                                              # Nintendo SNES
+    libretro.parallel-n64                                       # Nintendo 64 (Vulkan)
+    libretro.genesis-plus-gx                                    # Sega Genesis / Mega Drive (плюс Master System, Game Gear, Sega CD)
+    libretro.beetle-saturn                                      # Sega Saturn
+    libretro.flycast                                            # Sega Dreamcast
+    libretro.ppsspp                                             # PSP
+    libretro.beetle-psx-hw                                      # PlayStation 1
+    libretro.pcsx2                                              # PlayStation 2
 
   ] ++ (with pkgs-unstable; [ ]);
 
