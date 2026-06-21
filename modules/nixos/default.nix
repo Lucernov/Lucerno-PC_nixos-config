@@ -6,7 +6,7 @@
   system.stateVersion = myLib.channelVersion;
 
   imports = [
-    ../hardware-configuration.nix
+    ./hardware-configuration.nix
     ./nx_soft.nix
     ./nx_stylix.nix
     ./nx_configuration-kde_plasma.nix
