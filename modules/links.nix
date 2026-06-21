@@ -10,6 +10,14 @@ in
   systemRules = [
     "d /mnt/www-GoogleDrive 0755 lucerno users -"
     "d /mnt/www-OneDrive 0755 lucerno users -"
+
+    "d /mnt/ai/ComfyUI/custom_nodes 0755 lucerno lucerno -"
+    "d /mnt/ai/ComfyUI/models/diffusion_models 0755 lucerno lucerno -"
+    "d /mnt/ai/ComfyUI/models/inpaint 0755 lucerno lucerno -"
+    "d /mnt/ai/ComfyUI/models/loras 0755 lucerno lucerno -"
+    "d /mnt/ai/ComfyUI/models/text_encoders 0755 lucerno lucerno -"
+    "d /mnt/ai/ComfyUI/models/upscale_models 0755 lucerno lucerno -"
+    "d /mnt/ai/ComfyUI/models/vae 0755 lucerno lucerno -"
   ];
 
   # ========== Скрипт для home.activation ==========
@@ -37,8 +45,62 @@ in
     ln -sfn ${home}/${configDir}/dotfiles/config/KDE/config-kglobalshortcutsrc ${home}/.config/kglobalshortcutsrc
     ln -sfn ${home}/${configDir}/dotfiles/config/KDE/local-share-applications-net.local.kitten ${home}/.local/share/applications/net.local.kitten
 
+
     # Симлинк для ядер RetroArch
     mkdir -p ${home}/.config/retroarch
     ln -sfn ${config.home.path}/lib/retroarch/cores ${home}/.config/retroarch/cores
+
+
+    # ----- СИСТЕМНЫЕ СИМЛИНКИ ДЛЯ COMFYUI (в /mnt/ai) -----
+    # Удаляем старые папки и создаём симлинки (принудительно)
+    rm -rf /mnt/ai/ComfyUI/custom_nodes/comfyui_controlnet_aux
+    ln -sfn /mnt/ai/ComfyUI_krita-ai-diffusion/comfyui_controlnet_aux /mnt/ai/ComfyUI/custom_nodes/comfyui_controlnet_aux
+
+    rm -rf /mnt/ai/ComfyUI/custom_nodes/comfyui-inpaint-nodes
+    ln -sfn /mnt/ai/ComfyUI_krita-ai-diffusion/comfyui-inpaint-nodes /mnt/ai/ComfyUI/custom_nodes/comfyui-inpaint-nodes
+
+    rm -rf /mnt/ai/ComfyUI/custom_nodes/ComfyUI_IPAdapter_plus
+    ln -sfn /mnt/ai/ComfyUI_krita-ai-diffusion/ComfyUI_IPAdapter_plus /mnt/ai/ComfyUI/custom_nodes/ComfyUI_IPAdapter_plus
+
+    rm -rf /mnt/ai/ComfyUI/custom_nodes/comfyui-tooling-nodes
+    ln -sfn /mnt/ai/ComfyUI_krita-ai-diffusion/comfyui-tooling-nodes /mnt/ai/ComfyUI/custom_nodes/comfyui-tooling-nodes
+
+    # Модели
+    rm -rf /mnt/ai/ComfyUI/models/diffusion_models/flux-2-klein-4b-fp8.safetensors
+    ln -sfn /mnt/ai/ComfyUI_krita-ai-diffusion/models/diffusion_models/flux-2-klein-4b-fp8.safetensors /mnt/ai/ComfyUI/models/diffusion_models/flux-2-klein-4b-fp8.safetensors
+
+    rm -rf /mnt/ai/ComfyUI/models/diffusion_models/flux-2-klein-4b-Q6_K.gguf
+    ln -sfn /mnt/ai/ComfyUI_krita-ai-diffusion/models/diffusion_models/flux-2-klein-4b-Q6_K.gguf /mnt/ai/ComfyUI/models/diffusion_models/flux-2-klein-4b-Q6_K.gguf
+
+    rm -rf /mnt/ai/ComfyUI/models/inpaint/MAT_Places512_G_fp16.safetensors
+    ln -sfn /mnt/ai/ComfyUI_krita-ai-diffusion/models/inpaint/MAT_Places512_G_fp16.safetensors /mnt/ai/ComfyUI/models/inpaint/MAT_Places512_G_fp16.safetensors
+
+    rm -rf /mnt/ai/ComfyUI/models/loras/LyNiaZ53Tudg0J6sT8Xbx_pytorch_lora_weights_comfy_converted.safetensors
+    ln -sfn /mnt/ai/ComfyUI_krita-ai-diffusion/models/loras/LyNiaZ53Tudg0J6sT8Xbx_pytorch_lora_weights_comfy_converted.safetensors /mnt/ai/ComfyUI/models/loras/LyNiaZ53Tudg0J6sT8Xbx_pytorch_lora_weights_comfy_converted.safetensors
+
+    rm -rf /mnt/ai/ComfyUI/models/text_encoders/Qwen3-4B-Q4_K_M.gguf
+    ln -sfn /mnt/ai/ComfyUI_krita-ai-diffusion/models/text_encoders/Qwen3-4B-Q4_K_M.gguf /mnt/ai/ComfyUI/models/text_encoders/Qwen3-4B-Q4_K_M.gguf
+
+    # Upscale модели
+    rm -rf /mnt/ai/ComfyUI/models/upscale_models/4x_NMKD-Superscale-SP_178000_G.pth
+    ln -sfn /mnt/ai/ComfyUI_krita-ai-diffusion/models/upscale_models/4x_NMKD-Superscale-SP_178000_G.pth /mnt/ai/ComfyUI/models/upscale_models/4x_NMKD-Superscale-SP_178000_G.pth
+
+    rm -rf /mnt/ai/ComfyUI/models/upscale_models/HAT_SRx4_ImageNet-pretrain.pth
+    ln -sfn /mnt/ai/ComfyUI_krita-ai-diffusion/models/upscale_models/HAT_SRx4_ImageNet-pretrain.pth /mnt/ai/ComfyUI/models/upscale_models/HAT_SRx4_ImageNet-pretrain.pth
+
+    rm -rf /mnt/ai/ComfyUI/models/upscale_models/OmniSR_X2_DIV2K.safetensors
+    ln -sfn /mnt/ai/ComfyUI_krita-ai-diffusion/models/upscale_models/OmniSR_X2_DIV2K.safetensors /mnt/ai/ComfyUI/models/upscale_models/OmniSR_X2_DIV2K.safetensors
+
+    rm -rf /mnt/ai/ComfyUI/models/upscale_models/OmniSR_X3_DIV2K.safetensors
+    ln -sfn /mnt/ai/ComfyUI_krita-ai-diffusion/models/upscale_models/OmniSR_X3_DIV2K.safetensors /mnt/ai/ComfyUI/models/upscale_models/OmniSR_X3_DIV2K.safetensors
+
+    rm -rf /mnt/ai/ComfyUI/models/upscale_models/OmniSR_X4_DIV2K.safetensors
+    ln -sfn /mnt/ai/ComfyUI_krita-ai-diffusion/models/upscale_models/OmniSR_X4_DIV2K.safetensors /mnt/ai/ComfyUI/models/upscale_models/OmniSR_X4_DIV2K.safetensors
+
+    rm -rf /mnt/ai/ComfyUI/models/upscale_models/Real_HAT_GAN_sharper.pth
+    ln -sfn /mnt/ai/ComfyUI_krita-ai-diffusion/models/upscale_models/Real_HAT_GAN_sharper.pth /mnt/ai/ComfyUI/models/upscale_models/Real_HAT_GAN_sharper.pth
+
+    rm -rf /mnt/ai/ComfyUI/models/vae/flux2-vae.safetensors
+    ln -sfn /mnt/ai/ComfyUI_krita-ai-diffusion/models/vae/flux2-vae.safetensors /mnt/ai/ComfyUI/models/vae/flux2-vae.safetensors
   '';
 }
