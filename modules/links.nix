@@ -1,5 +1,5 @@
 # modules/links.nix
-{ pkgs, lib, myLib }:
+{ pkgs, lib, myLib, config ? null }:
 
 let
   home = myLib.home;
@@ -12,8 +12,9 @@ in
     "d /mnt/www-OneDrive 0755 lucerno users -"
   ];
 
-  # ========== Скрипт для home.activation (директории + симлинки) ==========
-  activationScript = ''
+  # ========== Скрипт для home.activation ==========
+  # Вычисляется ТОЛЬКО если передан config (т.е. при импорте из home-manager)
+  activationScript = lib.mkIf (config != null) ''
     # Создание директорий внутри ~/
     mkdir -p ${home}/.local/share && chmod 755 ${home}/.local/share
     mkdir -p ${home}/.config && chmod 755 ${home}/.config

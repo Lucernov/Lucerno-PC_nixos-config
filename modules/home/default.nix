@@ -1,7 +1,7 @@
 { config, pkgs, pkgs-unstable, inputs, lib, myLib, ... }:
 
 let
-  links = import ../links.nix { inherit pkgs lib myLib; };
+  links = import ../links.nix { inherit pkgs lib myLib config; };
   packages = import ../packages.nix { inherit pkgs pkgs-unstable; };
 in
 
