@@ -14,6 +14,7 @@
   programs.nano.enable = true;                                  # Устанавливает Nano (простой текстовый редактор) системно
   programs.htop.enable = true;                                  # Устанавливает htop (интерактивный монитор процессов) системно
   programs.amnezia-vpn.enable = true;                           # Включает сервис AmneziaVPN (VPN-клиент)
+  programs.retroarch.enable = true;                             # Эмулятор приставок
   programs.appimage = {
     enable = true;                                              # Включает поддержку запуска AppImage-файлов (бинарные образы приложений)
     binfmt = true;                                              # Эта опция автоматически настраивает загрузчик.
@@ -96,7 +97,7 @@
     (bottles.override { removeWarningPopup = true; })           # Запуск Windows-приложений через Wine (без всплывающих предупреждений)
     goverlay                                                    # Оверлей для мониторинга системы и FPS (MangoHud, vkBasalt)
     mangohud                                                    # Оверлей для отображения FPS и мониторинга системы в играх
-    retroarch                                                   # Эмулятор приставок
+    #retroarch                                                   # Эмулятор приставок
     #lutris                                                     # Игровой лаунчер для управления играми
     #heroic                                                     # Лаунчер для Epic Games Store и GOG
 
