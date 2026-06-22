@@ -134,16 +134,12 @@ in
 
 
   # ========== ССЫЛКИ НА ДИСКИ ==========
-  systemd.tmpfiles.rules = [
-    "L+ /home/lucerno/Видео - - - - /mnt/video"
-    "L+ /home/lucerno/Документы - - - - /mnt/docs"
-    "L+ /home/lucerno/Музыка - - - - /mnt/music"
-    "L+ /home/lucerno/Изображения - - - - /mnt/images"
-    "d /home/lucerno/${myLib.configDirName} 0755 lucerno lucerno -"
-    "d /mnt/ai 0755 lucerno lucerno -"
-    "d /mnt/sys_archiv 0755 lucerno lucerno -"
-    "z /sys/class/powercap/intel-rapl:*/energy_uj 0640 root powercap -"
-  ];
+#  systemd.tmpfiles.rules = [
+#    "L+ /home/lucerno/Видео - - - - /mnt/video"
+#    "L+ /home/lucerno/Документы - - - - /mnt/docs"
+#    "L+ /home/lucerno/Музыка - - - - /mnt/music"
+#    "L+ /home/lucerno/Изображения - - - - /mnt/images"
+#  ];
   # ========== КОНЕЦ РАЗДЕЛА ДИСКОВ ==========
 
 

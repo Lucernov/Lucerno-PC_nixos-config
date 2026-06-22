@@ -9,7 +9,7 @@ in
   # НАСТРОЙКИ HOME MANAGER
   home.stateVersion = myLib.channelVersion;            # Версия NixOS, на которой были созданы настройки home-manager. Используется для миграции конфигурации
   home.username = myLib.userName;                      # Имя пользователя, для которого применяется конфигурация
-  home.homeDirectory = "/home/${myLib.userName}";      # Домашняя директория
+  home.homeDirectory = myLib.home;                     # Домашняя директория
 
 
   home.activation = {                                  # Добавляем активацию (создание директорий и симлинков)
