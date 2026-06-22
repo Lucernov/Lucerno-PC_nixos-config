@@ -154,15 +154,10 @@ in
     noto-fonts                                                                                  # Базовый набор для всех языков
     liberation_ttf                                                                              # Свободная замена Arial, Times, Courier
     inter                                                                                       # Современный интерфейсный шрифт
-    roboto                                                                                      # Шрифт Google Material Design
     source-sans-pro                                                                             # Шрифт Adobe для интерфейсов
-    source-serif-pro                                                                            # Шрифт Adobe с засечками
-    source-code-pro                                                                             # Моноширинный Adobe
-    fira-code                                                                                   # Шрифт с лигатурами
-    jetbrains-mono                                                                              # Отличный шрифт для кода
-    inputs.apple-fonts.packages.${pkgs.system}.sf-pro                                           # Apple шрифт sf-pro
-    inputs.apple-fonts.packages.${pkgs.system}.sf-mono                                          # Apple шрифт sf-mono
-    inputs.apple-fonts.packages.${pkgs.system}.ny                                               # Apple шрифт new-york
+    jetbrains-mono                                                                              # Шрифт для кода с лигатурами
+    inputs.apple-fonts.packages.${pkgs.stdenv.hostPlatform.system}.sf-pro                       # Apple шрифт sf-pro
+    inputs.apple-fonts.packages.${pkgs.stdenv.hostPlatform.system}.ny                           # Apple шрифт new-york (Серифный шрифт с засечками)
   ];
 
 
