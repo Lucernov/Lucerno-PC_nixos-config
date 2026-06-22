@@ -150,8 +150,19 @@ in
 
   # ========== Добавляем шрифты ==========
   fonts.packages = with pkgs; [
-    corefonts
-    # ... другие шрифты, если есть
+    noto-fonts-color-emoji                                                                      # Цветные эмодзи
+    noto-fonts                                                                                  # Базовый набор для всех языков
+    liberation_ttf                                                                              # Свободная замена Arial, Times, Courier
+    inter                                                                                       # Современный интерфейсный шрифт
+    roboto                                                                                      # Шрифт Google Material Design
+    source-sans-pro                                                                             # Шрифт Adobe для интерфейсов
+    source-serif-pro                                                                            # Шрифт Adobe с засечками
+    source-code-pro                                                                             # Моноширинный Adobe
+    fira-code                                                                                   # Шрифт с лигатурами
+    jetbrains-mono                                                                              # Отличный шрифт для кода
+    inputs.apple-fonts.packages.${pkgs.system}.sf-pro                                           # Apple шрифт sf-pro
+    inputs.apple-fonts.packages.${pkgs.system}.sf-mono                                          # Apple шрифт sf-mono
+    inputs.apple-fonts.packages.${pkgs.system}.new-york                                         # Apple шрифт new-york
   ];
 
 

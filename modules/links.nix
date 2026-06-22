@@ -11,7 +11,7 @@ in
     "d ${home}/${myLib.configDirName} 0755 lucerno lucerno -"
     "d /mnt/ai 0755 lucerno lucerno -"
     "d /mnt/sys_archiv 0755 lucerno lucerno -"
-    "z /sys/class/powercap/intel-rapl:*/energy_uj 0640 root powercap -"
+    "z /sys/class/powercap/intel-rapl:*/energy_uj 0640 root powercap -"           # Переопределение прав, чтобы в btop показывато потребление питания процессора
 
     # линки rclone
     "d /mnt/www-GoogleDrive 0755 lucerno users -"

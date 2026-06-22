@@ -33,6 +33,11 @@
     comfyui-nix.url = "github:utensils/comfyui-nix";                                                       # Flake для ComfyUI
     import-tree.url = "github:vic/import-tree";                                                            # Утилита для рекурсивного импорта файлов
 
+    apple-fonts = {
+      url = "github:Lyndeno/apple-fonts.nix";                                                              # Шрифты Apple
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     #fufexan/nix-gaming nickm8/nix-gaming TophC7/play.nix
   };
 

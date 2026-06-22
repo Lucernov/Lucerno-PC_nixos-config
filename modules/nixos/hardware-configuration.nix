@@ -132,14 +132,6 @@ in
     priority = 100;                                                         # Приоритет использования zram-устройства (чем выше, тем предпочтительнее)
   };
 
-
-  # ========== ССЫЛКИ НА ДИСКИ ==========
-#  systemd.tmpfiles.rules = [
-#    "L+ /home/lucerno/Видео - - - - /mnt/video"
-#    "L+ /home/lucerno/Документы - - - - /mnt/docs"
-#    "L+ /home/lucerno/Музыка - - - - /mnt/music"
-#    "L+ /home/lucerno/Изображения - - - - /mnt/images"
-#  ];
   # ========== КОНЕЦ РАЗДЕЛА ДИСКОВ ==========
 
 
