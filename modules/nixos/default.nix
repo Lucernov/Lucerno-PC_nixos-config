@@ -162,7 +162,7 @@ in
     jetbrains-mono                                                                              # Отличный шрифт для кода
     inputs.apple-fonts.packages.${pkgs.system}.sf-pro                                           # Apple шрифт sf-pro
     inputs.apple-fonts.packages.${pkgs.system}.sf-mono                                          # Apple шрифт sf-mono
-    inputs.apple-fonts.packages.${pkgs.system}.new-york                                         # Apple шрифт new-york
+    inputs.apple-fonts.packages.${pkgs.system}.ny                                               # Apple шрифт new-york
   ];
 
 
