@@ -27,6 +27,11 @@
       initial_window_height = 768;                                                # Высота нового окна терминала по умолчанию
       enabled_layouts = "splits,fat,grid,stack,tall,horizontal,vertical";         # Список доступных вариантов раскладки окон (можно переключать)
       default_layout = "splits";                                                  # Раскладка по умолчанию (разделение на панели, как в tmux)
+      font_family = "JetBrains Mono";                                             # Основной шрифт терминала
+      font_size = 11;                                                             # Размер шрифта в пунктах
+      bold_font = "auto";                                                         # Автоматический выбор жирного начертания
+      italic_font = "auto";                                                       # Автоматический выбор курсивного начертания
+      bold_italic_font = "auto";                                                  # Автоматический выбор жирного курсива
     };
 
     # Привязка клавиш (map)
@@ -77,6 +82,10 @@
     start_as_hidden no
     # Заголовок окна (используется для поиска)
     title quick-access
+    # Шрифт терминала для выпадающего режима
+    font_family JetBrains Mono
+    # Размер шрифта в пунктах
+    font_size 11
   '';
 
   # Скрипт для переключения Kitty (открыть/закрыть выпадающее окно)
