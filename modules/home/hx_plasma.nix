@@ -26,17 +26,16 @@
     configFile."katerc"."KTextEditor Renderer"."Show Indentation Lines" = "true";                       # вертикальные полосы для разных блоков
     # === LSP для Nix (nil) ===
     configFile."katerc"."lspclient"."AllowedServerCommandLines" = "/run/current-system/sw/bin/nil";     # Разрешаем Kate запускать LSP-сервер nil (ука¬зываем полный путь, чтобы избежать проблем с PATH)
-
-
-
   };
 
-  # Создаём файл напрямую через home.file (на верхнем уровне)
+  # === Настройка LSP для Kate: файл settings.json ===
+  # Внимание: plasma-manager некорректно обрабатывает JSON-файлы через configFile, поэтому создаём этот файл напрямую через home.file (на верхнем уровне).
+  # Это обходной путь, который гарантирует правильную запись JSON-структуры.
   home.file.".config/lspclient/settings.json".text = builtins.toJSON {
     servers = {
       nix = {
-        command = [ "nil" ];
-        highlightingModeRegex = "^Nix$";
+        command = [ "nil" ];                                                                            # Команда для запуска LSP-сервера
+        highlightingModeRegex = "^Nix$";                                                                # Регулярное выражение для определения Nix-файлов по режиму подсветки
       };
     };
   };
