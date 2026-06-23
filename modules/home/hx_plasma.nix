@@ -21,8 +21,9 @@
       VariantList = "";                                            # Нет вариантов раскладок (пусто)
     };
 
-    # === Только шрифт для Kate, остальное не трогаем ===
-    configFile."katerc".General.Font = "JetBrains Mono,13,-1,5,50,0,0,0,0,0";
+    # === Kate ===
+    configFile."katerc".General.Font = "JetBrains Mono,13,-1,5,50,0,0,0,0,0";       # определение шрифта
+    configFile."katerc"."KTextEditor Renderer"."Show Indentation Lines" = "true";   # вертикальные полосы для разных блоков
   };
 
 }
