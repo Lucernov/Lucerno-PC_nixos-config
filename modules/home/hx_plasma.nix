@@ -20,10 +20,16 @@
       Use = "true";                                                # Использовать эти настройки (активировать)
       VariantList = "";                                            # Нет вариантов раскладок (пусто)
     };
+  };
 
-    configFile."katerc".text = ''
-      [General]
-      Font=JetBrains Mono,13,-1,5,50,0,0,0,0,0
-    '';
+  # ========== Настройка Kate через выделенный модуль ==========
+  programs.kate = {
+    enable = true;                                                 # Включаем управление Kate через plasma-manager
+    editor = {
+      font = {
+        family = "JetBrains Mono";                                 # Шрифт редактора
+        pointSize = 13;                                            # Размер шрифта
+      };
+    };
   };
 }
