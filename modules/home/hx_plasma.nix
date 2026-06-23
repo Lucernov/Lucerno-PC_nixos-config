@@ -1,4 +1,4 @@
-{ inputs, myLib, ... }:
+{ inputs, myLib, pkgs, ... }:
 
 {
   imports = [ inputs.plasma-manager.homeModules.plasma-manager ];                                       # Подключаем модуль plasma-manager, который позволяет настраивать KDE Plasma через home-manager
