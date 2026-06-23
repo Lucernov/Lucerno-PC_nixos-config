@@ -26,13 +26,13 @@
     configFile."katerc"."KTextEditor Renderer"."Show Indentation Lines" = "true";                       # вертикальные полосы для разных блоков
     # === LSP для Nix (nil) ===
     configFile."katerc"."lspclient"."AllowedServerCommandLines" = "/run/current-system/sw/bin/nil";     # Разрешаем Kate запускать LSP-сервер nil (ука¬зываем полный путь, чтобы избежать проблем с PATH)
-    configFile."lspclient/settings.json".text = builtins.toJSON {                                       # Настраиваем соответствие языка Nix и сервера nil в Kate
+    configFile."lspclient/settings.json".source = pkgs.writeText "settings.json" (builtins.toJSON {     # Настраиваем соответствие языка Nix и сервера nil в Kate
       servers = {
         nix = {
           command = [ "nil" ];                                                                          # Команда для запуска сервера
           highlightingModeRegex = "^Nix$";                                                              # Регулярное выражение для определения Nix-файлов по режиму подсветки
         };
       };
-    };
+    });
   };
 }
