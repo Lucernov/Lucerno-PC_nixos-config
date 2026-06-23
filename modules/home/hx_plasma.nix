@@ -29,7 +29,9 @@
 
 
 
-  # Создаём файл напрямую
+  };
+
+  # Создаём файл напрямую через home.file (на верхнем уровне)
   home.file.".config/lspclient/settings.json".text = builtins.toJSON {
     servers = {
       nix = {
@@ -37,7 +39,5 @@
         highlightingModeRegex = "^Nix$";
       };
     };
-  };
-
   };
 }
