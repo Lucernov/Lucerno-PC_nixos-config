@@ -22,7 +22,7 @@
     };
 
     # === Kate ===
-    configFile."katerc".General.Font = "JetBrains Mono,13,-1,5,50,0,0,0,0,0";       # определение шрифта
+    configFile."katerc".General.Font = "JetBrains Mono,13,-1,5,400,0,0,0,0,0";      # определение шрифта
     configFile."katerc"."KTextEditor Renderer"."Show Indentation Lines" = "true";   # вертикальные полосы для разных блоков
   };
 
