@@ -22,14 +22,4 @@
     };
   };
 
-  # ========== Настройка Kate через выделенный модуль ==========
-  programs.kate = {
-    enable = true;                                                 # Включаем управление Kate через plasma-manager
-    editor = {
-      font = {
-        family = "JetBrains Mono";                                 # Шрифт редактора
-        pointSize = 13;                                            # Размер шрифта
-      };
-    };
-  };
 }
