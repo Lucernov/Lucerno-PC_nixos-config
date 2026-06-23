@@ -20,5 +20,10 @@
       Use = "true";                                                # Использовать эти настройки (активировать)
       VariantList = "";                                            # Нет вариантов раскладок (пусто)
     };
+
+    configFile."katerc".text = ''
+      [General]
+      Font=JetBrains Mono,13,-1,5,50,0,0,0,0,0
+    '';
   };
 }
