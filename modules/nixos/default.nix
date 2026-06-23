@@ -195,7 +195,7 @@ in
       ];
       trusted-public-keys = [                                                                   # Публичные ключи для проверки подписей пакетов из соответствующих кэшей
         "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="                        # Ключ основного кэша
-        "flox-cache-public-1:7F4OyH7ZCnFhcze3fJdfyXYLQw/aV7GEed86nQ7IsOs="                      # Ключ кэша flox (CUDA)
+        "cache.flox.dev-1:H4Tsx+8AOz3b3CvyCqVQPyEr2cHKH+O8bHn8ZgYp/po="                         # Ключ кэша flox (CUDA)
         "cache.nixos-cuda.org:74DUi4Ye579gUqzH4ziL9IyiJBlDpMRn9MBN8oNan9M="                     # Публичный ключ CUDA-кэша
         "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="               # ключ кэша nix-community
       ];
