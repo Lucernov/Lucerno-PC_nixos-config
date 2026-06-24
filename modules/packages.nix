@@ -54,8 +54,7 @@
     authenticator                                               # Приложение для двухфакторной аутентификации (TOTP, HOTP), например, для аккаунтов Google, GitHub и т.д.
     google-chrome                                               # Браузер Google Chrome
     parabolic                                                   # Загрузчик видео/аудио с YouTube (альтернатива yt-dlp)
-    discord                                                     # Голосовой/текстовый чат
-    discord-openasar                                            # Голосовой/текстовый чат
+    (discord.override { withOpenASAR = true; })                 # Голосовой/текстовый чат
     telegram-desktop                                            # Мессенджер Telegram
 
     # ГРАФИКА
