@@ -6,11 +6,8 @@
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-26.05";                                                      # Стабильный канал Nixpkgs (NixOS 26.05)
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";                                          # Нестабильный канал Nixpkgs (последние обновления)
 
-    flake-parts.url = "github:hercules-ci/flake-parts";                                                    # Flake-parts — фреймворк для модульной организации flake
-    flake-parts.inputs.nixpkgs-lib.follows = "nixpkgs";                                                    # Зависимости flake-parts также используют основной nixpkgs
-
     home-manager = {                                                                                       # Home Manager — управление пользовательским окружением
-      url = "github:nix-community/home-manager/release-26.05";
+      url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";                                                                  # Использовать тот же nixpkgs, что и основной (единая версия)
     };
 
@@ -20,23 +17,24 @@
       inputs.home-manager.follows = "home-manager";                                                        # Следовать за home-manager
     };
 
+    flake-parts = {
+      url = "github:hercules-ci/flake-parts";                                                              # Flake-parts — фреймворк для модульной организации flake
+      inputs.nixpkgs-lib.follows = "nixpkgs";                                                              # Зависимости flake-parts также используют основной nixpkgs
+    };
+
     stylix = {                                                                                             # Единая настройка тем
-      url = "github:nix-community/stylix/release-26.05";
-      #url = "github:nix-community/stylix";
+      url = "github:nix-community/stylix";
       inputs.nixpkgs.follows = "nixpkgs";                                                                  # Следовать за nixpkgs
     };
-
-    nixpkgs-krita-25-11 = {                                                                                # Фиксированная версия nixpkgs для Krita (новая версия пока не работает с ComfyUI)
-      url = "github:NixOS/nixpkgs/b77b3de8775677f84492abe84635f87b0e153f0f";
-    };
-
-    comfyui-nix.url = "github:utensils/comfyui-nix";                                                       # Flake для ComfyUI
-    import-tree.url = "github:vic/import-tree";                                                            # Утилита для рекурсивного импорта файлов
 
     apple-fonts = {
       url = "github:Lyndeno/apple-fonts.nix";                                                              # Шрифты Apple
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    import-tree.url = "github:vic/import-tree";                                                            # Утилита для рекурсивного импорта файлов
+    comfyui-nix.url = "github:utensils/comfyui-nix";                                                       # Flake для ComfyUI
+    nixpkgs-krita-25-11.url = "github:NixOS/nixpkgs/b77b3de8775677f84492abe84635f87b0e153f0f";             # Фиксированная версия nixpkgs для Krita (новая версия пока не работает с ComfyUI)
 
     #fufexan/nix-gaming nickm8/nix-gaming TophC7/play.nix
   };
