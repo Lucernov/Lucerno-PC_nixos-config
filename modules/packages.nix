@@ -16,6 +16,7 @@
     home-manager                                                # Управление пользовательским окружением (конфиги, пакеты, службы)
     nil                                                         # LSP-сервер для Nix
     glib                                                        # Базовая библиотека GLib (низкоуровневые структуры данных)
+    openh264
     uv                                                          # Менеджер Python-проектов (альтернатива pip + virtualenv)
     gsettings-desktop-schemas                                   # Схемы настроек для GSettings (используются GTK-приложениями)
     ffmpeg-full                                                 # Полная версия FFmpeg (кодирование/декодирование аудио/видео)
@@ -54,6 +55,7 @@
     google-chrome                                               # Браузер Google Chrome
     parabolic                                                   # Загрузчик видео/аудио с YouTube (альтернатива yt-dlp)
     discord                                                     # Голосовой/текстовый чат
+    discord-openasar                                            # Голосовой/текстовый чат
     telegram-desktop                                            # Мессенджер Telegram
 
     # ГРАФИКА
