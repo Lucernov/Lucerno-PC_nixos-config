@@ -22,7 +22,7 @@
     };
 
     # === Kate ===
-    configFile."katerc".General.Font = "JetBrains Mono,13,-1,5,400,0,0,0,0,0";                          # определение шрифта
+    configFile."katerc".General.Font = "JetBrains Mono Nerd Font,13,-1,5,400,0,0,0,0,0";                # определение шрифта
     configFile."katerc"."KTextEditor Renderer"."Show Indentation Lines" = "true";                       # вертикальные полосы для разных блоков
     # === LSP для Nix (nil) ===
     configFile."katerc"."lspclient"."AllowedServerCommandLines" = "/run/current-system/sw/bin/nil";     # Разрешаем Kate запускать LSP-сервер nil (ука¬зываем полный путь, чтобы избежать проблем с PATH)

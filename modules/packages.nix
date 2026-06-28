@@ -123,6 +123,8 @@
 
   # ========== Пакеты, устанавливаемые через Home Manager ==========
   homePackages = with pkgs; [
+    # тема для Oh My Zsh
+    zsh-powerlevel10k
 
     # ИИ
     comfy-ui-cuda
