@@ -155,8 +155,8 @@ in
     liberation_ttf                                                                              # Свободная замена Arial, Times, Courier
     inter                                                                                       # Современный интерфейсный шрифт
     jetbrains-mono                                                                              # Шрифт для кода с лигатурами
-    inputs.apple-fonts.packages.${pkgs.stdenv.hostPlatform.system}.sf-pro                       # Apple шрифт sf-pro
-    inputs.apple-fonts.packages.${pkgs.stdenv.hostPlatform.system}.ny                           # Apple шрифт new-york (Серифный шрифт с засечками)
+    inputs.apple-fonts.packages.${pkgs.stdenv.hostPlatform.system}.sf-pro                       # Apple шрифт SF-Pro
+    inputs.apple-fonts.packages.${pkgs.stdenv.hostPlatform.system}.ny                           # Apple шрифт New-York (Серифный шрифт с засечками)
   ];
 
 
