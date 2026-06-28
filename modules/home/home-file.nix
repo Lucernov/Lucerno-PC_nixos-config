@@ -16,6 +16,9 @@
     '';
     ".config/user-dirs.dirs".force = true;
 
+    # --- Конфигурация Powerlevel10k ---
+    ".p10k.zsh".source = ./dotfiles/config/zsh/.p10k.zsh;
+
     # --- Указывает количество потоков для компиляции шейдеров в Steam ---
     ".local/share/Steam/config/steam_dev.cfg".text = ''
       unShaderBackgroundProcessingThreads 16
