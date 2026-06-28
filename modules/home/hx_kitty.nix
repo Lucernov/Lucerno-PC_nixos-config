@@ -27,12 +27,12 @@
       initial_window_height = 768;                                                # Высота нового окна терминала по умолчанию
       enabled_layouts = "splits,fat,grid,stack,tall,horizontal,vertical";         # Список доступных вариантов раскладки окон (можно переключать)
       default_layout = "splits";                                                  # Раскладка по умолчанию (разделение на панели, как в tmux)
-      font_family = "JetBrains Mono Nerd Font";                                             # Основной шрифт терминала
+      font_family = "JetBrainsMono Nerd Font Mono";                                             # Основной шрифт терминала
       font_size = 13;                                                             # Размер шрифта в пунктах
       bold_font = "auto";                                                         # Автоматический выбор жирного начертания
       italic_font = "auto";                                                       # Автоматический выбор курсивного начертания
       bold_italic_font = "auto";                                                  # Автоматический выбор жирного курсива
-      font_features = "JetBrains Mono Nerd Font:liga=1,calt=1";                             # принудительно включает лигатуры и контекстные альтернативы
+      font_features = "JetBrainsMono Nerd Font Mono:liga=1,calt=1";                             # принудительно включает лигатуры и контекстные альтернативы
     };
 
     # Привязка клавиш (map)
@@ -84,11 +84,11 @@
     # Заголовок окна (используется для поиска)
     title quick-access
     # Шрифт терминала для выпадающего режима
-    font_family JetBrains Mono Nerd Font
+    font_family JetBrainsMono Nerd Font Mono
     # Размер шрифта в пунктах
     font_size 13
     # принудительно включает лигатуры и контекстные альтернативы
-    font_features JetBrains Mono Nerd Font:liga=1,calt=1
+    font_features JetBrainsMono Nerd Font Mono:liga=1,calt=1
   '';
 
   # Скрипт для переключения Kitty (открыть/закрыть выпадающее окно)
