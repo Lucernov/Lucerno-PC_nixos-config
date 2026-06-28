@@ -19,6 +19,6 @@
     chrome = "google-chrome-stable --ozone-platform=x11";
     cat="bat";
     top="btop";
-    neo = "neo --defaultbg";   # Использует фон терминала (прозрачный, если включён в Kitty)
+    neo- = "neo --defaultbg";   # Использует фон терминала (прозрачный, если включён в Kitty)
   };
 }
