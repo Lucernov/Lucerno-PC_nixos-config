@@ -53,6 +53,8 @@ in
     ln -sfn ${home}/${configDir}/dotfiles/config/KDE/config-kglobalshortcutsrc ${home}/.config/kglobalshortcutsrc
     ln -sfn ${home}/${configDir}/dotfiles/config/KDE/local-share-applications-net.local.kitten ${home}/.local/share/applications/net.local.kitten
 
+    # Симлинк для Powerlevel10k
+    ln -sfn ${home}/${configDir}/dotfiles/config/zsh/.p10k.zsh ${home}/.p10k.zsh
 
     # Симлинк для ядер RetroArch
     mkdir -p ${home}/.config/retroarch
