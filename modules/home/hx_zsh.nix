@@ -9,7 +9,7 @@
     # Oh My Zsh
     oh-my-zsh = {
       enable = true;                        # Включает Oh My Zsh (коллекция тем и плагинов)
-      theme = "powerlevel10k/powerlevel10k";# тема с информацией о git ветке
+      #theme = "agnoster";                   # тема с информацией о git ветке
       plugins = [                           # Список плагинов
         "git"                               # Алиасы для Git (сокращает время набора) - gst, ga, gc, gp
         "docker"                            # Алиасы для Docker - dps, drm, dstop
@@ -43,6 +43,11 @@
     initContent = ''
       # Разрешение unfree пакетов для home-manager
       export NIXPKGS_ALLOW_UNFREE=1
+
+      # Подключаем Powerlevel10k
+      source ${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/powerlevel10k.zsh-theme
+      # Загружаем пользовательскую конфигурацию, если она есть
+      [[ -f ~/.p10k.zsh ]] && source ~/.p10k.zsh
 
       # Путь к локальным скриптам
       #export PATH="$HOME/.local/bin:$PATH"
