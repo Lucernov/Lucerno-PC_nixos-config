@@ -8,30 +8,30 @@
 
     # Oh My Zsh
     oh-my-zsh = {
-      enable = true;                      # Включает Oh My Zsh (коллекция тем и плагинов)
-      theme = "agnoster";                 # тема с информацией о git ветке
-      plugins = [                         # Список плагинов
-        "git"                             # Алиасы для Git (сокращает время набора) - gst, ga, gc, gp
-        "docker"                          # Алиасы для Docker - dps, drm, dstop
-        "sudo"                            # Добавляет sudo перед последней командой [Esc][Esc]
-        "extract"                         # Распаковывает любой архив (7z, rar, zip, tar...) extract file.zip
-        "web-search"                      # Поиск в браузере прямо из терминала - google nixos, youtube linux
-        "command-not-found"               # Предлагает установить пакет через nix - неизвестная_команда
-        "colored-man-pages"               # Цветные man страницы - man ls
-        "history"                         # Показывает историю команд - h или history
-        "npm"                             # Автодополнения
-        "node"                            # Автодополнения
-        "python"                          # Автодополнения
+      enable = true;                        # Включает Oh My Zsh (коллекция тем и плагинов)
+      theme = "powerlevel10k/powerlevel10k";# тема с информацией о git ветке
+      plugins = [                           # Список плагинов
+        "git"                               # Алиасы для Git (сокращает время набора) - gst, ga, gc, gp
+        "docker"                            # Алиасы для Docker - dps, drm, dstop
+        "sudo"                              # Добавляет sudo перед последней командой [Esc][Esc]
+        "extract"                           # Распаковывает любой архив (7z, rar, zip, tar...) extract file.zip
+        "web-search"                        # Поиск в браузере прямо из терминала - google nixos, youtube linux
+        "command-not-found"                 # Предлагает установить пакет через nix - неизвестная_команда
+        "colored-man-pages"                 # Цветные man страницы - man ls
+        "history"                           # Показывает историю команд - h или history
+        "npm"                               # Автодополнения
+        "node"                              # Автодополнения
+        "python"                            # Автодополнения
       ];
     };
 
     # Настройки истории
     history = {
-      size = 10000;                       # Сколько команд хранить в памяти
-      path = "$HOME/.zsh_history";        # Файл с историей
-      share = true;                       # Общая история между всеми терминалами
-      save = 10000;                       # Сколько команд сохранять в файл
-      extended = true;                    # Включает расширенный формат истории с временными метками
+      size = 10000;                         # Сколько команд хранить в памяти
+      path = "$HOME/.zsh_history";          # Файл с историей
+      share = true;                         # Общая история между всеми терминалами
+      save = 10000;                         # Сколько команд сохранять в файл
+      extended = true;                      # Включает расширенный формат истории с временными метками
     # Полезные команды:
     # показать историю - history
     # повторить последнюю команду - !!
