@@ -20,5 +20,7 @@
     cat="bat";
     top="btop";
     neo- = "neo --defaultbg";   # Использует фон терминала (прозрачный, если включён в Kitty)
+    discord-clean = "rm -rf ~/.config/discord ~/.cache/discord && discord";   # ПОЛНАЯ очистка кеша Discord перед запуском
+    discord-fix = "find ~/.config/discord -type d -name modules -exec rm -rf {} \\; 2>/dev/null; rm -rf ~/.config/discord/Cache ~/.config/discord/Code\\ Cache ~/.config/discord/GPUCache ~/.config/discord/Service\\ Worker ~/.cache/discord; discord";   # Очистка кеша Discord перед запуском с сохранением токена
   };
 }
