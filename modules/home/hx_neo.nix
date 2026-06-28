@@ -1,19 +1,11 @@
 { config, pkgs, ... }:
 
 {
-  # Устанавливаем neo (если он есть в nixpkgs, но его может не быть)
-  # Если neo нет в nixpkgs, можно установить через другие способы.
+  # Устанавливаем neo (если он есть в nixpkgs)
   # home.packages = with pkgs; [ neo ];
 
-  # Создаём файл цветов для прозрачного фона
-  xdg.configFile."neo/transparent.colors".text = ''
-    // Использовать системный цвет фона (прозрачный)
-    -1
-    2                       # Цвет символов (2 — зелёный)
-  '';
-
-  # Алиас для запуска neo с этим файлом
+  # Алиас для запуска neo с прозрачным фоном (через --defaultbg)
   home.shellAliases = {
-    neo = "neo --colorfile ${config.xdg.configHome}/neo/transparent.colors";
+    neo = "neo --defaultbg";   # Использует фон терминала (прозрачный, если включён в Kitty)
   };
 }
