@@ -7,8 +7,8 @@ in
 
 {
   # НАСТРОЙКИ HOME MANAGER
-  home.stateVersion = myLib.channelVersion;            # Версия NixOS, на которой были созданы настройки home-manager. Используется для миграции конфигурации
-  home.username = myLib.userName;                      # Имя пользователя, для которого применяется конфигурация
+  home.stateVersion = myLib.channelVersion;            # Версия NixOS
+  home.username = myLib.userName;                      # Имя пользователя
   home.homeDirectory = myLib.home;                     # Домашняя директория
 
 
