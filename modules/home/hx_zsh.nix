@@ -1,4 +1,5 @@
-{ myLib, ... }:
+{ myLib, pkgs, ... }:
+
 {
   programs.zsh = {
     enable = true;                          # Включает настройку Zsh через home-manager (генерирует ~/.zshrc)
