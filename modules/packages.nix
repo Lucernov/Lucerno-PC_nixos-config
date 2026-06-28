@@ -45,6 +45,7 @@
     dust                                                        # Быстрая утилита для анализа размера папок и файлов (аналог du, но с графиками)
     ncdu                                                        # Интерактивный анализатор дискового пространства с интерфейсом ncurses
     cava                                                        # Консольный аудиовизуализатор (спектроанализатор)
+    neo                                                         # Знаменитый "Матричный" дождь из символов (эффект из фильма)
 
     # KDE приложения
     kdePackages.kcalc                                           # Калькулятор
@@ -140,10 +141,14 @@
   ] ++ (with pkgs-unstable; [ ]);
 
 
-#nix run nixpkgs#genact
-#nix run nixpkgs#cmatrix
-#nix run nixpkgs#caligula
-#настройки плазма менеджера
-#nix run github:nix-community/plasma-manager/trunk#rc2nix > plasma.nix
-#nix run github:nix-community/plasma-manager#rc2nix > plasma-current.nix
+# ===== Быстрый запуск утилит без установки (через nix run) =====
+#nix run nixpkgs#lm-sensors                                                 # Утилита для отображения температуры и состояния датчиков оборудования
+#nix run nixpkgs#genact                                                     # Генератор бессмысленной активности в терминале (имитация работы, для прикола)
+#nix run nixpkgs#neo                                                        # Знаменитый "Матричный" дождь из символов (эффект из фильма)
+
+#nix run nixpkgs#caligula                                                   # Генератор случайных чисел/событий (интерактивная игрушка для терминала)
+
+# ===== Настройка Plasma Manager (генерация конфигов) =====
+#nix run github:nix-community/plasma-manager/trunk#rc2nix > plasma.nix      # Сгенерировать текущий конфиг Plasma в Nix-формате (rc2nix)
+#nix run github:nix-community/plasma-manager#rc2nix > plasma-current.nix    # Альтернативный способ (из главной ветки) получить Nix-конфиг Plasma
 }
