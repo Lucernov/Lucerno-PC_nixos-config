@@ -74,6 +74,7 @@
             import-tree = inputs.import-tree;                                                              # Передаём утилиту import-tree
             inherit myLib;
             nixpkgs-krita-25-11 = nixpkgs-krita-25-11;
+            inherit blender-cuda;
           };
 
           modules = [                                                                                      # Список модулей, из которых собирается система

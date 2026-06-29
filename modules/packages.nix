@@ -1,5 +1,5 @@
 # modules/packages.nix
-{ pkgs, pkgs-unstable }:
+{ pkgs, pkgs-unstable, blender-cuda }:
   # ========== Включение системных модулей для программ ==========
     # ./nixos/nx_packages_system_modules.nix -> git dconf zsh vim nano htop amnezia appimage partition-manager kdeconnect
 
