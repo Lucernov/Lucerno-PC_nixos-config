@@ -17,18 +17,18 @@
         maxretry = 3
         bantime  = 1h
         findtime = 10m
-        # Используем своё действие для добавления в набор
         action  = nftables-set
       '';
     };
-    # Определяем новое действие
-    action = {
-      "nftables-set" = {
-        description = "nftables set action for addr-set-sshd";
-        actionban   = "nft add element inet nixos-fw addr-set-sshd { <ip> }";
-        actionunban = "nft delete element inet nixos-fw addr-set-sshd { <ip> }";
-      };
-    };
+  };
+
+  # Создаём файл действия для nftables
+  environment.etc."fail2ban/action.d/nftables-set.conf" = {
+    text = ''
+      [Definition]
+      actionban   = nft add element inet nixos-fw addr-set-sshd { <ip> }
+      actionunban = nft delete element inet nixos-fw addr-set-sshd { <ip> }
+    '';
   };
 }
 
