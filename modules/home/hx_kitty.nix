@@ -68,7 +68,7 @@
   # Конфигурация для выпадающего режима (quick-access) – отдельный файл
   xdg.configFile."kitty/quick-access-terminal.conf".text = ''
     # Количество строк в выпадающем окне
-    lines 50
+    lines 35
     # Отступ слева (для центрирования)
     margin_left 200
     # Отступ справа
