@@ -29,7 +29,6 @@
       italic_font = "auto";                                                       # Автоматический выбор курсивного начертания
       bold_italic_font = "auto";                                                  # Автоматический выбор жирного курсива
       font_features = "JetBrainsMono Nerd Font Mono:liga=1,calt=1";               # принудительно включает лигатуры и контекстные альтернативы
-      window_padding = "22 5";
       #hide_window_decorations = "yes";                                           # Убрать рамку окна
       # Позиционирование окна (для обычного режима, не quick-access)
       initial_window_width = 1024;                                                # Ширина нового окна терминала по умолчанию (в пикселях)
