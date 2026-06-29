@@ -3,7 +3,11 @@
 {
   services.fail2ban = {
     enable = true;
-    loglevel = "INFO";
+
+    # Настройки демона (записываются в /etc/fail2ban/fail2ban.local)
+    daemonConfig = {
+      loglevel = "INFO";   # или "DEBUG" для детального вывода
+    };
 
     ignoreIP = [
       "127.0.0.1/8"
