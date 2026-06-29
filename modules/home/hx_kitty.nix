@@ -24,7 +24,7 @@
       enabled_layouts = "splits,fat,grid,stack,tall,horizontal,vertical";         # Список доступных вариантов раскладки окон (можно переключать)
       default_layout = "splits";                                                  # Раскладка по умолчанию (разделение на панели, как в tmux)
       font_family = "JetBrainsMono Nerd Font Mono";                               # Основной шрифт терминала
-      font_size = 13;                                                             # Размер шрифта в пунктах
+      font_size = 15;                                                             # Размер шрифта в пунктах
       bold_font = "auto";                                                         # Автоматический выбор жирного начертания
       italic_font = "auto";                                                       # Автоматический выбор курсивного начертания
       bold_italic_font = "auto";                                                  # Автоматический выбор жирного курсива
@@ -86,7 +86,7 @@
     # Шрифт терминала для выпадающего режима
     font_family JetBrainsMono Nerd Font Mono
     # Размер шрифта в пунктах
-    font_size 13
+    font_size 15
     # принудительно включает лигатуры и контекстные альтернативы
     font_features JetBrainsMono Nerd Font Mono:liga=1,calt=1
   '';
