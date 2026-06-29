@@ -68,6 +68,7 @@ in
     iw                                                          # Утилита для настройки беспроводных сетей (Wi-Fi)
     rclone                                                      # Утилита для синхронизации и монтирования облачных хранилищ (Google Drive, OneDrive и др.)
     wget                                                        # Утилита для загрузки файлов из интернета
+    fail2ban
     authenticator                                               # Приложение для двухфакторной аутентификации (TOTP, HOTP), например, для аккаунтов Google, GitHub и т.д.
     google-chrome                                               # Браузер Google Chrome
     parabolic                                                   # Загрузчик видео/аудио с YouTube (альтернатива yt-dlp)
@@ -130,6 +131,7 @@ in
     reaper-sws-extension                                        # Расширение SWS для REAPER (дополнительные команды и автоматизация)
     reaper-reapack-extension                                    # Менеджер скриптов ReaPack для REAPER (установка пользовательских скриптов)
     lsp-plugins                                                 # Набор VST/LV2-плагинов для обработки звука (LSP)
+
   ]) ++ (optionalPackage (if blender-cuda != null then blender-cuda.packages.${pkgs.system}.blender-with-cuda else null));
 
   # ========== Пакеты, устанавливаемые через Home Manager ==========
