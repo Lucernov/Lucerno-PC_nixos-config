@@ -4,7 +4,7 @@
   services.fail2ban = {
     enable = true;
     # Так как у вас включён nftables, указываем бэкенд
-    backend = "nftables";
+    banaction = "nftables-multiport";
     # Игнорируем локальные адреса (чтобы не забанить себя)
     ignoreIP = [
         "127.0.0.1/8"     # localhost IPv4
