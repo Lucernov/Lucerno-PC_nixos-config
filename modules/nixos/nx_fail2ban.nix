@@ -25,11 +25,12 @@
   environment.etc."fail2ban/action.d/nftables-set.conf" = {
     text = ''
       [Definition]
-      actionban   = /run/current-system/sw/bin/nft add element inet nixos-fw addr-set-sshd { <ip> }
-      actionunban = /run/current-system/sw/bin/nft delete element inet nixos-fw addr-set-sshd { <ip> }
+      actionban   = /run/current-system/sw/bin/nft add element inet f2b-table addr-set-sshd { <ip> }
+      actionunban = /run/current-system/sw/bin/nft delete element inet f2b-table addr-set-sshd { <ip> }
     '';
   };
 }
+
 
 
 #sudo systemctl status fail2ban
