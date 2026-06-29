@@ -3,8 +3,6 @@
 {
   services.fail2ban = {
     enable = true;
-    # Используем iptables (работает через совместимость iptables-nft)
-    banaction = "iptables-multiport";
     ignoreIP = [
       "127.0.0.1/8"
       "::1"
@@ -19,8 +17,17 @@
         maxretry = 3
         bantime  = 1h
         findtime = 10m
-        action  = iptables-multiport[name=sshd, port=ssh, protocol=tcp]
+        # Используем своё действие для добавления в набор
+        action  = nftables-set
       '';
+    };
+    # Определяем новое действие
+    action = {
+      "nftables-set" = {
+        description = "nftables set action for addr-set-sshd";
+        actionban   = "nft add element inet nixos-fw addr-set-sshd { <ip> }";
+        actionunban = "nft delete element inet nixos-fw addr-set-sshd { <ip> }";
+      };
     };
   };
 }
