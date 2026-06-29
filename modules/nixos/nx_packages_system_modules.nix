@@ -2,7 +2,6 @@
 { config, pkgs, pkgs-unstable, blender-cuda, ... }:
 
 let
-  packages = import ../packages.nix { inherit pkgs pkgs-unstable; };
   packages = import ../packages.nix { inherit pkgs pkgs-unstable blender-cuda; };
 in
 
