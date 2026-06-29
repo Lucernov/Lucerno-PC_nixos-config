@@ -87,17 +87,6 @@ in
   };
 
 
-  # ========== Настройки файервола с nftables ==========
-  networking.nftables.enable = true;                                                            # Переход на nftables (современная замена iptables)
-  networking.firewall = {                                                                       # Основные настройки межсетевого экрана
-    enable = true;                                                                              # Включаем файервол
-    allowedTCPPorts = [ 22 ];                                                                   # Разрешаем входящие TCP-соединения на порт 22 (SSH)
-    allowPing = false;                                                                          # Отключить ICMP-запросы (ping)
-    logRefusedConnections = false;                                                              # Логирование отклонённых подключений (refused connections) Отключаем, чтобы не засорять логи
-    logRefusedPackets = false;                                                                  # Логирование отклонённых пакетов (refused packets) Отключаем для снижения шума
-  };
-
-
   # ========== Настройки звука ==========
   security.rtkit.enable = true;                                                                 # Включаем rtkit (Realtime Kit) — демон, дающий процессам приоритет реального времени. Необходим для низких задержек в аудио.
   services.pulseaudio.enable = false;                                                           # Отключаем старый звуковой сервер PulseAudio (полностью заменяем на PipeWire)

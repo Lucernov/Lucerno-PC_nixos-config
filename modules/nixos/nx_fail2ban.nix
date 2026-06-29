@@ -22,12 +22,11 @@
     };
   };
 
-  # Создаём файл действия для nftables
   environment.etc."fail2ban/action.d/nftables-set.conf" = {
     text = ''
       [Definition]
-      actionban   = nft add element inet nixos-fw addr-set-sshd { <ip> }
-      actionunban = nft delete element inet nixos-fw addr-set-sshd { <ip> }
+      actionban   = /run/current-system/sw/bin/nft add element inet nixos-fw addr-set-sshd { <ip> }
+      actionunban = /run/current-system/sw/bin/nft delete element inet nixos-fw addr-set-sshd { <ip> }
     '';
   };
 }
