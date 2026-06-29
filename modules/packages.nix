@@ -1,5 +1,11 @@
 # modules/packages.nix
 { pkgs, pkgs-unstable, blender-cuda }:
+
+let
+  # Вспомогательная функция: добавляет пакет в список, только если он не null
+  optionalPackage = pkg: if pkg != null then [ pkg ] else [ ];
+in
+
   # ========== Включение системных модулей для программ ==========
     # ./nixos/nx_packages_system_modules.nix -> git dconf zsh vim nano htop amnezia appimage partition-manager kdeconnect
 
@@ -124,7 +130,7 @@
     reaper-sws-extension                                        # Расширение SWS для REAPER (дополнительные команды и автоматизация)
     reaper-reapack-extension                                    # Менеджер скриптов ReaPack для REAPER (установка пользовательских скриптов)
     lsp-plugins                                                 # Набор VST/LV2-плагинов для обработки звука (LSP)
-  ]);
+  ]) ++ (optionalPackage (if blender-cuda != null then blender-cuda.packages.${pkgs.system}.blender-with-cuda else null));
 
   # ========== Пакеты, устанавливаемые через Home Manager ==========
   homePackages = with pkgs; [
