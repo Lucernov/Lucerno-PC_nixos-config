@@ -1,4 +1,5 @@
 { myLib, ... }:
+
 {
   programs.zsh.shellAliases = {
     # ========== Навигация и файлы ==========
@@ -24,7 +25,7 @@
     hm     = "cd ${myLib.home}/${myLib.configDirName} && git add -A && (git commit -m \"hm: $(date '+%Y-%m-%d %H:%M:%S')\" || true) && git push && export NIXPKGS_ALLOW_UNFREE=1 && nh home switch";   # пересобрать home-manager и записать изменения
     update = "cd ${myLib.home}/${myLib.configDirName} && git add -A && git commit -m \"pre-rebuild\" && git push && nh os switch";   # пересобрать NixOS без обновления входов
     upgrade = "cd ${myLib.home}/${myLib.configDirName} && git add -A && (git commit -m \"upgrade: $(date '+%Y-%m-%d %H:%M:%S')\" || true) && git push && nh os switch --update";   # пересобрать NixOS с обновлением flake.lock
-    clean   = "nh clean all --keep 2 && nh os boot --update";   # очистить старые поколения, обновить входы и переключиться
+    clean   = "nh clean all --keep 2 && nh os boot --update";  # очистить старые поколения, обновить входы и переключиться
 
     # ========== Приложения ==========
     parabolic = "org.nickvision.tubeconverter";                # запустить Parabolic (загрузчик видео/аудио с YouTube)
