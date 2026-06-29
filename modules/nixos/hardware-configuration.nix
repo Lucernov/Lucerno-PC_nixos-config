@@ -145,16 +145,16 @@ in
   boot.kernelPackages = pkgs.linuxPackages_zen;                           # Установка кастомного ZEN ядра
   #boot.kernelPackages = pkgs.linuxPackages;                              # Выбор стабильной версии стандартного ядра
 
+  boot.initrd.kernelModules = [                                           # Модули, загружаемые на раннем этапе (в initrd) – до монтирования корневой ФС
+    "nvidia"                                                              # Основной драйвер NVIDIA
+    "nvidia_modeset"                                                      # Управление режимами видеовыхода (необходимо для Wayland)
+    "nvidia_drm"                                                          # Интеграция NVIDIA с DRM (Direct Rendering Manager)
+  ];
   boot.kernelModules = [                                                  # Модули ядра, загружаемые на основном этапе (после initrd)
     "ntsync"                                                              # Модуль для улучшения синхронизации в Wine/Proton (игры)
     "nvidia_uvm"                                                          # Unified Virtual Memory для NVIDIA (CUDA, OpenCL, AI)
     "intel_rapl_msr"                                                      # Модуль для чтения энергопотребления процессора (RAPL). Нужен для btop, powertop и других утилит.
   # "kvm-intel"                                                           # Модуль аппаратной виртуализации KVM для процессоров Intel
-  ];
-  boot.initrd.kernelModules = [                                           # Модули, загружаемые на раннем этапе (в initrd) – до монтирования корневой ФС
-    "nvidia"                                                              # Основной драйвер NVIDIA
-    "nvidia_modeset"                                                      # Управление режимами видеовыхода (необходимо для Wayland)
-    "nvidia_drm"                                                          # Интеграция NVIDIA с DRM (Direct Rendering Manager)
   ];
 
   boot.initrd.availableKernelModules = [                                  # Модули, которые могут быть загружены динамически при обнаружении оборудования

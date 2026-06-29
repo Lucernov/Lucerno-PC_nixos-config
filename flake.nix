@@ -32,7 +32,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    blender-cuda.url = "github:adithyagenie/blender-cuda-nixos";                                           # Бинарная сборка с поддержкой cuda
+    blender-cuda.url = "github:adithyagenie/blender-cuda-nixos";                                           # Бинарная сборка Blender с поддержкой cuda
     import-tree.url = "github:vic/import-tree";                                                            # Утилита для рекурсивного импорта файлов
     comfyui-nix.url = "github:utensils/comfyui-nix";                                                       # Flake для ComfyUI
     nixpkgs-krita-25-11.url = "github:NixOS/nixpkgs/b77b3de8775677f84492abe84635f87b0e153f0f";             # Фиксированная версия nixpkgs для Krita (новая версия пока не работает с ComfyUI)
