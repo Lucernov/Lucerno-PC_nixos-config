@@ -3,6 +3,8 @@
 {
   services.fail2ban = {
     enable = true;
+    # Используем iptables (работает через совместимость iptables-nft)
+    banaction = "iptables-multiport";
     ignoreIP = [
       "127.0.0.1/8"
       "::1"
@@ -20,10 +22,6 @@
         action  = iptables-multiport[name=sshd, port=ssh, protocol=tcp]
       '';
     };
-    extraConfig = ''
-      [DEFAULT]
-      banaction = iptables-multiport
-    '';
   };
 }
 
