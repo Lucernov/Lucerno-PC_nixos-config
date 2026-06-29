@@ -1,5 +1,5 @@
 # modules/packages.nix
-{ pkgs, pkgs-unstable, blender-cuda }:
+{ pkgs, pkgs-unstable, blender-cuda ? null }:
 
 let
   # Вспомогательная функция: добавляет пакет в список, только если он не null
