@@ -24,6 +24,8 @@
         maxretry = 3
         bantime  = 1h
         findtime = 10m
+        # Явно указываем таблицу, семейство и цепочку:
+        action  = nftables-multiport[table=nixos-fw, family=inet, chain=input]
       '';
       # Можно добавить другие, например, для веб-сервера, если он есть
       # nginx-http-auth = ''
@@ -34,6 +36,12 @@
       #   maxretry = 5
       #   bantime  = 1d
       # '';
+
+
+#sudo systemctl status fail2ban
+#sudo fail2ban-client status sshd
+#sudo nft list ruleset | grep -A5 "fail2ban"
     };
   };
 }
+
