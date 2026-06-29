@@ -4,7 +4,9 @@
   services.fail2ban = {
     enable = true;
     daemonSettings = {
-      loglevel = "INFO";   # Уровень логирования
+      DEFAULT = {
+        loglevel = "INFO";
+      };
     };
     ignoreIP = [
       "127.0.0.1/8"
