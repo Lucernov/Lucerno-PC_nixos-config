@@ -41,13 +41,13 @@ in
     ln -sfn ${home}/${configDir}/dotfiles/config/nix ${home}/.config/nix
     ln -sfn /mnt/sys_archiv/secrets/git-credentials ${home}/.git-credentials
     ln -sfn /mnt/sys_archiv/secrets/rclone ${home}/.config/rclone
+    ln -sfn /mnt/sys_archiv/secrets/AmneziaVPN.ORG ${home}/.config/AmneziaVPN.ORG
     ln -sfn /mnt/sys_archiv/samples/drum_sklad ${home}/drum_sklad
     ln -sfn ${home}/${configDir}/dotfiles/config/Steam/userdata ${home}/.local/share/Steam/userdata
     ln -sfn /mnt/sys_archiv/samples/vital ${home}/.local/share/vital
     ln -sfn ${home}/${configDir}/dotfiles/config/btop ${home}/.config/btop
     ln -sfn ${home}/${configDir}/dotfiles/config/qmmp ${home}/.config/qmmp
     ln -sfn ${home}/${configDir}/dotfiles/config/SocialStream ${home}/.config/SocialStream
-    ln -sfn ${home}/${configDir}/dotfiles/config/AmneziaVPN.ORG ${home}/.config/AmneziaVPN.ORG
     ln -sfn ${home}/${configDir}/dotfiles/config/obs-studio ${home}/.config/obs-studio
     ln -sfn /mnt/sys_archiv/samples/DecentSampler ${home}/.config/DecentSampler
     ln -sfn ${home}/${configDir}/dotfiles/config/REAPER ${home}/.config/REAPER
