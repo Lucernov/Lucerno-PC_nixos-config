@@ -1,9 +1,10 @@
 { myLib, ... }:
 {
   programs.zsh.shellAliases = {
+    l = "lsd -l";
     ll = "lsd -la";
     la = "lsd -a";
-    l = "lsd -l";
+    lt = "lsd --tree";
     gs = "git status";
     gp = "git pull";
     gc = "git commit -m";
