@@ -38,6 +38,8 @@ in
     mkdir -p ${home}/${configDir}/secrets && chmod 750 ${home}/${configDir}/secrets
 
     # Прямые симлинки (БЕЗ копирования в Nix store)
+    ln -sfn ${home}/${configDir}/dotfiles/config/nix ${home}/.config/nix
+    ln -sfn /mnt/sys_archiv/secrets/git-credentials ${home}/.git-credentials
     ln -sfn /mnt/sys_archiv/samples/drum_sklad ${home}/drum_sklad
     ln -sfn ${home}/${configDir}/dotfiles/config/Steam/userdata ${home}/.local/share/Steam/userdata
     ln -sfn /mnt/sys_archiv/samples/vital ${home}/.local/share/vital
