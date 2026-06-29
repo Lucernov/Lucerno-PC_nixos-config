@@ -41,7 +41,7 @@
     # поиск по истории - Ctrl+R
     };
 
-    initExtra = ''
+    initContent = ''
       # Разрешение unfree пакетов для home-manager
       export NIXPKGS_ALLOW_UNFREE=1
 
@@ -49,6 +49,8 @@
       source ${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/powerlevel10k.zsh-theme
       # Загружаем пользовательскую конфигурацию, если она есть
       [[ -f ~/.p10k.zsh ]] && source ~/.p10k.zsh
+
+       eval "$(zoxide init zsh --cmd cd)"
 
       # Путь к локальным скриптам
       #export PATH="$HOME/.local/bin:$PATH"
