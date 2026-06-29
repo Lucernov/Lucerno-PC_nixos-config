@@ -3,18 +3,14 @@
 {
   services.fail2ban = {
     enable = true;
-
-    # Настройки демона (записываются в /etc/fail2ban/fail2ban.local)
-    daemonConfig = {
-      loglevel = "INFO";   # или "DEBUG" для детального вывода
+    daemonSettings = {
+      loglevel = "INFO";   # Уровень логирования
     };
-
     ignoreIP = [
       "127.0.0.1/8"
       "::1"
       "192.168.0.0/24"
     ];
-
     jails = {
       sshd = ''
         enabled = true
@@ -26,7 +22,6 @@
         findtime = 10m
         action  = nftables-set
       '';
-
       nginx-http-auth = ''
         enabled = true
         port    = http,https
@@ -37,7 +32,6 @@
         findtime = 10m
         action  = nftables-set
       '';
-
       postfix = ''
         enabled = true
         port    = smtp,ssmtp
