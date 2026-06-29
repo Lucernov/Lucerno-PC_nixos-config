@@ -50,7 +50,21 @@
       # Загружаем пользовательскую конфигурацию, если она есть
       [[ -f ~/.p10k.zsh ]] && source ~/.p10k.zsh
 
-       eval "$(zoxide init zsh --cmd cd)"
+      # Инициализация zoxide (заменяет cd)
+      eval "$(zoxide init zsh --cmd cd)"
+
+      # ---------- Интеграция zoxide + fzf (Ctrl+T) ----------
+        # Виджет для быстрого перехода в папку через fzf
+        fzf-zoxide-widget() {
+          local selected=$(zoxide query -l | fzf --preview 'tree -C {} | head -200')
+          if [ -n "$selected" ]; then
+            LBUFFER="cd $selected"
+            zle accept-line
+          fi
+        }
+        zle -N fzf-zoxide-widget
+        bindkey '^T' fzf-zoxide-widget
+      # -----------------------------------------------------
 
       # Путь к локальным скриптам
       #export PATH="$HOME/.local/bin:$PATH"
