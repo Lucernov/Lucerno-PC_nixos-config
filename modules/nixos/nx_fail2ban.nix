@@ -3,25 +3,13 @@
 {
   services.fail2ban = {
     enable = true;
-    loglevel = "INFO";   # Уровень логирования (INFO, DEBUG, WARNING, ERROR)
+    loglevel = "INFO";
 
     ignoreIP = [
       "127.0.0.1/8"
       "::1"
       "192.168.0.0/24"
     ];
-
-    # Явное определение фильтров (на случай, если они отсутствуют в системе)
-    filters = {
-      nginx-http-auth = ''
-        [Definition]
-        failregex = ^<HOST> - .* "GET /.* HTTP/1\.." 401 .*$
-      '';
-      postfix = ''
-        [Definition]
-        failregex = ^<HOST>.*: (?:SASL|AUTH) authentication failed.*$
-      '';
-    };
 
     jails = {
       sshd = ''
@@ -59,7 +47,6 @@
     };
   };
 
-  # Действие для добавления IP в общий набор addr-set-sshd
   environment.etc."fail2ban/action.d/nftables-set.conf" = {
     text = ''
       [Definition]
