@@ -53,7 +53,7 @@
       # Инициализация zoxide (заменяет cd)
       eval "$(zoxide init zsh --cmd cd)"
 
-      # ---------- Интеграция zoxide + fzf (Ctrl+T) ----------
+      # ---------- Интеграция zoxide + fzf (Ctrl+F) ----------
         # Виджет для быстрого перехода в папку через fzf
         fzf-zoxide-widget() {
           local selected=$(zoxide query -l | fzf --preview 'tree -C {} | head -200')
@@ -63,7 +63,7 @@
           fi
         }
         zle -N fzf-zoxide-widget
-        bindkey '^T' fzf-zoxide-widget
+        bindkey '^F' fzf-zoxide-widget
       # -----------------------------------------------------
 
       # Путь к локальным скриптам
