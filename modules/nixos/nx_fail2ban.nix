@@ -55,12 +55,3 @@
     '';
   };
 }
-
-
-
-#sudo systemctl status fail2ban
-#sudo fail2ban-client status
-#sudo nft list ruleset | grep -A5 "fail2ban"
-#sudo nft list table inet f2b-table
-#sudo nft list set inet f2b-table limit-ssh
-#sudo journalctl -u fail2ban -f

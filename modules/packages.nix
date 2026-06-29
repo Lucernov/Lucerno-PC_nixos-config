@@ -82,7 +82,7 @@ in
     pinta                                                       # Простой растровый редактор
     krita                                                       # Кастомный пакет Krita (цифровая живопись)
     inkscape                                                    # Векторная графика
-    blender-cuda.packages.${pkgs.system}.blender-with-cuda      # 3D-моделирование
+    blender-cuda.packages.${pkgs.stdenv.hostPlatform.system}.blender-with-cuda      # 3D-моделирование
 
     # МУЛЬТИМЕДИА
     my-packages.qmmp                                            # Аудиоплеер
@@ -132,7 +132,7 @@ in
     reaper-reapack-extension                                    # Менеджер скриптов ReaPack для REAPER (установка пользовательских скриптов)
     lsp-plugins                                                 # Набор VST/LV2-плагинов для обработки звука (LSP)
 
-  ]) ++ (optionalPackage (if blender-cuda != null then blender-cuda.packages.${pkgs.system}.blender-with-cuda else null));
+  ]) ++ (optionalPackage (if blender-cuda != null then blender-cuda.packages.${pkgs.stdenv.hostPlatform.system}.blender-with-cuda else null));
 
   # ========== Пакеты, устанавливаемые через Home Manager ==========
   homePackages = with pkgs; [
