@@ -41,7 +41,7 @@
     # поиск по истории - Ctrl+R
     };
 
-    initContent = ''
+    initExtra = ''
       # Разрешение unfree пакетов для home-manager
       export NIXPKGS_ALLOW_UNFREE=1
 
