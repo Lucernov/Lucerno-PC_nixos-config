@@ -21,18 +21,19 @@
       cursor_shape_unfocused = "hollow";                                          # Форма курсора в неактивном окне (полый блок)
       cursor_blink_interval = 0.5;                                                # Интервал мигания курсора (0.5 секунды)
       cursor_stop_blinking_after = 15.0;                                          # Остановить мигание после 15 секунд бездействия
-      #hide_window_decorations = "yes";                                           # Убрать рамку окна
-      # Позиционирование окна (для обычного режима, не quick-access)
-      initial_window_width = 1024;                                                # Ширина нового окна терминала по умолчанию (в пикселях)
-      initial_window_height = 768;                                                # Высота нового окна терминала по умолчанию
       enabled_layouts = "splits,fat,grid,stack,tall,horizontal,vertical";         # Список доступных вариантов раскладки окон (можно переключать)
       default_layout = "splits";                                                  # Раскладка по умолчанию (разделение на панели, как в tmux)
-      font_family = "JetBrainsMono Nerd Font Mono";                                             # Основной шрифт терминала
+      font_family = "JetBrainsMono Nerd Font Mono";                               # Основной шрифт терминала
       font_size = 13;                                                             # Размер шрифта в пунктах
       bold_font = "auto";                                                         # Автоматический выбор жирного начертания
       italic_font = "auto";                                                       # Автоматический выбор курсивного начертания
       bold_italic_font = "auto";                                                  # Автоматический выбор жирного курсива
-      font_features = "JetBrainsMono Nerd Font Mono:liga=1,calt=1";                             # принудительно включает лигатуры и контекстные альтернативы
+      font_features = "JetBrainsMono Nerd Font Mono:liga=1,calt=1";               # принудительно включает лигатуры и контекстные альтернативы
+      window_margin = 22;
+      #hide_window_decorations = "yes";                                           # Убрать рамку окна
+      # Позиционирование окна (для обычного режима, не quick-access)
+      initial_window_width = 1024;                                                # Ширина нового окна терминала по умолчанию (в пикселях)
+      initial_window_height = 768;                                                # Высота нового окна терминала по умолчанию
     };
 
     # Привязка клавиш (map)

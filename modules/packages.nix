@@ -82,7 +82,7 @@ in
     pinta                                                       # Простой растровый редактор
     krita                                                       # Кастомный пакет Krita (цифровая живопись)
     inkscape                                                    # Векторная графика
-    blender-cuda.packages.${pkgs.stdenv.hostPlatform.system}.blender-with-cuda      # 3D-моделирование
+    blender-cuda.packages.${pkgs.stdenv.hostPlatform.system}.blender-with-cuda  # 3D-моделирование
 
     # МУЛЬТИМЕДИА
     my-packages.qmmp                                            # Аудиоплеер
