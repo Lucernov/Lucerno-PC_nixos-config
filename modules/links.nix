@@ -40,10 +40,10 @@ in
     # Прямые симлинки (БЕЗ копирования в Nix store)
     ln -sfn ${home}/${configDir}/dotfiles/config/nix ${home}/.config/nix
     ln -sfn /mnt/sys_archiv/secrets/git-credentials ${home}/.git-credentials
+    ln -sfn /mnt/sys_archiv/secrets/rclone ${home}/.config/rclone
     ln -sfn /mnt/sys_archiv/samples/drum_sklad ${home}/drum_sklad
     ln -sfn ${home}/${configDir}/dotfiles/config/Steam/userdata ${home}/.local/share/Steam/userdata
     ln -sfn /mnt/sys_archiv/samples/vital ${home}/.local/share/vital
-    ln -sfn ${home}/${configDir}/dotfiles/config/rclone ${home}/.config/rclone
     ln -sfn ${home}/${configDir}/dotfiles/config/btop ${home}/.config/btop
     ln -sfn ${home}/${configDir}/dotfiles/config/qmmp ${home}/.config/qmmp
     ln -sfn ${home}/${configDir}/dotfiles/config/SocialStream ${home}/.config/SocialStream
