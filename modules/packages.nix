@@ -1,15 +1,12 @@
 # modules/packages.nix
-{ pkgs, pkgs-unstable, myLib, blender-cuda ? null }:
+{ pkgs, pkgs-unstable, myLib, blender-cuda }:
 
 let
-  optionalPackage = pkg: if pkg != null then [ pkg ] else [ ];  # Вспомогательная функция: добавляет пакет в список, только если он не null
-
   # ========== Дополнительные системные пакеты ==========
     # ./nixos/nx_obs.nix
     # ./nixos/nx_steam.nix
 
   systemPackages = with pkgs; [
-
     # СИСТЕМНЫЕ
     manix                                                       # Универсальный поиск по документации Nix
     optinix                                                     # Специализированный поиск по опциям (options) NixOS/Home Manager

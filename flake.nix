@@ -49,19 +49,19 @@
     let
       pkgsUnstable = import nixpkgs-unstable {                                                             # Создаём экземпляр нестабильного nixpkgs (для свежих пакетов)
         localSystem = { system = "x86_64-linux"; };                                                        # Новый синтаксис с атрибутом localSystem вместо устаревшего `system`
-        config.allowUnfree = true;
+        config.allowUnfree = true;                                                                         # Разрешает установку пакетов с несвободными лицензиями
       };
 
       pkgsWithOverlay = import nixpkgs {                                                                   # Создаём экземпляр nixpkgs с оверлеем (кастомные пакеты)
         localSystem = { system = "x86_64-linux"; };                                                        # Здесь также используем localSystem
-        config.allowUnfree = true;
+        config.allowUnfree = true;                                                                         # Разрешает установку пакетов с несвободными лицензиями
         overlays = [
-          (import ./pkgs/overlays.nix { pkgs-unstable = pkgsUnstable; })
-          comfyui-nix.overlays.default
+          (import ./pkgs/overlays.nix { pkgs-unstable = pkgsUnstable; })                                   # Подключаем оверлей с моими пакетами (my-packages)
+          comfyui-nix.overlays.default                                                                     # Оверлей ComfyUI для добавления comfy-ui-cuda
         ];
       };
 
-      myLib = import ./mylib.nix;                                                                          # Импорт моего файла библиотеки
+      myLib = import ./mylib.nix;                                                                          # Импорт моего файла библиотеки с общими переменными
     in
 
     flake-parts.lib.mkFlake { inherit inputs; } {                                                          # Используем flake-parts для построения flake
@@ -73,24 +73,24 @@
         nixosConfigurations.Lucerno-PC = nixpkgs.lib.nixosSystem {                                         # Системная конфигурация NixOS (для пересборки всей ОС)
           system = "x86_64-linux";                                                                         # Архитектура системы. Для nixosSystem ВСЁ ЕЩЁ используется параметр `system` (требование API NixOS)
           specialArgs = {                                                                                  # Дополнительные аргументы, передаваемые во все модули
-            inherit inputs;
-            pkgs-unstable = pkgsUnstable;                                                                  # Передаём нестабильные пакеты
-            import-tree = inputs.import-tree;                                                              # Передаём утилиту import-tree
-            inherit myLib;
-            nixpkgs-krita-25-11 = nixpkgs-krita-25-11;
-            inherit blender-cuda;
+            inherit inputs;                                                                                # Все входы (flake-зависимости)
+            pkgs-unstable = pkgsUnstable;                                                                  # Нестабильные пакеты для использования в модулях
+            import-tree = inputs.import-tree;                                                              # Утилита для рекурсивного импорта
+            inherit myLib;                                                                                 # Мои общие переменные
+            nixpkgs-krita-25-11 = nixpkgs-krita-25-11;                                                     # Фиксированный nixpkgs для Krita
+            inherit blender-cuda;                                                                          # Flake с Blender+CUDA для передачи в пакеты
           };
 
           modules = [                                                                                      # Список модулей, из которых собирается система
             ({ config, pkgs, lib, nixpkgs-krita-25-11, ... }: {                                            # Переопределяем krita из фиксированного набора пакетов
               nixpkgs.overlays = [
                 (final: prev: {
-                krita = nixpkgs-krita-25-11.legacyPackages.${final.stdenv.hostPlatform.system}.krita;      # Используем final.stdenv.hostPlatform.system вместо final.system, чтобы избежать deprecated warning внутри оверлея
+                krita = nixpkgs-krita-25-11.legacyPackages.${final.stdenv.hostPlatform.system}.krita;      # Берём krita из фиксированной версии
                 })
               ];
             })
             { nixpkgs.pkgs = pkgsWithOverlay; }                                                            # Переопределяем pkgs для всей системы (с оверлеем)
-            (inputs.import-tree ./modules/nixos)                                                           # Основной модуль config nixos
+            (inputs.import-tree ./modules/nixos)                                                           # Основной модуль config nixos. Рекурсивно импортируем все модули из папки modules/nixos
             inputs.stylix.nixosModules.stylix                                                              # Модуль стилизации (stylix)
           ];
         };
@@ -99,16 +99,16 @@
         homeConfigurations.lucerno = home-manager.lib.homeManagerConfiguration {
           pkgs = pkgsWithOverlay;                                                                         # Для отдельной команды home-manager используем тот же pkgs с оверлеем
           modules = [
-          (inputs.import-tree ./modules/home)                                                             # Основной модуль home-manager
+          (inputs.import-tree ./modules/home)                                                             # Основной модуль home-manager. Рекурсивно импортируем все модули из папки modules/home
           ];
           extraSpecialArgs = {
-            inherit inputs;
+            inherit inputs;                                                                               # Все flake-входы доступны в модулях home-manager
             pkgs-unstable = pkgsUnstable;                                                                 # Нестабильные пакеты для home-manager
-            inherit myLib;
+            inherit myLib;                                                                                # Мои общие переменные
           };
         };
       };
 
-      perSystem = { config, pkgs, ... }: { };                                                             # Системно-зависимые настройки (пока не используются)
+      perSystem = { config, pkgs, ... }: { };                                                             # Заглушка для будущих системно-зависимых настроек (например, для сборки пакетов под конкретную систему)
     };
 }
