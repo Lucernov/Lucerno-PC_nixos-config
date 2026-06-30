@@ -1,5 +1,5 @@
 # modules/packages.nix
-{ pkgs, pkgs-unstable, myLib, lib, blender-cuda ? null }:
+{ pkgs, pkgs-unstable, myLib, blender-cuda ? null }:
 
 let
   # ========== Дополнительные системные пакеты ==========
