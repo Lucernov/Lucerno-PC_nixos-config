@@ -1,4 +1,3 @@
-# modules/hx_git.nix
 # Модуль home-manager для настройки Git (конфигурация и глобальный .gitignore)
 { ... }:
 {

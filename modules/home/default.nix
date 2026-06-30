@@ -1,4 +1,4 @@
-{ config, pkgs, pkgs-unstable, inputs, lib, myLib, ... }:
+{ config, pkgs, pkgs-unstable, lib, myLib, ... }:
 
 let
   links = import ../links.nix { inherit pkgs lib myLib config; };

@@ -1,4 +1,3 @@
-# modules/default.nix
 { pkgs, lib, pkgs-unstable, myLib, blender-cuda, ... }:
 
 let

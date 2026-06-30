@@ -1,4 +1,4 @@
-{ myLib, pkgs, ... }:
+{ pkgs, ... }:
 
 {
   programs.zsh = {

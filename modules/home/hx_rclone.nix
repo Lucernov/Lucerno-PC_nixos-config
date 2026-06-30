@@ -1,6 +1,5 @@
-# modules/hx_rclone.nix
 # Модуль home-manager для настройки автоматического монтирования облачных дисков (Google Drive, OneDrive) через rclone
-{ config, pkgs, myLib, ... }:
+{ pkgs, myLib, ... }:
 
 {
   # ========== Сервис монтирования Google Drive ==========

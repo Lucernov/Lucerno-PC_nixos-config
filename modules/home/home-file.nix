@@ -1,4 +1,4 @@
-{ config, pkgs, myLib, ... }:
+{ pkgs, myLib, ... }:
 {
   # XDG пользовательские директории
   home.file = {
