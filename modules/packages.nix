@@ -4,7 +4,7 @@
 let
   # Вспомогательная функция: добавляет пакет в список, только если он не null
   optionalPackage = pkg: if pkg != null then [ pkg ] else [ ];
-in
+
 
   # ========== Включение системных модулей для программ ==========
     # ./nixos/nx_packages_system_modules.nix -> git dconf zsh vim nano htop amnezia appimage partition-manager kdeconnect
@@ -160,8 +160,34 @@ in
     libretro.beetle-psx-hw                                      # PlayStation 1
     libretro.pcsx2                                              # PlayStation 2
 
-  ] ++ (with pkgs-unstable; [ ]);
+  ] ++ (with pkgs-unstable; [ ];
 
+in
+{
+  inherit systemPackages homePackages;
+
+  # ========== Системные модули (только для NixOS) ==========
+  nixosModule = { config, pkgs, lib, ... }: {
+
+    programs.git.enable = true;                                   # Включает поддержку Git (утилита системы контроля версий)
+    programs.dconf.enable = true;                                 # Включает dconf – базу данных настроек для GTK-приложений (необходим для тем, шрифтов и т.п.)
+    programs.zsh.enable = true;                                   # Регистрирует Zsh как системную оболочку
+    programs.vim.enable = true;                                   # Устанавливает Vim (текстовый редактор) системно
+    programs.nano.enable = true;                                  # Устанавливает Nano (простой текстовый редактор) системно
+    programs.htop.enable = true;                                  # Устанавливает htop (интерактивный монитор процессов) системно
+    programs.amnezia-vpn.enable = true;                           # Включает сервис AmneziaVPN (VPN-клиент)
+    programs.appimage = {
+      enable = true;                                              # Включает поддержку запуска AppImage-файлов (бинарные образы приложений)
+      binfmt = true;                                              # Эта опция автоматически настраивает загрузчик
+    };
+    # KDE приложения
+    programs.partition-manager.enable = true;                     # Включает модуль для утилиты управления разделами диска (KDE Partition Manager)
+    programs.kdeconnect.enable = true;                            # Включает интеграцию с телефоном: синхронизация уведомлений, буфера обмена, управление презентациями и т.д.
+
+    # Используем уже определённый список systemPackages
+    environment.systemPackages = systemPackages;
+  };
+}
 
 # ===== Быстрый запуск утилит без установки (через nix run) =====
 #nix run nixpkgs#lm-sensors                                                 # Утилита для отображения температуры и состояния датчиков оборудования
@@ -170,4 +196,3 @@ in
 # ===== Настройка Plasma Manager (генерация конфигов) =====
 #nix run github:nix-community/plasma-manager/trunk#rc2nix > plasma.nix      # Сгенерировать текущий конфиг Plasma в Nix-формате (rc2nix)
 #nix run github:nix-community/plasma-manager#rc2nix > plasma-current.nix    # Альтернативный способ (из главной ветки) получить Nix-конфиг Plasma
-}

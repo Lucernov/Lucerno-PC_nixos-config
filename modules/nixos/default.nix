@@ -1,11 +1,14 @@
 # modules/default.nix
-{ config, pkgs, lib, pkgs-unstable, inputs, myLib, ... }:
+{ config, pkgs, lib, pkgs-unstable, inputs, myLib, blender-cuda, ... }:
 
 let
   links = import ../links.nix { inherit pkgs lib myLib; };
+  packages = import ../packages.nix { inherit pkgs pkgs-unstable blender-cuda; };
 in
 
 {
+  imports = [ packages.nixosModule ];
+
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   system.stateVersion = myLib.channelVersion;
 
