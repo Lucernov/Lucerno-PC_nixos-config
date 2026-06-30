@@ -160,9 +160,10 @@ let
     libretro.beetle-psx-hw                                      # PlayStation 1
     libretro.pcsx2                                              # PlayStation 2
 
-  ] ++ (with pkgs-unstable; [ ];
+  ] ++ (with pkgs-unstable; [ ]);
 
 in
+
 {
   inherit systemPackages homePackages;
 
