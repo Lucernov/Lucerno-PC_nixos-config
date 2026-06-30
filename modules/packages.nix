@@ -138,10 +138,10 @@ let
   # ========== Пакеты, устанавливаемые через Home Manager ==========
   homePackages = with pkgs; [
     # тема для Oh My Zsh
-    zsh-powerlevel10k
+    zsh-powerlevel10k                                           # Тема для Zsh с красивым информативным промптом (Powerlevel10k)
 
     # ИИ
-    comfy-ui-cuda
+    comfy-ui-cuda                                               # ComfyUI с поддержкой CUDA для генерации изображений через нейросети
 
     # --- Ретро-ядра для RetroArch ---
     libretro.mesen                                              # Nintendo NES

@@ -1,5 +1,5 @@
 # modules/default.nix
-{ config, pkgs, lib, pkgs-unstable, inputs, myLib, blender-cuda, ... }:
+{ pkgs, lib, pkgs-unstable, myLib, blender-cuda, ... }:
 
 let
   links = import ../links.nix { inherit pkgs lib myLib; };                                      # Импортируем модуль с симлинками (системные правила tmpfiles)
