@@ -63,8 +63,25 @@
         overlays = [
           (import ./pkgs/overlays.nix { pkgs-unstable = pkgsUnstable; })
           comfyui-nix.overlays.default
-        ];
-      };
+    # Добавляем оверлей для дополнения comfyui-manager
+    (final: prev: {
+      comfyui-manager = prev.comfyui-manager.overridePythonAttrs (old: {
+        propagatedBuildInputs = (old.propagatedBuildInputs or []) ++ (with final.python3Packages; [
+          gitpython
+          pygithub
+          transformers
+          huggingface-hub
+          typer
+          rich
+          typing-extensions
+          toml
+          uv
+          chardet
+        ]);
+      });
+    })
+  ];
+};
 
       myLib = import ./mylib.nix;                                                                          # Импорт моего файла библиотеки
     in
