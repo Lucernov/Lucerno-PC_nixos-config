@@ -37,13 +37,8 @@
       inputs.nixpkgs.follows = "nixpkgs";                                                                  # Следовать за nixpkgs
     };
 
-    comfyui-nix = {                                                                                        # Flake для ComfyUI
-      url = "github:utensils/comfyui-nix";
-      inputs.nixpkgs.follows = "nixpkgs";                                                                  # Следовать за nixpkgs
-    };
-
     import-tree.url = "github:vic/import-tree";                                                            # Утилита для рекурсивного импорта файлов
-    #comfyui-nix.url = "github:utensils/comfyui-nix";                                                       # Flake для ComfyUI
+    comfyui-nix.url = "github:utensils/comfyui-nix";                                                       # Flake для ComfyUI
     nixpkgs-krita-25-11.url = "github:NixOS/nixpkgs/b77b3de8775677f84492abe84635f87b0e153f0f";             # Фиксированная версия nixpkgs для Krita (новая версия пока не работает с ComfyUI)
 
     #fufexan/nix-gaming nickm8/nix-gaming TophC7/play.nix
@@ -63,25 +58,8 @@
         overlays = [
           (import ./pkgs/overlays.nix { pkgs-unstable = pkgsUnstable; })
           comfyui-nix.overlays.default
-    # Добавляем оверлей для дополнения comfyui-manager
-    (final: prev: {
-      comfyui-manager = prev.comfyui-manager.overridePythonAttrs (old: {
-        propagatedBuildInputs = (old.propagatedBuildInputs or []) ++ (with final.python3Packages; [
-          gitpython
-          pygithub
-          transformers
-          huggingface-hub
-          typer
-          rich
-          typing-extensions
-          toml
-          uv
-          chardet
-        ]);
-      });
-    })
-  ];
-};
+        ];
+      };
 
       myLib = import ./mylib.nix;                                                                          # Импорт моего файла библиотеки
     in
