@@ -2,24 +2,25 @@
 { config, pkgs, lib, pkgs-unstable, inputs, myLib, blender-cuda, ... }:
 
 let
-  links = import ../links.nix { inherit pkgs lib myLib; };
-  packages = import ../packages.nix { inherit pkgs pkgs-unstable blender-cuda; };
+  links = import ../links.nix { inherit pkgs lib myLib; };                                      # Импортируем модуль с симлинками (системные правила tmpfiles)
+  packages = import ../packages.nix { inherit pkgs pkgs-unstable myLib blender-cuda; };               # Импортируем общий файл с пакетами и системными модулями
 in
 
 {
-  imports = [ packages.nixosModule ];
+  imports = [ packages.nixosModule ];                                                           # Подключаем модуль из packages.nix, который включает все системные опции (programs.*, environment.systemPackages)
 
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
-  system.stateVersion = myLib.channelVersion;
+  # ========== Базовые настройки Nix ==========
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];                              # Включаем поддержку команд Nix и флейков (flake)
+  system.stateVersion = myLib.channelVersion;                                                   # Версия состояния системы (соответствует каналу NixOS)
 
 
   # ========== мои симлинки ==========
-  systemd.tmpfiles.rules = links.systemRules;
+  systemd.tmpfiles.rules = links.systemRules;                                                   # Правила из links.nix (создание каталогов, прав доступа и ссылок для rclone, ComfyUI и т.д.)
 
 
   # ========== Загрузчик ==========
   boot.loader = {
-    systemd-boot.enable = true;                                                                 # Используем systemd-boot (простой UEFI загрузчик)
+    systemd-boot.enable = true;                                                                 # Используем простой UEFI загрузчик systemd-boot
     efi.canTouchEfiVariables = true;                                                            # Разрешить запись в EFI-переменные (нужно для добавления записей загрузки)
     systemd-boot.consoleMode = "auto";                                                          # детализация вывода загрузчика
   };
@@ -182,12 +183,6 @@ in
         "adithyagenie.cachix.org-1:h6BSMboeVfxyrULWuRQqAyweo4AJRATekb88xotfQwc="                # Публичный ключ кэша adithyagenie (Blender с CUDA)
       ];
     };
-  };
-
-
-  programs.nh = {
-    enable = true;                                                                              # Включает утилиту nh (Nix Helper) для удобного управления системой и home-менеджером
-    flake = "${myLib.home}/${myLib.configDirName}";                                             # Указывает путь к flake, содержащему конфигурации NixOS и home-manager
   };
 
 

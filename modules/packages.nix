@@ -1,12 +1,8 @@
 # modules/packages.nix
-{ pkgs, pkgs-unstable, blender-cuda ? null }:
+{ pkgs, pkgs-unstable, myLib, blender-cuda ? null }:
 
 let
   optionalPackage = pkg: if pkg != null then [ pkg ] else [ ];  # Вспомогательная функция: добавляет пакет в список, только если он не null
-
-
-  # ========== Включение системных модулей для программ ==========
-    # ./nixos/nx_packages_system_modules.nix -> git dconf zsh vim nano htop amnezia appimage partition-manager kdeconnect
 
   # ========== Дополнительные системные пакеты ==========
     # ./nixos/nx_obs.nix
@@ -15,7 +11,6 @@ let
   systemPackages = with pkgs; [
 
     # СИСТЕМНЫЕ
-    nh                                                          # Утилита для управления Nix
     optinix                                                     # Инструмент для поиска опций в Nix
     nix-tree                                                    # Просмотр дерева зависимостей Nix
     home-manager                                                # Управление пользовательским окружением (конфиги, пакеты, службы)
@@ -169,23 +164,27 @@ in
   # ========== Системные модули (только для NixOS) ==========
   nixosModule = { config, pkgs, lib, ... }: {
 
-    programs.git.enable = true;                                   # Включает поддержку Git (утилита системы контроля версий)
-    programs.dconf.enable = true;                                 # Включает dconf – базу данных настроек для GTK-приложений (необходим для тем, шрифтов и т.п.)
-    programs.zsh.enable = true;                                   # Регистрирует Zsh как системную оболочку
-    programs.vim.enable = true;                                   # Устанавливает Vim (текстовый редактор) системно
-    programs.nano.enable = true;                                  # Устанавливает Nano (простой текстовый редактор) системно
-    programs.htop.enable = true;                                  # Устанавливает htop (интерактивный монитор процессов) системно
-    programs.amnezia-vpn.enable = true;                           # Включает сервис AmneziaVPN (VPN-клиент)
+    programs.git.enable = true;                                 # Включает поддержку Git (утилита системы контроля версий)
+    programs.dconf.enable = true;                               # Включает dconf – базу данных настроек для GTK-приложений (необходим для тем, шрифтов и т.п.)
+    programs.zsh.enable = true;                                 # Регистрирует Zsh как системную оболочку
+    programs.vim.enable = true;                                 # Устанавливает Vim (текстовый редактор) системно
+    programs.nano.enable = true;                                # Устанавливает Nano (простой текстовый редактор) системно
+    programs.htop.enable = true;                                # Устанавливает htop (интерактивный монитор процессов) системно
+    programs.amnezia-vpn.enable = true;                         # Включает сервис AmneziaVPN (VPN-клиент)
     programs.appimage = {
-      enable = true;                                              # Включает поддержку запуска AppImage-файлов (бинарные образы приложений)
-      binfmt = true;                                              # Эта опция автоматически настраивает загрузчик
+      enable = true;                                            # Включает поддержку запуска AppImage-файлов (бинарные образы приложений)
+      binfmt = true;                                            # Эта опция автоматически настраивает загрузчик
+    };
+    programs.nh = {                                             # Утилита для управления Nix
+      enable = true;                                            # Включает утилиту nh (Nix Helper) для удобного управления системой и home-менеджером
+      flake = "${myLib.home}/${myLib.configDirName}";           # Указывает путь к flake, содержащему конфигурации NixOS и home-manager
     };
     # KDE приложения
-    programs.partition-manager.enable = true;                     # Включает модуль для утилиты управления разделами диска (KDE Partition Manager)
-    programs.kdeconnect.enable = true;                            # Включает интеграцию с телефоном: синхронизация уведомлений, буфера обмена, управление презентациями и т.д.
+    programs.partition-manager.enable = true;                   # Включает модуль для утилиты управления разделами диска (KDE Partition Manager)
+    programs.kdeconnect.enable = true;                          # Включает интеграцию с телефоном: синхронизация уведомлений, буфера обмена, управление презентациями и т.д.
 
-    # Используем уже определённый список systemPackages
-    environment.systemPackages = systemPackages;
+
+    environment.systemPackages = systemPackages;                # Используем уже определённый список systemPackages
   };
 }
 
