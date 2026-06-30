@@ -2,8 +2,7 @@
 { pkgs, pkgs-unstable, blender-cuda ? null }:
 
 let
-  # Вспомогательная функция: добавляет пакет в список, только если он не null
-  optionalPackage = pkg: if pkg != null then [ pkg ] else [ ];
+  optionalPackage = pkg: if pkg != null then [ pkg ] else [ ];  # Вспомогательная функция: добавляет пакет в список, только если он не null
 
 
   # ========== Включение системных модулей для программ ==========
@@ -12,7 +11,7 @@ let
   # ========== Дополнительные системные пакеты ==========
     # ./nixos/nx_obs.nix
     # ./nixos/nx_steam.nix
-{
+
   systemPackages = with pkgs; [
 
     # СИСТЕМНЫЕ
