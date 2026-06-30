@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ pkgs, ... }:
 {
   # Настройка OBS Studio через home-manager
   programs.obs-studio = {

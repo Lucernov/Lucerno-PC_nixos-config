@@ -1,6 +1,6 @@
 # modules/nx_stylix.nix
 # Модуль настройки темы оформления (stylix) для всей системы: цвета, обои, темы приложений
-{ config, pkgs, lib, myLib, ... }:
+{ pkgs, myLib, ... }:
 
 {
   config = {
