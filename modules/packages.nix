@@ -117,6 +117,8 @@ let
     surge-xt                                                    # Синтезатор Surge XT
     geonkick                                                    # Синтезатор барабанов для создания ударных партий
     drumgizmo                                                   # Многоканальный сэмплер барабанов (реалистичные ударные)
+    decent-sampler                                              # Сэмплер для библиотек DecentSampler (формат .dspreset, .dslibrary)
+    linuxsampler                                                # Семплер, поддерживающий форматы GIG, SFZ и SF2 (VST/LV2)
     dragonfly-reverb                                            # Реверберация Dragonfly (VST/LV2)
     calf                                                        # Calf Studio Gear один из самых известных и полных наборов аудио-плагинов для Linux
     fretboard                                                   # Гитаровый гриф / MIDI-инструмент
