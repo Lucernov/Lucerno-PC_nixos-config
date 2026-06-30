@@ -9,7 +9,6 @@ let
   systemPackages = with pkgs; [
     # СИСТЕМНЫЕ
     manix                                                       # Универсальный поиск по документации Nix
-    optinix                                                     # Специализированный поиск по опциям (options) NixOS/Home Manager
     nix-tree                                                    # Просмотр дерева зависимостей Nix
     home-manager                                                # Управление пользовательским окружением (конфиги, пакеты, службы)
     nil                                                         # LSP-сервер для Nix

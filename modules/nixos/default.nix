@@ -2,7 +2,7 @@
 
 let
   links = import ../links.nix { inherit pkgs lib myLib; };                                      # Импортируем модуль с симлинками (системные правила tmpfiles)
-  packages = import ../packages.nix { inherit pkgs pkgs-unstable myLib blender-cuda; };               # Импортируем общий файл с пакетами и системными модулями
+  packages = import ../packages.nix { inherit pkgs pkgs-unstable myLib blender-cuda; };         # Импортируем общий файл с пакетами и системными модулями
 in
 
 {
