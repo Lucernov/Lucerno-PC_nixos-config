@@ -17,9 +17,14 @@
       inputs.home-manager.follows = "home-manager";                                                        # Следовать за home-manager
     };
 
-    flake-parts = {
-      url = "github:hercules-ci/flake-parts";                                                              # Flake-parts — фреймворк для модульной организации flake
+    flake-parts = {                                                                                        # Flake-parts — фреймворк для модульной организации flake
+      url = "github:hercules-ci/flake-parts";
       inputs.nixpkgs-lib.follows = "nixpkgs";                                                              # Зависимости flake-parts также используют основной nixpkgs
+    };
+
+    blender-cuda = {                                                                                       # Бинарная сборка Blender с поддержкой cuda
+      url = "github:adithyagenie/blender-cuda-nixos";
+      inputs.nixpkgs.follows = "nixpkgs";                                                                  # Следовать за nixpkgs
     };
 
     stylix = {                                                                                             # Единая настройка тем
@@ -27,12 +32,11 @@
       inputs.nixpkgs.follows = "nixpkgs";                                                                  # Следовать за nixpkgs
     };
 
-    apple-fonts = {
-      url = "github:Lyndeno/apple-fonts.nix";                                                              # Шрифты Apple
-      inputs.nixpkgs.follows = "nixpkgs";
+    apple-fonts = {                                                                                        # Шрифты Apple
+      url = "github:Lyndeno/apple-fonts.nix";
+      inputs.nixpkgs.follows = "nixpkgs";                                                                  # Следовать за nixpkgs
     };
 
-    blender-cuda.url = "github:adithyagenie/blender-cuda-nixos";                                           # Бинарная сборка Blender с поддержкой cuda
     import-tree.url = "github:vic/import-tree";                                                            # Утилита для рекурсивного импорта файлов
     comfyui-nix.url = "github:utensils/comfyui-nix";                                                       # Flake для ComfyUI
     nixpkgs-krita-25-11.url = "github:NixOS/nixpkgs/b77b3de8775677f84492abe84635f87b0e153f0f";             # Фиксированная версия nixpkgs для Krita (новая версия пока не работает с ComfyUI)
