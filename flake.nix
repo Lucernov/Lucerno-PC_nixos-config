@@ -100,7 +100,7 @@
           pkgs = pkgsWithOverlay;                                                                         # Для отдельной команды home-manager используем тот же pkgs с оверлеем
           modules = [
           (inputs.import-tree ./modules/home)                                                             # Основной модуль home-manager. Рекурсивно импортируем все модули из папки modules/home
-          inputs.stylix.homeManagerModules.stylix                                                         # Модуль стилизации (stylix)
+          inputs.stylix.homeModules.stylix                                                                # Модуль стилизации (stylix)
           ];
           extraSpecialArgs = {
             inherit inputs;                                                                               # Все flake-входы доступны в модулях home-manager
