@@ -82,6 +82,7 @@
           };
 
           modules = [                                                                                      # Список модулей, из которых собирается система
+            inputs.stylix.nixosModules.stylix                                                              # Модуль стилизации (stylix)
             ({ config, pkgs, lib, nixpkgs-krita-25-11, ... }: {                                            # Переопределяем krita из фиксированного набора пакетов
               nixpkgs.overlays = [
                 (final: prev: {
@@ -91,7 +92,6 @@
             })
             { nixpkgs.pkgs = pkgsWithOverlay; }                                                            # Переопределяем pkgs для всей системы (с оверлеем)
             (inputs.import-tree ./modules/nixos)                                                           # Основной модуль config nixos. Рекурсивно импортируем все модули из папки modules/nixos
-            inputs.stylix.nixosModules.stylix                                                              # Модуль стилизации (stylix)
           ];
         };
 
@@ -99,8 +99,8 @@
         homeConfigurations.lucerno = home-manager.lib.homeManagerConfiguration {
           pkgs = pkgsWithOverlay;                                                                         # Для отдельной команды home-manager используем тот же pkgs с оверлеем
           modules = [
-          (inputs.import-tree ./modules/home)                                                             # Основной модуль home-manager. Рекурсивно импортируем все модули из папки modules/home
           inputs.stylix.homeModules.stylix                                                                # Модуль стилизации (stylix)
+          (inputs.import-tree ./modules/home)                                                             # Основной модуль home-manager. Рекурсивно импортируем все модули из папки modules/home
           ];
           extraSpecialArgs = {
             inherit myLib;                                                                                # Мои общие переменные
