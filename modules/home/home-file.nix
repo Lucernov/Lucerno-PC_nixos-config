@@ -1,4 +1,4 @@
-{ pkgs, myLib, ... }:
+{ pkgs, pkgs-unstable, myLib, ... }:
 {
   # XDG пользовательские директории
   home.file = {
@@ -42,7 +42,7 @@
       Type=Application
       Name=REAPER
       Comment=ПРОСТО БОЛЬ !!!
-      Exec=${pkgs.my-packages.reaper}/bin/reaper %F
+      Exec=${pkgs-unstable.reaper}/bin/reaper %F
       Icon=cockos-reaper
       Categories=Audio;AudioVideo;
       Terminal=false
@@ -69,7 +69,7 @@
     ".local/share/applications/org.qmmp.qmmp.desktop".text = ''
       [Desktop Entry]
       Name=Qmmp
-      Exec=${pkgs.my-packages.qmmp}/bin/qmmp %F
+      Exec=${pkgs-unstable.qmmp}/bin/qmmp %F
       Icon=qmmp
       Terminal=false
       Type=Application

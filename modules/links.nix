@@ -2,7 +2,7 @@
 { pkgs, lib, myLib, config ? null }:
 
 let
-  home = myLib.home;
+  inherit (myLib) home;
   configDir = myLib.configDirName;
 in
 {

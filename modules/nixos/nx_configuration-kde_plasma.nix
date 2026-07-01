@@ -1,8 +1,14 @@
 { pkgs, myLib, ... }:
 
 {
-  # ========== Настройка дисплейного менеджера SDDM ==========
-  services.displayManager.plasma-login-manager.enable = true;      # менеджер входа Plasma Login Manager
+  services = {
+    displayManager = {                                              # Настройка дисплейного менеджера SDDM
+      plasma-login-manager.enable = true;                           # менеджер входа Plasma Login Manager
+      defaultSession = "plasma";                                    # Указывает, какая сессия рабочего стола будет запускаться по умолчанию. Значение "plasma" соответствует KDE Plasma (может быть "plasma" или "plasmawayland")
+    };
+    desktopManager.plasma6.enable = true;                           # Подключает все необходимые системные службы, компоненты и настройки, чтобы KDE Plasma 6 могла работать в качестве основной графической среды
+    xserver.enable = false;                                         # Запрещает запуск X11-сервера. Вся графика будет работать через Wayland
+  };
 
   # ========== Переменные окружения для сессии SDDM ==========
   environment.sessionVariables = {                                  # Локаль для интерфейса SDDM (русский язык)
@@ -10,10 +16,6 @@
     LANGUAGE = "ru_RU.UTF-8";
     QT_QPA_PLATFORMTHEME = "kde";
   };
-
-  services.desktopManager.plasma6.enable = true;                    # Подключает все необходимые системные службы, компоненты и настройки, чтобы KDE Plasma 6 могла работать в качестве основной графической среды
-  services.displayManager.defaultSession = "plasma";                # Указывает, какая сессия рабочего стола будет запускаться по умолчанию. Значение "plasma" соответствует KDE Plasma (может быть "plasma" или "plasmawayland")
-  services.xserver.enable = false;                                  # Запрещает запуск X11-сервера. Вся графика будет работать через Wayland
 
   # ========== Дополнительные системные пакеты для Plasma ==========
   environment.systemPackages = with pkgs; [

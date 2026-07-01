@@ -82,7 +82,7 @@
             pkgs-unstable = pkgsUnstable;                                                                  # Нестабильные пакеты для использования в модулях
             import-tree = inputs.import-tree;                                                              # Утилита для рекурсивного импорта
             inherit myLib;                                                                                 # Мои общие переменные
-            nixpkgs-krita-25-11 = nixpkgs-krita-25-11;                                                     # Фиксированный nixpkgs для Krita
+            inherit nixpkgs-krita-25-11;                                                                   # Фиксированный nixpkgs для Krita
             inherit blender-cuda;                                                                          # Flake с Blender+CUDA для передачи в пакеты
           };
 
