@@ -22,11 +22,6 @@
       inputs.nixpkgs-lib.follows = "nixpkgs";                                                              # Зависимости flake-parts также используют основной nixpkgs
     };
 
-    nix-index-database = {                                                                                 # Автоматическое обновление индекса для nix-locate (быстрый поиск файлов в Nix store без ручного запуска nix-index)
-      url = "github:nix-community/nix-index-database";
-      inputs.nixpkgs.follows = "nixpkgs";                                                                  # Следовать за nixpkgs
-    };
-
     blender-cuda = {                                                                                       # Бинарная сборка Blender с поддержкой cuda
       url = "github:adithyagenie/blender-cuda-nixos";
       inputs.nixpkgs.follows = "nixpkgs";                                                                  # Следовать за nixpkgs

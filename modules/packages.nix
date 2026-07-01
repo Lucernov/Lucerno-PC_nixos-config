@@ -1,5 +1,5 @@
 # modules/packages.nix
-{ pkgs, pkgs-unstable, myLib, blender-cuda ? null, inputs ? null }:
+{ pkgs, pkgs-unstable, myLib, blender-cuda ? null }:
 
 let
   # ========== Дополнительные системные пакеты ==========
@@ -14,7 +14,6 @@ let
     nil                                                         # LSP-сервер для Nix
     nix-du                                                      # Анализирует использование дискового пространства в Nix store
     nix-output-monitor                                          # Отслеживает сборку Nix и показывает прогресс зависимостей
-    nix-index                                                   # Содержит nix-locate — утилиту для поиска файлов в Nix store (аналог locate, но для всех пакетов в store)
     cachix                                                      # Утилита для работы с кэшем Nix (добавление/управление бинарными кэшами)
     any-nix-shell                                               # Позволяет использовать Nix-оболочки из любого терминала. Упрощает работу с временными окружениями
     nixpkgs-fmt                                                 # Форматтер Nix (автоматическое форматирование кода)
@@ -30,6 +29,7 @@ let
     wayland-utils                                               # Набор утилит для диагностики Wayland (например, wayland-info)
     gearlever                                                   # Менеджер обновлений для графических приложений (например, AppImages)
     mission-center                                              # Графический монитор системы (альтернатива btop)
+    lact                                                        # Утилита для управления видеокартами NVIDIA и AMD (мониторинг, разгон, управление вентиляторами, настройка VF-кривой). Для NVIDIA требуется библиотека NVML
 
     # ========== КОНСОЛЬНЫЕ УТИЛИТЫ ==========
     kitty                                                       # Эмулятор терминала с поддержкой GPU и лигатур
@@ -164,8 +164,7 @@ in
   inherit systemPackages homePackages;
 
   # ========== Системные модули (только для NixOS) ==========
-  nixosModule = { config, pkgs, lib, myLib, inputs, ... }: {
-    imports = [ inputs.nix-index-database.nixosModules.nix-index ]; # Модуль для автоматического обновления индекса nix-locate
+  nixosModule = { config, pkgs, lib, myLib, ... }: {
     programs = {
       git.enable = true;                                        # Включает поддержку Git
       nix-index.enable = true;                                  # Автоматически обновлять индекс для nix-locate при каждом переключении поколения
