@@ -8,10 +8,10 @@
     # Основные настройки (те, что обычно в kitty.conf)
     settings = {
       allow_remote_control = "yes";                                               # Разрешает управление Kitty через внешние команды (kitty @)
-      background = "#2e3440";                                                     # Цвет фона (тёмно-серый, как в Nord)
-      background_opacity = 0.95;                                                  # Прозрачность фона (0.95 = почти непрозрачный)
+      #background = "#2e3440";                                                     # Цвет фона (тёмно-серый, как в Nord)
+      #background_opacity = 0.95;                                                  # Прозрачность фона (0.95 = почти непрозрачный)
       confirm_os_window_close = 0;                                                # Не спрашивать подтверждение при закрытии окна
-      foreground = "#eceff4";                                                     # Цвет текста (светло-серый)
+      #foreground = "#eceff4";                                                     # Цвет текста (светло-серый)
       listen_on = "unix:/tmp/kitty-sock";                                         # Единый сокет для управления всеми окнами Kitty
       shell = "zsh";                                                              # Оболочка по умолчанию
       tab_bar_style = "powerline";                                                # Стиль панели вкладок (powerline)
@@ -76,7 +76,7 @@
     # Отступ сверху
     margin_top 2
     # Прозрачность фона 80%
-    background_opacity 0.80
+    #background_opacity 0.80
     # Убрать рамку окна
     hide_window_decorations yes
     # Не скрывать при запуске (показывать сразу)
