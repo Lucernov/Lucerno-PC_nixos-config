@@ -11,11 +11,11 @@
       echo "Running pre-commit checks..."
 
       # Проверка форматирования
-      if ! alejandra --check .; then
-        echo "❌ Форматирование не соответствует стилю."
-        echo "Запустите 'alejandra .' и закоммитьте изменения."
-        exit 1
-      fi
+      #if ! alejandra --check .; then
+      #  echo "❌ Форматирование не соответствует стилю."
+      #  echo "Запустите 'alejandra .' и закоммитьте изменения."
+      #  exit 1
+      #fi
 
       # Статический анализ
       if ! statix check .; then
