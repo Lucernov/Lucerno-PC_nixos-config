@@ -36,20 +36,20 @@
 #    };
 
     # Привязка клавиш (map)
-    keybindings = {
-      "ctrl+t" = "new_tab_with_cwd !neighbor";                                    # Ctrl+T – новая вкладка с текущей рабочей папкой (игнорируя соседнюю)
-      "ctrl+е" = "new_tab_with_cwd !neighbor";                                    # То же самое для русской раскладки (буква 'е')
-      "ctrl+w" = "close_tab";                                                     # Ctrl+W – закрыть текущую вкладку
-      "ctrl+ц" = "close_tab";                                                     # То же для русской раскладки (буква 'ц')
-      "ctrl+right" = "next_tab";                                                  # Ctrl+Right – следующая вкладка
-      "ctrl+left" = "previous_tab";                                               # Ctrl+Left – предыдущая вкладка
-      "ctrl+alt+e" = "launch --location=hsplit";                                  # Разделение окна по горизонтали (верх/низ)
-      "ctrl+alt+у" = "launch --location=hsplit";                                  # Разделение окна по горизонтали (верх/низ)
-      "ctrl+alt+d" = "launch --location=vsplit";                                  # Разделение окна по вертикали (лево/право)
-      "ctrl+alt+в" = "launch --location=vsplit";                                  # Разделение окна по вертикали (лево/право)
-      "ctrl+alt+w" = "close_window";                                              # Закрыть текущее окно/сплит
-      "ctrl+alt+ц" = "close_window";                                              # Русская раскладка (буква 'ц')
-    };
+#    keybindings = {
+#      "ctrl+t" = "new_tab_with_cwd !neighbor";                                    # Ctrl+T – новая вкладка с текущей рабочей папкой (игнорируя соседнюю)
+#      "ctrl+е" = "new_tab_with_cwd !neighbor";                                    # То же самое для русской раскладки (буква 'е')
+#      "ctrl+w" = "close_tab";                                                     # Ctrl+W – закрыть текущую вкладку
+#      "ctrl+ц" = "close_tab";                                                     # То же для русской раскладки (буква 'ц')
+#      "ctrl+right" = "next_tab";                                                  # Ctrl+Right – следующая вкладка
+#      "ctrl+left" = "previous_tab";                                               # Ctrl+Left – предыдущая вкладка
+#      "ctrl+alt+e" = "launch --location=hsplit";                                  # Разделение окна по горизонтали (верх/низ)
+#      "ctrl+alt+у" = "launch --location=hsplit";                                  # Разделение окна по горизонтали (верх/низ)
+#      "ctrl+alt+d" = "launch --location=vsplit";                                  # Разделение окна по вертикали (лево/право)
+#      "ctrl+alt+в" = "launch --location=vsplit";                                  # Разделение окна по вертикали (лево/право)
+#      "ctrl+alt+w" = "close_window";                                              # Закрыть текущее окно/сплит
+#      "ctrl+alt+ц" = "close_window";                                              # Русская раскладка (буква 'ц')
+#    };
 
     # Любые другие строки, которые не поддерживаются settings/keybindings
     extraConfig = ''
