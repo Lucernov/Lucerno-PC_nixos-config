@@ -17,6 +17,9 @@ let
     nix-index                                                   # Содержит nix-locate — утилиту для поиска файлов в Nix store (аналог locate, но для всех пакетов в store)
     cachix                                                      # Утилита для работы с кэшем Nix (добавление/управление бинарными кэшами)
     any-nix-shell                                               # Позволяет использовать Nix-оболочки из любого терминала. Упрощает работу с временными окружениями
+    alejandra                                                   # Форматтер Nix (автоматическое форматирование кода)
+    statix                                                      # Линтер Nix (статический анализ)
+    deadnix                                                     # Поиск мёртвого (неиспользуемого) кода в Nix
     glib                                                        # Базовая библиотека GLib (низкоуровневые структуры данных)
     openh264                                                    # Кодек H.264 от Cisco с открытым исходным кодом. Используется для аппаратного кодирования
     uv                                                          # Менеджер Python-проектов (альтернатива pip + virtualenv)
@@ -63,9 +66,9 @@ let
 
     # ИНТЕРНЕТ
     iw                                                          # Утилита для настройки беспроводных сетей (Wi-Fi)
+    fail2ban                                                    # Демон для блокировки подозрительных IP-адресов (защита от брутфорса)
     rclone                                                      # Утилита для синхронизации и монтирования облачных хранилищ (Google Drive, OneDrive и др.)
     wget                                                        # Утилита для загрузки файлов из интернета
-    fail2ban
     authenticator                                               # Приложение для двухфакторной аутентификации (TOTP, HOTP), например, для аккаунтов Google, GitHub и т.д.
     google-chrome                                               # Браузер Google Chrome
     parabolic                                                   # Загрузчик видео/аудио с YouTube (альтернатива yt-dlp)
@@ -142,7 +145,7 @@ let
     # ИИ
     comfy-ui-cuda                                               # ComfyUI с поддержкой CUDA для генерации изображений через нейросети
 
-    # --- Ретро-ядра для RetroArch ---
+    # Ядра для RetroArch
     libretro.mesen                                              # Nintendo NES
     libretro.bsnes                                              # Nintendo SNES
     libretro.parallel-n64                                       # Nintendo 64 (Vulkan)
@@ -161,9 +164,11 @@ in
   inherit systemPackages homePackages;
 
   # ========== Системные модули (только для NixOS) ==========
-  nixosModule = { config, pkgs, lib, myLib, ... }: {
+  nixosModule = { config, pkgs, lib, myLib, inputs, ... }: {
+    imports = [ inputs.nix-index-database.nixosModules.nix-index ]; # Модуль для автоматического обновления индекса nix-locate
     programs = {
       git.enable = true;                                        # Включает поддержку Git
+      nix-index.enable = true;                                  # Автоматически обновлять индекс для nix-locate при каждом переключении поколения
       dconf.enable = true;                                      # Включает dconf – базу данных настроек для GTK-приложений
       zsh.enable = true;                                        # Регистрирует Zsh как системную оболочку
       vim.enable = true;                                        # Устанавливает Vim (текстовый редактор) системно

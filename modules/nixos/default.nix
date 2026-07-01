@@ -173,6 +173,8 @@ in
         "https://cache.nixos-cuda.org"                                                          # Специализированный CUDA-кэш
         "https://nix-community.cachix.org"                                                      # Кэш Nix Community
         "https://adithyagenie.cachix.org"                                                       # Кэш готовых сборок Blender с CUDA (от adithyagenie, экономит время компиляции)
+        "https://chaotic-nyx.cachix.org"                                                        # Дополнительный кеш с большим количеством популярных пакетов (ускоряет сборку)
+        "https://devenv.cachix.org"                                                             # Кеш для сред разработки (devenv), содержит готовые сборки многих инструментов
       ];
       trusted-public-keys = [                                                                   # Публичные ключи для проверки подписей пакетов из соответствующих кэшей
         "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="                        # Ключ основного кэша
@@ -180,6 +182,8 @@ in
         "cache.nixos-cuda.org:74DUi4Ye579gUqzH4ziL9IyiJBlDpMRn9MBN8oNan9M="                     # Публичный ключ CUDA-кэша
         "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="               # ключ кэша nix-community
         "adithyagenie.cachix.org-1:h6BSMboeVfxyrULWuRQqAyweo4AJRATekb88xotfQwc="                # Публичный ключ кэша adithyagenie (Blender с CUDA)
+        "chaotic-nyx.cachix.org-1:HfnXSw4pj95iI/n17rIDy40agHj12WfF+Gqk6SonIT8="                 # ключ кэша chaotic-nyx
+        "devenv.cachix.org-1:w1cLUi8dv3hnoSPGAuibQv+f9TZLr6cv/Hm9XgU50cw="                      # ключ кэша devenv
       ];
     };
   };
