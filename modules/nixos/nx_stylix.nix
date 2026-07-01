@@ -9,8 +9,6 @@
       polarity = "dark";                                                                  # Цветовая направленность: "dark" (тёмная) или "light" (светлая)
       base16Scheme = "${pkgs.base16-schemes}/share/themes/nord.yaml";                     # Активная цветовая схема в формате base16 (Catppuccin Mocha)
     # base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-mocha.yaml";         # Активная цветовая схема в формате base16 (Catppuccin Mocha)
-
-      opacity.terminal = 0.80;                                                            # Прозрачность терминалов (Home Manager автоматически унаследует эту настройку)
     };
   };
 }
