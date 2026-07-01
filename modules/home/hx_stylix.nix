@@ -1,9 +1,9 @@
 { inputs, ... }:
 
 {
-  # Указываем Stylix использовать схему Nord
-  stylix.base16Scheme = "${inputs.stylix.inputs.tinted-schemes}/share/themes/nord.yaml";
+  # Правильный путь к схеме Nord внутри репозитория tinted-schemes
+  stylix.base16Scheme = "${inputs.stylix.inputs.tinted-schemes}/base16/nord.yaml";
 
-  # Возвращаем прозрачность фона терминала
+  # Прозрачность фона терминала
   stylix.opacity.terminal = 0.95;
 }
