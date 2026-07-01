@@ -73,10 +73,10 @@
         nixosConfigurations.Lucerno-PC = nixpkgs.lib.nixosSystem {                                         # Системная конфигурация NixOS (для пересборки всей ОС)
           system = "x86_64-linux";                                                                         # Архитектура системы. Для nixosSystem ВСЁ ЕЩЁ используется параметр `system` (требование API NixOS)
           specialArgs = {                                                                                  # Дополнительные аргументы, передаваемые во все модули
+            inherit myLib;                                                                                 # Мои общие переменные
             inherit inputs;                                                                                # Все входы (flake-зависимости)
             pkgs-unstable = pkgsUnstable;                                                                  # Нестабильные пакеты для использования в модулях
             import-tree = inputs.import-tree;                                                              # Утилита для рекурсивного импорта
-            inherit myLib;                                                                                 # Мои общие переменные
             inherit nixpkgs-krita-25-11;                                                                   # Фиксированный nixpkgs для Krita
             inherit blender-cuda;                                                                          # Flake с Blender+CUDA для передачи в пакеты
           };
@@ -89,9 +89,9 @@
                 })
               ];
             })
+            inputs.stylix.nixosModules.stylix                                                              # Модуль стилизации (stylix)
             { nixpkgs.pkgs = pkgsWithOverlay; }                                                            # Переопределяем pkgs для всей системы (с оверлеем)
             (inputs.import-tree ./modules/nixos)                                                           # Основной модуль config nixos. Рекурсивно импортируем все модули из папки modules/nixos
-            inputs.stylix.nixosModules.stylix                                                              # Модуль стилизации (stylix)
           ];
         };
 
@@ -99,13 +99,13 @@
         homeConfigurations.lucerno = home-manager.lib.homeManagerConfiguration {
           pkgs = pkgsWithOverlay;                                                                         # Для отдельной команды home-manager используем тот же pkgs с оверлеем
           modules = [
-          (inputs.import-tree ./modules/home)                                                             # Основной модуль home-manager. Рекурсивно импортируем все модули из папки modules/home
           inputs.stylix.homeModules.stylix                                                                # Модуль стилизации (stylix)
+          (inputs.import-tree ./modules/home)                                                             # Основной модуль home-manager. Рекурсивно импортируем все модули из папки modules/home
           ];
           extraSpecialArgs = {
+            inherit myLib;                                                                                # Мои общие переменные
             inherit inputs;                                                                               # Все flake-входы доступны в модулях home-manager
             pkgs-unstable = pkgsUnstable;                                                                 # Нестабильные пакеты для home-manager
-            inherit myLib;                                                                                # Мои общие переменные
           };
         };
       };
