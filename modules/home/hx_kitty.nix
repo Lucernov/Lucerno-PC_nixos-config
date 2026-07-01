@@ -1,5 +1,6 @@
 { pkgs, ... }:
 {
+  warnings = [ "Kitty module loaded!" ];
   programs.kitty = {
     enable = true;
     extraConfig = ''
