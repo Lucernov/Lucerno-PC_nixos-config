@@ -26,7 +26,6 @@
     update = "cd ${myLib.home}/${myLib.configDirName} && git add -A && git commit -m \"pre-rebuild\" && git push && nh os switch";   # пересобрать NixOS без обновления входов
     upgrade = "cd ${myLib.home}/${myLib.configDirName} && git add -A && (git commit -m \"upgrade: $(date '+%Y-%m-%d %H:%M:%S')\" || true) && git push && nh os switch --update";   # пересобрать NixOS с обновлением flake.lock
     clean   = "nh clean all --keep 2 && nh os boot --update";  # очистить старые поколения, обновить входы и переключиться
-    bdupdate = "nix-index && echo 'Индекс обновлён'";     # запасной (если привыкли к такому имени)
 
     # ========== Приложения ==========
     parabolic = "org.nickvision.tubeconverter";                # запустить Parabolic (загрузчик видео/аудио с YouTube)
