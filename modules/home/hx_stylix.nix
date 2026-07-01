@@ -4,7 +4,6 @@
   stylix = {
     base16Scheme = "${inputs.stylix.inputs.tinted-schemes}/base16/nord.yaml";
     targets.kitty.enable = true;                # явно включаем поддержку Kitty
-    targets.kitty.transparentBackground = true; # разрешаем прозрачность фона
     opacity.terminal = 0.95;                    # уровень прозрачности терминала
   };
 }
