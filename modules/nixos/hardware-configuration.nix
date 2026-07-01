@@ -146,7 +146,7 @@ in
   # ========== ЗАГРУЗКА И ЯДРО ==========
   boot = {
     kernelPackages = pkgs.linuxPackages_zen;                                # Установка кастомного ZEN ядра
-    #boot.kernelPackages = pkgs.linuxPackages;                              # Альтернатива
+  # kernelPackages = pkgs.linuxPackages;                                    # Альтернатива (базовое ядро)
 
     initrd.kernelModules = [                                                # Модули, загружаемые на раннем этапе (initrd)
       "nvidia"                                                              # Основной драйвер NVIDIA
@@ -228,9 +228,9 @@ in
       KERNEL=="hpet", GROUP="audio"
     '';
 
-    fwupd.enable = true;        # Включает демон fwupd для автоматического обновления прошивок устройств (UEFI, USB, диски и др.)
-    xserver.videoDrivers = [ "nvidia" ]; # Использовать проприетарный драйвер NVIDIA (NVIDIA RTX 3070)
+    fwupd.enable = true;                                                    # Включает демон fwupd для автоматического обновления прошивок устройств (UEFI, USB, диски и др.)
+    xserver.videoDrivers = [ "nvidia" ];                                    # Использовать проприетарный драйвер NVIDIA (NVIDIA RTX 3070)
   };
 
-  nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";                    # Определяет архитектуру системы (x86_64). mkDefault позволяет переопределить извне, если потребуется
+  nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";                      # Определяет архитектуру системы (x86_64). mkDefault позволяет переопределить извне, если потребуется
 }
