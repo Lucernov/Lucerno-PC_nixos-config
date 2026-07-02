@@ -101,10 +101,12 @@ in
     };
     rtkit.enable = true;                                                                                # Включаем rtkit (Realtime Kit) — демон, дающий процессам приоритет реального времени. Необходим для низких задержек в аудио.
     pam.loginLimits = [                                                                                 # Лимиты для аудио-группы (чтобы приложения имели приоритет реального времени и блокировку памяти)
-      { domain = "@audio"; item = "rtprio"; type = "soft"; value = "89"; }                              # Мягкий лимит приоритета RT
-      { domain = "@audio"; item = "rtprio"; type = "hard"; value = "89"; }                              # Жёсткий лимит приоритета RT
-      { domain = "@audio"; item = "memlock"; type = "soft"; value = "unlimited"; }                      # Мягкий лимит блокировки памяти
-      { domain = "@audio"; item = "memlock"; type = "hard"; value = "unlimited"; }                      # Жёсткий лимит блокировки памяти
+      { domain = "@audio"; item = "rtprio"; type = "soft"; value = "89"; }                              # мягкий лимит RT-приоритета
+      { domain = "@audio"; item = "rtprio"; type = "hard"; value = "89"; }                              # жёсткий лимит RT-приоритета
+      { domain = "@audio"; item = "memlock"; type = "soft"; value = "unlimited"; }                      # мягкий лимит блокировки памяти
+      { domain = "@audio"; item = "memlock"; type = "hard"; value = "unlimited"; }                      # жёсткий лимит блокировки памяти
+      { domain = "@audio"; item = "nice"; type = "soft"; value = "-11"; }                               # разрешаем nice -11
+      { domain = "@audio"; item = "nice"; type = "hard"; value = "-11"; }                               # жёсткий лимит nice
     ];
   };
 
