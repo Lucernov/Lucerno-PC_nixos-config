@@ -22,7 +22,7 @@
 
     # ========== Управление конфигурацией Nix ==========
     sync   = "cd ${myLib.home}/${myLib.configDirName} && git add -A && (git commit -m \"$(date '+%Y-%m-%d %H:%M:%S')\" || true) && git push";   # синхронизировать конфиг с Git
-    hm     = "cd ${myLib.home}/${myLib.configDirName} && git add -A && (git commit -m \"hm: $(date '+%Y-%m-%d %H:%M:%S')\" || true) && git push && export NIXPKGS_ALLOW_UNFREE=1 && nh home switch";   # пересобрать home-manager и записать изменения
+    #hm     = "cd ${myLib.home}/${myLib.configDirName} && git add -A && (git commit -m \"hm: $(date '+%Y-%m-%d %H:%M:%S')\" || true) && git push && export NIXPKGS_ALLOW_UNFREE=1 && nh home switch";   # пересобрать home-manager и записать изменения
     update = "cd ${myLib.home}/${myLib.configDirName} && git add -A && git commit -m \"pre-rebuild\" && git push && nh os switch";   # пересобрать NixOS без обновления входов
     upgrade = "cd ${myLib.home}/${myLib.configDirName} && git add -A && (git commit -m \"upgrade: $(date '+%Y-%m-%d %H:%M:%S')\" || true) && git push && nh os switch --update";   # пересобрать NixOS с обновлением flake.lock
     clean   = "nh clean all --keep 2 && nh os boot --update";  # очистить старые поколения, обновить входы и переключиться

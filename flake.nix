@@ -92,21 +92,30 @@
             })
             { nixpkgs.pkgs = pkgsWithOverlay; }                                                            # Переопределяем pkgs для всей системы (с оверлеем)
             (inputs.import-tree ./modules/nixos)                                                           # Основной модуль config nixos. Рекурсивно импортируем все модули из папки modules/nixos
-          ];
-        };
 
-        # Конфигурация Home-Manager отдельно (для команды home-manager switch без sudo)
-        homeConfigurations.lucerno = home-manager.lib.homeManagerConfiguration {
-          pkgs = pkgsWithOverlay;                                                                         # Для отдельной команды home-manager используем тот же pkgs с оверлеем
-          modules = [
-          inputs.stylix.homeModules.stylix                                                                # Модуль стилизации (stylix)
-          (inputs.import-tree ./modules/home)                                                             # Основной модуль home-manager. Рекурсивно импортируем все модули из папки modules/home
+            # ========== Интеграция Home Manager как модуль NixOS ==========
+            inputs.home-manager.nixosModules.home-manager                                                  # Подключаем модуль home-manager
+            {
+              # Настройки интеграции Home Manager с NixOS
+              home-manager.useGlobalPkgs = true;                                                           # Используем системный экземпляр pkgs
+              home-manager.useUserPackages = true;                                                         # Устанавливаем пакеты в /etc/profiles (доступно всем пользователям)
+
+              # Конфигурация для пользователя lucerno
+              home-manager.users.lucerno = { pkgs, lib, ... }: {
+                # Аргументы, передаваемые во все модули Home Manager (аналог extraSpecialArgs)
+                _module.args = {
+                  inherit myLib;                                                                           # Мои общие переменные
+                  pkgs-unstable = pkgsUnstable;                                                            # Нестабильные пакеты для home-manager
+                };
+
+                # Импорт всех модулей из папки modules/home (рекурсивно)
+                imports = [
+                  (inputs.import-tree ./modules/home)                                                     # Основной модуль home-manager. Рекурсивно импортируем все модули из папки modules/home
+                  inputs.plasma-manager.homeModules.plasma-manager
+                ];
+              };
+            }
           ];
-          extraSpecialArgs = {
-            inherit myLib;                                                                                # Мои общие переменные
-            inherit inputs;                                                                               # Все flake-входы доступны в модулях home-manager
-            pkgs-unstable = pkgsUnstable;                                                                 # Нестабильные пакеты для home-manager
-          };
         };
       };
 
