@@ -107,20 +107,8 @@ let
     (bottles.override { removeWarningPopup = true; })           # Запуск Windows-приложений через Wine (без всплывающих предупреждений)
     goverlay                                                    # Оверлей для мониторинга системы и FPS (MangoHud, vkBasalt)
     mangohud                                                    # Оверлей для отображения FPS и мониторинга системы в играх
-    retroarch                                                   # Эмулятор приставок
     #lutris                                                     # Игровой лаунчер для управления играми
     #heroic                                                     # Лаунчер для Epic Games Store и GOG
-
-    # Ядра для RetroArch
-    libretro.mesen                                              # Nintendo NES
-    libretro.bsnes                                              # Nintendo SNES
-    libretro.parallel-n64                                       # Nintendo 64 (Vulkan)
-    libretro.genesis-plus-gx                                    # Sega Genesis / Mega Drive (плюс Master System, Game Gear, Sega CD)
-    libretro.beetle-saturn                                      # Sega Saturn
-    libretro.flycast                                            # Sega Dreamcast
-    libretro.ppsspp                                             # PSP
-    libretro.beetle-psx-hw                                      # PlayStation 1
-    libretro.pcsx2                                              # PlayStation 2
 
     # ИИ
     comfy-ui-cuda                                               # ComfyUI с поддержкой CUDA для генерации изображений через нейросети

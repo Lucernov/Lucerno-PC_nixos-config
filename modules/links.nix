@@ -60,11 +60,6 @@ in
     # Симлинк для Powerlevel10k
     ln -sfn ${home}/${configDir}/dotfiles/config/zsh/.p10k.zsh ${home}/.p10k.zsh
 
-    # Симлинк для ядер RetroArch
-    mkdir -p ${home}/.config/retroarch
-    ln -sfn ${config.home.path}/lib/retroarch/cores ${home}/.config/retroarch/cores
-
-
     # ----- СИСТЕМНЫЕ СИМЛИНКИ ДЛЯ COMFYUI (в /mnt/ai) -----
     rm -rf ${home}/.config/comfy-ui
     ln -sfn /mnt/ai/ComfyUI ${home}/.config/comfy-ui
