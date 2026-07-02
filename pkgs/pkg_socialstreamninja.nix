@@ -3,6 +3,7 @@
 let
   # Версия приложения (можно обновлять при выходе новых версий)
   version = "0.3.128";
+  pname = "socialstreamninja";
 
   # URL для скачивания AppImage
   src = fetchurl {
@@ -14,7 +15,7 @@ let
 in
 appimageTools.wrapType2 {
   name = "socialstreamninja";
-  inherit src;
+  inherit pname version src;
 
   # Дополнительные зависимости, если нужны (обычно для AppImage хватает базовых)
   extraPkgs = pkgs: with pkgs; [
