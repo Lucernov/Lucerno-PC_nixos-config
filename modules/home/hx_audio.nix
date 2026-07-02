@@ -25,12 +25,14 @@
       # ========== Настройка приоритетов реального времени для PipeWire и WirePlumber ==========
 
       # Drop‑in файлы для приоритетов реального времени (безопасный способ)
+      # Эти файлы добавляют настройки к системным юнитам, не переопределяя их полностью.
       ".config/systemd/user/pipewire.service.d/99-realtime.conf".text = ''
         [Service]
-        CPUSchedulingPolicy=fifo
-        CPUSchedulingPriority=85
-        Nice=-11
-        LimitRTPRIO=89
+        CPUSchedulingPolicy=fifo          # Политика реального времени FIFO
+        CPUSchedulingPriority=85          # Приоритет (чем выше, тем важнее)
+        Nice=-11                          # Отрицательный nice для большего приоритета
+        LimitRTPRIO=89                    # Максимальный приоритет RT, разрешённый через rtkit
+        LimitNICE=-11                     # Разрешить устанавливать nice -11 (требуется для Nice=-11)
       '';
       ".config/systemd/user/pipewire-pulse.service.d/99-realtime.conf".text = ''
         [Service]
@@ -38,6 +40,7 @@
         CPUSchedulingPriority=85
         Nice=-11
         LimitRTPRIO=89
+        LimitNICE=-11
       '';
       ".config/systemd/user/wireplumber.service.d/99-realtime.conf".text = ''
         [Service]
@@ -45,6 +48,7 @@
         CPUSchedulingPriority=85
         Nice=-11
         LimitRTPRIO=89
+        LimitNICE=-11
       '';
     };
   };
