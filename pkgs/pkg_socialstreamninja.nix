@@ -6,7 +6,7 @@ let
 
   src = fetchurl {
     url = "https://github.com/steveseguin/social_stream/releases/download/v${version}/socialstreamninja_linux_v${version}_x86_64.AppImage";
-    hash = "sha256-2uRfHEN19X6mpsPT0ffN6aX9vKhUSOhhxBywhsKnHpE=";
+    hash = "sha256-IKjSPzYp7UT1EVXpJjS5+t5WF7waeUHuEvus3jd4tJo=";
   };
 
   # Распаковываем AppImage
