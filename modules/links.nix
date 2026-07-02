@@ -47,6 +47,7 @@ in
     ln -sfn /mnt/sys_archiv/samples/vital ${home}/.local/share/vital
     ln -sfn ${home}/${configDir}/dotfiles/config/btop ${home}/.config/btop
     ln -sfn ${home}/${configDir}/dotfiles/config/qmmp ${home}/.config/qmmp
+    ln -sfn /mnt/sys_archiv/pkgs/AppImages/socialstreamninja_linux_v0.3.128_x86_64.AppImage ${home}/.local/bin/socialstreamninja
     ln -sfn ${home}/${configDir}/dotfiles/config/SocialStream ${home}/.config/SocialStream
     ln -sfn ${home}/${configDir}/dotfiles/config/obs-studio ${home}/.config/obs-studio
     ln -sfn /mnt/sys_archiv/samples/DecentSampler ${home}/.config/DecentSampler

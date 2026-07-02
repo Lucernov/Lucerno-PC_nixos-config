@@ -12,6 +12,7 @@ in
     stateVersion = myLib.channelVersion;                                                              # Версия NixOS
     username = myLib.userName;                                                                        # Имя пользователя
     homeDirectory = myLib.home;                                                                       # Домашняя директория
+    sessionPath = [ "${myLib.home}/.local/bin" ];                                                     # Добавляем .local/bin в $PATH
     activation = { createLinks = lib.hm.dag.entryAfter [ "writeBoundary" ] links.activationScript; }; # Добавляем активацию (создание директорий и симлинков)
     sessionVariables = {
       VST3_PATH = "${config.home.homeDirectory}/.vst3";                                               # Устанавливаем переменную окружения для пользовательской папки VST3
