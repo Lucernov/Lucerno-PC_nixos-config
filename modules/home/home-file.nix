@@ -86,7 +86,7 @@
       Name=SocialStreamNinja
       Comment=Управление социальными сетями
     # Exec=/mnt/sys_archiv/pkgs/AppImages/socialstreamninja_linux_v0.3.113_x86_64.AppImage
-      Exec=${pkgs.my-packages.socialstreamninja}/bin/socialstreamninja %F
+      Exec=${pkgs.my-packages.socialstreamninja}/bin/socialstreamninja
       Icon=${myLib.home}/${myLib.configDirName}/dotfiles/sys-icons/icon-SocialStreamNinja.png
       Categories=Network;
       Terminal=false
