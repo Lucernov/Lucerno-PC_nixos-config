@@ -27,7 +27,7 @@
 
   # Демон PipeWire (основной аудио-сервер)
   systemd.user.services.pipewire = {
-    serviceConfig = {
+    Service = {
       CPUSchedulingPolicy = "fifo";        # Политика планирования FIFO (режим реального времени)
       CPUSchedulingPriority = 85;          # Приоритет (чем выше, тем важнее)
       Nice = -11;                          # Отрицательный nice даёт более высокий приоритет
@@ -37,7 +37,7 @@
 
   # Демон PipeWire-Pulse (эмуляция PulseAudio для совместимости)
   systemd.user.services.pipewire-pulse = {
-    serviceConfig = {
+    Service = {
       CPUSchedulingPolicy = "fifo";        # Политика планирования FIFO (режим реального времени)
       CPUSchedulingPriority = 85;          # Приоритет (чем выше, тем важнее)
       Nice = -11;                          # Отрицательный nice даёт более высокий приоритет
@@ -47,7 +47,7 @@
 
   # Менеджер сессий WirePlumber (управляет маршрутизацией и устройствами)
   systemd.user.services.wireplumber = {
-    serviceConfig = {
+    Service = {
       CPUSchedulingPolicy = "fifo";        # Политика планирования FIFO (режим реального времени)
       CPUSchedulingPriority = 85;          # Приоритет (чем выше, тем важнее)
       Nice = -11;                          # Отрицательный nice даёт более высокий приоритет
