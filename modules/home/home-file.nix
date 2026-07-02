@@ -16,15 +16,6 @@
     '';
     ".config/user-dirs.dirs".force = true;
 
-    # --- Настройки GTK (контролируются Home Manager, чтобы избежать конфликтов) ---
-    ".gtkrc-2.0".text = ''
-      gtk-theme-name="adw-gtk3"
-      gtk-primary-button-warps-slider=1
-      gtk-font-name = "DejaVu Sans 12"
-      gtk-theme-name = "adw-gtk3"
-    '';
-    ".gtkrc-2.0".force = true;
-
     # --- Указывает количество потоков для компиляции шейдеров в Steam ---
     ".local/share/Steam/config/steam_dev.cfg".text = ''
       unShaderBackgroundProcessingThreads 16
