@@ -20,38 +20,32 @@
       ".config/REAPER/UserPlugins/reaper_sws-x86_64.so".source = "${pkgs-unstable.reaper-sws-extension}/UserPlugins/reaper_sws-x86_64.so";
       # Копирует библиотеку расширения ReaPack в папку UserPlugins REAPER
       ".config/REAPER/UserPlugins/reaper_reapack-x86_64.so".source = "${pkgs-unstable.reaper-reapack-extension}/UserPlugins/reaper_reapack-x86_64.so";
-    };
-  };
 
-  # ========== Настройка приоритетов реального времени для PipeWire и WirePlumber ==========
 
-  # Демон PipeWire (основной аудио-сервер)
-  systemd.user.services.pipewire = {
-    Service = {
-      CPUSchedulingPolicy = "fifo";        # Политика планирования FIFO (режим реального времени)
-      CPUSchedulingPriority = 85;          # Приоритет (чем выше, тем важнее)
-      Nice = -11;                          # Отрицательный nice даёт более высокий приоритет
-      LimitRTPRIO = 89;                    # Максимальный допустимый приоритет RT
-    };
-  };
+      # ========== Настройка приоритетов реального времени для PipeWire и WirePlumber ==========
 
-  # Демон PipeWire-Pulse (эмуляция PulseAudio для совместимости)
-  systemd.user.services.pipewire-pulse = {
-    Service = {
-      CPUSchedulingPolicy = "fifo";        # Политика планирования FIFO (режим реального времени)
-      CPUSchedulingPriority = 85;          # Приоритет (чем выше, тем важнее)
-      Nice = -11;                          # Отрицательный nice даёт более высокий приоритет
-      LimitRTPRIO = 89;                    # Максимальный допустимый приоритет RT
-    };
-  };
-
-  # Менеджер сессий WirePlumber (управляет маршрутизацией и устройствами)
-  systemd.user.services.wireplumber = {
-    Service = {
-      CPUSchedulingPolicy = "fifo";        # Политика планирования FIFO (режим реального времени)
-      CPUSchedulingPriority = 85;          # Приоритет (чем выше, тем важнее)
-      Nice = -11;                          # Отрицательный nice даёт более высокий приоритет
-      LimitRTPRIO = 89;                    # Максимальный допустимый приоритет RT
+      # Drop‑in файлы для приоритетов реального времени (безопасный способ)
+      ".config/systemd/user/pipewire.service.d/99-realtime.conf".text = ''
+        [Service]
+        CPUSchedulingPolicy=fifo
+        CPUSchedulingPriority=85
+        Nice=-11
+        LimitRTPRIO=89
+      '';
+      ".config/systemd/user/pipewire-pulse.service.d/99-realtime.conf".text = ''
+        [Service]
+        CPUSchedulingPolicy=fifo
+        CPUSchedulingPriority=85
+        Nice=-11
+        LimitRTPRIO=89
+      '';
+      ".config/systemd/user/wireplumber.service.d/99-realtime.conf".text = ''
+        [Service]
+        CPUSchedulingPolicy=fifo
+        CPUSchedulingPriority=85
+        Nice=-11
+        LimitRTPRIO=89
+      '';
     };
   };
 }
