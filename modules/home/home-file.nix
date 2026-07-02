@@ -1,4 +1,4 @@
-{ myLib, ... }:
+{ pkgs, myLib, ... }:
 {
   # XDG пользовательские директории
   home.file = {
@@ -21,19 +21,6 @@
       unShaderBackgroundProcessingThreads 16
     '';
     ".local/share/Steam/config/steam_dev.cfg".force = true;
-
-    # --- Автозапуск AmneziaVPN ---
-    # Создаёт .desktop-файл, который запускает AmneziaVPN при входе в KDE.
-    ".config/autostart/amneziavpn.desktop".text = ''
-      [Desktop Entry]
-      Type=Application
-      Name=AmneziaVPN
-      Exec=amnezia-vpn
-      Icon=amnezia-vpn
-      X-KDE-autostart-after=panel
-      StartupNotify=false
-      Terminal=false
-    '';
 
     # --- Ярлык REAPER в меню KDE с кастомным запусском ---
     ".local/share/applications/reaper-x11.desktop".text = ''
@@ -98,7 +85,8 @@
       Type=Application
       Name=SocialStreamNinja
       Comment=Управление социальными сетями
-      Exec=/mnt/sys_archiv/pkgs/AppImages/socialstreamninja_linux_v0.3.113_x86_64.AppImage
+    # Exec=/mnt/sys_archiv/pkgs/AppImages/socialstreamninja_linux_v0.3.113_x86_64.AppImage
+      Exec=${pkgs.my-packages.socialstreamninja}/bin/socialstreamninja %F
       Icon=${myLib.home}/${myLib.configDirName}/dotfiles/sys-icons/icon-SocialStreamNinja.png
       Categories=Network;
       Terminal=false
@@ -120,28 +108,5 @@
     '';
     ".local/share/applications/google-chrome.desktop".force = true;
 
-
-    # --- Включение RT приоритета для музыки ---
-    ".config/systemd/user/pipewire.service.d/99-realtime.conf".text = ''
-      [Service]
-      CPUSchedulingPolicy=fifo
-      CPUSchedulingPriority=85
-      Nice=-11
-      LimitRTPRIO=89
-    '';
-    ".config/systemd/user/pipewire-pulse.service.d/99-realtime.conf".text = ''
-      [Service]
-      CPUSchedulingPolicy=fifo
-      CPUSchedulingPriority=85
-      Nice=-11
-      LimitRTPRIO=89
-    '';
-    ".config/systemd/user/wireplumber.service.d/99-realtime.conf".text = ''
-      [Service]
-      CPUSchedulingPolicy=fifo
-      CPUSchedulingPriority=85
-      Nice=-11
-      LimitRTPRIO=89
-    '';
   };
 }

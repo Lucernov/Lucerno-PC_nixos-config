@@ -3,8 +3,8 @@ _:
 {
   # ========== Настройки файервола с nftables ==========
   networking = {
-    nftables.enable = true;          # Включаем nftables
-    firewall = {                     # Основные настройки межсетевого экрана
+    nftables.enable = true;                     # Включаем nftables
+    firewall = {                                # Основные настройки межсетевого экрана
       enable = true;                            # Включаем файервол
       allowedTCPPorts = [ 22 ];                 # Разрешаем входящие TCP-соединения на порт 22 (SSH)
       allowPing = false;                        # Отключить ICMP-запросы (ping)

@@ -9,10 +9,7 @@
     # Основные настройки (те, что обычно в kitty.conf)
     settings = {
       allow_remote_control = "yes";                                               # Разрешает управление Kitty через внешние команды (kitty @)
-      #background = "#2e3440";                                                     # Цвет фона (тёмно-серый, как в Nord)
-      #background_opacity = 0.95;                                                  # Прозрачность фона (0.95 = почти непрозрачный)
       confirm_os_window_close = 0;                                                # Не спрашивать подтверждение при закрытии окна
-      #foreground = "#eceff4";                                                     # Цвет текста (светло-серый)
       listen_on = "unix:/tmp/kitty-sock";                                         # Единый сокет для управления всеми окнами Kitty
       shell = "zsh";                                                              # Оболочка по умолчанию
       tab_bar_style = "powerline";                                                # Стиль панели вкладок (powerline)
@@ -30,10 +27,13 @@
       italic_font = "auto";                                                       # Автоматический выбор курсивного начертания
       bold_italic_font = "auto";                                                  # Автоматический выбор жирного курсива
       font_features = "JetBrainsMono Nerd Font Mono:liga=1,calt=1";               # принудительно включает лигатуры и контекстные альтернативы
-      #hide_window_decorations = "yes";                                           # Убрать рамку окна
-      # Позиционирование окна (для обычного режима, не quick-access)
+    # Позиционирование окна (для обычного режима, не quick-access)
       initial_window_width = 1024;                                                # Ширина нового окна терминала по умолчанию (в пикселях)
       initial_window_height = 768;                                                # Высота нового окна терминала по умолчанию
+    # background = "#2e3440";                                                     # Цвет фона (тёмно-серый, как в Nord)
+    # foreground = "#eceff4";                                                     # Цвет текста (светло-серый)
+    # background_opacity = 0.95;                                                  # Прозрачность фона (0.95 = почти непрозрачный)
+    # hide_window_decorations = "yes";                                            # Убрать рамку окна
     };
 
     # Привязка клавиш (map)

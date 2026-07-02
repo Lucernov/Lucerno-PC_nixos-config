@@ -6,6 +6,8 @@ let
 in
 
 {
+  programs.home-manager.enable = true;                                                                # Включает Home Manager как системный модуль (управление пользовательским окружением)
+
   home = {                                                                                            # НАСТРОЙКИ HOME MANAGER
     stateVersion = myLib.channelVersion;                                                              # Версия NixOS
     username = myLib.userName;                                                                        # Имя пользователя
@@ -17,8 +19,4 @@ in
     };
     packages = packages.homePackages;                                                                 # Импорт пакетов, установленных через Home Manager
   };
-
-  # ========== Включение модулей программ (через home-manager) ==========
-  # Эти модули не только устанавливают пакеты, но и позволяют централизованно настраивать их через атрибуты (например, programs.btop.settings)
-  programs.home-manager.enable = true;                                                                # Включает Home Manager как системный модуль (управление пользовательским окружением)
 }
