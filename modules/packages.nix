@@ -33,6 +33,7 @@ let
 
     # ========== КОНСОЛЬНЫЕ УТИЛИТЫ ==========
     kitty                                                       # Эмулятор терминала с поддержкой GPU и лигатур
+    zsh-powerlevel10k                                           # Тема для Zsh с красивым информативным промптом (Powerlevel10k)
     lsd                                                         # Улучшенный аналог ls с иконками и цветами
     bat                                                         # Улучшенный cat с подсветкой синтаксиса и интеграцией с Git
     zoxide                                                      # Умная замена cd, запоминающая часто используемые папки
@@ -110,6 +111,17 @@ let
     #lutris                                                     # Игровой лаунчер для управления играми
     #heroic                                                     # Лаунчер для Epic Games Store и GOG
 
+    # Ядра для RetroArch
+    libretro.mesen                                              # Nintendo NES
+    libretro.bsnes                                              # Nintendo SNES
+    libretro.parallel-n64                                       # Nintendo 64 (Vulkan)
+    libretro.genesis-plus-gx                                    # Sega Genesis / Mega Drive (плюс Master System, Game Gear, Sega CD)
+    libretro.beetle-saturn                                      # Sega Saturn
+    libretro.flycast                                            # Sega Dreamcast
+    libretro.ppsspp                                             # PSP
+    libretro.beetle-psx-hw                                      # PlayStation 1
+    libretro.pcsx2                                              # PlayStation 2
+
     # ИИ
     comfy-ui-cuda                                               # ComfyUI с поддержкой CUDA для генерации изображений через нейросети
 
@@ -146,23 +158,7 @@ let
   ]);
 
   # ========== Пакеты, устанавливаемые через Home Manager ==========
-  homePackages = with pkgs; [
-    # тема для Oh My Zsh
-    zsh-powerlevel10k                                           # Тема для Zsh с красивым информативным промптом (Powerlevel10k)
-
-
-    # Ядра для RetroArch
-    libretro.mesen                                              # Nintendo NES
-    libretro.bsnes                                              # Nintendo SNES
-    libretro.parallel-n64                                       # Nintendo 64 (Vulkan)
-    libretro.genesis-plus-gx                                    # Sega Genesis / Mega Drive (плюс Master System, Game Gear, Sega CD)
-    libretro.beetle-saturn                                      # Sega Saturn
-    libretro.flycast                                            # Sega Dreamcast
-    libretro.ppsspp                                             # PSP
-    libretro.beetle-psx-hw                                      # PlayStation 1
-    libretro.pcsx2                                              # PlayStation 2
-
-  ] ++ (with pkgs-unstable; [ ]);
+  homePackages = with pkgs; [ ] ++ (with pkgs-unstable; [ ]);
 
 in
 
