@@ -107,6 +107,17 @@ let
     (bottles.override { removeWarningPopup = true; })           # Запуск Windows-приложений через Wine (без всплывающих предупреждений)
     goverlay                                                    # Оверлей для мониторинга системы и FPS (MangoHud, vkBasalt)
     mangohud                                                    # Оверлей для отображения FPS и мониторинга системы в играх
+    (retroarch.withCores (cores: with cores; [                  # Эмулятор приставок
+      mesen                                                     # Ядро Nintendo NES
+      bsnes                                                     # Ядро Nintendo SNES
+      parallel-n64                                              # Ядро Nintendo 64 (Vulkan)
+      genesis-plus-gx                                           # Ядро Sega Genesis / Mega Drive (плюс Master System, Game Gear, Sega CD)
+      beetle-saturn                                             # Ядро Sega Saturn
+      flycast                                                   # Ядро Sega Dreamcast
+      ppsspp                                                    # Ядро PSP
+      beetle-psx-hw                                             # Ядро PlayStation 1
+      pcsx2                                                     # Ядро PlayStation 2
+    ]))
     #lutris                                                     # Игровой лаунчер для управления играми
     #heroic                                                     # Лаунчер для Epic Games Store и GOG
 
