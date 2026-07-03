@@ -34,6 +34,7 @@ let
 
   systemPackages = with pkgs; [
     # СИСТЕМНЫЕ
+    nix-ld
     manix                                                       # Универсальный поиск по документации Nix
     nix-tree                                                    # Просмотр дерева зависимостей Nix
     home-manager                                                # Управление пользовательским окружением (конфиги, пакеты, службы)
@@ -219,6 +220,7 @@ in
       # ВСТАВЛЯЕМ nix-ld
       nix-ld = {
         enable = true;
+        package = pkgs.nix-ld;
         libraries = nixLdLibs;
       };
     };
