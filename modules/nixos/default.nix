@@ -68,7 +68,6 @@ in
       ELECTRON_OZONE_PLATFORM_HINT = "auto";                                                            # Для приложений на Electron (VS Code, Discord, Telegram и др.) Заставляет их использовать Wayland вместо XWayland
       ELECTRON_FORCE_WAYLAND = "1";                                                                     # Принудительно запускает Electron-приложения в нативном режиме Wayland вместо XWayland
       QT_QPA_PLATFORM = "wayland";                                                                      # Задаёт бэкенд Qt для работы через Wayland (вместо X11)
-      QT_QPA_PLATFORM_PLUGIN_PATH = "/run/current-system/sw/lib/qt-5.15.19/plugins/platforms";          # Путь к плагинам Qt для поддержки Wayland. Без этого некоторые Qt-приложения могут не запускаться под Wayland
       GDK_BACKEND = "wayland";                                                                          # Указывает GTK-приложениям использовать Wayland
       SDL_VIDEODRIVER = "wayland";                                                                      # Задаёт драйвер для SDL (используется в играх и мультимедиа) – Wayland
       NIXOS_OZONE_WL = "1";                                                                             # Включает поддержку Ozone Wayland для Chromium/Electron (флаг NIXOS_OZONE_WL)
