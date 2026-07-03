@@ -6,6 +6,25 @@ let
     # ./nixos/nx_obs.nix
     # ./nixos/nx_steam.nix
 
+  # Общий список библиотек для nix-ld
+  nixLdLibs = with pkgs; [
+    pango
+    cairo
+    glib
+    fontconfig
+    zlib
+    libpng
+    curl
+    xorg.libxcb
+    xorg.xcb-util
+    libxkbcommon
+    stdenv.cc.cc.lib
+    gtk3
+    gdk-pixbuf
+    atk
+    gobject-introspection
+  ];
+
   systemPackages = with pkgs; [
     # СИСТЕМНЫЕ
     manix                                                       # Универсальный поиск по документации Nix
@@ -191,6 +210,12 @@ in
       # KDE приложения
       partition-manager.enable = true;                          # Включает модуль для KDE Partition Manager
       kdeconnect.enable = true;                                 # Включает интеграцию с телефоном через KDE Connect
+
+      # ВСТАВЛЯЕМ nix-ld
+      nix-ld = {
+        enable = true;
+        libraries = nixLdLibs;
+      };
     };
 
     environment.systemPackages = systemPackages;                # Используем уже определённый список systemPackages
