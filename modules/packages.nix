@@ -96,12 +96,7 @@ let
 
     # МУЛЬТИМЕДИА
     my-packages.qmmp                                            # Аудиоплеер
-    #vlc                                                         # Универсальный видеоплеер
-    (vlc.override {
-      enableX11 = true;
-      enableWayland = true;
-      qt5 = qt5;
-    })
+    vlc                                                         # Универсальный видеоплеер
 
     # ОФИС
     eloquent                                                    # Проверка орфографии и стилистики текста (аналог LanguageTool)
