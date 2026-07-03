@@ -30,18 +30,21 @@
         [Service]
         CPUSchedulingPolicy=fifo
         CPUSchedulingPriority=85
+        Nice=-11
         LimitRTPRIO=89
       '';
       ".config/systemd/user/pipewire-pulse.service.d/99-realtime.conf".text = ''
         [Service]
         CPUSchedulingPolicy=fifo
         CPUSchedulingPriority=85
+        Nice=-11
         LimitRTPRIO=89
       '';
       ".config/systemd/user/wireplumber.service.d/99-realtime.conf".text = ''
         [Service]
         CPUSchedulingPolicy=fifo
         CPUSchedulingPriority=85
+        Nice=-11
         LimitRTPRIO=89
       '';
     };
