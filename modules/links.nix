@@ -61,28 +61,6 @@ in
     # Симлинк для Powerlevel10k
     ln -sfn ${home}/${configDir}/dotfiles/config/zsh/.p10k.zsh ${home}/.p10k.zsh
 
-
-    # ------------------------------------------------------
-    # ----- СИМЛИНКИ ДЛЯ VST ПЛАГИНОВ (Plogue) -----
-    mkdir -p ${home}/.vst ${home}/.vst3 ${home}/.clap ${home}/.local/bin
-
-    # VST2: Aria и дополнительные плагины
-    ln -sfn /mnt/archiv/SYS/SOFT/MusicSoft/Plogue-Sforzando/opt/Aria/libAria.so ${home}/.vst/libAria.so
-    ln -sfn /mnt/archiv/SYS/SOFT/MusicSoft/Plogue-Sforzando/opt/Aria/Plugins/Ambience.so ${home}/.vst/Ambience.so
-    ln -sfn /mnt/archiv/SYS/SOFT/MusicSoft/Plogue-Sforzando/opt/Aria/Plugins/BasicConvolver.so ${home}/.vst/BasicConvolver.so
-    ln -sfn /mnt/archiv/SYS/SOFT/MusicSoft/Plogue-Sforzando/opt/Aria/Plugins/MDAPlugins.so ${home}/.vst/MDAPlugins.so
-    ln -sfn /mnt/archiv/SYS/SOFT/MusicSoft/Plogue-Sforzando/opt/Aria/Plugins/Saturation.so ${home}/.vst/Saturation.so
-    ln -sfn /mnt/archiv/SYS/SOFT/MusicSoft/Plogue-Sforzando/opt/Aria/Plugins/TableWarp2.so ${home}/.vst/TableWarp2.so
-
-    # VST3: sforzando
-    ln -sfn /mnt/archiv/SYS/SOFT/MusicSoft/Plogue-Sforzando/sforzando.vst3 ${home}/.vst3/sforzando.vst3
-
-    # CLAP: sforzando
-    ln -sfn /mnt/archiv/SYS/SOFT/MusicSoft/Plogue-Sforzando/sforzando.clap ${home}/.clap/sforzando.clap
-
-    # Исполняемый файл sforzando (для запуска как приложение)
-    ln -sfn /mnt/archiv/SYS/SOFT/MusicSoft/Plogue-Sforzando/opt/sforzando/sforzando ${home}/.local/bin/sforzando
-
     # ------------------------------------------------------
     # ----- СИСТЕМНЫЕ СИМЛИНКИ ДЛЯ COMFYUI (в /mnt/ai) -----
     rm -rf ${home}/.config/comfy-ui

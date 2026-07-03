@@ -6,32 +6,6 @@ let
     # ./nixos/nx_obs.nix
     # ./nixos/nx_steam.nix
 
-  # Общий список библиотек для nix-ld
-  nixLdLibs = with pkgs; [
-    # Графические и GUI-библиотеки (для отрисовки интерфейсов)
-    pango                                                       # Рендеринг текста и шрифтов
-    cairo                                                       # 2D-графика
-    gtk3                                                        # Набор виджетов (многие плагины используют GTK)
-    gdk-pixbuf                                                  # Загрузка и масштабирование изображений
-    atk                                                         # Доступность (Accessibility Toolkit)
-    gobject-introspection                                       # Интроспекция GObject (используется некоторыми плагинами)
-
-    # Системные и базовые библиотеки
-    glib                                                        # Базовая библиотека C (структуры данных, события, потоки)
-    fontconfig                                                  # Настройка и поиск шрифтов
-    zlib                                                        # Сжатие данных (часто используется для чтения ресурсов плагинов)
-    libpng                                                      # Работа с PNG-изображениями (иконки, скины)
-
-    # Сетевые и X11-библиотеки
-    curl                                                        # HTTP-запросы (некоторые плагины проверяют лицензии или загружают обновления)
-    xorg.libxcb                                                 # Базовый клиент X11 (необходим для работы XCB-плагинов)
-    xorg.xcbutil                                                # Дополнительные утилиты для XCB (вместо устаревшего xorg.xcb-util)
-    libxkbcommon                                                # Работа с клавиатурными раскладками (нужна для ввода в GUI плагинов)
-
-    # C++ стандартная библиотека
-    stdenv.cc.cc.lib                                            # libstdc++ (многие плагины собраны с GCC и требуют её)
-  ];
-
   systemPackages = with pkgs; [
     # СИСТЕМНЫЕ
     nix-ld
@@ -216,13 +190,6 @@ in
       # KDE приложения
       partition-manager.enable = true;                          # Включает модуль для KDE Partition Manager
       kdeconnect.enable = true;                                 # Включает интеграцию с телефоном через KDE Connect
-
-      # ВСТАВЛЯЕМ nix-ld
-      nix-ld = {
-        enable = true;
-        package = pkgs.nix-ld;
-        libraries = nixLdLibs;
-      };
     };
 
     environment.systemPackages = systemPackages;                # Используем уже определённый список systemPackages
