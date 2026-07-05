@@ -1,4 +1,4 @@
-{ symlinkJoin, makeWrapper, minion, fetchurl, stdenv }:
+{ symlinkJoin, makeWrapper, minion, fetchurl, stdenv, jre }:
 
 let
   javafxVersion = "21.0.3";
@@ -22,21 +22,19 @@ in symlinkJoin {
   name = "minion-wrapped";
   paths = [ minion ];
   buildInputs = [ makeWrapper stdenv ];
+  nativeBuildInputs = [ jre ]; # для доступа к java во время сборки
   postBuild = ''
-    # Копируем JavaFX
     mkdir -p $out/share/minion/javafx
     cp ${javafxJars.base} $out/share/minion/javafx/javafx-base.jar
     cp ${javafxJars.controls} $out/share/minion/javafx/javafx-controls.jar
     cp ${javafxJars.fxml} $out/share/minion/javafx/javafx-fxml.jar
     cp ${javafxJars.graphics} $out/share/minion/javafx/javafx-graphics.jar
 
-    # Удаляем оригинальный скрипт (который не работает)
     rm -f $out/bin/minion
 
-    # Создаём свой скрипт запуска
     cat > $out/bin/minion <<EOF
     #!${stdenv.shell}
-    exec java \\
+    exec ${jre}/bin/java \\
       -Dprism.lcdtext=false -Dprism.text=t2k \\
       --module-path $out/share/minion/javafx \\
       --add-modules javafx.base,javafx.controls,javafx.fxml,javafx.graphics \\
