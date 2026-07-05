@@ -6,7 +6,7 @@ let
     name = "javafx-${m}";
     value = fetchurl {
       url = "https://repo1.maven.org/maven2/org/openjfx/javafx-${m}/${javafxVersion}/javafx-${m}-${javafxVersion}.jar";
-      hash = ""; # замените на правильный хеш
+      hash = "sha256-Em3a2XaQVhyEQAKf+FrDkRZc+9HKBkV+gRx8zOu2hoM=";
     };
   }) javafxModules);
 in
