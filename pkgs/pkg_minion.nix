@@ -26,17 +26,14 @@ in symlinkJoin {
     cp ${javafxJars.fxml} $out/share/minion/javafx/javafx-fxml.jar
     cp ${javafxJars.graphics} $out/share/minion/javafx/javafx-graphics.jar
 
-    # Отладка – выводим содержимое папок в лог сборки
-    echo "=== Contents of $out/share/minion ===" >&2
-    ls -la $out/share/minion/ >&2 || true
-    echo "=== Contents of javafx dir ===" >&2
-    ls -la $out/share/minion/javafx/ >&2 || true
-
-    # Удаляем оригинальный скрипт
     rm -f $out/bin/minion
 
-    # Формируем classpath вручную
-    CP="$out/share/minion/javafx/javafx-base.jar:$out/share/minion/javafx/javafx-controls.jar:$out/share/minion/javafx/javafx-fxml.jar:$out/share/minion/javafx/javafx-graphics.jar:$out/share/minion/Minion-jfx.jar"
+    # Собираем все jar-файлы из share/minion (включая подпапки) в переменную CP
+    CP=""
+    for jar in $(find $out/share/minion -name "*.jar" -type f); do
+      CP="$CP:$jar"
+    done
+    CP="''${CP#:}"  # убираем начальное двоеточие
 
     cat > $out/bin/minion <<EOF
     #!${stdenv.shell}
