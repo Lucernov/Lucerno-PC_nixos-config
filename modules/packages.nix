@@ -102,7 +102,7 @@ let
     papers                                                      # Просмотрщик документов (PDF, DjVu, PostScript) — современная альтернатива Evince для GNOME
 
     # ИГРЫ
-    my-packages.minion                                          # Менеджер аддонов для TESO
+   # my-packages.minion                                          # Менеджер аддонов для TESO
     (bottles.override { removeWarningPopup = true; })           # Запуск Windows-приложений через Wine (без всплывающих предупреждений)
     goverlay                                                    # Оверлей для мониторинга системы и FPS (MangoHud, vkBasalt)
     mangohud                                                    # Оверлей для отображения FPS и мониторинга системы в играх
@@ -148,6 +148,9 @@ let
     gxplugins-lv2                                               # набор дополнительных LV2-плагинов от разработчиков Guitarix
 
   ] ++ (with pkgs-unstable; [                                   # Пакеты из нестабильного канала (более свежие версии)
+
+    minion
+
     # МУЗЫКА
     reaper-sws-extension                                        # Расширение SWS для REAPER (дополнительные команды и автоматизация)
     reaper-reapack-extension                                    # Менеджер скриптов ReaPack для REAPER (установка пользовательских скриптов)
