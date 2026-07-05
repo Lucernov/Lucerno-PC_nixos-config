@@ -29,15 +29,8 @@ in symlinkJoin {
     cp ${javafxJars.fxml} $out/share/minion/javafx/javafx-fxml.jar
     cp ${javafxJars.graphics} $out/share/minion/javafx/javafx-graphics.jar
 
-    classpath=""
-    for jar in $out/share/minion/javafx/*.jar $out/share/minion/lib/*.jar $out/share/minion/Minion-jfx.jar; do
-      classpath="$classpath:$jar"
-    done
-    classpath="''${classpath#:}"
-
     wrapProgram $out/bin/minion \
       --set JAVA_TOOL_OPTIONS "-Dprism.lcdtext=false -Dprism.text=t2k" \
-      --set CLASSPATH "$classpath"
+      --set JAVA_OPTS "--module-path $out/share/minion/javafx --add-modules javafx.base,javafx.controls,javafx.fxml,javafx.graphics"
   '';
 }
-
