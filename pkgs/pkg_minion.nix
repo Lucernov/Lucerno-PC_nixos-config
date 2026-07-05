@@ -1,24 +1,24 @@
 { symlinkJoin, makeWrapper, minion, fetchurl }:
+
 let
   javafxVersion = "21.0.3";
-  javafxModules = [ "base" "controls" "fxml" "graphics" ];
 
-  # Функция для получения jar-файла с нужным хешем
-  fetchJar = module: hash: fetchurl {
-    url = "https://repo1.maven.org/maven2/org/openjfx/javafx-${module}/${javafxVersion}/javafx-${module}-${javafxVersion}.jar";
-    inherit hash;
-  };
+  jars = [
+    { name = "base";     hash = "sha256-rLqKDC2btfN0+avMf13wJTSVNkKEbgmfGkdlKXkzFqM="; }
+    { name = "controls"; hash = "sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA="; }  # замени на правильный
+    { name = "fxml";     hash = "sha256-bhtaPEKtEjYzOo2TPWxIzmOugtiindNQDghqvgvX/0k="; }
+    { name = "graphics"; hash = "sha256-Em3a2XaQVhyEQAKf+FrDkRZc+9HKBkV+gRx8zOu2hoM="; }
+  ];
 
-  javafxJars = {
-    base = fetchJar "base" "sha256-rLqKDC2btfN0+avMf13wJTSVNkKEbgmfGkdlKXkzFqM=";
-    graphics = fetchJar "graphics" "sha256-Em3a2XaQVhyEQAKf+FrDkRZc+9HKBkV+gRx8zOu2hoM=";
-    # Для controls и fxml пока используем заглушку – после первой сборки Nix выдаст правильный хеш,
-    # подставьте его сюда и пересоберите.
-    controls = fetchJar "controls" "sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=";
-    fxml = fetchJar "fxml" "sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=";
-  };
-in
-symlinkJoin {
+  javafxJars = builtins.listToAttrs (map (j: {
+    name = j.name;
+    value = fetchurl {
+      url = "https://repo1.maven.org/maven2/org/openjfx/javafx-${j.name}/${javafxVersion}/javafx-${j.name}-${javafxVersion}.jar";
+      hash = j.hash;
+    };
+  }) jars);
+
+in symlinkJoin {
   name = "minion-wrapped";
   paths = [ minion ];
   buildInputs = [ makeWrapper ];
@@ -40,3 +40,4 @@ symlinkJoin {
       --set CLASSPATH "$classpath"
   '';
 }
+
