@@ -1,4 +1,4 @@
-{ symlinkJoin, minion, fetchurl, stdenv, jdk, unzip }:
+{ symlinkJoin, minion, fetchurl, stdenv, jdk, unzip, findutils }:
 
 let
   javafxVersion = "21.0.3";
@@ -18,7 +18,7 @@ let
 in symlinkJoin {
   name = "minion-wrapped";
   paths = [ minion ];
-  buildInputs = [ stdenv jdk unzip ];
+  buildInputs = [ stdenv jdk unzip findutils ];
   postBuild = ''
     mkdir -p $out/share/minion/javafx
     cp ${javafxJars.base} $out/share/minion/javafx/javafx-base.jar
@@ -28,24 +28,30 @@ in symlinkJoin {
 
     rm -f $out/bin/minion
 
-    # Находим основной jar-файл (первый попавшийся в share/minion)
-    MAIN_JAR="$(find $out/share/minion -maxdepth 1 -name "*.jar" -type f | head -n 1)"
-    if [ -z "$MAIN_JAR" ]; then
-      echo "No jar found in $out/share/minion" >&2
-      exit 1
-    fi
+    # Находим все jar-файлы в пакете minion (везде)
+    JARS=$(find $out -name "*.jar" -type f)
+    echo "Found jars: $JARS" >&2
 
-    # Пытаемся извлечь Main-Class из MANIFEST.MF
-    MAIN_CLASS="$(unzip -p "$MAIN_JAR" META-INF/MANIFEST.MF | grep -i 'Main-Class:' | sed 's/^[Mm]ain-[Cc]lass:[ ]*//' | tr -d '\r' || true)"
-    if [ -z "$MAIN_CLASS" ]; then
-      MAIN_CLASS="gg.minion.Minion"  # fallback
-    fi
+    # Пытаемся определить главный класс из любого jar с Main-Class
+    MAIN_CLASS=""
+    for jar in $JARS; do
+      class=$(unzip -p "$jar" META-INF/MANIFEST.MF 2>/dev/null | grep -i 'Main-Class:' | sed 's/^[Mm]ain-[Cc]lass:[ ]*//' | tr -d '\r')
+      if [ -n "$class" ]; then
+        MAIN_CLASS="$class"
+        break
+      fi
+    done
+    [ -z "$MAIN_CLASS" ] && MAIN_CLASS="gg.minion.Minion"
 
-    # Собираем classpath: основной jar + все javafx
-    CP="$MAIN_JAR"
+    # Собираем classpath из всех jar-файлов + JavaFX
+    CP=""
+    for jar in $JARS; do
+      CP="$CP:$jar"
+    done
     for jar in $out/share/minion/javafx/*.jar; do
       CP="$CP:$jar"
     done
+    CP="''${CP#:}"
 
     cat > $out/bin/minion <<EOF
     #!${stdenv.shell}
