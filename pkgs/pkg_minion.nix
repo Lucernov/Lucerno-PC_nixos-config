@@ -1,19 +1,21 @@
-{ symlinkJoin, minion, openjdk21, openjfx, stdenv, findutils }:
+{ stdenv, fetchurl, openjdk21, openjfx }:
 
-symlinkJoin {
-  name = "minion-wrapped";
-  paths = [ minion ];
-  buildInputs = [ stdenv findutils ];
-  postBuild = ''
-    # Находим основной jar-файл (не JavaFX)
-    MAIN_JAR=$(find $out -name "*.jar" -type f ! -path "*/javafx/*" | head -n1)
-    if [ -z "$MAIN_JAR" ]; then
-      echo "No main jar found in $out" >&2
-      exit 1
-    fi
-    echo "Main jar: $MAIN_JAR" >&2
+stdenv.mkDerivation rec {
+  pname = "minion";
+  version = "3.0.12";
 
-    # Путь к модулям JavaFX из openjfx
+  src = fetchurl {
+    url = "https://github.com/minion-gg/minion/releases/download/v${version}/Minion-jfx.jar";
+    hash = "sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA="; # при первой сборке Nix подставит правильный
+  };
+
+  dontUnpack = true;
+
+  installPhase = ''
+    mkdir -p $out/bin $out/share/minion
+    cp $src $out/share/minion/Minion-jfx.jar
+
+    # Определяем путь к модулям JavaFX (автоматически)
     JAVAFX_MODULES=""
     for path in "${openjfx}/lib" "${openjfx}/share/java" $(find ${openjfx} -name "javafx.base.jar" -printf "%h" -quit 2>/dev/null); do
       if [ -d "$path" ] && [ -f "$path/javafx.base.jar" ]; then
@@ -21,22 +23,19 @@ symlinkJoin {
         break
       fi
     done
+
     if [ -z "$JAVAFX_MODULES" ]; then
-      echo "JavaFX modules not found in ${openjfx}" >&2
+      echo "ERROR: JavaFX modules not found in ${openjfx}" >&2
       exit 1
     fi
-    echo "JavaFX modules: $JAVAFX_MODULES" >&2
+    echo "JavaFX modules path: $JAVAFX_MODULES" >&2
 
-    # Удаляем старый скрипт (он не работает)
-    rm -f $out/bin/minion
-
-    # Создаём новый скрипт с правильными модулями
     cat > $out/bin/minion <<EOF
     #!${stdenv.shell}
     exec ${openjdk21}/bin/java \\
       --module-path "$JAVAFX_MODULES" \\
       --add-modules javafx.base,javafx.controls,javafx.fxml,javafx.graphics \\
-      -cp "$MAIN_JAR" \\
+      -cp $out/share/minion/Minion-jfx.jar \\
       gg.minion.Minion "\$@"
     EOF
     chmod +x $out/bin/minion
