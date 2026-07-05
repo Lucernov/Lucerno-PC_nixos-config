@@ -1,4 +1,4 @@
-{ symlinkJoin, makeWrapper, minion, fetchurl, stdenv, jre }:
+{ symlinkJoin, makeWrapper, minion, fetchurl, stdenv, jdk }:
 
 let
   javafxVersion = "21.0.3";
@@ -22,7 +22,7 @@ in symlinkJoin {
   name = "minion-wrapped";
   paths = [ minion ];
   buildInputs = [ makeWrapper stdenv ];
-  nativeBuildInputs = [ jre ]; # для доступа к java во время сборки
+  nativeBuildInputs = [ jdk ];
   postBuild = ''
     mkdir -p $out/share/minion/javafx
     cp ${javafxJars.base} $out/share/minion/javafx/javafx-base.jar
@@ -34,11 +34,10 @@ in symlinkJoin {
 
     cat > $out/bin/minion <<EOF
     #!${stdenv.shell}
-    exec ${jre}/bin/java \\
+    exec ${jdk}/bin/java \\
       -Dprism.lcdtext=false -Dprism.text=t2k \\
-      --module-path $out/share/minion/javafx \\
-      --add-modules javafx.base,javafx.controls,javafx.fxml,javafx.graphics \\
-      -jar $out/share/minion/Minion-jfx.jar "\$@"
+      -cp "$out/share/minion/javafx/*:$out/share/minion/Minion-jfx.jar" \\
+      gg.minion.Minion "\$@"
     EOF
     chmod +x $out/bin/minion
   '';
