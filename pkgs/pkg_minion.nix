@@ -1,31 +1,27 @@
-{ stdenv, fetchurl, openjdk21, openjfx }:
+{ stdenv, fetchzip, openjdk21, openjfx }:
 
-stdenv.mkDerivation {
+stdenv.mkDerivation rec {
   pname = "minion";
   version = "3.0.12";
 
-  src = fetchurl {
-    url = "https://minion.gg/Minion-jfx.jar";
-    hash = "sha256-rzVhoaLRAv6/xKxqEl+CTx9KfIL7ZR3rY8cAilNQjGg=";
+  src = fetchzip {
+    url = "https://minion.gg/Minion-linux.zip";
+    hash = "sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA="; # при первой сборке подставится правильный
+    stripRoot = false;
   };
-
-  dontUnpack = true;
 
   installPhase = ''
     mkdir -p $out/bin $out/share/minion
-    cp $src $out/share/minion/Minion-jfx.jar
+    cp $src/Minion-jfx.jar $out/share/minion/
 
-    # Определяем путь к модулям JavaFX
+    # Находим путь к модулям JavaFX (автоматически)
     JAVAFX_MODULES=""
-    if [ -d "${openjfx}/lib" ]; then
-      JAVAFX_MODULES="${openjfx}/lib"
-    elif [ -d "${openjfx}/share/java" ]; then
-      JAVAFX_MODULES="${openjfx}/share/java"
-    else
-      # Ищем папку с javafx.base.jar
-      JAVAFX_MODULES=$(find ${openjfx} -name "javafx.base.jar" -printf "%h" -quit 2>/dev/null)
-    fi
-
+    for path in "${openjfx}/lib" "${openjfx}/share/java" $(find ${openjfx} -name "javafx.base.jar" -printf "%h" -quit 2>/dev/null); do
+      if [ -d "$path" ] && [ -f "$path/javafx.base.jar" ]; then
+        JAVAFX_MODULES="$path"
+        break
+      fi
+    done
     if [ -z "$JAVAFX_MODULES" ]; then
       echo "ERROR: JavaFX modules not found in ${openjfx}" >&2
       exit 1
