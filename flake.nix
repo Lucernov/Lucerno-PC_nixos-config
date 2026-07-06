@@ -5,7 +5,6 @@
   inputs = {                                                                                               # Здесь перечисляются все внешние зависимости (flake-репозитории)
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-26.05";                                                      # Стабильный канал Nixpkgs
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";                                          # Нестабильный канал Nixpkgs (последние обновления)
-    nixpkgs-old.url = "github:NixOS/nixpkgs/nixos-25.11";
 
     home-manager = {                                                                                       # Home Manager — управление пользовательским окружением
       url = "github:nix-community/home-manager/release-26.05";
