@@ -1,5 +1,5 @@
 # modules/packages.nix
-{ pkgs, pkgs-unstable, myLib, blender-cuda ? null }:
+{ pkgs, pkgs-unstable, pkgs-old, myLib, blender-cuda ? null }:
 
 let
   # ========== Дополнительные системные пакеты ==========
@@ -103,8 +103,7 @@ let
     papers                                                      # Просмотрщик документов (PDF, DjVu, PostScript) — современная альтернатива Evince для GNOME
 
     # ИГРЫ
-    minion
-    #my-packages.minion                                          # Менеджер аддонов для TESO
+    my-packages.minion                                          # Менеджер аддонов для TESO
     (bottles.override { removeWarningPopup = true; })           # Запуск Windows-приложений через Wine (без всплывающих предупреждений)
     goverlay                                                    # Оверлей для мониторинга системы и FPS (MangoHud, vkBasalt)
     mangohud                                                    # Оверлей для отображения FPS и мониторинга системы в играх

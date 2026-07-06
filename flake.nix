@@ -5,6 +5,7 @@
   inputs = {                                                                                               # Здесь перечисляются все внешние зависимости (flake-репозитории)
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-26.05";                                                      # Стабильный канал Nixpkgs
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";                                          # Нестабильный канал Nixpkgs (последние обновления)
+    nixpkgs-old.url = "github:NixOS/nixpkgs/nixos-25.11";
 
     home-manager = {                                                                                       # Home Manager — управление пользовательским окружением
       url = "github:nix-community/home-manager/release-26.05";
@@ -45,18 +46,23 @@
   };
 
   # ========== Выходные данные (outputs) ==========
-  outputs = inputs@{ nixpkgs, nixpkgs-unstable, flake-parts, home-manager, plasma-manager, comfyui-nix, nixpkgs-krita-25-11, blender-cuda, stylix, ... }:          # Функция, которая принимает все входы и возвращает результаты сборки
+  outputs = inputs@{ nixpkgs, nixpkgs-unstable, nixpkgs-old, flake-parts, home-manager, plasma-manager, comfyui-nix, nixpkgs-krita-25-11, blender-cuda, stylix, ... }:          # Функция, которая принимает все входы и возвращает результаты сборки
     let
       pkgsUnstable = import nixpkgs-unstable {                                                             # Создаём экземпляр нестабильного nixpkgs (для свежих пакетов)
         localSystem = { system = "x86_64-linux"; };                                                        # Новый синтаксис с атрибутом localSystem вместо устаревшего `system`
         config.allowUnfree = true;                                                                         # Разрешает установку пакетов с несвободными лицензиями
       };
 
+      pkgsOld = import nixpkgs-old {
+        localSystem = { system = "x86_64-linux"; };
+        config.allowUnfree = true;
+      };
+
       pkgsWithOverlay = import nixpkgs {                                                                   # Создаём экземпляр nixpkgs с оверлеем (кастомные пакеты)
         localSystem = { system = "x86_64-linux"; };                                                        # Здесь также используем localSystem
         config.allowUnfree = true;                                                                         # Разрешает установку пакетов с несвободными лицензиями
         overlays = [
-          (import ./pkgs/overlays.nix { pkgs-unstable = pkgsUnstable; })                                   # Подключаем оверлей с моими пакетами (my-packages)
+          (import ./pkgs/overlays.nix { pkgs-unstable = pkgsUnstable; pkgs-old = pkgsOld; })               # Подключаем оверлей с моими пакетами (my-packages)
           comfyui-nix.overlays.default                                                                     # Оверлей ComfyUI для добавления comfy-ui-cuda
         ];
       };
@@ -79,6 +85,7 @@
             import-tree = inputs.import-tree;                                                              # Утилита для рекурсивного импорта
             inherit nixpkgs-krita-25-11;                                                                   # Фиксированный nixpkgs для Krita
             inherit blender-cuda;                                                                          # Flake с Blender+CUDA для передачи в пакеты
+            pkgs-old = pkgsOld;
           };
 
           modules = [                                                                                      # Список модулей, из которых собирается система
@@ -106,6 +113,7 @@
                 _module.args = {
                   inherit myLib;                                                                           # Мои общие переменные
                   pkgs-unstable = pkgsUnstable;                                                            # Нестабильные пакеты для home-manager
+                  pkgs-old = pkgsOld;
                 };
 
                 # Импорт всех модулей из папки modules/home (рекурсивно)
