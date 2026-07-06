@@ -41,19 +41,20 @@
     import-tree.url = "github:vic/import-tree";                                                            # Утилита для рекурсивного импорта файлов
     comfyui-nix.url = "github:utensils/comfyui-nix";                                                       # Flake для ComfyUI
     nixpkgs-krita-25-11.url = "github:NixOS/nixpkgs/b77b3de8775677f84492abe84635f87b0e153f0f";             # Фиксированная версия nixpkgs для Krita (новая версия пока не работает с ComfyUI)
+    nixpkgs-minion-25-11.url = "github:NixOS/nixpkgs/b77b3de8775677f84492abe84635f87b0e153f0f";
 
     #fufexan/nix-gaming nickm8/nix-gaming TophC7/play.nix
   };
 
   # ========== Выходные данные (outputs) ==========
-  outputs = inputs@{ nixpkgs, nixpkgs-unstable, nixpkgs-old, flake-parts, home-manager, plasma-manager, comfyui-nix, nixpkgs-krita-25-11, blender-cuda, stylix, ... }:          # Функция, которая принимает все входы и возвращает результаты сборки
+  outputs = inputs@{ nixpkgs, nixpkgs-unstable, flake-parts, home-manager, plasma-manager, comfyui-nix, nixpkgs-krita-25-11, nixpkgs-minion-25-11, blender-cuda, stylix, ... }:          # Функция, которая принимает все входы и возвращает результаты сборки
     let
       pkgsUnstable = import nixpkgs-unstable {                                                             # Создаём экземпляр нестабильного nixpkgs (для свежих пакетов)
         localSystem = { system = "x86_64-linux"; };                                                        # Новый синтаксис с атрибутом localSystem вместо устаревшего `system`
         config.allowUnfree = true;                                                                         # Разрешает установку пакетов с несвободными лицензиями
       };
 
-      pkgsOld = import nixpkgs-old {
+      pkgsMinion = import nixpkgs-minion-25-11 {
         localSystem = { system = "x86_64-linux"; };
         config.allowUnfree = true;
       };
@@ -62,7 +63,7 @@
         localSystem = { system = "x86_64-linux"; };                                                        # Здесь также используем localSystem
         config.allowUnfree = true;                                                                         # Разрешает установку пакетов с несвободными лицензиями
         overlays = [
-          (import ./pkgs/overlays.nix { pkgs-unstable = pkgsUnstable; pkgs-old = pkgsOld; })               # Подключаем оверлей с моими пакетами (my-packages)
+          (import ./pkgs/overlays.nix { pkgs-unstable = pkgsUnstable; pkgs-minion = pkgsMinion; })         # Подключаем оверлей с моими пакетами (my-packages)
           comfyui-nix.overlays.default                                                                     # Оверлей ComfyUI для добавления comfy-ui-cuda
         ];
       };
@@ -85,7 +86,7 @@
             import-tree = inputs.import-tree;                                                              # Утилита для рекурсивного импорта
             inherit nixpkgs-krita-25-11;                                                                   # Фиксированный nixpkgs для Krita
             inherit blender-cuda;                                                                          # Flake с Blender+CUDA для передачи в пакеты
-            pkgs-old = pkgsOld;
+            pkgs-minion = pkgsMinion;
           };
 
           modules = [                                                                                      # Список модулей, из которых собирается система
@@ -113,7 +114,6 @@
                 _module.args = {
                   inherit myLib;                                                                           # Мои общие переменные
                   pkgs-unstable = pkgsUnstable;                                                            # Нестабильные пакеты для home-manager
-                  pkgs-old = pkgsOld;
                 };
 
                 # Импорт всех модулей из папки modules/home (рекурсивно)

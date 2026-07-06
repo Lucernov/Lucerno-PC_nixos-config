@@ -1,6 +1,7 @@
-{ pkgs, pkgs-unstable, pkgs-old }:
+{ pkgs, pkgs-unstable, pkgs-minion }:
+
 {
-  minion = pkgs-old.minion;
+  minion = pkgs-minion.minion;
   qmmp = pkgs.callPackage ./pkg_qmmp.nix { };
   reaper = pkgs.callPackage ./pkg_reaper.nix { inherit (pkgs-unstable) reaper; };
   btop = pkgs.callPackage ./pkg_btop.nix { };
