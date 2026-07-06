@@ -1,12 +1,17 @@
 # pkgs/minion.nix
-{ symlinkJoin, makeWrapper, minion, jre8 }:
-symlinkJoin {
+{ stdenv, minion, jre8 }:
+let
+  jar = "${minion}/share/minion/Minion-jfx.jar";
+in
+stdenv.mkDerivation {
   name = "minion-wrapped";
-  paths = [ minion ];
-  buildInputs = [ makeWrapper ];
-  postBuild = ''
-    wrapProgram $out/bin/minion \
-      --set JAVA_HOME ${jre8} \
-      --set PATH ${jre8}/bin:$PATH
+  installPhase = ''
+    mkdir -p $out/bin
+    cat > $out/bin/minion << EOF
+    #!${stdenv.shell}
+    export JAVA_TOOL_OPTIONS="-Dprism.lcdtext=false -Dprism.text=t2k"
+    exec ${jre8}/bin/java -jar ${jar} "\$@"
+    EOF
+    chmod +x $out/bin/minion
   '';
 }
