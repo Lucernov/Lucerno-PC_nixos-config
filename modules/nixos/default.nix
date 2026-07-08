@@ -141,7 +141,7 @@ in
       };
     };
 
-  # ========== Логи ==========
+    # ========== Логи ==========
     journald.extraConfig = ''
       # максимальный общий размер постоянных логов (в /var/log/journal)
       SystemMaxUse=300M
@@ -154,6 +154,9 @@ in
       # автоматическая очистка по времени (5 дней)
       SystemMaxRetentionSec=5d
     '';
+
+    irqbalance.enable = true;           # Включает демон irqbalance, который распределяет аппаратные прерывания между ядрами CPU.
+
   };
 
   # ========== Базовые настройки Nix ==========
@@ -172,6 +175,7 @@ in
         "https://adithyagenie.cachix.org"                                                               # Кэш готовых сборок Blender с CUDA (от adithyagenie, экономит время компиляции)
         "https://chaotic-nyx.cachix.org"                                                                # Дополнительный кеш с большим количеством популярных пакетов
         "https://devenv.cachix.org"                                                                     # Кеш для сред разработки (devenv)
+        "https://attic.xuyh0120.win/lantian"                                                            # Добавляем кэш аттика от xuyh0120 (содержит множество готовых сборок для CachyOS пакетов)
       ];
       trusted-public-keys = [                                                                           # Публичные ключи для проверки подписей пакетов из соответствующих кэшей
         "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="                                # Ключ основного кэша
@@ -181,6 +185,7 @@ in
         "adithyagenie.cachix.org-1:h6BSMboeVfxyrULWuRQqAyweo4AJRATekb88xotfQwc="                        # Публичный ключ кэша adithyagenie (Blender с CUDA)
         "chaotic-nyx.cachix.org-1:HfnXSw4pj95iI/n17rIDy40agHj12WfF+Gqk6SonIT8="                         # Ключ chaotic-nyx
         "devenv.cachix.org-1:w1cLUi8dv3hnoSPGAuibQv+f9TZLr6cv/Hm9XgU50cw="                              # Ключ devenv
+        "lantian:EeAUQ+W+6r7EtwnmYjeVwx5kOGEBpjlBfPlzGlTNvHc="                                          # Публичный ключ для проверки подписей пакетов из указанного аттика.
       ];
     };
     gc = {                                                                                              # Настройки автоматической очистки старых поколений (garbage collection)
