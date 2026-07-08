@@ -145,7 +145,7 @@ in
 
   # ========== ЗАГРУЗКА И ЯДРО ==========
   boot = {
-    kernelPackages = pkgs.linuxPackages_cachyos_bore;                       # Установка кастомного CachyOS ядра c BORE планировщиком
+    kernelPackages = pkgs.linuxPackages-linux-cachyos-latest-x86_64-v3;     # Установка кастомного CachyOS ядра для intel i5 13400f процессора
   # kernelPackages = pkgs.linuxPackages_zen;                                # Установка кастомного ZEN ядра
   # kernelPackages = pkgs.linuxPackages;                                    # Альтернатива (базовое ядро)
 
