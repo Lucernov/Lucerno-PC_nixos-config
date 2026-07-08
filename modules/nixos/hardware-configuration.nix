@@ -1,4 +1,4 @@
-{ config, pkgs, lib, modulesPath, myLib, ... }:
+{ config, pkgs, lib, modulesPath, myLib, inputs, ... }:
 
 let
   # UUID дисков
@@ -145,7 +145,7 @@ in
 
   # ========== ЗАГРУЗКА И ЯДРО ==========
   boot = {
-    kernelPackages = pkgs.linuxPackages-linux-cachyos-latest-x86_64-v3;     # Установка кастомного CachyOS ядра для intel i5 13400f процессора
+    kernelPackages = inputs.nix-cachyos-kernel.legacyPackages.${pkgs.system}."linuxPackages-cachyos-bore-lto-x86_64-v3";  # Установка кастомного CachyOS ядра для intel i5 13400f процессора
   # kernelPackages = pkgs.linuxPackages_zen;                                # Установка кастомного ZEN ядра
   # kernelPackages = pkgs.linuxPackages;                                    # Альтернатива (базовое ядро)
 
