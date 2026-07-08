@@ -145,7 +145,7 @@ in
 
   # ========== ЗАГРУЗКА И ЯДРО ==========
   boot = {
-    kernelPackages = pkgs.linuxPackages_cachyos-bore;                       # Установка кастомного CachyOS ядра c BORE планировщиком
+    kernelPackages = pkgs.linuxPackages_cachyos_bore;                       # Установка кастомного CachyOS ядра c BORE планировщиком
   # kernelPackages = pkgs.linuxPackages_zen;                                # Установка кастомного ZEN ядра
   # kernelPackages = pkgs.linuxPackages;                                    # Альтернатива (базовое ядро)
 
