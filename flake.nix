@@ -6,6 +6,11 @@
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-26.05";                                                      # Стабильный канал Nixpkgs
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";                                          # Нестабильный канал Nixpkgs (последние обновления)
 
+    nix-cachyos-kernel = {
+      url = "github:xddxdd/nix-cachyos-kernel/release";
+      inputs.nixpkgs.follows = "nixpkgs";   # используем ваш основной nixpkgs
+    };
+
     home-manager = {                                                                                       # Home Manager — управление пользовательским окружением
       url = "github:nix-community/home-manager/release-26.05";
       inputs.nixpkgs.follows = "nixpkgs";                                                                  # Использовать тот же nixpkgs, что и основной (единая версия)
@@ -46,7 +51,7 @@
   };
 
   # ========== Выходные данные (outputs) ==========
-  outputs = inputs@{ nixpkgs, nixpkgs-unstable, flake-parts, home-manager, plasma-manager, comfyui-nix, nixpkgs-krita-25-11, nixpkgs-minion-25-11, blender-cuda, stylix, ... }:          # Функция, которая принимает все входы и возвращает результаты сборки
+  outputs = inputs@{ nixpkgs, nixpkgs-unstable, nix-cachyos-kernel, home-manager, plasma-manager, flake-parts, stylix, blender-cuda, comfyui-nix, nixpkgs-krita-25-11, nixpkgs-minion-25-11, ... }:          # Функция, которая принимает все входы и возвращает результаты сборки
     let
       pkgsUnstable = import nixpkgs-unstable {                                                             # Создаём экземпляр нестабильного nixpkgs (для свежих пакетов)
         localSystem = { system = "x86_64-linux"; };                                                        # Новый синтаксис с атрибутом localSystem вместо устаревшего `system`
@@ -64,6 +69,7 @@
         overlays = [
           (import ./pkgs/overlays.nix { pkgs-unstable = pkgsUnstable; pkgs-minion = pkgsMinion; })         # Подключаем оверлей с моими пакетами (my-packages)
           comfyui-nix.overlays.default                                                                     # Оверлей ComfyUI для добавления comfy-ui-cuda
+          nix-cachyos-kernel.overlays.default
         ];
       };
 

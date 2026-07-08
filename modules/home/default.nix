@@ -18,6 +18,7 @@ in
       VST3_PATH = "${config.home.homeDirectory}/.vst3";                                               # Устанавливаем переменную окружения для пользовательской папки VST3
       WINEPREFIX = "/mnt/music/wine-yabridge";                                                        # Префикс Wine для Windows-плагинов, используемых через yabridge
     };
+
     packages = packages.homePackages;                                                                 # Импорт пакетов, установленных через Home Manager
   };
 }
