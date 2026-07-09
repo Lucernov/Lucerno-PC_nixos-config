@@ -11,6 +11,11 @@
       inputs.nixpkgs.follows = "nixpkgs";                                                                  # Зависимости используют основной nixpkgs
     };
 
+    nur = {                                                                                                # Подключить NUR (Nix User Repository) репозиторий пользовательских пакетов
+      url = "github:nix-community/NUR";
+      inputs.nixpkgs.follows = "nixpkgs";                                                                  # Зависимости используют основной nixpkgs
+    };
+
     home-manager = {                                                                                       # Home Manager — управление пользовательским окружением
       url = "github:nix-community/home-manager/release-26.05";
       inputs.nixpkgs.follows = "nixpkgs";                                                                  # Зависимости используют основной nixpkgs
@@ -45,23 +50,23 @@
     import-tree.url = "github:vic/import-tree";                                                            # Утилита для рекурсивного импорта файлов
     comfyui-nix.url = "github:utensils/comfyui-nix";                                                       # Flake для ComfyUI
     nixpkgs-krita-25-11.url = "github:NixOS/nixpkgs/b77b3de8775677f84492abe84635f87b0e153f0f";             # Фиксированная версия nixpkgs для Krita (новая версия пока не работает с ComfyUI)
-    nixpkgs-minion-25-11.url = "github:NixOS/nixpkgs/b77b3de8775677f84492abe84635f87b0e153f0f";
+    nixpkgs-minion-25-11.url = "github:NixOS/nixpkgs/b77b3de8775677f84492abe84635f87b0e153f0f"; # TEMP
 
     #fufexan/nix-gaming nickm8/nix-gaming TophC7/play.nix
   };
 
   # ========== Выходные данные (outputs) ==========
-  outputs = inputs@{ nixpkgs, nixpkgs-unstable, nix-cachyos-kernel, home-manager, plasma-manager, flake-parts, stylix, blender-cuda, comfyui-nix, nixpkgs-krita-25-11, nixpkgs-minion-25-11, ... }: # Функция, которая принимает все входы и возвращает результаты сборки
+  outputs = inputs@{ nixpkgs, nixpkgs-unstable, nur, nix-cachyos-kernel, home-manager, plasma-manager, flake-parts, stylix, blender-cuda, comfyui-nix, nixpkgs-krita-25-11, nixpkgs-minion-25-11, ... }: # Функция, которая принимает все входы и возвращает результаты сборки
     let
       pkgsUnstable = import nixpkgs-unstable {                                                             # Создаём экземпляр нестабильного nixpkgs (для свежих пакетов)
         localSystem = { system = "x86_64-linux"; };                                                        # Новый синтаксис с атрибутом localSystem вместо устаревшего `system`
         config.allowUnfree = true;                                                                         # Разрешает установку пакетов с несвободными лицензиями
       };
 
-      pkgsMinion = import nixpkgs-minion-25-11 {
-        localSystem = { system = "x86_64-linux"; };
-        config.allowUnfree = true;
-      };
+      pkgsMinion = import nixpkgs-minion-25-11 { # TEMP
+        localSystem = { system = "x86_64-linux"; }; # TEMP
+        config.allowUnfree = true; # TEMP
+      }; # TEMP
 
       pkgsWithOverlay = import nixpkgs {                                                                   # Создаём экземпляр nixpkgs с оверлеем (кастомные пакеты)
         localSystem = { system = "x86_64-linux"; };                                                        # Здесь также используем localSystem
@@ -69,7 +74,8 @@
         overlays = [
           (import ./pkgs/overlays.nix { pkgs-unstable = pkgsUnstable; pkgs-minion = pkgsMinion; })         # Подключаем оверлей с моими пакетами (my-packages)
           comfyui-nix.overlays.default                                                                     # Оверлей ComfyUI для добавления comfy-ui-cuda
-          nix-cachyos-kernel.overlays.default
+          nix-cachyos-kernel.overlays.default                                                              # Оверлей ядра CachyOS (добавляет ядра linux-cachyos и др.)
+          nur.overlays.default                                                                             # Теперь все пакеты из NUR доступны как pkgs.nur.repos.<пользователь>.<пакет>
         ];
       };
 
@@ -80,7 +86,7 @@
       systems = [ "x86_64-linux" ];                                                                        # Целевая архитектура (один компьютер x86_64)
       imports = [ ];                                                                                       # Список дополнительных модулей flake-parts (пока пуст)
 
-      # Основное содержимое флейка - системные конфигурации, пользовательские конфигурации, оверлеи, пакеты
+      # Основное содержимое флейка - системные и пользовательские конфигурации, оверлеи, пакеты
       flake = {
         nixosConfigurations.Lucerno-PC = nixpkgs.lib.nixosSystem {                                         # Системная конфигурация NixOS (для пересборки всей ОС)
           system = "x86_64-linux";                                                                         # Архитектура системы. Для nixosSystem ВСЁ ЕЩЁ используется параметр `system` (требование API NixOS)
@@ -91,7 +97,7 @@
             import-tree = inputs.import-tree;                                                              # Утилита для рекурсивного импорта
             inherit nixpkgs-krita-25-11;                                                                   # Фиксированный nixpkgs для Krita
             inherit blender-cuda;                                                                          # Flake с Blender+CUDA для передачи в пакеты
-            pkgs-minion = pkgsMinion;
+            pkgs-minion = pkgsMinion; # TEMP
           };
 
           modules = [                                                                                      # Список модулей, из которых собирается система
@@ -105,26 +111,19 @@
             })
             { nixpkgs.pkgs = pkgsWithOverlay; }                                                            # Переопределяем pkgs для всей системы (с оверлеем)
             (inputs.import-tree ./modules/nixos)                                                           # Основной модуль config nixos. Рекурсивно импортируем все модули из папки modules/nixos
-
-            # ========== Интеграция Home Manager как модуль NixOS ==========
-            inputs.home-manager.nixosModules.home-manager                                                  # Подключаем модуль home-manager
+            inputs.home-manager.nixosModules.home-manager                                                  # Подключаем модуль Home Manager как модуль NixOS
             {
               # Настройки интеграции Home Manager с NixOS
               home-manager.useGlobalPkgs = true;                                                           # Используем системный экземпляр pkgs
               home-manager.useUserPackages = true;                                                         # Устанавливаем пакеты в /etc/profiles (доступно всем пользователям)
-
-              # Конфигурация для пользователя lucerno
-              home-manager.users.lucerno = { pkgs, lib, ... }: {
-                # Аргументы, передаваемые во все модули Home Manager (аналог extraSpecialArgs)
-                _module.args = {
+              home-manager.users.lucerno = { pkgs, lib, ... }: {                                           # Конфигурация для пользователя lucerno
+                _module.args = {                                                                           # Аргументы, передаваемые во все модули Home Manager (аналог extraSpecialArgs)
                   inherit myLib;                                                                           # Мои общие переменные
                   pkgs-unstable = pkgsUnstable;                                                            # Нестабильные пакеты для home-manager
                 };
-
-                # Импорт всех модулей из папки modules/home (рекурсивно)
-                imports = [
+                imports = [                                                                               # Импорт всех модулей из папки modules/home (рекурсивно)
                   (inputs.import-tree ./modules/home)                                                     # Основной модуль home-manager. Рекурсивно импортируем все модули из папки modules/home
-                  inputs.plasma-manager.homeModules.plasma-manager
+                  inputs.plasma-manager.homeModules.plasma-manager                                        # После подключения становится доступен атрибут programs.plasma
                 ];
               };
             }
