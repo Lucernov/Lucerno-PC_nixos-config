@@ -21,4 +21,8 @@ in
 
     packages = packages.homePackages;                                                                 # Импорт пакетов, установленных через Home Manager
   };
+
+  home.sessionVariables = {
+    GITHUB_TOKEN = builtins.readFile "/mnt/sys_archiv/secrets/github-token";
+  };
 }
