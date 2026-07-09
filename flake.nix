@@ -6,40 +6,40 @@
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-26.05";                                                      # Стабильный канал Nixpkgs
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";                                          # Нестабильный канал Nixpkgs (последние обновления)
 
-    nix-cachyos-kernel = {
+    nix-cachyos-kernel = {                                                                                 # Ядро CachyOS
       url = "github:xddxdd/nix-cachyos-kernel/release";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "nixpkgs";                                                                  # Зависимости используют основной nixpkgs
     };
 
     home-manager = {                                                                                       # Home Manager — управление пользовательским окружением
       url = "github:nix-community/home-manager/release-26.05";
-      inputs.nixpkgs.follows = "nixpkgs";                                                                  # Использовать тот же nixpkgs, что и основной (единая версия)
+      inputs.nixpkgs.follows = "nixpkgs";                                                                  # Зависимости используют основной nixpkgs
     };
 
     plasma-manager = {                                                                                     # Plasma Manager — настройка KDE Plasma через Home Manager
       url = "github:nix-community/plasma-manager/trunk";
-      inputs.nixpkgs.follows = "nixpkgs";                                                                  # Следовать за nixpkgs
+      inputs.nixpkgs.follows = "nixpkgs";                                                                  # Зависимости используют основной nixpkgs
       inputs.home-manager.follows = "home-manager";                                                        # Следовать за home-manager
     };
 
     flake-parts = {                                                                                        # Flake-parts — фреймворк для модульной организации flake
       url = "github:hercules-ci/flake-parts";
-      inputs.nixpkgs-lib.follows = "nixpkgs";                                                              # Зависимости flake-parts также используют основной nixpkgs
+      inputs.nixpkgs-lib.follows = "nixpkgs";                                                              # Зависимости используют основной nixpkgs
     };
 
     blender-cuda = {                                                                                       # Бинарная сборка Blender с поддержкой cuda
       url = "github:adithyagenie/blender-cuda-nixos";
-      inputs.nixpkgs.follows = "nixpkgs";                                                                  # Следовать за nixpkgs
+      inputs.nixpkgs.follows = "nixpkgs";                                                                  # Зависимости используют основной nixpkgs
     };
 
     stylix = {                                                                                             # Единая настройка тем
       url = "github:nix-community/stylix/release-26.05";
-      inputs.nixpkgs.follows = "nixpkgs";                                                                  # Следовать за nixpkgs
+      inputs.nixpkgs.follows = "nixpkgs";                                                                  # Зависимости используют основной nixpkgs
     };
 
     apple-fonts = {                                                                                        # Шрифты Apple
       url = "github:Lyndeno/apple-fonts.nix";
-      inputs.nixpkgs.follows = "nixpkgs";                                                                  # Следовать за nixpkgs
+      inputs.nixpkgs.follows = "nixpkgs";                                                                  # Зависимости используют основной nixpkgs
     };
 
     import-tree.url = "github:vic/import-tree";                                                            # Утилита для рекурсивного импорта файлов
@@ -51,7 +51,7 @@
   };
 
   # ========== Выходные данные (outputs) ==========
-  outputs = inputs@{ nixpkgs, nixpkgs-unstable, nix-cachyos-kernel, home-manager, plasma-manager, flake-parts, stylix, blender-cuda, comfyui-nix, nixpkgs-krita-25-11, nixpkgs-minion-25-11, ... }:          # Функция, которая принимает все входы и возвращает результаты сборки
+  outputs = inputs@{ nixpkgs, nixpkgs-unstable, nix-cachyos-kernel, home-manager, plasma-manager, flake-parts, stylix, blender-cuda, comfyui-nix, nixpkgs-krita-25-11, nixpkgs-minion-25-11, ... }: # Функция, которая принимает все входы и возвращает результаты сборки
     let
       pkgsUnstable = import nixpkgs-unstable {                                                             # Создаём экземпляр нестабильного nixpkgs (для свежих пакетов)
         localSystem = { system = "x86_64-linux"; };                                                        # Новый синтаксис с атрибутом localSystem вместо устаревшего `system`

@@ -147,7 +147,7 @@ in
   boot = {
     kernelPackages = inputs.nix-cachyos-kernel.legacyPackages.${pkgs.system}."linuxPackages-cachyos-bore-lto-x86_64-v3";  # Установка кастомного CachyOS ядра для intel i5 13400f процессора
   # kernelPackages = pkgs.linuxPackages_zen;                                # Установка кастомного ZEN ядра
-  # kernelPackages = pkgs.linuxPackages;                                    # Альтернатива (базовое ядро)
+  # kernelPackages = pkgs.linuxPackages;                                    # Базовое ядро
 
     initrd.kernelModules = [                                                # Модули, загружаемые на раннем этапе (initrd)
       "nvidia"                                                              # Основной драйвер NVIDIA
