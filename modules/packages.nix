@@ -73,6 +73,7 @@ let
     google-chrome                                               # Браузер Google Chrome
     parabolic                                                   # Загрузчик видео/аудио с YouTube (альтернатива yt-dlp)
     (discord.override { withOpenASAR = true; })                 # Голосовой/текстовый чат
+    vesktop
     telegram-desktop                                            # Мессенджер Telegram
 
     # ГРАФИКА
