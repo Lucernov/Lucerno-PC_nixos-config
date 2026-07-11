@@ -59,17 +59,17 @@
   outputs = inputs@{ nixpkgs, nixpkgs-unstable, nur, nix-cachyos-kernel, home-manager, plasma-manager, flake-parts, stylix, blender-cuda, comfyui-nix, nixpkgs-krita-25-11, nixpkgs-minion-25-11, ... }: # Функция, которая принимает все входы и возвращает результаты сборки
     let
       pkgsUnstable = import nixpkgs-unstable {                                                             # Создаём экземпляр нестабильного nixpkgs (для свежих пакетов)
-        localSystem = { system = "x86_64-linux"; };                                                        # Новый синтаксис с атрибутом localSystem вместо устаревшего `system`
+        localSystem = "x86_64-linux";                                                                      # Новый синтаксис с атрибутом localSystem вместо устаревшего `system`
         config.allowUnfree = true;                                                                         # Разрешает установку пакетов с несвободными лицензиями
       };
 
       pkgsMinion = import nixpkgs-minion-25-11 { # TEMP
-        localSystem = { system = "x86_64-linux"; }; # TEMP
+        localSystem = "x86_64-linux"; # TEMP
         config.allowUnfree = true; # TEMP
       }; # TEMP
 
       pkgsWithOverlay = import nixpkgs {                                                                   # Создаём экземпляр nixpkgs с оверлеем (кастомные пакеты)
-        localSystem = { system = "x86_64-linux"; };                                                        # Здесь также используем localSystem
+        localSystem = "x86_64-linux";                                                                      # Здесь также используем localSystem
         config.allowUnfree = true;                                                                         # Разрешает установку пакетов с несвободными лицензиями
         overlays = [
           (import ./pkgs/overlays.nix { pkgs-unstable = pkgsUnstable; pkgs-minion = pkgsMinion; })         # Подключаем оверлей с моими пакетами (my-packages)
