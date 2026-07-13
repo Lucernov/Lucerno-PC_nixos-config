@@ -23,6 +23,10 @@ in
     extraModprobeConfig = ''
       # Отключаем авто-отключение питания Bluetooth-адаптера (чтобы не терял связь)
       options btusb enable_autosuspend=0
+      # Принудительно ограничиваем количество пакетов (стабилизирует USB-аудио)
+      options snd-usb-audio nrpacks=1
+      # Включаем неявный обратный канал (помогает при проблемах синхронизации)
+      options snd_usb_audio implicit_fb=1
     '';
   };
 
