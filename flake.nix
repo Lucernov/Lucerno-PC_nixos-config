@@ -37,6 +37,11 @@
       inputs.nixpkgs.follows = "nixpkgs";                                                                  # Зависимости используют основной nixpkgs
     };
 
+    davinci = {
+      url = "git+https://git.voidarc.co.uk/voidarc/nixos.davinci";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     stylix = {                                                                                             # Единая настройка тем
       url = "github:nix-community/stylix/release-26.05";
       inputs.nixpkgs.follows = "nixpkgs";                                                                  # Зависимости используют основной nixpkgs

@@ -1,7 +1,7 @@
-{ pkgs, lib, pkgs-unstable, myLib, blender-cuda, ... }:
+{ pkgs, lib, pkgs-unstable, myLib, blender-cuda, inputs, ... }:
 
 let
-  packages = import ../packages.nix { inherit pkgs pkgs-unstable myLib blender-cuda; };        # Импортируем общий файл с пакетами и системными модулями
+  packages = import ../packages.nix { inherit pkgs pkgs-unstable myLib blender-cuda; davinci = inputs.davinci; };        # Импортируем общий файл с пакетами и системными модулями
   links = import ../links.nix { inherit pkgs lib myLib; };                                              # Импортируем модуль с симлинками (системные правила tmpfiles)
 in
 

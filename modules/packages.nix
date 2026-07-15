@@ -1,5 +1,5 @@
 # modules/packages.nix
-{ pkgs, pkgs-unstable, myLib, blender-cuda ? null }:
+{ pkgs, pkgs-unstable, myLib, blender-cuda ? null, davinci ? null }:
 
 let
   # ========== Дополнительные системные пакеты ==========
@@ -96,6 +96,7 @@ let
     my-packages.qmmp                                            # Аудиоплеер
     vlc                                                         # Универсальный видеоплеер
     mpv                                                         # Видеоплеер (корректно открывает AV1)
+    davinci.packages.${pkgs.stdenv.hostPlatform.system}.default
 
     # ОФИС
     eloquent                                                    # Проверка орфографии и стилистики текста (аналог LanguageTool)
