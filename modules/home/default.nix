@@ -1,4 +1,4 @@
-{ config, pkgs, pkgs-unstable, myLib, ... }:
+{ pkgs, pkgs-unstable, myLib, ... }:
 
 let
   packages = import ../packages.nix { inherit myLib pkgs pkgs-unstable; };
@@ -12,11 +12,6 @@ in
     username = myLib.userName;                                                                        # Имя пользователя
     homeDirectory = myLib.home;                                                                       # Домашняя директория
     sessionPath = [ "${myLib.home}/.local/bin" ];                                                     # Добавляем .local/bin в $PATH
-    sessionVariables = {
-      VST3_PATH = "${config.home.homeDirectory}/.vst3";                                               # Устанавливаем переменную окружения для пользовательской папки VST3
-      WINEPREFIX = "/mnt/music/wine-yabridge";                                                        # Префикс Wine для Windows-плагинов, используемых через yabridge
-    };
-
     packages = packages.homePackages;                                                                 # Импорт пакетов, установленных через Home Manager
   };
 }
