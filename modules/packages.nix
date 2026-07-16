@@ -77,6 +77,7 @@ let
     (discord.override { withOpenASAR = true; })                 # Голосовой/текстовый чат
     vesktop
     telegram-desktop                                            # Мессенджер Telegram
+    teamspeak6-client
 
     # ГРАФИКА
     upscaler                                                    # Увеличение разрешения изображений
