@@ -8,10 +8,14 @@ in
 {
   # ========== Системные правила (требуют root) ==========
   systemRules = [
-    "d ${home}/${myLib.configDirName} 0755 lucerno lucerno -"
+    # ---------- Директории ----------
+    "d ${home}/${configDir} 0755 lucerno lucerno -"
+    "d ${home}/.local/share 0755 lucerno lucerno -"
+    "d ${home}/.config 0755 lucerno lucerno -"
+    "d ${home}/${configDir}/secrets 0750 lucerno lucerno -"
+
     "d /mnt/ai 0755 lucerno lucerno -"
     "d /mnt/sys_archiv 0755 lucerno lucerno -"
-    "z /sys/class/powercap/intel-rapl:*/energy_uj 0640 root powercap -"           # Переопределение прав, чтобы в btop показывало потребление питания процессора
 
     # линки rclone
     "d /mnt/www-GoogleDrive 0755 lucerno users -"
@@ -26,72 +30,72 @@ in
     "d /mnt/ai/ComfyUI/models/upscale_models 0755 lucerno lucerno -"
     "d /mnt/ai/ComfyUI/models/vae 0755 lucerno lucerno -"
 
-  # sudo systemd-tmpfiles --create
-  ];
+    # sudo systemd-tmpfiles --create
 
-  # ========== Скрипт для home.activation ==========
-  # Вычисляется ТОЛЬКО если передан config (т.е. при импорте из home-manager)
-  activationScript = lib.mkIf (config != null) ''
-    # Создание директорий внутри ~/
-    mkdir -p ${home}/.local/share && chmod 755 ${home}/.local/share
-    mkdir -p ${home}/.config && chmod 755 ${home}/.config
-    mkdir -p ${home}/${configDir}/secrets && chmod 750 ${home}/${configDir}/secrets
+    # ---------- Права на энергопотребление CPU чтобы в btop показывало потребление питания процессора  ----------
+    "z /sys/class/powercap/intel-rapl:*/energy_uj 0640 root powercap -"
 
-    # Прямые симлинки (БЕЗ копирования в Nix store)
-    ln -sfn ${home}/${configDir}/dotfiles/config/nix ${home}/.config/nix
-    ln -sfn /mnt/sys_archiv/secrets/git-credentials ${home}/.git-credentials
-    ln -sfn /mnt/sys_archiv/secrets/rclone ${home}/.config/rclone
-    ln -sfn /mnt/sys_archiv/secrets/AmneziaVPN.ORG ${home}/.config/AmneziaVPN.ORG
-    ln -sfn /mnt/sys_archiv/samples/drum_sklad ${home}/drum_sklad
-    ln -sfn ${home}/${configDir}/dotfiles/config/Steam/userdata ${home}/.local/share/Steam/userdata
-    ln -sfn /mnt/sys_archiv/samples/vital ${home}/.local/share/vital
-    ln -sfn ${home}/${configDir}/dotfiles/config/btop ${home}/.config/btop
-    ln -sfn ${home}/${configDir}/dotfiles/config/qmmp ${home}/.config/qmmp
-    ln -sfn /mnt/sys_archiv/pkgs/AppImages/socialstreamninja_linux_v0.3.128_x86_64.AppImage ${home}/.local/bin/socialstreamninja
-    ln -sfn ${home}/${configDir}/dotfiles/config/SocialStream ${home}/.config/SocialStream
-    ln -sfn ${home}/${configDir}/dotfiles/config/obs-studio ${home}/.config/obs-studio
-    ln -sfn /mnt/sys_archiv/samples/DecentSampler ${home}/.config/DecentSampler
-    ln -sfn ${home}/${configDir}/dotfiles/config/REAPER ${home}/.config/REAPER
-    ln -sfn ${home}/${configDir}/dotfiles/config/yabridgectl ${home}/.config/yabridgectl
-    ln -sfn ${home}/${configDir}/dotfiles/config/MangoHud ${home}/.config/MangoHud
-    ln -sfn /mnt/games/SteamLibrary/steamapps ${home}/.local/share/Steam/steamapps
-    ln -sfn ${home}/${configDir}/dotfiles/config/KDE/config-kglobalshortcutsrc ${home}/.config/kglobalshortcutsrc
-    ln -sfn ${home}/${configDir}/dotfiles/config/KDE/local-share-applications-net.local.kitten ${home}/.local/share/applications/net.local.kitten
+    # ---------- Симлинки конфигов (из ~/nixos-config/dotfiles/config) ----------
+    "L+ ${home}/.config/nix - lucerno lucerno - ${home}/${configDir}/dotfiles/config/nix"
+    "L+ ${home}/.config/btop - lucerno lucerno - ${home}/${configDir}/dotfiles/config/btop"
+    "L+ ${home}/.config/qmmp - lucerno lucerno - ${home}/${configDir}/dotfiles/config/qmmp"
+    "L+ ${home}/.config/SocialStream - lucerno lucerno - ${home}/${configDir}/dotfiles/config/SocialStream"
+    "L+ ${home}/.config/obs-studio - lucerno lucerno - ${home}/${configDir}/dotfiles/config/obs-studio"
+    "L+ ${home}/.config/REAPER - lucerno lucerno - ${home}/${configDir}/dotfiles/config/REAPER"
+    "L+ ${home}/.config/yabridgectl - lucerno lucerno - ${home}/${configDir}/dotfiles/config/yabridgectl"
+    "L+ ${home}/.config/MangoHud - lucerno lucerno - ${home}/${configDir}/dotfiles/config/MangoHud"
+    "L+ ${home}/.config/kglobalshortcutsrc - lucerno lucerno - ${home}/${configDir}/dotfiles/config/KDE/config-kglobalshortcutsrc"
+    "L+ ${home}/.local/share/applications/net.local.kitten - lucerno lucerno - ${home}/${configDir}/dotfiles/config/KDE/local-share-applications-net.local.kitten"
+    "L+ ${home}/.p10k.zsh - lucerno lucerno - ${home}/${configDir}/dotfiles/config/zsh/.p10k.zsh"
 
-    # Симлинк для Powerlevel10k
-    ln -sfn ${home}/${configDir}/dotfiles/config/zsh/.p10k.zsh ${home}/.p10k.zsh
+    # ---------- Симлинки для Steam и игр ----------
+    "L+ ${home}/.local/share/Steam/userdata - lucerno lucerno - ${home}/${configDir}/dotfiles/config/Steam/userdata"
+    "L+ ${home}/.local/share/Steam/steamapps - lucerno lucerno - /mnt/games/SteamLibrary/steamapps"
 
-    # ------------------------------------------------------
-    # ----- СИСТЕМНЫЕ СИМЛИНКИ ДЛЯ COMFYUI (в /mnt/ai) -----
-    rm -rf ${home}/.config/comfy-ui
-    ln -sfn /mnt/ai/ComfyUI ${home}/.config/comfy-ui
+    # ---------- Симлинки для приложений и данных ----------
+    "L+ ${home}/.git-credentials - lucerno lucerno - /mnt/sys_archiv/secrets/git-credentials"
+    "L+ ${home}/.config/rclone - lucerno lucerno - /mnt/sys_archiv/secrets/rclone"
+    "L+ ${home}/.config/AmneziaVPN.ORG - lucerno lucerno - /mnt/sys_archiv/secrets/AmneziaVPN.ORG"
+    "L+ ${home}/drum_sklad - lucerno lucerno - /mnt/sys_archiv/samples/drum_sklad"
+    "L+ ${home}/.local/share/vital - lucerno lucerno - /mnt/sys_archiv/samples/vital"
+    "L+ ${home}/.local/bin/socialstreamninja - lucerno lucerno - /mnt/sys_archiv/pkgs/AppImages/socialstreamninja_linux_v0.3.128_x86_64.AppImage"
+    "L+ ${home}/.config/DecentSampler - lucerno lucerno - /mnt/sys_archiv/samples/DecentSampler"
 
-    rm -rf /mnt/ai/ComfyUI/custom_nodes/comfyui_controlnet_aux
-    ln -sfn /mnt/ai/ComfyUI_krita-ai-diffusion/comfyui_controlnet_aux /mnt/ai/ComfyUI/custom_nodes/comfyui_controlnet_aux
+    # ---------- Симлинки ComfyUI (в /mnt/ai) ----------
+    # Удаляем старые папки перед созданием ссылок (R — удаление рекурсивное)
+    "R /mnt/ai/ComfyUI/custom_nodes/comfyui_controlnet_aux - - - - -"
+    "L+ /mnt/ai/ComfyUI/custom_nodes/comfyui_controlnet_aux - lucerno lucerno - /mnt/ai/ComfyUI_krita-ai-diffusion/comfyui_controlnet_aux"
 
-    rm -rf /mnt/ai/ComfyUI/custom_nodes/comfyui-inpaint-nodes
-    ln -sfn /mnt/ai/ComfyUI_krita-ai-diffusion/comfyui-inpaint-nodes /mnt/ai/ComfyUI/custom_nodes/comfyui-inpaint-nodes
+    "R /mnt/ai/ComfyUI/custom_nodes/comfyui-inpaint-nodes - - - - -"
+    "L+ /mnt/ai/ComfyUI/custom_nodes/comfyui-inpaint-nodes - lucerno lucerno - /mnt/ai/ComfyUI_krita-ai-diffusion/comfyui-inpaint-nodes"
 
-    rm -rf /mnt/ai/ComfyUI/custom_nodes/ComfyUI_IPAdapter_plus
-    ln -sfn /mnt/ai/ComfyUI_krita-ai-diffusion/ComfyUI_IPAdapter_plus /mnt/ai/ComfyUI/custom_nodes/ComfyUI_IPAdapter_plus
+    "R /mnt/ai/ComfyUI/custom_nodes/ComfyUI_IPAdapter_plus - - - - -"
+    "L+ /mnt/ai/ComfyUI/custom_nodes/ComfyUI_IPAdapter_plus - lucerno lucerno - /mnt/ai/ComfyUI_krita-ai-diffusion/ComfyUI_IPAdapter_plus"
 
-    rm -rf /mnt/ai/ComfyUI/custom_nodes/comfyui-tooling-nodes
-    ln -sfn /mnt/ai/ComfyUI_krita-ai-diffusion/comfyui-tooling-nodes /mnt/ai/ComfyUI/custom_nodes/comfyui-tooling-nodes
+    "R /mnt/ai/ComfyUI/custom_nodes/comfyui-tooling-nodes - - - - -"
+    "L+ /mnt/ai/ComfyUI/custom_nodes/comfyui-tooling-nodes - lucerno lucerno - /mnt/ai/ComfyUI_krita-ai-diffusion/comfyui-tooling-nodes"
 
-    # Модели
-    ln -sfn /mnt/ai/ComfyUI_krita-ai-diffusion/models/diffusion_models/flux-2-klein-4b-fp8.safetensors /mnt/ai/ComfyUI/models/diffusion_models/flux-2-klein-4b-fp8.safetensors
-    ln -sfn /mnt/ai/ComfyUI_krita-ai-diffusion/models/diffusion_models/flux-2-klein-4b-Q6_K.gguf /mnt/ai/ComfyUI/models/diffusion_models/flux-2-klein-4b-Q6_K.gguf
-    ln -sfn /mnt/ai/ComfyUI_krita-ai-diffusion/models/inpaint/MAT_Places512_G_fp16.safetensors /mnt/ai/ComfyUI/models/inpaint/MAT_Places512_G_fp16.safetensors
-    ln -sfn /mnt/ai/ComfyUI_krita-ai-diffusion/models/loras/LyNiaZ53Tudg0J6sT8Xbx_pytorch_lora_weights_comfy_converted.safetensors /mnt/ai/ComfyUI/models/loras/LyNiaZ53Tudg0J6sT8Xbx_pytorch_lora_weights_comfy_converted.safetensors
-    ln -sfn /mnt/ai/ComfyUI_krita-ai-diffusion/models/text_encoders/Qwen3-4B-Q4_K_M.gguf /mnt/ai/ComfyUI/models/text_encoders/Qwen3-4B-Q4_K_M.gguf
+    # Модели (файлы, не папки) — просто ссылки
+    "L+ /mnt/ai/ComfyUI/models/diffusion_models/flux-2-klein-4b-fp8.safetensors - lucerno lucerno - /mnt/ai/ComfyUI_krita-ai-diffusion/models/diffusion_models/flux-2-klein-4b-fp8.safetensors"
+    "L+ /mnt/ai/ComfyUI/models/diffusion_models/flux-2-klein-4b-Q6_K.gguf - lucerno lucerno - /mnt/ai/ComfyUI_krita-ai-diffusion/models/diffusion_models/flux-2-klein-4b-Q6_K.gguf"
+    "L+ /mnt/ai/ComfyUI/models/inpaint/MAT_Places512_G_fp16.safetensors - lucerno lucerno - /mnt/ai/ComfyUI_krita-ai-diffusion/models/inpaint/MAT_Places512_G_fp16.safetensors"
+    "L+ /mnt/ai/ComfyUI/models/loras/LyNiaZ53Tudg0J6sT8Xbx_pytorch_lora_weights_comfy_converted.safetensors - lucerno lucerno - /mnt/ai/ComfyUI_krita-ai-diffusion/models/loras/LyNiaZ53Tudg0J6sT8Xbx_pytorch_lora_weights_comfy_converted.safetensors"
+    "L+ /mnt/ai/ComfyUI/models/text_encoders/Qwen3-4B-Q4_K_M.gguf - lucerno lucerno - /mnt/ai/ComfyUI_krita-ai-diffusion/models/text_encoders/Qwen3-4B-Q4_K_M.gguf"
 
     # Upscale модели
-    ln -sfn /mnt/ai/ComfyUI_krita-ai-diffusion/models/upscale_models/4x_NMKD-Superscale-SP_178000_G.pth /mnt/ai/ComfyUI/models/upscale_models/4x_NMKD-Superscale-SP_178000_G.pth
-    ln -sfn /mnt/ai/ComfyUI_krita-ai-diffusion/models/upscale_models/HAT_SRx4_ImageNet-pretrain.pth /mnt/ai/ComfyUI/models/upscale_models/HAT_SRx4_ImageNet-pretrain.pth
-    ln -sfn /mnt/ai/ComfyUI_krita-ai-diffusion/models/upscale_models/OmniSR_X2_DIV2K.safetensors /mnt/ai/ComfyUI/models/upscale_models/OmniSR_X2_DIV2K.safetensors
-    ln -sfn /mnt/ai/ComfyUI_krita-ai-diffusion/models/upscale_models/OmniSR_X3_DIV2K.safetensors /mnt/ai/ComfyUI/models/upscale_models/OmniSR_X3_DIV2K.safetensors
-    ln -sfn /mnt/ai/ComfyUI_krita-ai-diffusion/models/upscale_models/OmniSR_X4_DIV2K.safetensors /mnt/ai/ComfyUI/models/upscale_models/OmniSR_X4_DIV2K.safetensors
-    ln -sfn /mnt/ai/ComfyUI_krita-ai-diffusion/models/upscale_models/Real_HAT_GAN_sharper.pth /mnt/ai/ComfyUI/models/upscale_models/Real_HAT_GAN_sharper.pth
-    ln -sfn /mnt/ai/ComfyUI_krita-ai-diffusion/models/vae/flux2-vae.safetensors /mnt/ai/ComfyUI/models/vae/flux2-vae.safetensors
-  '';
+    "L+ /mnt/ai/ComfyUI/models/upscale_models/4x_NMKD-Superscale-SP_178000_G.pth - lucerno lucerno - /mnt/ai/ComfyUI_krita-ai-diffusion/models/upscale_models/4x_NMKD-Superscale-SP_178000_G.pth"
+    "L+ /mnt/ai/ComfyUI/models/upscale_models/HAT_SRx4_ImageNet-pretrain.pth - lucerno lucerno - /mnt/ai/ComfyUI_krita-ai-diffusion/models/upscale_models/HAT_SRx4_ImageNet-pretrain.pth"
+    "L+ /mnt/ai/ComfyUI/models/upscale_models/OmniSR_X2_DIV2K.safetensors - lucerno lucerno - /mnt/ai/ComfyUI_krita-ai-diffusion/models/upscale_models/OmniSR_X2_DIV2K.safetensors"
+    "L+ /mnt/ai/ComfyUI/models/upscale_models/OmniSR_X3_DIV2K.safetensors - lucerno lucerno - /mnt/ai/ComfyUI_krita-ai-diffusion/models/upscale_models/OmniSR_X3_DIV2K.safetensors"
+    "L+ /mnt/ai/ComfyUI/models/upscale_models/OmniSR_X4_DIV2K.safetensors - lucerno lucerno - /mnt/ai/ComfyUI_krita-ai-diffusion/models/upscale_models/OmniSR_X4_DIV2K.safetensors"
+    "L+ /mnt/ai/ComfyUI/models/upscale_models/Real_HAT_GAN_sharper.pth - lucerno lucerno - /mnt/ai/ComfyUI_krita-ai-diffusion/models/upscale_models/Real_HAT_GAN_sharper.pth"
+    "L+ /mnt/ai/ComfyUI/models/vae/flux2-vae.safetensors - lucerno lucerno - /mnt/ai/ComfyUI_krita-ai-diffusion/models/vae/flux2-vae.safetensors"
+
+    # Ссылка ~/.config/comfy-ui на /mnt/ai/ComfyUI (тоже с удалением старой папки)
+    "R ${home}/.config/comfy-ui - - - - -"
+    "L+ ${home}/.config/comfy-ui - lucerno lucerno - /mnt/ai/ComfyUI"
+  ];
+
+  # ========== Скрипт для home.activation (пустой, т.к. всё перенесено в systemRules) ==========
+  activationScript = lib.mkIf (config != null) "";
 }

@@ -1,7 +1,6 @@
-{ config, pkgs, pkgs-unstable, lib, myLib, ... }:
+{ config, pkgs, pkgs-unstable, myLib, ... }:
 
 let
-  links = import ../links.nix { inherit pkgs lib myLib config; };
   packages = import ../packages.nix { inherit myLib pkgs pkgs-unstable; };
 in
 
@@ -13,7 +12,6 @@ in
     username = myLib.userName;                                                                        # Имя пользователя
     homeDirectory = myLib.home;                                                                       # Домашняя директория
     sessionPath = [ "${myLib.home}/.local/bin" ];                                                     # Добавляем .local/bin в $PATH
-    activation = { createLinks = lib.hm.dag.entryAfter [ "writeBoundary" ] links.activationScript; }; # Добавляем активацию (создание директорий и симлинков)
     sessionVariables = {
       VST3_PATH = "${config.home.homeDirectory}/.vst3";                                               # Устанавливаем переменную окружения для пользовательской папки VST3
       WINEPREFIX = "/mnt/music/wine-yabridge";                                                        # Префикс Wine для Windows-плагинов, используемых через yabridge
