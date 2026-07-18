@@ -218,28 +218,6 @@ in
       StartupWMClass=Google-chrome-stable
     ''}"
 
-    # Удаляем старый сокет Kitty, чтобы новый создавался с правильным именем
-    "R /tmp/kitty-sock - - - - -"
-    # --- .desktop для Kitty (Win+Z) ---
-    "L+ ${home}/.local/share/applications/net.local.toggle-kitty.desktop - lucerno lucerno - ${pkgs.writeText "net.local.toggle-kitty.desktop" ''
-    [Desktop Entry]
-    Exec=${home}/.local/bin/toggle-kitty
-    Name=Toggle Kitty
-    NoDisplay=true
-    StartupNotify=false
-    Type=Application
-    X-KDE-GlobalAccel-CommandShortcut=true
-    ''}"
-    # Скрипт запуска КИТТИ через Win+Z
-    "L+ ${home}/.local/bin/toggle-kitty 0755 lucerno lucerno - ${pkgs.writeShellScript "toggle-kitty" ''
-      export KITTY_LISTEN_ON=/tmp/kitty-sock
-      if kitty @ get-window-id --match title:"quick-access" 2>/dev/null; then
-          kitty @ close-window --match title:"quick-access"
-      else
-          kitten quick-access-terminal
-      fi
-    ''}"
-
     # ---------- ПРАВИЛА ДЛЯ АУДИО ----------
     "d ${home}/.vst3 0755 lucerno lucerno -"
     "d ${home}/.config/REAPER/UserPlugins 0755 lucerno lucerno -"                             # для .so файлов REAPER

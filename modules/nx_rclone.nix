@@ -2,6 +2,13 @@
 { pkgs, myLib, ... }:
 
 {
+  # ========== Настройки FUSE для rclone ==========
+  programs.fuse = {
+    enable = true;                                                                  # Включает поддержку FUSE в системе
+    userAllowOther = true;                                                          # Разрешает опцию allow_other для обычных пользователей
+    mountMax = 1000;                                                                # Максимальное количество FUSE-монтирований на пользователя
+  };
+
   systemd.services = {
     # ========== Сервис монтирования Google Drive ==========
     rclone-gdrive = {
