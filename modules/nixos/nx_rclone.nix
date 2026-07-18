@@ -16,22 +16,11 @@
         ProtectSystem = "off";
         ProtectHome = false;
         NoNewPrivileges = false;
-        ProtectKernelTunables = false;
-        ProtectControlGroups = false;
-        ProtectKernelLogs = false;
-        RestrictNamespaces = false;
-        LockPersonality = false;
-        MemoryDenyWriteExecute = false;
-        RestrictRealtime = false;
-        RestrictSUIDSGID = false;
-        PrivateTmp = false;
         PrivateMounts = false;
         MountFlags = "shared";
         SupplementaryGroups = [ "fuse" ];
         DeviceAllow = [ "/dev/fuse" ];
-        DevicePolicy = "auto";
         AmbientCapabilities = [ "CAP_SYS_ADMIN" ];
-        CapabilityBoundingSet = [ "CAP_SYS_ADMIN" ];
         ExecStart = ''${pkgs.rclone}/bin/rclone mount gdrive: /mnt/www-GoogleDrive \
           --config=${myLib.home}/.config/rclone/rclone.conf \
           --vfs-cache-mode full \
@@ -58,22 +47,11 @@
         ProtectSystem = "off";
         ProtectHome = false;
         NoNewPrivileges = false;
-        ProtectKernelTunables = false;
-        ProtectControlGroups = false;
-        ProtectKernelLogs = false;
-        RestrictNamespaces = false;
-        LockPersonality = false;
-        MemoryDenyWriteExecute = false;
-        RestrictRealtime = false;
-        RestrictSUIDSGID = false;
-        PrivateTmp = false;
         PrivateMounts = false;
         MountFlags = "shared";
         SupplementaryGroups = [ "fuse" ];
         DeviceAllow = [ "/dev/fuse" ];
-        DevicePolicy = "auto";
         AmbientCapabilities = [ "CAP_SYS_ADMIN" ];
-        CapabilityBoundingSet = [ "CAP_SYS_ADMIN" ];
         ExecStart = ''${pkgs.rclone}/bin/rclone mount onedrive: /mnt/www-OneDrive \
           --config=${myLib.home}/.config/rclone/rclone.conf \
           --vfs-cache-mode full \
