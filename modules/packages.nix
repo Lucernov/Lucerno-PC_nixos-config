@@ -8,25 +8,25 @@
 
   # ========== Включение системных модулей для программ ==========
   programs = {
-    git.enable = true;                                        # Включает поддержку Git
-    nix-index.enable = true;                                  # Автоматически обновлять индекс для nix-locate при каждом переключении поколения
-    dconf.enable = true;                                      # Включает dconf – базу данных настроек для GTK-приложений
-    zsh.enable = true;                                        # Регистрирует Zsh как системную оболочку
-    vim.enable = true;                                        # Устанавливает Vim (текстовый редактор) системно
-    nano.enable = true;                                       # Устанавливает Nano (простой текстовый редактор) системно
-    htop.enable = true;                                       # Устанавливает htop (интерактивный монитор процессов) системно
-    amnezia-vpn.enable = true;                                # Включает сервис AmneziaVPN (VPN-клиент)
+    git.enable = true;                                          # Включает поддержку Git
+    nix-index.enable = true;                                    # Автоматически обновлять индекс для nix-locate при каждом переключении поколения
+    dconf.enable = true;                                        # Включает dconf – базу данных настроек для GTK-приложений
+    zsh.enable = true;                                          # Регистрирует Zsh как системную оболочку
+    vim.enable = true;                                          # Устанавливает Vim (текстовый редактор) системно
+    nano.enable = true;                                         # Устанавливает Nano (простой текстовый редактор) системно
+    htop.enable = true;                                         # Устанавливает htop (интерактивный монитор процессов) системно
+    amnezia-vpn.enable = true;                                  # Включает сервис AmneziaVPN (VPN-клиент)
     appimage = {
-      enable = true;                                          # Включает поддержку запуска AppImage-файлов
-      binfmt = true;                                          # Автоматически настраивает загрузчик
+      enable = true;                                            # Включает поддержку запуска AppImage-файлов
+      binfmt = true;                                            # Автоматически настраивает загрузчик
     };
     nh = {
-      enable = true;                                          # Включает утилиту nh (Nix Helper)
-      flake = "${myLib.home}/${myLib.configDirName}";         # Указывает путь к flake
+      enable = true;                                            # Включает утилиту nh (Nix Helper)
+      flake = "${myLib.home}/${myLib.configDirName}";           # Указывает путь к flake
     };
     # KDE приложения
-    partition-manager.enable = true;                          # Включает модуль для KDE Partition Manager
-    kdeconnect.enable = true;                                 # Включает интеграцию с телефоном через KDE Connect
+    partition-manager.enable = true;                            # Включает модуль для KDE Partition Manager
+    kdeconnect.enable = true;                                   # Включает интеграцию с телефоном через KDE Connect
   };
 
   environment.systemPackages = with pkgs; [
