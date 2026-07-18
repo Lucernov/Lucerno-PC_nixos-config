@@ -1,4 +1,4 @@
-{ myLib, ... }:
+{ pkgs, pkgs-unstable, myLib, ... }:
 
 {
   environment.sessionVariables = {
@@ -49,4 +49,46 @@
       { domain = "@audio"; item = "nice"; type = "hard"; value = "-11"; }                               # жёсткий лимит nice
     ];
   };
+
+  # ========== Правила tmpfiles для аудио и REAPER ==========
+  systemd.tmpfiles.rules = [
+    # ---------- ПРАВИЛА ДЛЯ АУДИО ----------
+    "d ${myLib.home}/.vst3 0755 lucerno lucerno -"
+    "d ${myLib.home}/.config/REAPER/UserPlugins 0755 lucerno lucerno -"
+    "L+ ${myLib.home}/.local/bin/wine64 - lucerno lucerno - ${pkgs-unstable.wineWow64Packages.staging}/bin/wine"  # wine64
+    "L+ ${myLib.home}/.config/REAPER/UserPlugins/reaper_sws-x86_64.so - lucerno lucerno - ${pkgs-unstable.reaper-sws-extension}/UserPlugins/reaper_sws-x86_64.so"  # .so файлы REAPER
+    "L+ ${myLib.home}/.config/REAPER/UserPlugins/reaper_reapack-x86_64.so - lucerno lucerno - ${pkgs-unstable.reaper-reapack-extension}/UserPlugins/reaper_reapack-x86_64.so"  # .so файлы REAPER
+
+    # ---------- Каталоги для drop‑in файлов systemd --user ----------
+    "d ${myLib.home}/.config/systemd 0755 lucerno lucerno -"
+    "d ${myLib.home}/.config/systemd/user 0755 lucerno lucerno -"
+    "d ${myLib.home}/.config/systemd/user/pipewire.service.d 0755 lucerno lucerno -"
+    "d ${myLib.home}/.config/systemd/user/pipewire-pulse.service.d 0755 lucerno lucerno -"
+    "d ${myLib.home}/.config/systemd/user/wireplumber.service.d 0755 lucerno lucerno -"
+
+    # ---------- Настройка приоритетов реального времени для PipeWire и WirePlumber ----------
+    "f ${myLib.home}/.config/systemd/user/pipewire.service.d/99-realtime.conf 0644 lucerno lucerno - ${pkgs.writeText "99-realtime.conf" ''
+    [Service]
+    CPUSchedulingPolicy=fifo
+    CPUSchedulingPriority=85
+    Nice=-11
+    LimitRTPRIO=89
+    ''}"
+
+    "f ${myLib.home}/.config/systemd/user/pipewire-pulse.service.d/99-realtime.conf 0644 lucerno lucerno - ${pkgs.writeText "99-realtime.conf" ''
+    [Service]
+    CPUSchedulingPolicy=fifo
+    CPUSchedulingPriority=85
+    Nice=-11
+    LimitRTPRIO=89
+    ''}"
+
+    "f ${myLib.home}/.config/systemd/user/wireplumber.service.d/99-realtime.conf 0644 lucerno lucerno - ${pkgs.writeText "99-realtime.conf" ''
+    [Service]
+    CPUSchedulingPolicy=fifo
+    CPUSchedulingPriority=85
+    Nice=-11
+    LimitRTPRIO=89
+    ''}"
+  ];
 }

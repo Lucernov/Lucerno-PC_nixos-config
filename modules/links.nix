@@ -217,44 +217,5 @@ in
       Terminal=false
       StartupWMClass=Google-chrome-stable
     ''}"
-
-    # ---------- ПРАВИЛА ДЛЯ АУДИО ----------
-    "d ${home}/.vst3 0755 lucerno lucerno -"
-    "d ${home}/.config/REAPER/UserPlugins 0755 lucerno lucerno -"                             # для .so файлов REAPER
-    # wine64
-    "L+ ${home}/.local/bin/wine64 - lucerno lucerno - ${pkgs-unstable.wineWow64Packages.staging}/bin/wine"
-    # .so файлы REAPER
-    "L+ ${home}/.config/REAPER/UserPlugins/reaper_sws-x86_64.so - lucerno lucerno - ${pkgs-unstable.reaper-sws-extension}/UserPlugins/reaper_sws-x86_64.so"
-    "L+ ${home}/.config/REAPER/UserPlugins/reaper_reapack-x86_64.so - lucerno lucerno - ${pkgs-unstable.reaper-reapack-extension}/UserPlugins/reaper_reapack-x86_64.so"
-    # ---------- Каталоги для drop‑in файлов systemd --user ----------
-    "d ${home}/.config/systemd 0755 lucerno lucerno -"
-    "d ${home}/.config/systemd/user 0755 lucerno lucerno -"
-    "d ${home}/.config/systemd/user/pipewire.service.d 0755 lucerno lucerno -"
-    "d ${home}/.config/systemd/user/pipewire-pulse.service.d 0755 lucerno lucerno -"
-    "d ${home}/.config/systemd/user/wireplumber.service.d 0755 lucerno lucerno -"
-    # ---------- Настройка приоритетов реального времени для PipeWire и WirePlumber ----------
-    "f ${home}/.config/systemd/user/pipewire.service.d/99-realtime.conf 0644 lucerno lucerno - ${pkgs.writeText "99-realtime.conf" ''
-    [Service]
-    CPUSchedulingPolicy=fifo
-    CPUSchedulingPriority=85
-    Nice=-11
-    LimitRTPRIO=89
-    ''}"
-
-    "f ${home}/.config/systemd/user/pipewire-pulse.service.d/99-realtime.conf 0644 lucerno lucerno - ${pkgs.writeText "99-realtime.conf" ''
-    [Service]
-    CPUSchedulingPolicy=fifo
-    CPUSchedulingPriority=85
-    Nice=-11
-    LimitRTPRIO=89
-    ''}"
-
-    "f ${home}/.config/systemd/user/wireplumber.service.d/99-realtime.conf 0644 lucerno lucerno - ${pkgs.writeText "99-realtime.conf" ''
-    [Service]
-    CPUSchedulingPolicy=fifo
-    CPUSchedulingPriority=85
-    Nice=-11
-    LimitRTPRIO=89
-    ''}"
   ];
 }
