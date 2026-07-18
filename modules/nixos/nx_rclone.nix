@@ -1,8 +1,7 @@
-# Модуль home-manager для настройки автоматического монтирования облачных дисков (Google Drive, OneDrive) через rclone
+# Модуль для автоматического монтирования облачных дисков (Google Drive, OneDrive) через rclone
 { pkgs, myLib, ... }:
 
 {
-  # ========== Сервис монтирования Google Drive ==========
   systemd.services = {
     rclone-gdrive = {
       description = "RClone Mount for Google Drive";
@@ -14,6 +13,9 @@
         Group = "users";
         Type = "simple";
         PrivateDevices = false;
+        ProtectSystem = "off";
+        ProtectHome = false;
+        NoNewPrivileges = false;
         SupplementaryGroups = [ "fuse" ];
         ExecStart = ''${pkgs.rclone}/bin/rclone mount gdrive: /mnt/www-GoogleDrive \
           --config=${myLib.home}/.config/rclone/rclone.conf \
@@ -28,7 +30,6 @@
       };
     };
 
-    # ========== Сервис монтирования OneDrive ==========
     rclone-onedrive = {
       description = "RClone Mount for OneDrive";
       after = [ "network-online.target" ];
@@ -39,6 +40,9 @@
         Group = "users";
         Type = "simple";
         PrivateDevices = false;
+        ProtectSystem = "off";
+        ProtectHome = false;
+        NoNewPrivileges = false;
         SupplementaryGroups = [ "fuse" ];
         ExecStart = ''${pkgs.rclone}/bin/rclone mount onedrive: /mnt/www-OneDrive \
           --config=${myLib.home}/.config/rclone/rclone.conf \
