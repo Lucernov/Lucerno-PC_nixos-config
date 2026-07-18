@@ -4,7 +4,7 @@
   systemd.services.comfyui = {
     description = "ComfyUI server (system)";
     after = [ "network.target" ];
-    wantedBy = [ "multi-user.target" ];
+    wantedBy = [ "multi-user.target" ];   # автозапуск
     serviceConfig = {
       User = myLib.userName;
       Group = myLib.userName;
