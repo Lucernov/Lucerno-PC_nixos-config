@@ -42,7 +42,7 @@
       discord-fix   = "find ~/.config/discord -type d -name modules -exec rm -rf {} \\; 2>/dev/null; rm -rf ~/.config/discord/Cache ~/.config/discord/Code\\ Cache ~/.config/discord/GPUCache ~/.config/discord/Service\\ Worker ~/.cache/discord; discord";
       discord-clean = "rm -rf ~/.config/discord ~/.cache/discord && discord";
     };
-    initContent = ''
+    interactiveShellInit = ''
       # Разрешение unfree пакетов
       export NIXPKGS_ALLOW_UNFREE=1
 
@@ -78,4 +78,3 @@
     '';
   };
 }
-
