@@ -221,18 +221,6 @@ in
       StartupWMClass=Google-chrome-stable
     ''}"
 
-    # kitten
-    "L+ ${home}/.local/share/applications/net.local.kitten.desktop - lucerno lucerno - ${pkgs.writeText "net.local.kitten.desktop" ''
-      [Desktop Entry]
-      Type=Application
-      Name=Kitten
-      Exec=/run/current-system/sw/bin/kitten %F
-      Icon=org.nixos.kitten
-      Categories=Network;
-      Terminal=false
-      StartupNotify=true
-    ''}"
-
     # Удаляем старый сокет Kitty, чтобы новый создавался с правильным именем
     "R /tmp/kitty-sock - - - - -"
     # --- .desktop для Kitty (Win+Z) ---
