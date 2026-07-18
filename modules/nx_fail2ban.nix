@@ -18,14 +18,14 @@ _ :
     jails = {                                                           # Настройки тюрем (jails) для разных служб
       # Тюрьма для SSH
       sshd = ''
-        enabled = true                                                  # Включить
-        port    = ssh                                                   # Порт (ssh = 22)
-        filter  = sshd                                                  # Использовать фильтр sshd
-        logpath = /var/log/auth.log                                     # Путь к логу
-        maxretry = 3                                                    # Максимальное количество неудачных попыток
-        bantime  = 1d                                                   # Время блокировки (1 день)
-        findtime = 10m                                                  # Время, за которое считаются попытки (10 минут)
-        action  = nftables-set                                          # Действие (добавить IP в набор nftables)
+        enabled = true
+        port    = ssh
+        filter  = sshd
+        logpath = /var/log/auth.log
+        maxretry = 3
+        bantime  = 1d
+        findtime = 10m
+        action  = nftables-set
       '';
 
       # Тюрьма для авторизации Nginx
@@ -58,8 +58,8 @@ _ :
   environment.etc."fail2ban/action.d/nftables-set.conf" = {
     text = ''
       [Definition]
-      actionban   = /run/current-system/sw/bin/nft add element inet f2b-table addr-set-sshd { <ip> }   # Добавить IP в набор nftables при бане
-      actionunban = /run/current-system/sw/bin/nft delete element inet f2b-table addr-set-sshd { <ip> } # Удалить IP из набора при разбане
+      actionban   = /run/current-system/sw/bin/nft add element inet f2b-table addr-set-sshd { <ip> }
+      actionunban = /run/current-system/sw/bin/nft delete element inet f2b-table addr-set-sshd { <ip> }
     '';
   };
 }

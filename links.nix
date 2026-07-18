@@ -8,8 +8,8 @@ in
 {
   # ========== Системные правила (требуют root) ==========
   systemRules = [
-
-  "d ${home}/.vst3 0755 lucerno lucerno -"
+    # .zshrc
+    "L+ ${home}/.zshrc - lucerno lucerno - ${pkgs.writeText ".zshrc" "source /etc/zshrc"}"
 
     # ---------- Директории ----------
     "d ${home}/${configDir} 0755 lucerno lucerno -"
@@ -19,8 +19,7 @@ in
     "d ${home}/.local/share/applications 0755 lucerno lucerno -"
     "d ${home}/.local/bin 0755 lucerno lucerno -"
     "d ${home}/.local/share/Steam/config 0755 lucerno lucerno -"
-    "d ${home}/.config/autostart 0755 lucerno lucerno -"   # для автозапуска
-    "d ${home}/.config/REAPER/UserPlugins 0755 lucerno lucerno -"  # для .so файлов REAPER
+    "d ${home}/.config/autostart 0755 lucerno lucerno -"                                      # для автозапуска
 
     "d /mnt/ai 0755 lucerno lucerno -"
     "d /mnt/sys_archiv 0755 lucerno lucerno -"
@@ -95,7 +94,20 @@ in
     "R ${home}/.config/comfy-ui - - - - -"
     "L+ ${home}/.config/comfy-ui - lucerno lucerno - /mnt/ai/ComfyUI"
 
-    # ---------- Файлы пользователя (генерируемые через pkgs.writeText) ----------
+    # ---------- Автозапуск ----------
+    # AmneziaVPN
+    "L+ ${home}/.config/autostart/amneziavpn.desktop - lucerno lucerno - ${pkgs.writeText "amneziavpn.desktop" ''
+      [Desktop Entry]
+      Type=Application
+      Name=AmneziaVPN
+      Exec=amnezia-vpn
+      Icon=amnezia-vpn
+      X-KDE-autostart-after=panel
+      StartupNotify=false
+      Terminal=false
+    ''}"
+
+    # ---------- Переопределение путей пдомашних папок (генерируемые через pkgs.writeText) ----------
     "L+ ${home}/.config/user-dirs.dirs - lucerno lucerno - ${pkgs.writeText "user-dirs.dirs" ''
       XDG_DESKTOP_DIR="$HOME/Desktop"
       XDG_DOWNLOAD_DIR="$HOME/Загрузки"
@@ -107,6 +119,7 @@ in
       XDG_VIDEOS_DIR="/mnt/video"
     ''}"
 
+    # Конфигурационный файл Git (~/.gitconfig)
     "L+ ${home}/.gitconfig - lucerno lucerno - ${pkgs.writeText "gitconfig" ''
       [user]
         name = Lucernov
@@ -118,6 +131,7 @@ in
         helper = store
     ''}"
 
+    # Глобальный файл игнорирования Git (~/.gitignore)
     "L+ ${home}/.gitignore - lucerno lucerno - ${pkgs.writeText "gitignore" ''
       *.swp
       *~
@@ -125,6 +139,7 @@ in
       result
     ''}"
 
+    # --- Указывает количество потоков для компиляции шейдеров в Steam ---
     "L+ ${home}/.local/share/Steam/config/steam_dev.cfg - lucerno lucerno - ${pkgs.writeText "steam_dev.cfg" ''
       unShaderBackgroundProcessingThreads 16
     ''}"
@@ -138,7 +153,8 @@ in
       fi
     ''}"
 
-    # .desktop файлы
+    # ---------- .desktop файлы ----------
+    # --- Ярлык REAPER в меню KDE с кастомным запусском ---
     "L+ ${home}/.local/share/applications/reaper-x11.desktop - lucerno lucerno - ${pkgs.writeText "reaper-x11.desktop" ''
       [Desktop Entry]
       Version=1.0
@@ -152,6 +168,7 @@ in
       StartupWMClass=REAPER
     ''}"
 
+    # --- Ярлык Minion в меню KDE ---
     "L+ ${home}/.local/share/applications/minion.desktop - lucerno lucerno - ${pkgs.writeText "minion.desktop" ''
       [Desktop Entry]
       Version=1.0
@@ -165,6 +182,7 @@ in
       StartupWMClass=Minion
     ''}"
 
+    # --- Ярлык QMMP в меню KDE с кастомным запусском ---
     "L+ ${home}/.local/share/applications/org.qmmp.qmmp.desktop - lucerno lucerno - ${pkgs.writeText "org.qmmp.qmmp.desktop" ''
       [Desktop Entry]
       Name=Qmmp
@@ -175,6 +193,7 @@ in
       Categories=Audio;AudioVideo;
     ''}"
 
+    # --- Ярлык Ampero ---
     "L+ ${home}/.local/share/applications/ampero2.desktop - lucerno lucerno - ${pkgs.writeText "ampero2.desktop" ''
       [Desktop Entry]
       Type=Application
@@ -187,6 +206,7 @@ in
       Terminal=false
     ''}"
 
+    # --- Ярлык SocialStreamNinja приложение AppImage в меню KDE ---
     "L+ ${home}/.local/share/applications/socialstreamninja.desktop - lucerno lucerno - ${pkgs.writeText "socialstreamninja.desktop" ''
       [Desktop Entry]
       Version=1.0
@@ -200,6 +220,7 @@ in
       StartupNotify=true
     ''}"
 
+    # --- Ярлык Google Chrome с принудительным X11 ---
     "L+ ${home}/.local/share/applications/google-chrome.desktop - lucerno lucerno - ${pkgs.writeText "google-chrome.desktop" ''
       [Desktop Entry]
       Version=1.0
@@ -212,6 +233,7 @@ in
       StartupWMClass=Google-chrome-stable
     ''}"
 
+    # kitten
     "L+ ${home}/.local/share/applications/net.local.kitten.desktop - lucerno lucerno - ${pkgs.writeText "net.local.kitten.desktop" ''
       [Desktop Entry]
       Type=Application
@@ -223,43 +245,21 @@ in
       StartupNotify=true
     ''}"
 
-    # .zshrc
-    "L+ ${home}/.zshrc - lucerno lucerno - ${pkgs.writeText ".zshrc" "source /etc/zshrc"}"
-
-    # Автозапуск AmneziaVPN
-    "L+ ${home}/.config/autostart/amneziavpn.desktop - lucerno lucerno - ${pkgs.writeText "amneziavpn.desktop" ''
-      [Desktop Entry]
-      Type=Application
-      Name=AmneziaVPN
-      Exec=amnezia-vpn
-      Icon=amnezia-vpn
-      X-KDE-autostart-after=panel
-      StartupNotify=false
-      Terminal=false
-    ''}"
-
+    # ---------- ПРАВИЛА ДЛЯ АУДИО ----------
+    "d ${home}/.vst3 0755 lucerno lucerno -"
+    "d ${home}/.config/REAPER/UserPlugins 0755 lucerno lucerno -"                             # для .so файлов REAPER
     # wine64
     "L+ ${home}/.local/bin/wine64 - lucerno lucerno - ${pkgs-unstable.wineWow64Packages.staging}/bin/wine"
-
-    # .so файлы REAPER (копирование, но симлинк тоже подойдёт)
+    # .so файлы REAPER
     "L+ ${home}/.config/REAPER/UserPlugins/reaper_sws-x86_64.so - lucerno lucerno - ${pkgs-unstable.reaper-sws-extension}/UserPlugins/reaper_sws-x86_64.so"
     "L+ ${home}/.config/REAPER/UserPlugins/reaper_reapack-x86_64.so - lucerno lucerno - ${pkgs-unstable.reaper-reapack-extension}/UserPlugins/reaper_reapack-x86_64.so"
-
-        # ---------- Каталоги для drop‑in файлов systemd --user ----------
-    "d ${home}/.config/systemd 0755 lucerno lucerno -"
-    "d ${home}/.config/systemd/user 0755 lucerno lucerno -"
-    "d ${home}/.config/systemd/user/pipewire.service.d 0755 lucerno lucerno -"
-    "d ${home}/.config/systemd/user/pipewire-pulse.service.d 0755 lucerno lucerno -"
-    "d ${home}/.config/systemd/user/wireplumber.service.d 0755 lucerno lucerno -"
-
     # ---------- Каталоги для drop‑in файлов systemd --user ----------
     "d ${home}/.config/systemd 0755 lucerno lucerno -"
     "d ${home}/.config/systemd/user 0755 lucerno lucerno -"
     "d ${home}/.config/systemd/user/pipewire.service.d 0755 lucerno lucerno -"
     "d ${home}/.config/systemd/user/pipewire-pulse.service.d 0755 lucerno lucerno -"
     "d ${home}/.config/systemd/user/wireplumber.service.d 0755 lucerno lucerno -"
-
-    # ---------- Drop‑in файлы для реального времени ----------
+    # ---------- Настройка приоритетов реального времени для PipeWire и WirePlumber ----------
     "f ${home}/.config/systemd/user/pipewire.service.d/99-realtime.conf 0644 lucerno lucerno - ${pkgs.writeText "99-realtime.conf" ''
     [Service]
     CPUSchedulingPolicy=fifo
@@ -285,6 +285,4 @@ in
     ''}"
   ];
 
-  # ========== Скрипт для home.activation (пустой) ==========
-  activationScript = lib.mkIf (config != null) "";
 }
