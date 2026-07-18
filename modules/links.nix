@@ -238,7 +238,7 @@ in
     "R /tmp/kitty-sock - - - - -"
     # Скрипт запуска КИТТИ через Win+Z (без kitten)
     "L+ ${home}/.local/bin/toggle-kitty 0755 lucerno lucerno - ${pkgs.writeShellScript "toggle-kitty" ''
-      if kitty @ ls 2>/dev/null | grep -q "quick-access"; then
+      if kitty @ get-window-id --match title:"quick-access" 2>/dev/null; then
           kitty @ close-window --match title:"quick-access"
       else
           kitten quick-access-terminal
