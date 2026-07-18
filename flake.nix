@@ -16,17 +16,6 @@
       inputs.nixpkgs.follows = "nixpkgs";                                                                  # Зависимости используют основной nixpkgs
     };
 
-#    home-manager = {                                                                                       # Home Manager — управление пользовательским окружением
-#      url = "github:nix-community/home-manager/release-26.05";
-#      inputs.nixpkgs.follows = "nixpkgs";                                                                  # Зависимости используют основной nixpkgs
-#    };
-
-#    plasma-manager = {                                                                                     # Plasma Manager — настройка KDE Plasma через Home Manager
-#      url = "github:nix-community/plasma-manager/trunk";
-#      inputs.nixpkgs.follows = "nixpkgs";                                                                  # Зависимости используют основной nixpkgs
-#      inputs.home-manager.follows = "home-manager";                                                        # Следовать за home-manager
-#    };
-
     flake-parts = {                                                                                        # Flake-parts — фреймворк для модульной организации flake
       url = "github:hercules-ci/flake-parts";
       inputs.nixpkgs-lib.follows = "nixpkgs";                                                              # Зависимости используют основной nixpkgs
@@ -115,23 +104,7 @@
               ];
             })
             { nixpkgs.pkgs = pkgsWithOverlay; }                                                            # Переопределяем pkgs для всей системы (с оверлеем)
-            (inputs.import-tree ./modules/nixos)                                                           # Основной модуль config nixos. Рекурсивно импортируем все модули из папки modules/nixos
-#            inputs.home-manager.nixosModules.home-manager                                                  # Подключаем модуль Home Manager как модуль NixOS
-#            {
-              # Настройки интеграции Home Manager с NixOS
-#              home-manager.useGlobalPkgs = true;                                                           # Используем системный экземпляр pkgs
-#              home-manager.useUserPackages = true;                                                         # Устанавливаем пакеты в /etc/profiles (доступно всем пользователям)
-#              home-manager.users.lucerno = { pkgs, lib, ... }: {                                           # Конфигурация для пользователя lucerno
-#                _module.args = {                                                                           # Аргументы, передаваемые во все модули Home Manager (аналог extraSpecialArgs)
-#                  inherit myLib;                                                                           # Мои общие переменные
-#                  pkgs-unstable = pkgsUnstable;                                                            # Нестабильные пакеты для home-manager
-#                };
-#                imports = [                                                                               # Импорт всех модулей из папки modules/home (рекурсивно)
-#                  (inputs.import-tree ./modules/home)                                                     # Основной модуль home-manager. Рекурсивно импортируем все модули из папки modules/home
-#                  inputs.plasma-manager.homeModules.plasma-manager                                        # После подключения становится доступен атрибут programs.plasma
-#                ];
-#              };
-#            }
+            (inputs.import-tree ./modules)                                                           # Основной модуль config nixos. Рекурсивно импортируем все модули из папки modules/nixos
           ];
         };
       };
