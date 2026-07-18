@@ -69,6 +69,7 @@ let
   '';
 
   quickAccessConf = pkgs.writeText "quick-access-terminal.conf" ''
+    listen_on unix:/tmp/kitty-sock
     lines 35
     margin_left 200
     margin_right 200
