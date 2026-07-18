@@ -53,12 +53,13 @@ in
       lucerno = {};                                                                                     # Создаём группу lucerno (явно не задаём параметры)
       powercap = {};                                                                                    # Группа для доступа к энергопотреблению CPU (RAPL) нужна для отображения в btop
       fuse = {};
+      nvidia = {};
     };
     users.lucerno = {                                                                                   # Основные настройки учётной записи
       isNormalUser = true;                                                                              # Обычный пользователь (не системный)
       hashedPasswordFile = "${myLib.home}/${myLib.configDirName}/secrets/lucerno-password.hash";        # Файл с хешем пароля
       group = "lucerno";                                                                                # Группа, к которой принадлежит пользователь
-      extraGroups = [ "wheel" "networkmanager" "audio" "video" "storage" "render" "powercap" "rtkit" "fuse" ]; # Дополнительные группы
+      extraGroups = [ "wheel" "networkmanager" "audio" "video" "storage" "render" "powercap" "rtkit" "fuse" "nvidia" ]; # Дополнительные группы
       shell = pkgs.zsh;                                                                                 # Командная оболочка по умолчанию (Zsh)
     };
   };
