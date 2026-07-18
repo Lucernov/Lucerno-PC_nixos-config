@@ -1,33 +1,29 @@
 { config, pkgs, myLib, ... }:
 
-let
-  # Получаем цвета из активной схемы Stylix
-  colors = config.stylix.base16Scheme;
-in
 {
   systemd.tmpfiles.rules = [
     "L+ ${myLib.home}/.config/kitty/kitty.conf - lucerno lucerno - ${pkgs.writeText "kitty.conf" ''
-      # Цвета из Stylix (Catppuccin Mocha)
-      foreground ${colors.base05}
-      background ${colors.base00}
-      selection_background ${colors.base05}
-      selection_foreground ${colors.base00}
-      color0 ${colors.base00}
-      color1 ${colors.base08}
-      color2 ${colors.base0B}
-      color3 ${colors.base0A}
-      color4 ${colors.base0D}
-      color5 ${colors.base0E}
-      color6 ${colors.base0C}
-      color7 ${colors.base05}
-      color8 ${colors.base03}
-      color9 ${colors.base08}
-      color10 ${colors.base0B}
-      color11 ${colors.base0A}
-      color12 ${colors.base0D}
-      color13 ${colors.base0E}
-      color14 ${colors.base0C}
-      color15 ${colors.base07}
+      # Цвета Catppuccin Mocha (фиксированные)
+      foreground #cdd6f4
+      background #1e1e2e
+      selection_background #cdd6f4
+      selection_foreground #1e1e2e
+      color0 #45475a
+      color1 #f38ba8
+      color2 #a6e3a1
+      color3 #f9e2af
+      color4 #89b4fa
+      color5 #cba6f7
+      color6 #94e2d5
+      color7 #bac2de
+      color8 #585b70
+      color9 #f38ba8
+      color10 #a6e3a1
+      color11 #f9e2af
+      color12 #89b4fa
+      color13 #cba6f7
+      color14 #94e2d5
+      color15 #a6adc8
 
       # Ваши настройки
       font_family JetBrainsMono Nerd Font Mono
