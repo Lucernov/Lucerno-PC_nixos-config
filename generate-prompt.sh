@@ -38,6 +38,8 @@ add_section() {
 add_section "flake.lock" "flake.lock"
 add_section "flake.nix" "flake.nix"
 add_section "mylib.nix" "mylib.nix"
+add_section "links.nix" "links.nix"
+add_section "packages.nix" "packages.nix"
 
 # --- Пакеты (pkgs/) ---
 echo "# --- Пакеты (pkgs/) ---" >> "$OUTPUT_FILE"
