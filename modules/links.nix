@@ -1,5 +1,5 @@
 # modules/links.nix
-{ pkgs, lib, myLib, config ? null }:
+{ pkgs, pkgs-unstable, lib, myLib, config ? null }:
 
 let
   inherit (myLib) home;
@@ -8,6 +8,27 @@ in
 {
   # ========== Системные правила (требуют root) ==========
   systemRules = [
+
+  # ---------- Автозапуск AmneziaVPN ----------
+"f ${home}/.config/autostart/amneziavpn.desktop 0644 lucerno lucerno - ${pkgs.writeText "amneziavpn.desktop" ''
+  [Desktop Entry]
+  Type=Application
+  Name=AmneziaVPN
+  Exec=amnezia-vpn
+  Icon=amnezia-vpn
+  X-KDE-autostart-after=panel
+  StartupNotify=false
+  Terminal=false
+''}"
+
+  # ---------- Симлинк wine64 ----------
+"L+ ${home}/.local/bin/wine64 - lucerno lucerno - ${pkgs-unstable.wineWow64Packages.staging}/bin/wine"
+
+
+# ---------- Копирование .so файлов REAPER ----------
+"f ${home}/.config/REAPER/UserPlugins/reaper_sws-x86_64.so 0644 lucerno lucerno - ${pkgs-unstable.reaper-sws-extension}/UserPlugins/reaper_sws-x86_64.so"
+"f ${home}/.config/REAPER/UserPlugins/reaper_reapack-x86_64.so 0644 lucerno lucerno - ${pkgs-unstable.reaper-reapack-extension}/UserPlugins/reaper_reapack-x86_64.so"
+
     # ---------- Директории ----------
     "d ${home}/${configDir} 0755 lucerno lucerno -"
     "d ${home}/.local/share 0755 lucerno lucerno -"
