@@ -6,7 +6,7 @@
     enableCompletion = true;                                     # Включает автодополнение команд (обычные completion)
     autosuggestions.enable = true;                               # Включает автоматические подсказки (as-you-type) на основе истории
     syntaxHighlighting.enable = true;                            # Включает подсветку синтаксиса команд в терминале
-    oh-my-zsh = {
+    ohMyZsh = {
       enable = true;                                             # Включает Oh My Zsh (коллекция тем и плагинов)
       plugins = [                                                # Список плагинов
         "git"                                                    # Алиасы для Git (сокращает время набора) - gst, ga, gc, gp
