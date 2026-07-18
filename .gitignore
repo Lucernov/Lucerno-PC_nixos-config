@@ -20,9 +20,6 @@
 # Логи
 *.log
 
-# Большие папки Steam (не должны быть в Git)
-/dotfiles/config/Steam/userdata/
-
 # Игнорировать всё в dotfiles, кроме wallpapers и разрешённых папок config
 /dotfiles/*
 !/dotfiles/wallpapers/
