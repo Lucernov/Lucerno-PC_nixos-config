@@ -145,8 +145,7 @@ in
     ''}"
 
     # Скрипт запуска КИТТИ через Win+Z
-    "L+ ${home}/.local/bin/toggle-kitty 0755 lucerno lucerno - ${pkgs.writeText "toggle-kitty" ''
-    #!${pkgs.bash}/bin/bash
+    "L+ ${home}/.local/bin/toggle-kitty 0755 lucerno lucerno - ${pkgs.writeShellScript "toggle-kitty" ''
     if ${pkgs.kitty}/bin/kitty @ ls 2>/dev/null | grep -q "quick-access"; then
         ${pkgs.kitty}/bin/kitty @ close-window --match title:"quick-access"
     else
