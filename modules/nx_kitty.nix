@@ -24,7 +24,7 @@ let
     color14 #94e2d5
     color15 #a6adc8
 
-    # Основные настройки (из hx_kitty.nix)
+    # Основные настройки
     allow_remote_control yes
     confirm_os_window_close 0
     listen_on unix:/tmp/kitty-sock
@@ -82,24 +82,10 @@ let
     font_features JetBrainsMono Nerd Font Mono:liga=1,calt=1
   '';
 
-  # Скрипт переключения – теперь с полными путями и корректной проверкой
-  toggleKittyScript = pkgs.writeShellScript "toggle-kitty" ''
-    # Проверяем существование окна с заголовком "quick-access" через get-window-id
-    if ${pkgs.kitty}/bin/kitty @ get-window-id --match title:"quick-access" 2>/dev/null; then
-        ${pkgs.kitty}/bin/kitty @ close-window --match title:"quick-access"
-    else
-        ${pkgs.kitty}/bin/kitty +kitten quick-access-terminal
-    fi
-  '';
-
 in
 {
   systemd.tmpfiles.rules = [
-    # Конфиг Kitty
     "L+ ${myLib.home}/.config/kitty/kitty.conf - lucerno lucerno - ${kittyConf}"
-    # Конфиг для выпадающего окна
     "L+ ${myLib.home}/.config/kitty/quick-access-terminal.conf - lucerno lucerno - ${quickAccessConf}"
-    # Исполняемый скрипт с правами 0755
-    "L+ ${myLib.home}/.local/bin/toggle-kitty 0755 lucerno lucerno - ${toggleKittyScript}"
   ];
 }

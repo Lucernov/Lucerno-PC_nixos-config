@@ -1,4 +1,4 @@
-{ pkgs, pkgs-unstable, myLib, ... }:
+{ pkgs, pkgs-unstable, lib, myLib, config, ... }:
 
 let
   inherit (myLib) home;
@@ -232,6 +232,16 @@ in
       Categories=Network;
       Terminal=false
       StartupNotify=true
+    ''}"
+
+    # Скрипт запуска КИТТИ через Win+Z
+    "R ${home}/.local/bin/toggle-kitty - - - - -"
+      "L+ ${home}/.local/bin/toggle-kitty 0755 lucerno lucerno - ${pkgs.writeShellScript "toggle-kitty" ''
+        if ${pkgs.kitty}/bin/kitty @ get-window-id --match title:"quick-access" 2>/dev/null; then
+            ${pkgs.kitty}/bin/kitty @ close-window --match title:"quick-access"
+        else
+            ${pkgs.kitty}/bin/kitty +kitten quick-access-terminal
+      fi
     ''}"
 
     # ---------- ПРАВИЛА ДЛЯ АУДИО ----------

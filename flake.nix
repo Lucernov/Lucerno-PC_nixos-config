@@ -104,7 +104,7 @@
               ];
             })
             { nixpkgs.pkgs = pkgsWithOverlay; }                                                            # Переопределяем pkgs для всей системы (с оверлеем)
-            (builtins.attrValues (inputs.import-tree ./modules))                                                                 # Основной модуль config nixos. Рекурсивно импортируем все модули из папки modules/nixos
+            (inputs.import-tree ./modules)                                                                 # Основной модуль config nixos. Рекурсивно импортируем все модули из папки modules/nixos
           ];
         };
       };
