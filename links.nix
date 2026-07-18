@@ -144,13 +144,14 @@ in
       unShaderBackgroundProcessingThreads 16
     ''}"
 
-    "L+ ${home}/.local/bin/toggle-kitty - lucerno lucerno - ${pkgs.writeText "toggle-kitty" ''
-      #!${pkgs.bash}/bin/bash
-      if ${pkgs.kitty}/bin/kitty @ ls 2>/dev/null | grep -q "quick-access"; then
-          ${pkgs.kitty}/bin/kitty @ close-window --match title:"quick-access"
-      else
-          ${pkgs.kitty}/bin/kitten quick-access-terminal
-      fi
+    # Скрипт запуска КИТТИ через Win+Z
+    "L+ ${home}/.local/bin/toggle-kitty 0755 lucerno lucerno - ${pkgs.writeText "toggle-kitty" ''
+    #!${pkgs.bash}/bin/bash
+    if ${pkgs.kitty}/bin/kitty @ ls 2>/dev/null | grep -q "quick-access"; then
+        ${pkgs.kitty}/bin/kitty @ close-window --match title:"quick-access"
+    else
+        ${pkgs.kitty}/bin/kitty +kitten quick-access-terminal
+    fi
     ''}"
 
     # ---------- .desktop файлы ----------
