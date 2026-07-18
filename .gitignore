@@ -23,13 +23,14 @@
 # Большие папки Steam (не должны быть в Git)
 /dotfiles/config/Steam/userdata/
 
-# Игнорировать все файлы в dotfiles, кроме wallpapers
+# Игнорировать всё в dotfiles, кроме wallpapers и разрешённых папок config
 /dotfiles/*
 !/dotfiles/wallpapers/
 !/dotfiles/wallpapers/**/*
-!/dotfiles/config/KDE/
-!/dotfiles/config/KDE/*
+!/dotfiles/config/
+/dotfiles/config/*
 !/dotfiles/config/zsh/
 !/dotfiles/config/zsh/*
 !/dotfiles/config/yabridgectl/
 !/dotfiles/config/yabridgectl/*
+
