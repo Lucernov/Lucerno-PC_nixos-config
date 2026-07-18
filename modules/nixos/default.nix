@@ -57,7 +57,7 @@ in
       isNormalUser = true;                                                                              # Обычный пользователь (не системный)
       hashedPasswordFile = "${myLib.home}/${myLib.configDirName}/secrets/lucerno-password.hash";        # Файл с хешем пароля
       group = "lucerno";                                                                                # Группа, к которой принадлежит пользователь
-      extraGroups = [ "wheel" "networkmanager" "audio" "video" "storage" "render" "powercap" "rtkit" ]; # Дополнительные группы
+      extraGroups = [ "wheel" "networkmanager" "audio" "video" "storage" "render" "powercap" "rtkit" "fuse" ]; # Дополнительные группы
       shell = pkgs.zsh;                                                                                 # Командная оболочка по умолчанию (Zsh)
     };
   };

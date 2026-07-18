@@ -13,6 +13,7 @@
         User = myLib.userName;
         Group = "users";
         Type = "simple";
+        SupplementaryGroups = [ "fuse" ];
         ExecStart = ''${pkgs.rclone}/bin/rclone mount gdrive: /mnt/www-GoogleDrive \
           --config=${myLib.home}/.config/rclone/rclone.conf \
           --vfs-cache-mode full \
@@ -36,6 +37,7 @@
         User = myLib.userName;
         Group = "users";
         Type = "simple";
+        SupplementaryGroups = [ "fuse" ];
         ExecStart = ''${pkgs.rclone}/bin/rclone mount onedrive: /mnt/www-OneDrive \
           --config=${myLib.home}/.config/rclone/rclone.conf \
           --vfs-cache-mode full \
