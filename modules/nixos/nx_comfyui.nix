@@ -4,7 +4,7 @@
   systemd.services.comfyui = {
     description = "ComfyUI server (system)";
     after = [ "network.target" ];
-    # Раскомментируйте следующую строку, если нужна автозагрузка при старте системы
+    # раскомментируйте для автозагрузки
     wantedBy = [ "multi-user.target" ];
     serviceConfig = {
       User = myLib.userName;
@@ -14,7 +14,12 @@
       ExecStart = "${pkgs.comfy-ui-cuda}/bin/comfy-ui --listen 127.0.0.1 --port 8188";
       Restart = "on-failure";
       RestartSec = 5;
-      # Разрешаем доступ к устройствам и снимаем ограничения
+      # Переменные окружения для CUDA
+      Environment = [
+        "CUDA_VISIBLE_DEVICES=0"
+        "LD_LIBRARY_PATH=/run/opengl-driver/lib"
+      ];
+      # Остальные опции для доступа к устройствам
       PrivateDevices = false;
       ProtectSystem = "off";
       ProtectHome = false;
