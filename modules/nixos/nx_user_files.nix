@@ -140,6 +140,7 @@ in
     "d ${home}/.local/bin 0755 ${userName} ${userName} -"
     "d ${home}/.local/share/Steam/config 0755 ${userName} ${userName} -"
 
+    "f ${home}/.zshrc 0644 ${userName} ${userName} - ${pkgs.writeText ".zshrc" "source /etc/zshrc"}"
     # user-dirs.dirs
     "f ${home}/.config/user-dirs.dirs 0644 ${userName} ${userName} - ${pkgs.writeText "user-dirs.dirs" user-dirs-content}"
     # gitconfig
