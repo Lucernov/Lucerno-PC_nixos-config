@@ -82,12 +82,11 @@ let
     font_features JetBrainsMono Nerd Font Mono:liga=1,calt=1
   '';
 
-  toggleKittyScript = pkgs.writeText "toggle-kitty" ''
-    #!${pkgs.bash}/bin/bash
+  toggleKittyScript = pkgs.writeShellScript "toggle-kitty" ''
     if ${pkgs.kitty}/bin/kitty @ ls 2>/dev/null | grep -q "quick-access"; then
         ${pkgs.kitty}/bin/kitty @ close-window --match title:"quick-access"
     else
-        ${pkgs.kitty}/bin/kitten quick-access-terminal
+        ${pkgs.kitty}/bin/kitty +kitten quick-access-terminal
     fi
   '';
 
