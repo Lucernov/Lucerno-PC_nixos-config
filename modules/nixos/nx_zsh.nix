@@ -16,7 +16,6 @@
     };
     histFile = "$HOME/.zsh_history";
     histSize = 10000;
-    saveHist = 10000;
     shellAliases = {
       l  = "lsd -l";
       ll = "lsd -la";
