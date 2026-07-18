@@ -242,7 +242,7 @@ in
       if kitty @ get-window-id --match title:"quick-access" 2>/dev/null; then
           kitty @ close-window --match title:"quick-access"
       else
-          kitten --listen-on /tmp/kitty-sock quick-access-terminal
+          kitten quick-access-terminal
       fi
     ''}"
 
