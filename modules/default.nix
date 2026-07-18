@@ -1,13 +1,11 @@
-{ pkgs, lib, pkgs-unstable, myLib, blender-cuda, ... }:
+{ pkgs, lib, pkgs-unstable, myLib, ... }:
 
 let
-  packages = import ../packages.nix { inherit pkgs pkgs-unstable myLib blender-cuda; };                 # Импортируем общий файл с пакетами и системными модулями
   links = import ../links.nix { inherit pkgs pkgs-unstable lib myLib; };                                # Импортируем модуль с симлинками (системные правила tmpfiles)
 in
 
 {
   system.stateVersion = myLib.channelVersion;                                                           # Версия состояния системы (соответствует каналу NixOS)
-  imports = [ packages.nixosModule ];                                                                   # Подключаем модуль из packages.nix, который включает все системные опции (programs.*, environment.systemPackages)
   systemd = { tmpfiles.rules = links.systemRules; };                                                    # Правила из links.nix (мои симлинки)
 
   # ========== Загрузчик и ядро ==========
