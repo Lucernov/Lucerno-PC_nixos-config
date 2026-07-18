@@ -27,6 +27,25 @@ let
       Categories=AudioVideo;Player;
     '';
   };
-in {
+
+in
+{
   environment.systemPackages = [ videoPlayerScript videoPlayerDesktop ];
+
+  # Активационный скрипт, который гарантирует наличие горячей клавиши Win+Z для Kitty
+  system.activationScripts.fix-kitty-shortcut = {
+    supportsDryActivation = true;
+    text = ''
+      SHORTCUT_FILE="$HOME/.config/kglobalshortcutsrc"
+      NEEDLE="[services][net.local.toggle-kitty.desktop]"
+      if [ -f "$SHORTCUT_FILE" ]; then
+        if ! grep -q "$NEEDLE" "$SHORTCUT_FILE"; then
+          echo "" >> "$SHORTCUT_FILE"
+          echo "[services][net.local.toggle-kitty.desktop]" >> "$SHORTCUT_FILE"
+          echo "_launch=Meta+Z" >> "$SHORTCUT_FILE"
+          echo "✅ Added Kitty shortcut to $SHORTCUT_FILE"
+        fi
+      fi
+    '';
+  };
 }
