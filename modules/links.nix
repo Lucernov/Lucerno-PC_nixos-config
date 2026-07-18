@@ -1,4 +1,4 @@
-{ pkgs, pkgs-unstable, lib, myLib, config, ... }:
+{ pkgs, pkgs-unstable, myLib, ... }:
 
 let
   inherit (myLib) home;
