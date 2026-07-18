@@ -28,4 +28,8 @@
 !/dotfiles/wallpapers/
 !/dotfiles/wallpapers/**/*
 !/dotfiles/config/KDE/
-
+!/dotfiles/config/KDE/*
+!/dotfiles/config/zsh/
+!/dotfiles/config/zsh/*
+!/dotfiles/config/yabridgectl/
+!/dotfiles/config/yabridgectl/*
