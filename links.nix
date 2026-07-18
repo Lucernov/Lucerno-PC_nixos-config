@@ -144,15 +144,6 @@ in
       unShaderBackgroundProcessingThreads 16
     ''}"
 
-    # Скрипт запуска КИТТИ через Win+Z
-    "L+ ${home}/.local/bin/toggle-kitty 0755 lucerno lucerno - ${pkgs.writeShellScript "toggle-kitty" ''
-    if ${pkgs.kitty}/bin/kitty @ ls 2>/dev/null | grep -q "quick-access"; then
-        ${pkgs.kitty}/bin/kitty @ close-window --match title:"quick-access"
-    else
-        ${pkgs.kitty}/bin/kitty +kitten quick-access-terminal
-    fi
-    ''}"
-
     # ---------- .desktop файлы ----------
     # --- Ярлык REAPER в меню KDE с кастомным запусском ---
     "L+ ${home}/.local/share/applications/reaper-x11.desktop - lucerno lucerno - ${pkgs.writeText "reaper-x11.desktop" ''
