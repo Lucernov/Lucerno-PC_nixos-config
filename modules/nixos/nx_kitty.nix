@@ -1,10 +1,13 @@
-{ symlinkJoin, makeWrapper, kitty, writeText }:
+{ config, pkgs, myLib, ... }:
 
-let
-  kittyConf = writeText "kitty.conf" ''
-    # ========== Kitty конфиг ==========
+{
+  # Добавляем свои настройки в конфиг Kitty, который генерирует Stylix
+  stylix.targets.kitty.extraConfig = ''
+    # Шрифты и размер
     font_family JetBrainsMono Nerd Font Mono
     font_size 15
+
+    # Основные настройки
     allow_remote_control yes
     confirm_os_window_close 0
     listen_on unix:/tmp/kitty-sock
@@ -21,7 +24,7 @@ let
     background_opacity 0.95
     hide_window_decorations yes
 
-    # Клавиши
+    # Хоткеи
     map ctrl+t new_tab_with_cwd !neighbor
     map ctrl+е new_tab_with_cwd !neighbor
     map ctrl+w close_tab
@@ -39,16 +42,5 @@ let
     cursor_trail 200
     cursor_trail_decay 0.1 0.4
     cursor_trail_start_threshold 2
-  '';
-in
-symlinkJoin {
-  name = "kitty-wrapped";
-  paths = [ kitty ];
-  buildInputs = [ makeWrapper ];
-  postBuild = ''
-    mkdir -p $out/share/kitty
-    cp ${kittyConf} $out/share/kitty/kitty.conf
-    wrapProgram $out/bin/kitty \
-      --set KITTY_CONFIG_DIRECTORY $out/share/kitty
   '';
 }
