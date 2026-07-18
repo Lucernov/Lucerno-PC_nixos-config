@@ -17,7 +17,6 @@
         "CUDA_VISIBLE_DEVICES=0"
         "LD_LIBRARY_PATH=/run/opengl-driver/lib:/run/opengl-driver/lib64"
         "CUDA_HOME=/run/opengl-driver"
-        "PATH=${pkgs.nvidia-smi}/bin:$PATH"
       ];
       PrivateDevices = false;
       ProtectSystem = "off";
