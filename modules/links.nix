@@ -234,14 +234,14 @@ in
       StartupNotify=true
     ''}"
 
+    # Удаляем старый сокет Kitty, чтобы новый создавался с правильным именем
+    "R /tmp/kitty-sock - - - - -"
     # Скрипт запуска КИТТИ через Win+Z (без kitten)
     "L+ ${home}/.local/bin/toggle-kitty 0755 lucerno lucerno - ${pkgs.writeShellScript "toggle-kitty" ''
-      # Проверяем, существует ли окно quick-access
-      if ${pkgs.kitty}/bin/kitty @ get-window-id --match title:"quick-access" 2>/dev/null; then
-          ${pkgs.kitty}/bin/kitty @ close-window --match title:"quick-access"
+      if kitty @ ls 2>/dev/null | grep -q "quick-access"; then
+          kitty @ close-window --match title:"quick-access"
       else
-          # Запускаем новое окно Kitty с нужным заголовком и конфигом
-          ${pkgs.kitty}/bin/kitty @ new-window --title quick-access --config ${myLib.home}/.config/kitty/quick-access-terminal.conf
+          kitten quick-access-terminal
       fi
     ''}"
 
