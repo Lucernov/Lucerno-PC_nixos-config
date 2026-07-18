@@ -95,6 +95,7 @@ in
   systemd.tmpfiles.rules = [
     "L+ ${myLib.home}/.config/kitty/kitty.conf - lucerno lucerno - ${kittyConf}"
     "L+ ${myLib.home}/.config/kitty/quick-access-terminal.conf - lucerno lucerno - ${quickAccessConf}"
-    "L+ ${myLib.home}/.local/bin/toggle-kitty - lucerno lucerno - ${toggleKittyScript}"
+    # Для скрипта указываем права 0755, чтобы он был исполняемым
+    "L+ ${myLib.home}/.local/bin/toggle-kitty 0755 lucerno lucerno - ${toggleKittyScript}"
   ];
 }
