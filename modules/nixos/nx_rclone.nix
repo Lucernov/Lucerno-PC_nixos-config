@@ -25,10 +25,13 @@
         RestrictRealtime = false;
         RestrictSUIDSGID = false;
         PrivateTmp = false;
+        PrivateMounts = false;
+        MountFlags = "shared";
         SupplementaryGroups = [ "fuse" ];
         DeviceAllow = [ "/dev/fuse" ];
         DevicePolicy = "auto";
-        # AmbientCapabilities = [ "CAP_SYS_ADMIN" ]; # если не поможет, раскомментируйте
+        AmbientCapabilities = [ "CAP_SYS_ADMIN" ];
+        CapabilityBoundingSet = [ "CAP_SYS_ADMIN" ];
         ExecStart = ''${pkgs.rclone}/bin/rclone mount gdrive: /mnt/www-GoogleDrive \
           --config=${myLib.home}/.config/rclone/rclone.conf \
           --vfs-cache-mode full \
@@ -64,10 +67,13 @@
         RestrictRealtime = false;
         RestrictSUIDSGID = false;
         PrivateTmp = false;
+        PrivateMounts = false;
+        MountFlags = "shared";
         SupplementaryGroups = [ "fuse" ];
         DeviceAllow = [ "/dev/fuse" ];
         DevicePolicy = "auto";
-        # AmbientCapabilities = [ "CAP_SYS_ADMIN" ];
+        AmbientCapabilities = [ "CAP_SYS_ADMIN" ];
+        CapabilityBoundingSet = [ "CAP_SYS_ADMIN" ];
         ExecStart = ''${pkgs.rclone}/bin/rclone mount onedrive: /mnt/www-OneDrive \
           --config=${myLib.home}/.config/rclone/rclone.conf \
           --vfs-cache-mode full \
