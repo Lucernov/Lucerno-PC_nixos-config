@@ -82,8 +82,10 @@ let
     font_features JetBrainsMono Nerd Font Mono:liga=1,calt=1
   '';
 
+  # Скрипт переключения – теперь с полными путями и корректной проверкой
   toggleKittyScript = pkgs.writeShellScript "toggle-kitty" ''
-    if ${pkgs.kitty}/bin/kitty @ ls 2>/dev/null | grep -q "quick-access"; then
+    # Проверяем существование окна с заголовком "quick-access" через get-window-id
+    if ${pkgs.kitty}/bin/kitty @ get-window-id --match title:"quick-access" 2>/dev/null; then
         ${pkgs.kitty}/bin/kitty @ close-window --match title:"quick-access"
     else
         ${pkgs.kitty}/bin/kitty +kitten quick-access-terminal
@@ -93,9 +95,11 @@ let
 in
 {
   systemd.tmpfiles.rules = [
+    # Конфиг Kitty
     "L+ ${myLib.home}/.config/kitty/kitty.conf - lucerno lucerno - ${kittyConf}"
+    # Конфиг для выпадающего окна
     "L+ ${myLib.home}/.config/kitty/quick-access-terminal.conf - lucerno lucerno - ${quickAccessConf}"
-    # Для скрипта указываем права 0755, чтобы он был исполняемым
+    # Исполняемый скрипт с правами 0755
     "L+ ${myLib.home}/.local/bin/toggle-kitty 0755 lucerno lucerno - ${toggleKittyScript}"
   ];
 }
