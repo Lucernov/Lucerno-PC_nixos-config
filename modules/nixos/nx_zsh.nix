@@ -4,7 +4,7 @@
   programs.zsh = {
     enable = true;
     enableCompletion = true;
-    enableAutosuggestions = true;
+    autosuggestions.enable = true;
     syntaxHighlighting.enable = true;
     oh-my-zsh = {
       enable = true;
@@ -14,15 +14,10 @@
         "npm" "node" "python"
       ];
     };
-    history = {
-      size = 10000;
-      path = "$HOME/.zsh_history";
-      share = true;
-      save = 10000;
-      extended = true;
-    };
+    histFile = "$HOME/.zsh_history";
+    histSize = 10000;
+    saveHist = 10000;
     shellAliases = {
-      # все ваши алиасы
       l  = "lsd -l";
       ll = "lsd -la";
       ls = "lsd --icon always";
@@ -72,6 +67,15 @@
       # Промпт
       PROMPT='%F{green}%n@%m%f:%F{blue}%~%f$ '
       RPROMPT='%F{red}$(git branch --show-current 2>/dev/null)%f'
+
+      # Настройка истории
+      setopt EXTENDED_HISTORY
+      setopt HIST_EXPIRE_DUPS_FIRST
+      setopt HIST_IGNORE_DUPS
+      setopt HIST_IGNORE_SPACE
+      setopt HIST_VERIFY
+      setopt SHARE_HISTORY
     '';
   };
 }
+
