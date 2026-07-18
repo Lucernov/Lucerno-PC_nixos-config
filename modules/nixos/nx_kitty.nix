@@ -42,7 +42,7 @@
       enabled_layouts splits,fat,grid,stack,tall,horizontal,vertical
       default_layout splits
       background_opacity 0.95
-      hide_window_decorations yes
+      hide_window_decorations no
 
       # Хоткеи
       map ctrl+t new_tab_with_cwd !neighbor
