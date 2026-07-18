@@ -49,6 +49,6 @@ symlinkJoin {
     mkdir -p $out/share/kitty
     cp ${kittyConf} $out/share/kitty/kitty.conf
     wrapProgram $out/bin/kitty \
-      --add-flags "--config-file $out/share/kitty/kitty.conf"
+      --set KITTY_CONFIG_DIRECTORY $out/share/kitty
   '';
 }
