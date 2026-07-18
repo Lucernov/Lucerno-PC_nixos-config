@@ -227,6 +227,9 @@ in
   Terminal=false
   StartupNotify=true
 ''}"
+
+# ---------- Файл .zshrc ----------
+"f ${home}/.zshrc 0644 lucerno lucerno - ${pkgs.writeText ".zshrc" "source /etc/zshrc"}"
   ];
 
   # ========== Скрипт для home.activation (пустой, т.к. всё перенесено в systemRules) ==========
