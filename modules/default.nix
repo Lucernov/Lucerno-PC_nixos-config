@@ -1,12 +1,7 @@
-{ pkgs, lib, pkgs-unstable, myLib, ... }:
-
-let
-  links = import ../links.nix { inherit pkgs pkgs-unstable lib myLib; };                                # Импортируем модуль с симлинками (системные правила tmpfiles)
-in
+{ pkgs, myLib, ... }:
 
 {
   system.stateVersion = myLib.channelVersion;                                                           # Версия состояния системы (соответствует каналу NixOS)
-  systemd = { tmpfiles.rules = links.systemRules; };                                                    # Правила из links.nix (мои симлинки)
 
   # ========== Загрузчик и ядро ==========
   boot = {

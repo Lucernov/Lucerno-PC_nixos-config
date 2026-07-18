@@ -1,13 +1,11 @@
-# modules/links.nix
-{ pkgs, pkgs-unstable, lib, myLib, config ? null }:
+{ pkgs, pkgs-unstable, myLib, ... }:
 
 let
   inherit (myLib) home;
   configDir = myLib.configDirName;
 in
 {
-  # ========== Системные правила (требуют root) ==========
-  systemRules = [
+  systemd.tmpfiles.rules = [
     # .zshrc
     "L+ ${home}/.zshrc - lucerno lucerno - ${pkgs.writeText ".zshrc" "source /etc/zshrc"}"
 
@@ -275,5 +273,4 @@ in
     LimitRTPRIO=89
     ''}"
   ];
-
 }
