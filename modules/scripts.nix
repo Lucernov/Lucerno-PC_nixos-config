@@ -32,19 +32,23 @@ in
 {
   environment.systemPackages = [ videoPlayerScript videoPlayerDesktop ];
 
-  # Активационный скрипт, который гарантирует наличие горячей клавиши Win+Z для Kitty
+  # Активационный скрипт для гарантии наличия горячей клавиши Win+Z
   system.activationScripts.fix-kitty-shortcut = {
     supportsDryActivation = true;
     text = ''
-      SHORTCUT_FILE="$HOME/.config/kglobalshortcutsrc"
+      SHORTCUT_FILE="/home/lucerno/.config/kglobalshortcutsrc"
       NEEDLE="[services][net.local.toggle-kitty.desktop]"
       if [ -f "$SHORTCUT_FILE" ]; then
         if ! grep -q "$NEEDLE" "$SHORTCUT_FILE"; then
           echo "" >> "$SHORTCUT_FILE"
           echo "[services][net.local.toggle-kitty.desktop]" >> "$SHORTCUT_FILE"
           echo "_launch=Meta+Z" >> "$SHORTCUT_FILE"
-          echo "✅ Added Kitty shortcut to $SHORTCUT_FILE"
+          echo "✅ Added Kitty shortcut to $SHORTCUT_FILE" >&2
+        else
+          echo "✅ Kitty shortcut already exists" >&2
         fi
+      else
+        echo "⚠️ File $SHORTCUT_FILE not found" >&2
       fi
     '';
   };
