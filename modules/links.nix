@@ -46,7 +46,6 @@ in
     "L+ ${home}/.config/yabridgectl - lucerno lucerno - ${home}/${configDir}/dotfiles/config/yabridgectl"
     "L+ ${home}/.config/MangoHud - lucerno lucerno - ${home}/${configDir}/dotfiles/config/MangoHud"
     "L+ ${home}/.config/kglobalshortcutsrc - lucerno lucerno - ${home}/${configDir}/dotfiles/config/KDE/config-kglobalshortcutsrc"
-   # "L+ ${home}/.local/share/applications/net.local.kitten - lucerno lucerno - ${home}/${configDir}/dotfiles/config/KDE/local-share-applications-net.local.kitten"
     "L+ ${home}/.p10k.zsh - lucerno lucerno - ${home}/${configDir}/dotfiles/config/zsh/.p10k.zsh"
 
     # ---------- Симлинки для Steam и игр ----------

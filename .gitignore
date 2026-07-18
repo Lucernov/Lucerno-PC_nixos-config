@@ -27,3 +27,5 @@
 /dotfiles/*
 !/dotfiles/wallpapers/
 !/dotfiles/wallpapers/**/*
+!/dotfiles/config/KDE/
+
