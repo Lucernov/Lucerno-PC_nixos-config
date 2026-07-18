@@ -1,46 +1,71 @@
 { config, pkgs, myLib, ... }:
 
+let
+  # Получаем цвета из активной схемы Stylix
+  colors = config.stylix.base16Scheme;
+in
 {
-  # Добавляем свои настройки в конфиг Kitty, который генерирует Stylix
-  stylix.targets.kitty.extraConfig = ''
-    # Шрифты и размер
-    font_family JetBrainsMono Nerd Font Mono
-    font_size 15
+  systemd.tmpfiles.rules = [
+    "L+ ${myLib.home}/.config/kitty/kitty.conf - lucerno lucerno - ${pkgs.writeText "kitty.conf" ''
+      # Цвета из Stylix (Catppuccin Mocha)
+      foreground ${colors.base05}
+      background ${colors.base00}
+      selection_background ${colors.base05}
+      selection_foreground ${colors.base00}
+      color0 ${colors.base00}
+      color1 ${colors.base08}
+      color2 ${colors.base0B}
+      color3 ${colors.base0A}
+      color4 ${colors.base0D}
+      color5 ${colors.base0E}
+      color6 ${colors.base0C}
+      color7 ${colors.base05}
+      color8 ${colors.base03}
+      color9 ${colors.base08}
+      color10 ${colors.base0B}
+      color11 ${colors.base0A}
+      color12 ${colors.base0D}
+      color13 ${colors.base0E}
+      color14 ${colors.base0C}
+      color15 ${colors.base07}
 
-    # Основные настройки
-    allow_remote_control yes
-    confirm_os_window_close 0
-    listen_on unix:/tmp/kitty-sock
-    shell zsh
-    tab_bar_style powerline
-    tab_powerline_style round
-    tab_activity_symbol *
-    cursor_shape beam
-    cursor_shape_unfocused hollow
-    cursor_blink_interval 0.5
-    cursor_stop_blinking_after 15.0
-    enabled_layouts splits,fat,grid,stack,tall,horizontal,vertical
-    default_layout splits
-    background_opacity 0.95
-    hide_window_decorations yes
+      # Ваши настройки
+      font_family JetBrainsMono Nerd Font Mono
+      font_size 15
+      allow_remote_control yes
+      confirm_os_window_close 0
+      listen_on unix:/tmp/kitty-sock
+      shell zsh
+      tab_bar_style powerline
+      tab_powerline_style round
+      tab_activity_symbol *
+      cursor_shape beam
+      cursor_shape_unfocused hollow
+      cursor_blink_interval 0.5
+      cursor_stop_blinking_after 15.0
+      enabled_layouts splits,fat,grid,stack,tall,horizontal,vertical
+      default_layout splits
+      background_opacity 0.95
+      hide_window_decorations yes
 
-    # Хоткеи
-    map ctrl+t new_tab_with_cwd !neighbor
-    map ctrl+е new_tab_with_cwd !neighbor
-    map ctrl+w close_tab
-    map ctrl+ц close_tab
-    map ctrl+right next_tab
-    map ctrl+left previous_tab
-    map ctrl+alt+e launch --location=hsplit
-    map ctrl+alt+у launch --location=hsplit
-    map ctrl+alt+d launch --location=vsplit
-    map ctrl+alt+в launch --location=vsplit
-    map ctrl+alt+w close_window
-    map ctrl+alt+ц close_window
+      # Хоткеи
+      map ctrl+t new_tab_with_cwd !neighbor
+      map ctrl+е new_tab_with_cwd !neighbor
+      map ctrl+w close_tab
+      map ctrl+ц close_tab
+      map ctrl+right next_tab
+      map ctrl+left previous_tab
+      map ctrl+alt+e launch --location=hsplit
+      map ctrl+alt+у launch --location=hsplit
+      map ctrl+alt+d launch --location=vsplit
+      map ctrl+alt+в launch --location=vsplit
+      map ctrl+alt+w close_window
+      map ctrl+alt+ц close_window
 
-    # Cursor trail
-    cursor_trail 200
-    cursor_trail_decay 0.1 0.4
-    cursor_trail_start_threshold 2
-  '';
+      # Cursor trail
+      cursor_trail 200
+      cursor_trail_decay 0.1 0.4
+      cursor_trail_start_threshold 2
+    ''}"
+  ];
 }
