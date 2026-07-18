@@ -4,10 +4,10 @@
   systemd.services.comfyui = {
     description = "ComfyUI server (system)";
     after = [ "network.target" ];
-    wantedBy = [ "multi-user.target" ];
+    wantedBy = [ "multi-user.target" ];   # Автозапуск при загрузке
     serviceConfig = {
-      User = myLib.userName;
-      Group = myLib.userName;
+      # User = myLib.userName;            # временно закомментировано для теста от root
+      # Group = myLib.userName;
       Type = "simple";
       WorkingDirectory = "/mnt/ai/ComfyUI";
       ExecStart = "${pkgs.comfy-ui-cuda}/bin/comfy-ui --listen 127.0.0.1 --port 8188";
@@ -16,7 +16,6 @@
       Environment = [
         "CUDA_VISIBLE_DEVICES=0"
         "LD_LIBRARY_PATH=/run/opengl-driver/lib:/run/opengl-driver/lib64"
-        "CUDA_HOME=/run/opengl-driver"
       ];
       PrivateDevices = false;
       ProtectSystem = "off";
@@ -25,8 +24,6 @@
       PrivateMounts = false;
       MountFlags = "shared";
       SupplementaryGroups = [ "fuse" "render" "video" "nvidia" ];
-      DeviceAllow = [ "/dev/fuse" "/dev/nvidia*" "/dev/dri/*" ];
-      DevicePolicy = "auto";
       AmbientCapabilities = [ "CAP_SYS_ADMIN" ];
     };
   };
