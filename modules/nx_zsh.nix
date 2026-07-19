@@ -1,5 +1,9 @@
 { pkgs, myLib, ... }:
 
+let
+  configDir = myLib.configDirName;
+in
+
 {
   programs.zsh = {
     enable = true;                                               # Включает настройку Zsh через home-manager (генерирует ~/.zshrc)
@@ -66,6 +70,7 @@
       discord-clean = "rm -rf ~/.config/discord ~/.cache/discord && discord"; # полная очистка кеша Discord перед запуском
     };
 
+    # ========== Интерактивная инициализация Zsh ==========
     interactiveShellInit = ''
       # Разрешение unfree пакетов
       export NIXPKGS_ALLOW_UNFREE=1
@@ -103,6 +108,14 @@
       setopt SHARE_HISTORY
     '';
   };
+
+    # ========== Правила tmpfiles для zsh ==========
+  systemd.tmpfiles.rules = [
+    # .zshrc
+    "L+ ${myLib.home}/.zshrc - lucerno lucerno - ${pkgs.writeText ".zshrc" "source /etc/zshrc"}"
+    # Симлинк для Powerlevel10k
+    "L+ ${myLib.home}/.p10k.zsh - lucerno lucerno - ${myLib.home}/${configDir}/dotfiles/config/zsh/.p10k.zsh"
+  ];
 }
 
     # Полезные команды:

@@ -9,6 +9,13 @@
     mountMax = 1000;                                                                # Максимальное количество FUSE-монтирований на пользователя
   };
 
+  # ========== Правила tmpfiles для папок монтирования ==========
+  systemd.tmpfiles.rules = [
+    # линки rclone
+    "d /mnt/www-GoogleDrive 0755 lucerno users -"
+    "d /mnt/www-OneDrive 0755 lucerno users -"
+  ];
+
   systemd.services = {
     # ========== Сервис монтирования Google Drive ==========
     rclone-gdrive = {

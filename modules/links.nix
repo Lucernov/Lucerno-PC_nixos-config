@@ -1,4 +1,4 @@
-{ pkgs, pkgs-unstable, myLib, ... }:
+{ pkgs, myLib, ... }:
 
 let
   inherit (myLib) home;
@@ -6,8 +6,6 @@ let
 in
 {
   systemd.tmpfiles.rules = [
-    # .zshrc
-    "L+ ${home}/.zshrc - lucerno lucerno - ${pkgs.writeText ".zshrc" "source /etc/zshrc"}"
 
     # ---------- Директории ----------
     "d ${home}/${configDir} 0755 lucerno lucerno -"
@@ -22,10 +20,6 @@ in
     # ДИСКИ
     "d /mnt/ai 0755 lucerno lucerno -"
     "d /mnt/sys_archiv 0755 lucerno lucerno -"
-
-    # линки rclone
-    "d /mnt/www-GoogleDrive 0755 lucerno users -"
-    "d /mnt/www-OneDrive 0755 lucerno users -"
 
     # линки ComfyUI
     "d /mnt/ai/ComfyUI/custom_nodes 0755 lucerno lucerno -"
@@ -49,13 +43,6 @@ in
     "L+ ${home}/.config/yabridgectl - lucerno lucerno - ${home}/${configDir}/dotfiles/config/yabridgectl"
     "L+ ${home}/.config/MangoHud - lucerno lucerno - ${home}/${configDir}/dotfiles/config/MangoHud"
     "L+ ${home}/.config/kglobalshortcutsrc - lucerno lucerno - ${home}/${configDir}/dotfiles/config/KDE/config-kglobalshortcutsrc"
-
-    # Симлинк для Powerlevel10k
-    "L+ ${home}/.p10k.zsh - lucerno lucerno - ${home}/${configDir}/dotfiles/config/zsh/.p10k.zsh"
-
-    # ---------- Симлинки для Steam и игр ----------
-    "L+ ${home}/.local/share/Steam/userdata - lucerno lucerno - ${home}/${configDir}/dotfiles/config/Steam/userdata"
-    "L+ ${home}/.local/share/Steam/steamapps - lucerno lucerno - /mnt/games/SteamLibrary/steamapps"
 
     # ---------- Симлинки для приложений и данных ----------
     "L+ ${home}/.git-credentials - lucerno lucerno - /mnt/sys_archiv/secrets/git-credentials"
@@ -133,12 +120,8 @@ in
       result
     ''}"
 
-    # --- Указывает количество потоков для компиляции шейдеров в Steam ---
-    "L+ ${home}/.local/share/Steam/config/steam_dev.cfg - lucerno lucerno - ${pkgs.writeText "steam_dev.cfg" ''
-      unShaderBackgroundProcessingThreads 16
-    ''}"
-
     # ---------- .desktop файлы ----------
+
     # --- Ярлык REAPER в меню KDE с кастомным запусском ---
     "L+ ${home}/.local/share/applications/reaper-x11.desktop - lucerno lucerno - ${pkgs.writeText "reaper-x11.desktop" ''
       [Desktop Entry]
