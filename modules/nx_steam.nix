@@ -19,7 +19,7 @@ in
 
   # ========== Правила tmpfiles для Steam ==========
   systemd.tmpfiles.rules = [
-      # ---------- Симлинки для Steam и игр ----------
+    # ---------- Симлинки для Steam и игр ----------
     "L+ ${home}/.local/share/Steam/userdata - lucerno lucerno - ${home}/${configDir}/dotfiles/config/Steam/userdata"
     "L+ ${home}/.local/share/Steam/steamapps - lucerno lucerno - /mnt/games/SteamLibrary/steamapps"
     # --- Указывает количество потоков для компиляции шейдеров в Steam ---

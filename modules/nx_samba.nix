@@ -4,7 +4,7 @@
 {
   # ========== Создание и настройка общей папки через systemd-tmpfiles ==========
   systemd.tmpfiles.rules = lib.mkAfter [
-    "d /mnt/archiv/FTP/ 0775 lucerno users - -"             # Создать папку с указанными правами и владельцем
+    "d /mnt/archiv/FTP/ 0775 lucerno users - -"
   ];
 
   services = {

@@ -105,7 +105,7 @@
       SystemMaxRetentionSec=5d
     '';
 
-    irqbalance.enable = true;           # Включает демон irqbalance, который распределяет аппаратные прерывания между ядрами CPU.
+    irqbalance.enable = true;                                                                           # Включает демон irqbalance, который распределяет аппаратные прерывания между ядрами CPU.
 
   };
 
