@@ -1,5 +1,10 @@
 { pkgs, pkgs-unstable, myLib, ... }:
 
+let
+  inherit (myLib) home;
+  configDir = myLib.configDirName;
+in
+
 {
   environment.sessionVariables = {
     VST3_PATH = "${myLib.home}/.vst3";                                                                  # Устанавливаем переменную окружения для пользовательской папки VST3
@@ -52,12 +57,18 @@
 
   # ========== Правила tmpfiles для аудио и REAPER ==========
   systemd.tmpfiles.rules = [
-    # ---------- ПРАВИЛА ДЛЯ АУДИО ----------
     "d ${myLib.home}/.vst3 0755 lucerno lucerno -"
-    "d ${myLib.home}/.config/REAPER/UserPlugins 0755 lucerno lucerno -"
     "L+ ${myLib.home}/.local/bin/wine64 - lucerno lucerno - ${pkgs-unstable.wineWow64Packages.staging}/bin/wine"  # wine64
     "L+ ${myLib.home}/.config/REAPER/UserPlugins/reaper_sws-x86_64.so - lucerno lucerno - ${pkgs-unstable.reaper-sws-extension}/UserPlugins/reaper_sws-x86_64.so"  # .so файлы REAPER
     "L+ ${myLib.home}/.config/REAPER/UserPlugins/reaper_reapack-x86_64.so - lucerno lucerno - ${pkgs-unstable.reaper-reapack-extension}/UserPlugins/reaper_reapack-x86_64.so"  # .so файлы REAPER
+
+    # ---------- Симлинки конфигов ----------
+    "d ${myLib.home}/.config/REAPER/UserPlugins 0755 lucerno lucerno -"
+    "L+ ${home}/.config/REAPER - lucerno lucerno - ${home}/${configDir}/dotfiles/config/REAPER"
+    "L+ ${home}/.config/yabridgectl - lucerno lucerno - ${home}/${configDir}/dotfiles/config/yabridgectl"
+    "L+ ${home}/.config/DecentSampler - lucerno lucerno - /mnt/sys_archiv/samples/DecentSampler"
+    "L+ ${home}/drum_sklad - lucerno lucerno - /mnt/sys_archiv/samples/drum_sklad"
+    "L+ ${home}/.local/share/vital - lucerno lucerno - /mnt/sys_archiv/samples/vital"
 
     # ---------- Каталоги для drop‑in файлов systemd --user ----------
     "d ${myLib.home}/.config/systemd 0755 lucerno lucerno -"

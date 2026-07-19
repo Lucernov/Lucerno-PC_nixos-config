@@ -1,6 +1,10 @@
 # Модуль для автоматического монтирования облачных дисков (Google Drive, OneDrive) через rclone
 { pkgs, myLib, ... }:
 
+let
+  inherit (myLib) home;
+in
+
 {
   # ========== Настройки FUSE для rclone ==========
   programs.fuse = {
@@ -13,6 +17,7 @@
   systemd.tmpfiles.rules = [
     "d /mnt/www-GoogleDrive 0755 lucerno users -"
     "d /mnt/www-OneDrive 0755 lucerno users -"
+    "L+ ${home}/.config/rclone - lucerno lucerno - /mnt/sys_archiv/secrets/rclone"
   ];
 
   systemd.services = {

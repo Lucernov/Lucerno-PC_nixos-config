@@ -7,6 +7,18 @@ in
 {
   systemd.tmpfiles.rules = [
 
+    # ---------- Переопределение путей пдомашних папок (генерируемые через pkgs.writeText) ----------
+    "L+ ${home}/.config/user-dirs.dirs - lucerno lucerno - ${pkgs.writeText "user-dirs.dirs" ''
+      XDG_DESKTOP_DIR="$HOME/Desktop"
+      XDG_DOWNLOAD_DIR="$HOME/Загрузки"
+      XDG_TEMPLATES_DIR="$HOME/Templates"
+      XDG_PUBLICSHARE_DIR="$HOME/Public"
+      XDG_DOCUMENTS_DIR="/mnt/docs"
+      XDG_MUSIC_DIR="/mnt/music"
+      XDG_PICTURES_DIR="/mnt/images"
+      XDG_VIDEOS_DIR="/mnt/video"
+    ''}"
+
     # ---------- Директории ----------
     "d ${home}/${configDir} 0755 lucerno lucerno -"
     "d ${home}/.local/bin 0755 lucerno lucerno -"
@@ -21,15 +33,6 @@ in
     "d /mnt/ai 0755 lucerno lucerno -"
     "d /mnt/sys_archiv 0755 lucerno lucerno -"
 
-    # линки ComfyUI
-    "d /mnt/ai/ComfyUI/custom_nodes 0755 lucerno lucerno -"
-    "d /mnt/ai/ComfyUI/models/diffusion_models 0755 lucerno lucerno -"
-    "d /mnt/ai/ComfyUI/models/inpaint 0755 lucerno lucerno -"
-    "d /mnt/ai/ComfyUI/models/loras 0755 lucerno lucerno -"
-    "d /mnt/ai/ComfyUI/models/text_encoders 0755 lucerno lucerno -"
-    "d /mnt/ai/ComfyUI/models/upscale_models 0755 lucerno lucerno -"
-    "d /mnt/ai/ComfyUI/models/vae 0755 lucerno lucerno -"
-
     # ---------- Права на энергопотребление CPU ----------
     "z /sys/class/powercap/intel-rapl:*/energy_uj 0640 root powercap -"
 
@@ -39,42 +42,13 @@ in
     "L+ ${home}/.config/qmmp - lucerno lucerno - ${home}/${configDir}/dotfiles/config/qmmp"
     "L+ ${home}/.config/SocialStream - lucerno lucerno - ${home}/${configDir}/dotfiles/config/SocialStream"
     "L+ ${home}/.config/obs-studio - lucerno lucerno - ${home}/${configDir}/dotfiles/config/obs-studio"
-    "L+ ${home}/.config/REAPER - lucerno lucerno - ${home}/${configDir}/dotfiles/config/REAPER"
-    "L+ ${home}/.config/yabridgectl - lucerno lucerno - ${home}/${configDir}/dotfiles/config/yabridgectl"
     "L+ ${home}/.config/MangoHud - lucerno lucerno - ${home}/${configDir}/dotfiles/config/MangoHud"
     "L+ ${home}/.config/kglobalshortcutsrc - lucerno lucerno - ${home}/${configDir}/dotfiles/config/KDE/config-kglobalshortcutsrc"
 
     # ---------- Симлинки для приложений и данных ----------
     "L+ ${home}/.git-credentials - lucerno lucerno - /mnt/sys_archiv/secrets/git-credentials"
-    "L+ ${home}/.config/rclone - lucerno lucerno - /mnt/sys_archiv/secrets/rclone"
     "L+ ${home}/.config/AmneziaVPN.ORG - lucerno lucerno - /mnt/sys_archiv/secrets/AmneziaVPN.ORG"
-    "L+ ${home}/drum_sklad - lucerno lucerno - /mnt/sys_archiv/samples/drum_sklad"
-    "L+ ${home}/.local/share/vital - lucerno lucerno - /mnt/sys_archiv/samples/vital"
     "L+ ${home}/.local/bin/socialstreamninja - lucerno lucerno - /mnt/sys_archiv/pkgs/AppImages/socialstreamninja_linux_v0.3.128_x86_64.AppImage"
-    "L+ ${home}/.config/DecentSampler - lucerno lucerno - /mnt/sys_archiv/samples/DecentSampler"
-
-    # ---------- Симлинки ComfyUI (в /mnt/ai) ----------
-    "L+ ${home}/.config/comfy-ui - lucerno lucerno - /mnt/ai/ComfyUI"
-    "L+ /mnt/ai/ComfyUI/custom_nodes/comfyui_controlnet_aux - lucerno lucerno - /mnt/ai/ComfyUI_krita-ai-diffusion/comfyui_controlnet_aux"
-    "L+ /mnt/ai/ComfyUI/custom_nodes/comfyui-inpaint-nodes - lucerno lucerno - /mnt/ai/ComfyUI_krita-ai-diffusion/comfyui-inpaint-nodes"
-    "L+ /mnt/ai/ComfyUI/custom_nodes/ComfyUI_IPAdapter_plus - lucerno lucerno - /mnt/ai/ComfyUI_krita-ai-diffusion/ComfyUI_IPAdapter_plus"
-    "L+ /mnt/ai/ComfyUI/custom_nodes/comfyui-tooling-nodes - lucerno lucerno - /mnt/ai/ComfyUI_krita-ai-diffusion/comfyui-tooling-nodes"
-
-    # Модели
-    "L+ /mnt/ai/ComfyUI/models/diffusion_models/flux-2-klein-4b-fp8.safetensors - lucerno lucerno - /mnt/ai/ComfyUI_krita-ai-diffusion/models/diffusion_models/flux-2-klein-4b-fp8.safetensors"
-    "L+ /mnt/ai/ComfyUI/models/diffusion_models/flux-2-klein-4b-Q6_K.gguf - lucerno lucerno - /mnt/ai/ComfyUI_krita-ai-diffusion/models/diffusion_models/flux-2-klein-4b-Q6_K.gguf"
-    "L+ /mnt/ai/ComfyUI/models/inpaint/MAT_Places512_G_fp16.safetensors - lucerno lucerno - /mnt/ai/ComfyUI_krita-ai-diffusion/models/inpaint/MAT_Places512_G_fp16.safetensors"
-    "L+ /mnt/ai/ComfyUI/models/loras/LyNiaZ53Tudg0J6sT8Xbx_pytorch_lora_weights_comfy_converted.safetensors - lucerno lucerno - /mnt/ai/ComfyUI_krita-ai-diffusion/models/loras/LyNiaZ53Tudg0J6sT8Xbx_pytorch_lora_weights_comfy_converted.safetensors"
-    "L+ /mnt/ai/ComfyUI/models/text_encoders/Qwen3-4B-Q4_K_M.gguf - lucerno lucerno - /mnt/ai/ComfyUI_krita-ai-diffusion/models/text_encoders/Qwen3-4B-Q4_K_M.gguf"
-
-    # Upscale модели
-    "L+ /mnt/ai/ComfyUI/models/upscale_models/4x_NMKD-Superscale-SP_178000_G.pth - lucerno lucerno - /mnt/ai/ComfyUI_krita-ai-diffusion/models/upscale_models/4x_NMKD-Superscale-SP_178000_G.pth"
-    "L+ /mnt/ai/ComfyUI/models/upscale_models/HAT_SRx4_ImageNet-pretrain.pth - lucerno lucerno - /mnt/ai/ComfyUI_krita-ai-diffusion/models/upscale_models/HAT_SRx4_ImageNet-pretrain.pth"
-    "L+ /mnt/ai/ComfyUI/models/upscale_models/OmniSR_X2_DIV2K.safetensors - lucerno lucerno - /mnt/ai/ComfyUI_krita-ai-diffusion/models/upscale_models/OmniSR_X2_DIV2K.safetensors"
-    "L+ /mnt/ai/ComfyUI/models/upscale_models/OmniSR_X3_DIV2K.safetensors - lucerno lucerno - /mnt/ai/ComfyUI_krita-ai-diffusion/models/upscale_models/OmniSR_X3_DIV2K.safetensors"
-    "L+ /mnt/ai/ComfyUI/models/upscale_models/OmniSR_X4_DIV2K.safetensors - lucerno lucerno - /mnt/ai/ComfyUI_krita-ai-diffusion/models/upscale_models/OmniSR_X4_DIV2K.safetensors"
-    "L+ /mnt/ai/ComfyUI/models/upscale_models/Real_HAT_GAN_sharper.pth - lucerno lucerno - /mnt/ai/ComfyUI_krita-ai-diffusion/models/upscale_models/Real_HAT_GAN_sharper.pth"
-    "L+ /mnt/ai/ComfyUI/models/vae/flux2-vae.safetensors - lucerno lucerno - /mnt/ai/ComfyUI_krita-ai-diffusion/models/vae/flux2-vae.safetensors"
 
     # ---------- Автозапуск ----------
     # AmneziaVPN
@@ -87,18 +61,6 @@ in
       X-KDE-autostart-after=panel
       StartupNotify=false
       Terminal=false
-    ''}"
-
-    # ---------- Переопределение путей пдомашних папок (генерируемые через pkgs.writeText) ----------
-    "L+ ${home}/.config/user-dirs.dirs - lucerno lucerno - ${pkgs.writeText "user-dirs.dirs" ''
-      XDG_DESKTOP_DIR="$HOME/Desktop"
-      XDG_DOWNLOAD_DIR="$HOME/Загрузки"
-      XDG_TEMPLATES_DIR="$HOME/Templates"
-      XDG_PUBLICSHARE_DIR="$HOME/Public"
-      XDG_DOCUMENTS_DIR="/mnt/docs"
-      XDG_MUSIC_DIR="/mnt/music"
-      XDG_PICTURES_DIR="/mnt/images"
-      XDG_VIDEOS_DIR="/mnt/video"
     ''}"
 
     # Конфигурационный файл Git (~/.gitconfig)
