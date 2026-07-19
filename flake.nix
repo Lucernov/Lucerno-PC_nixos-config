@@ -87,10 +87,10 @@
           specialArgs = {                                                                                  # Дополнительные аргументы, передаваемые во все модули
             inherit myLib;                                                                                 # Мои общие переменные
             inherit inputs;                                                                                # Все входы (flake-зависимости)
+            inherit blender-cuda;                                                                          # Flake с Blender+CUDA для передачи в пакеты
+            inherit nixpkgs-krita-25-11;                                                                   # Фиксированный nixpkgs для Krita
             pkgs-unstable = pkgsUnstable;                                                                  # Нестабильные пакеты для использования в модулях
             import-tree = inputs.import-tree;                                                              # Утилита для рекурсивного импорта
-            inherit nixpkgs-krita-25-11;                                                                   # Фиксированный nixpkgs для Krita
-            inherit blender-cuda;                                                                          # Flake с Blender+CUDA для передачи в пакеты
             pkgs-minion = pkgsMinion; # TEMP
           };
 
