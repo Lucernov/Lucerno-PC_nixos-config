@@ -26,7 +26,7 @@ in
     "d ${home}/.local/share/applications 0755 lucerno lucerno -"
     "d ${home}/.local/share/Steam/config 0755 lucerno lucerno -"
     "d ${home}/.config 0755 lucerno lucerno -"
-    "d ${home}/.config/autostart 0755 lucerno lucerno -"                                      # для автозапуска
+    "d ${home}/.config/autostart 0755 lucerno lucerno -"
     "d ${home}/${configDir}/secrets 0750 lucerno lucerno -"
 
     # ДИСКИ
@@ -46,7 +46,6 @@ in
     "L+ ${home}/.config/kglobalshortcutsrc - lucerno lucerno - ${home}/${configDir}/dotfiles/config/KDE/config-kglobalshortcutsrc"
 
     # ---------- Симлинки для приложений и данных ----------
-    "L+ ${home}/.git-credentials - lucerno lucerno - /mnt/sys_archiv/secrets/git-credentials"
     "L+ ${home}/.config/AmneziaVPN.ORG - lucerno lucerno - /mnt/sys_archiv/secrets/AmneziaVPN.ORG"
     "L+ ${home}/.local/bin/socialstreamninja - lucerno lucerno - /mnt/sys_archiv/pkgs/AppImages/socialstreamninja_linux_v0.3.128_x86_64.AppImage"
 
@@ -61,25 +60,6 @@ in
       X-KDE-autostart-after=panel
       StartupNotify=false
       Terminal=false
-    ''}"
-
-    # Конфигурационный файл Git (~/.gitconfig)
-    "L+ ${home}/.gitconfig - lucerno lucerno - ${pkgs.writeText "gitconfig" ''
-      [user]
-        name = Lucernov
-        email = jin.riv@gmail.com
-      [core]
-        excludesfile = ~/.gitignore
-        hooksPath = ~/.git/hooks
-      [credential]
-        helper = store
-    ''}"
-    # Глобальный файл игнорирования Git (~/.gitignore)
-    "L+ ${home}/.gitignore - lucerno lucerno - ${pkgs.writeText "gitignore" ''
-      *.swp
-      *~
-      .Trash-*
-      result
     ''}"
 
     # ---------- .desktop файлы ----------

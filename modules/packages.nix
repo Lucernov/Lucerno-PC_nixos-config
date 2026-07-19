@@ -48,7 +48,7 @@
     base16-schemes                                              # Набор цветовых схем Base16 (для терминалов, редакторов)
     libva-utils                                                 # Утилиты для VA-API (аппаратное ускорение видео)
     wayland-utils                                               # Набор утилит для диагностики Wayland (например, wayland-info)
-    gearlever                                                   # Менеджер обновлений для графических приложений (например, AppImages)
+    gearlever                                                   # Менеджер обновлений для AppImages приложений
     mission-center                                              # Графический монитор системы (альтернатива btop)
     lact                                                        # Утилита для управления видеокартами NVIDIA и AMD (мониторинг, разгон, управление вентиляторами, настройка VF-кривой). Для NVIDIA требуется библиотека NVML
     strace                                                      # перехватывает и записывает все системные вызовы (поиск ошибок запуска программ)
@@ -75,7 +75,7 @@
     lnav                                                        # Просмотр лог-файлов с подсветкой и навигацией
     # carbonyl                                                  # Консольный браузер на движке Chromium
     nvtopPackages.nvidia                                        # Монитор GPU NVIDIA в консоли (аналог htop для видеокарты)
-    my-packages.btop                                            # Монитор ресурсов с графиками (аналог htop, но красивее)
+    my-packages.btop                                            # Монитор ресурсов с графиками
     termshark                                                   # Анализатор сетевого трафика в терминале (альтернатива Wireshark)
     duf                                                         # Просмотр использования дискового пространства (удобная альтернатива df)
     dust                                                        # Анализ размера папок/файлов с визуализацией (аналог du, но нагляднее)
@@ -83,6 +83,8 @@
     neo                                                         # Матричный дождь из символов (эффект из фильма)
 
     # KDE приложения
+    kdePackages.breeze-gtk                                      # Обеспечивает единый внешний вид GTK-программ в окружении KDE Plasma
+    kdePackages.kde-gtk-config                                  # Настройка GTK-тем для KDE (позволяет менять тему GTK через системные настройки Plasma)
     kdePackages.kcalc                                           # Калькулятор
     kdePackages.ktorrent                                        # Torrent-клиент
     kdePackages.kdenlive                                        # Видеоредактор
@@ -97,9 +99,9 @@
     google-chrome                                               # Браузер Google Chrome
     parabolic                                                   # Загрузчик видео/аудио с YouTube (альтернатива yt-dlp)
     (discord.override { withOpenASAR = true; })                 # Голосовой/текстовый чат
-    vesktop
+    vesktop                                                     # Голосовой/текстовый чат (альтернатиивный discord клиент в котором открываются видео ролики)
     telegram-desktop                                            # Мессенджер Telegram
-    teamspeak6-client
+    teamspeak6-client                                           # Голосовой чат Тимспик
 
     # ГРАФИКА
     upscaler                                                    # Увеличение разрешения изображений
@@ -110,7 +112,7 @@
     inkscape                                                    # Векторная графика
 
     # 3D-моделирование
-    blender-cuda.packages.${pkgs.stdenv.hostPlatform.system}.blender-with-cuda  # 3D редактор
+    blender-cuda.packages.${pkgs.stdenv.hostPlatform.system}.blender-with-cuda  # 3D редактор (бинарная версия с поддержкой CUDA)
     freecad                                                     # Уже нормальный 3D кад
     prusa-slicer                                                # Слайсер для 3D принтера
     printrun                                                    # Соединение с 3D принтером и отправка на печать по usb

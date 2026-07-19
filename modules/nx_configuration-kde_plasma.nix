@@ -18,12 +18,8 @@
     QT_QPA_PLATFORMTHEME = "kde";                                   # Тема Qt для приложений (использовать тему KDE)
   };
 
-  # ========== Дополнительные системные пакеты для Plasma ==========
+  # ========== Настройка фона SDDM ==========
   environment.systemPackages = with pkgs; [
-    kdePackages.breeze-gtk                                          # Обеспечивает единый внешний вид GTK-программ в окружении KDE Plasma
-    kdePackages.kde-gtk-config                                      # Настройка GTK-тем для KDE (позволяет менять тему GTK через системные настройки Plasma)
-
-    # ========== Настройка фона SDDM ==========
     (writeTextDir "share/sddm/themes/breeze/theme.conf.user" ''
       [General]
       # Путь к изображению обоев для экрана входа (берётся из myLib)
