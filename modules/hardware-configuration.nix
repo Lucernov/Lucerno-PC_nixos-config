@@ -245,6 +245,7 @@ in
       KERNEL=="hpet", GROUP="audio"
     '';
 
+    irqbalance.enable = true;                                               # Включает демон irqbalance, который распределяет аппаратные прерывания между ядрами CPU.
     fwupd.enable = true;                                                    # Включает демон fwupd для автоматического обновления прошивок устройств (UEFI, USB, диски и др.)
     xserver.videoDrivers = [ "nvidia" ];                                    # Использовать проприетарный драйвер NVIDIA (NVIDIA RTX 3070)
   };
