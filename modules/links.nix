@@ -142,5 +142,17 @@ in
       Terminal=false
       StartupWMClass=Google-chrome-stable
     ''}"
+
+    # --- Ярлык TeamSpeak с принудительным X11 ---
+    "L+ ${home}/.local/share/applications/teamspeak6.desktop - lucerno lucerno - ${pkgs.writeText "teamspeak6.desktop" ''
+      [Desktop Entry]
+      Type=Application
+      Name=TeamSpeak 6
+      Exec=/run/current-system/sw/bin/teamspeak6 --ozone-platform=x11 %F
+      Icon=teamspeak6
+      Categories=Network;
+      Terminal=false
+      StartupNotify=true
+    ''}"
   ];
 }
