@@ -101,7 +101,7 @@
     (discord.override { withOpenASAR = true; })                 # Голосовой/текстовый чат
     vesktop                                                     # Голосовой/текстовый чат (альтернатиивный discord клиент в котором открываются видео ролики)
     telegram-desktop                                            # Мессенджер Telegram
-    teamspeak6-client                                           # Голосовой чат Тимспик
+    my-packages.teamspeak                                       # Голосовой чат Тимспик
 
     # ГРАФИКА
     upscaler                                                    # Увеличение разрешения изображений
