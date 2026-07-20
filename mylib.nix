@@ -1,5 +1,5 @@
 {
-  wallpaperPath = ./dotfiles/wallpapers/Velo_03.png;
+  wallpaperPath = ./dotfiles/wallpapers/Velo_02.png;
   userName = "lucerno";
   home = "/home/lucerno";
   hostName = "Lucerno-PC";
