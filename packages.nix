@@ -1,1 +1,0 @@
-/home/lucerno/nixos-config/modules/packages.nix
