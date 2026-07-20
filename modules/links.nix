@@ -143,16 +143,17 @@ in
       StartupWMClass=Google-chrome-stable
     ''}"
 
-    # --- Ярлык TeamSpeak с принудительным X11 ---
+    # ----------Ярлык TeamSpeak 6 с поддержкой X11 в Wayland ----------
     "L+ ${home}/.local/share/applications/teamspeak6.desktop - lucerno lucerno - ${pkgs.writeText "teamspeak6.desktop" ''
       [Desktop Entry]
-      Type=Application
-      Name=TeamSpeak 6
+      Categories=Audio;AudioVideo;Chat;Network
+      Comment=TeamSpeak Voice Communication Client
       Exec=/run/current-system/sw/bin/teamspeak6 --ozone-platform=x11 %F
-      Icon=teamspeak6
-      Categories=Network;
-      Terminal=false
-      StartupNotify=true
+      Icon=teamspeak6-client
+      Name=TeamSpeak 6
+      StartupWMClass=teamspeak-client
+      Type=Application
+      Version=1.5
     ''}"
   ];
 }
