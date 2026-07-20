@@ -148,9 +148,9 @@ in
       [Desktop Entry]
       Categories=Audio;AudioVideo;Chat;Network
       Comment=TeamSpeak Voice Communication Client
-      Exec=/run/current-system/sw/bin/teamspeak6 --ozone-platform=x11 %F
+      Exec=TeamSpeak --ozone-platform=x11 %F
       Icon=teamspeak6-client
-      Name=TeamSpeak 6
+      Name=TeamSpeak
       StartupWMClass=teamspeak-client
       Type=Application
       Version=1.5
