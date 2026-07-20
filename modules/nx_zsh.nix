@@ -51,7 +51,7 @@ in
       # ========== Управление конфигурацией Nix ==========
       sync   = "cd ${myLib.home}/${myLib.configDirName} && git add -A && (git commit -m \"$(date '+%Y-%m-%d %H:%M:%S')\" || true) && git push"; # синхронизировать конфиг с Git
       update = "cd ${myLib.home}/${myLib.configDirName} && git add -A && git commit -m \"pre-rebuild\" && git push && nh os switch";  # пересобрать NixOS без обновления входов
-      upgrade = "cd ${myLib.home}/${myLib.configDirName} && git add -A && (git commit -m \"upgrade: $(date '+%Y-%m-%d %H:%M:%S')\" || true) && git push && nh os switch --update";  # пересобрать NixOS с обновлением flake.lock
+      upgrade = "cd ${myLib.home}/${myLib.configDirName} && git add -A && (git commit -m \"pre-upgrade: $(date '+%Y-%m-%d %H:%M:%S')\" || true) && git push && nh os switch --update && git add flake.lock && (git commit -m \"upgrade: $(date '+%Y-%m-%d %H:%M:%S')\" || true) && git push";  # пересобрать NixOS с обновлением flake.lock
       clean   = "nh clean all --keep 2 && nh os boot --update";  # очистить старые поколения, обновить входы и переключиться
 
       # ========== Приложения ==========
