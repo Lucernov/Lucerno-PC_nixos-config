@@ -9,7 +9,9 @@ in
   systemd.services.comfyui = {
     description = "ComfyUI server (system)";                                            # Описание сервиса (отображается в systemctl status)
     after = [ "network.target" ];                                                       # Запускать после того, как сеть поднята
-    wantedBy = [ "multi-user.target" ];                                                 # Автоматически запускать при загрузке системы
+    wantedBy = [];                                                                      # Не запускать при загрузке системы
+  # wantedBy = [ "multi-user.target" ];                                                 # Автоматически запускать при загрузке системы
+
     serviceConfig = {
       User = myLib.userName;                                                            # Запускать от имени пользователя lucerno (не от root)
       Group = myLib.userName;                                                           # Группа пользователя
@@ -18,6 +20,22 @@ in
       ExecStart = "${pkgs.comfy-ui-cuda}/bin/comfy-ui --listen 127.0.0.1 --port 8188";  # Команда запуска - только локальный доступ
       Restart = "on-failure";                                                           # Перезапускать сервис, если он упал с ошибкой
       RestartSec = 5;                                                                   # Задержка перед перезапуском (5 секунд)
+      DevicePolicy = "closed";                                                          # Разрешать только явно перечисленные устройства (безопасность)
+      AmbientCapabilities = [ "CAP_SYS_ADMIN" ];                                        # Дать процессу возможность монтировать (нужно для FUSE)
+
+      # ---------- Дополнительные группы для доступа к оборудованию ----------
+      SupplementaryGroups = [ "fuse" "render" "video" "nvidia" ];                       # Группы для доступа к FUSE, GPU, NVIDIA
+
+      # ---------- Явное разрешение доступа к устройствам ----------
+      DeviceAllow = [
+        "/dev/fuse"                                                                     # Доступ к FUSE (для возможных монтирований внутри ComfyUI)
+        "/dev/nvidia0"                                                                  # Основное устройство NVIDIA (видеокарта)
+        "/dev/nvidiactl"                                                                # Управление NVIDIA
+        "/dev/nvidia-uvm"                                                               # Unified Virtual Memory (нужен для CUDA)
+        "/dev/nvidia-uvm-tools"                                                         # Инструменты UVM
+        "/dev/nvidia-modeset"                                                           # Режимный сет (для Wayland)
+        "/dev/dri/*"                                                                    # Доступ к DRI (графика)
+      ];
 
       # ---------- Переменные окружения для CUDA и доступа к драйверу NVIDIA ----------
       Environment = [
@@ -33,22 +51,6 @@ in
       NoNewPrivileges = false;                                                          # Разрешить процессу получать новые привилегии (CAP_SYS_ADMIN)
       PrivateMounts = false;                                                            # Не изолировать точки монтирования (нужно для FUSE)
       MountFlags = "shared";                                                            # Сделать монтирования разделяемыми (необходимо для FUSE)
-
-      # ---------- Дополнительные группы для доступа к оборудованию ----------
-      SupplementaryGroups = [ "fuse" "render" "video" "nvidia" ];                       # Группы для доступа к FUSE, GPU, NVIDIA
-
-      # ---------- Явное разрешение доступа к устройствам ----------
-      DeviceAllow = [
-        "/dev/fuse"                                                                     # Доступ к FUSE (для возможных монтирований внутри ComfyUI)
-        "/dev/nvidia0"                                                                  # Основное устройство NVIDIA (видеокарта)
-        "/dev/nvidiactl"                                                                # Управление NVIDIA
-        "/dev/nvidia-uvm"                                                               # Unified Virtual Memory (нужен для CUDA)
-        "/dev/nvidia-uvm-tools"                                                         # Инструменты UVM
-        "/dev/nvidia-modeset"                                                           # Режимный сет (для Wayland)
-        "/dev/dri/*"                                                                    # Доступ к DRI (графика)
-      ];
-      DevicePolicy = "closed";                                                          # Разрешать только явно перечисленные устройства (безопасность)
-      AmbientCapabilities = [ "CAP_SYS_ADMIN" ];                                        # Дать процессу возможность монтировать (нужно для FUSE)
     };
   };
 

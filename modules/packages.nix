@@ -73,7 +73,7 @@
     fastfetch                                                   # Вывод информации о системе
     lsof                                                        # Просмотр открытых файлов и сокетов
     lnav                                                        # Просмотр лог-файлов с подсветкой и навигацией
-    # carbonyl                                                  # Консольный браузер на движке Chromium
+  # carbonyl                                                    # Консольный браузер на движке Chromium
     nvtopPackages.nvidia                                        # Монитор GPU NVIDIA в консоли (аналог htop для видеокарты)
     my-packages.btop                                            # Монитор ресурсов с графиками
     termshark                                                   # Анализатор сетевого трафика в терминале (альтернатива Wireshark)
@@ -98,7 +98,7 @@
     authenticator                                               # Приложение для двухфакторной аутентификации (TOTP, HOTP), например, для аккаунтов Google, GitHub и т.д.
     google-chrome                                               # Браузер Google Chrome
     parabolic                                                   # Загрузчик видео/аудио с YouTube (альтернатива yt-dlp)
-    (discord.override { withOpenASAR = true; })                 # Голосовой/текстовый чат
+  # (discord.override { withOpenASAR = true; })                 # Голосовой/текстовый чат
     vesktop                                                     # Голосовой/текстовый чат (альтернатиивный discord клиент в котором открываются видео ролики)
     telegram-desktop                                            # Мессенджер Telegram
     my-packages.teamspeak                                       # Голосовой чат Тимспик
@@ -146,8 +146,8 @@
       beetle-psx-hw                                             # Ядро PlayStation 1
       pcsx2                                                     # Ядро PlayStation 2
     ]))
-    #lutris                                                     # Игровой лаунчер для управления играми
-    #heroic                                                     # Лаунчер для Epic Games Store и GOG
+  # lutris                                                      # Игровой лаунчер для управления играми
+  # heroic                                                      # Лаунчер для Epic Games Store и GOG
 
     # ИИ
     comfy-ui-cuda                                               # ComfyUI с поддержкой CUDA для генерации изображений через нейросети
