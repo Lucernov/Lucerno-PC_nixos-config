@@ -99,7 +99,7 @@
     google-chrome                                               # Браузер Google Chrome
     parabolic                                                   # Загрузчик видео/аудио с YouTube (альтернатива yt-dlp)
   # (discord.override { withOpenASAR = true; })                 # Голосовой/текстовый чат
-    vesktop                                                     # Голосовой/текстовый чат (альтернатиивный discord клиент в котором открываются видео ролики)
+    (vesktop.override { withSystemVencord = false; })           # Голосовой/текстовый чат (альтернатиивный discord клиент в котором открываются видео ролики)
     telegram-desktop                                            # Мессенджер Telegram
     my-packages.teamspeak                                       # Голосовой чат Тимспик
 
