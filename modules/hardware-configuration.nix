@@ -141,6 +141,7 @@ in
       package = config.boot.kernelPackages.nvidiaPackages.stable;           # Версия драйвера
     };
     ksm.enable = false;                                                     # Kernel Same‑page Merging – отключено (нужно только для виртуализации)
+    xone.enable = true;                                                     # Включает поддержку беспроводных геймпадов Xbox (через официальный драйвер xone)
   };
 
   # ========== ЗАГРУЗКА И ЯДРО ==========

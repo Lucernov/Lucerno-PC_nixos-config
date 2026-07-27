@@ -1,4 +1,4 @@
-{ pkgs, pkgs-unstable, myLib, ... }:
+{ pkgs, myLib, ... }:
 
 let
   inherit (myLib) home;
@@ -6,17 +6,6 @@ let
 in
 
 {
-  # ========== Настройки модуля Steam и игр ==========
-  programs.steam = {
-    enable = true;                                          # Включает поддержку Steam (устанавливает пакет, добавляет 32-битную среду)
-    remotePlay.openFirewall = true;                         # Открывает порты в фаерволе для Steam Remote Play (трансляция игры на другие устройства)
-    dedicatedServer.openFirewall = true;                    # Открывает порты для выделенных серверов игр (например, для Counter-Strike, Garry's Mod)
-    extraCompatPackages = [ pkgs-unstable.proton-ge-bin ];  # Дополнительные совместимые пакеты (Proton-GE) для запуска Windows-игр
-  };
-
-  # Драйвер для геймпадов Xbox (Xbox One, Series X|S) – модуль ядра
-  hardware.xone.enable = true;                              # Включает поддержку беспроводных геймпадов Xbox (через официальный драйвер xone)
-
   # ========== Правила tmpfiles для Steam ==========
   systemd.tmpfiles.rules = [
     # ---------- Симлинки для Steam и игр ----------
