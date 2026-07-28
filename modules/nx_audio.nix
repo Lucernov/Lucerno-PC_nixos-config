@@ -7,7 +7,7 @@ in
 
 {
   environment.sessionVariables = {
-    VST3_PATH = "${myLib.home}/.vst3";                                                                  # Устанавливаем переменную окружения для пользовательской папки VST3
+    VST3_PATH = "/run/current-system/sw/lib/vst3:${myLib.home}/.vst3";                                  # Устанавливаем переменную окружения для пользовательской папки VST3
     WINEPREFIX = "/mnt/music/wine-yabridge";                                                            # Префикс Wine для Windows-плагинов, используемых через yabridge
   };
 
@@ -61,6 +61,9 @@ in
     "L+ ${myLib.home}/.local/bin/wine64 - lucerno lucerno - ${pkgs-unstable.wineWow64Packages.staging}/bin/wine"  # wine64
     "L+ ${myLib.home}/.config/REAPER/UserPlugins/reaper_sws-x86_64.so - lucerno lucerno - ${pkgs-unstable.reaper-sws-extension}/UserPlugins/reaper_sws-x86_64.so"  # .so файлы REAPER
     "L+ ${myLib.home}/.config/REAPER/UserPlugins/reaper_reapack-x86_64.so - lucerno lucerno - ${pkgs-unstable.reaper-reapack-extension}/UserPlugins/reaper_reapack-x86_64.so"  # .so файлы REAPER
+
+    "L+ ${myLib.home}/.vst3/MT-PowerDrumKit.vst3 - lucerno lucerno - /run/current-system/sw/lib/vst3/MT-PowerDrumKit.vst3"
+    "L+ ${myLib.home}/Audio Assault/PluginData/Audio Assault/DrumLockerData - lucerno lucerno - /run/current-system/sw/share/drum-locker"
 
     # ---------- Симлинки конфигов ----------
     "d ${myLib.home}/.config/REAPER/UserPlugins 0755 lucerno lucerno -"

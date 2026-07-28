@@ -10,4 +10,5 @@
     coreutils = pkgs.coreutils;
   };
   mtpdk = pkgs.callPackage ./pkg_MT-PowerDrumKit_2.nix { };
+  drum-locker = pkgs.callPackage ./pkg_Drum-Locker.nix { };
 }

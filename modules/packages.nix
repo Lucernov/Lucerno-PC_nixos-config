@@ -89,7 +89,8 @@
     fastfetch                                                     # Вывод информации о системе
     lsof                                                          # Просмотр открытых файлов и сокетов
     lnav                                                          # Просмотр лог-файлов с подсветкой и навигацией
-    browsh                                                       # Консольный браузер на движке Firefox
+  # browsh                                                        # Консольный браузер на движке Firefox
+  # carbonyl                                                      # Консольный браузер на движке Chromium
     nvtopPackages.nvidia                                          # Монитор GPU NVIDIA в консоли (аналог htop для видеокарты)
     my-packages.btop                                              # Монитор ресурсов с графиками
     termshark                                                     # Анализатор сетевого трафика в терминале (альтернатива Wireshark)
@@ -192,6 +193,7 @@
     guitarix-vst                                                  # экспорт движка Guitarix в виде VST3-плагина для использования внутри DAW
     gxplugins-lv2                                                 # набор дополнительных LV2-плагинов от разработчиков Guitarix
     my-packages.mtpdk
+    my-packages.drum-locker
 
     ] ++ (with pkgs-unstable; [                                   # Пакеты из нестабильного канала (более свежие версии)
     # МУЗЫКА
