@@ -194,6 +194,7 @@
     gxplugins-lv2                                                 # набор дополнительных LV2-плагинов от разработчиков Guitarix
     my-packages.mtpdk
     my-packages.drum-locker
+    my-packages.amp-locker
 
     ] ++ (with pkgs-unstable; [                                   # Пакеты из нестабильного канала (более свежие версии)
     # МУЗЫКА

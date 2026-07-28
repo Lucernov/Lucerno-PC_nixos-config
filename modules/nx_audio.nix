@@ -70,6 +70,12 @@ in
     "d ${myLib.home}/Audio Assault/PluginData/Audio Assault 0755 lucerno lucerno -"
     "L+ ${myLib.home}/Audio Assault/PluginData/Audio Assault/DrumLockerData - lucerno lucerno - /run/current-system/sw/share/drum-locker"
 
+    # Создаём структуру каталогов для данных Amp Locker
+    "d ${myLib.home}/Audio Assault 0755 lucerno lucerno -"
+    "d ${myLib.home}/Audio Assault/PluginData 0755 lucerno lucerno -"
+    "d ${myLib.home}/Audio Assault/PluginData/Audio Assault 0755 lucerno lucerno -"
+    "L+ ${myLib.home}/Audio Assault/PluginData/Audio Assault/AmpLockerData - lucerno lucerno - /run/current-system/sw/share/amp-locker"
+
     # ---------- Симлинки конфигов ----------
     "d ${myLib.home}/.config/REAPER/UserPlugins 0755 lucerno lucerno -"
     "L+ ${home}/.config/REAPER - lucerno lucerno - ${home}/${configDir}/dotfiles/config/REAPER"
