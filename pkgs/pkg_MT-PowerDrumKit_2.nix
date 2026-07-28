@@ -13,7 +13,7 @@
 , libxcb
 , libxkbcommon
 , xcbutil
-, xcbutilcursor    # <-- исправлено
+, xcbutilcursor
 , glib
 , fontconfig
 , cairo
