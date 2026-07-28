@@ -3,7 +3,14 @@
 , fetchurl
 , unzip
 , autoPatchelfHook
-, xorg
+, libX11
+, libXext
+, libXrender
+, libXcursor
+, libXfixes
+, libXi
+, libXrandr
+, libxcb
 , libxkbcommon
 , glib
 , fontconfig
@@ -20,20 +27,20 @@ stdenv.mkDerivation {
 
   src = fetchurl {
     url = "https://resources.manda-audio.com/DOWNLOADS/products/mtpdk2_free/2.1.5/MTPDK-2.1.5.1-VST3-64bit-Linux-FULL.zip";
-    hash = ""; # После первой сборки подставьте правильный хеш
+    hash = "sha256-lb8RuIdLgDC2y9KSF6hlWXWKlt4jI8tndWk/WVanpGo=";
   };
 
   nativeBuildInputs = [ unzip autoPatchelfHook ];
 
   buildInputs = [
-    xorg.libX11
-    xorg.libXext
-    xorg.libXrender
-    xorg.libXcursor
-    xorg.libXfixes
-    xorg.libXi
-    xorg.libXrandr
-    xorg.libxcb
+    libX11
+    libXext
+    libXrender
+    libXcursor
+    libXfixes
+    libXi
+    libXrandr
+    libxcb
     libxkbcommon
     glib
     cairo
