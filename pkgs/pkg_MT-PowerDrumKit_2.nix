@@ -4,12 +4,6 @@
 , unzip
 , autoPatchelfHook
 , libX11
-, libXext
-, libXrender
-, libXcursor
-, libXfixes
-, libXi
-, libXrandr
 , libxcb
 , libxkbcommon
 , xcbutil
@@ -21,6 +15,7 @@
 , zlib
 , freetype
 , libpng
+, libxcb-keysyms
 }:
 
 stdenv.mkDerivation {
@@ -36,21 +31,16 @@ stdenv.mkDerivation {
 
   buildInputs = [
     libX11
-    libXext
-    libXrender
-    libXcursor
-    libXfixes
-    libXi
-    libXrandr
     libxcb
-    libxkbcommon
     xcbutil
     xcbutilcursor
+    libxcb-keysyms
+    libxkbcommon
+    freetype
     glib
     cairo
     pango
     fontconfig
-    freetype
     libpng
     zlib
   ];
