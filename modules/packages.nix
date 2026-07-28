@@ -8,9 +8,9 @@
     nix-index.enable = true;                                      # Автоматически обновлять индекс для nix-locate при каждом переключении поколения
     dconf.enable = true;                                          # Включает dconf – базу данных настроек для GTK-приложений
     zsh.enable = true;                                            # Регистрирует Zsh как системную оболочку
-    vim.enable = true;                                            # Устанавливает Vim (текстовый редактор) системно
-    nano.enable = true;                                           # Устанавливает Nano (простой текстовый редактор) системно
-    htop.enable = true;                                           # Устанавливает htop (интерактивный монитор процессов) системно
+    vim.enable = true;                                            # Устанавливает Vim (текстовый редактор)
+    nano.enable = true;                                           # Устанавливает Nano (простой текстовый редактор)
+    htop.enable = true;                                           # Устанавливает htop (интерактивный монитор процессов)
     amnezia-vpn.enable = true;                                    # Включает сервис AmneziaVPN (VPN-клиент)
     appimage = {
       enable = true;                                              # Включает поддержку запуска AppImage-файлов
