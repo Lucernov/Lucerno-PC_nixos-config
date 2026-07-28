@@ -4,6 +4,9 @@
 , unzip
 , autoPatchelfHook
 , makeWrapper
+, alsa-lib
+, freetype
+, curl
 }:
 
 stdenv.mkDerivation {
@@ -17,7 +20,12 @@ stdenv.mkDerivation {
 
   nativeBuildInputs = [ unzip autoPatchelfHook makeWrapper ];
 
-  buildInputs = [ ];
+  buildInputs = [
+    alsa-lib
+    freetype
+    curl
+    stdenv.cc.cc.lib
+  ];
 
   sourceRoot = ".";
 
