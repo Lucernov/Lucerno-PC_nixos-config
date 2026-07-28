@@ -9,4 +9,5 @@
     teamspeak6-client = pkgs.teamspeak6-client;
     coreutils = pkgs.coreutils;
   };
+  mtpdk = pkgs.callPackage ./pkg_MT-PowerDrumKit_2.nix { };
 }
