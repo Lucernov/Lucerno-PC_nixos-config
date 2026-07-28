@@ -5,7 +5,6 @@
 , autoPatchelfHook
 , xorg
 , libxkbcommon
-, libxkbcommon-x11
 , glib
 , fontconfig
 , cairo
@@ -35,11 +34,11 @@ stdenv.mkDerivation {
     xorg.libXi
     xorg.libXrandr
     xorg.libxcb
-    xorg.libxcb-cursor
-    xorg.libxcb-keysyms
-    xorg.libxcb-xkb
+    xorg.xcb-util
+    xorg.xcb-util-cursor      # вместо libxcb-cursor
+    xorg.xcb-util-keysyms     # вместо libxcb-keysyms
+    # xorg.xcb-util-xkb       # если есть, можно добавить, но обычно необязательно
     libxkbcommon
-    libxkbcommon-x11
     glib
     cairo
     pango
@@ -49,7 +48,7 @@ stdenv.mkDerivation {
     zlib
   ];
 
-  sourceRoot = "."; # архив не содержит корневой папки
+  sourceRoot = ".";
 
   unpackPhase = ''
     runHook preUnpack
@@ -60,18 +59,12 @@ stdenv.mkDerivation {
   installPhase = ''
     runHook preInstall
 
-    # 1. Устанавливаем VST3 плагин
     mkdir -p $out/lib/vst3
     cp -r MT-PowerDrumKit.vst3 $out/lib/vst3/
 
-    # 2. Устанавливаем файл с сэмплами в отдельное место
     mkdir -p $out/share/mtpdk
     cp MT-PowerDrumKit-Content.pdk $out/share/mtpdk/
 
-    # 3. Создаём симлинк в папке плагина, чтобы он нашёл сэмплы
-    #    Плагин, вероятно, ищет этот файл по пути:
-    #    $out/lib/vst3/MT-PowerDrumKit.vst3/Contents/x86_64-linux/MT-PowerDrumKit-Content.pdk
-    #    или в той же папке, где лежит .so
     ln -s $out/share/mtpdk/MT-PowerDrumKit-Content.pdk \
           $out/lib/vst3/MT-PowerDrumKit.vst3/Contents/x86_64-linux/MT-PowerDrumKit-Content.pdk
 
