@@ -63,6 +63,11 @@ in
     "L+ ${myLib.home}/.config/REAPER/UserPlugins/reaper_reapack-x86_64.so - lucerno lucerno - ${pkgs-unstable.reaper-reapack-extension}/UserPlugins/reaper_reapack-x86_64.so"  # .so файлы REAPER
 
     "L+ ${myLib.home}/.vst3/MT-PowerDrumKit.vst3 - lucerno lucerno - /run/current-system/sw/lib/vst3/MT-PowerDrumKit.vst3"
+
+    # Создаём структуру каталогов для данных Drum Locker
+    "d ${myLib.home}/Audio Assault 0755 lucerno lucerno -"
+    "d ${myLib.home}/Audio Assault/PluginData 0755 lucerno lucerno -"
+    "d ${myLib.home}/Audio Assault/PluginData/Audio Assault 0755 lucerno lucerno -"
     "L+ ${myLib.home}/Audio Assault/PluginData/Audio Assault/DrumLockerData - lucerno lucerno - /run/current-system/sw/share/drum-locker"
 
     # ---------- Симлинки конфигов ----------
