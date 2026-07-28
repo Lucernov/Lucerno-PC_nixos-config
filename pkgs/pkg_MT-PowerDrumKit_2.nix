@@ -61,16 +61,8 @@ stdenv.mkDerivation {
 
   installPhase = ''
     runHook preInstall
-
     mkdir -p $out/lib/vst3
     cp -r MT-PowerDrumKit.vst3 $out/lib/vst3/
-
-    mkdir -p $out/share/mtpdk
-    cp MT-PowerDrumKit-Content.pdk $out/share/mtpdk/
-
-    ln -s $out/share/mtpdk/MT-PowerDrumKit-Content.pdk \
-          $out/lib/vst3/MT-PowerDrumKit.vst3/Contents/x86_64-linux/MT-PowerDrumKit-Content.pdk
-
     runHook postInstall
   '';
 
