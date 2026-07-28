@@ -12,8 +12,8 @@
 , libXrandr
 , libxcb
 , libxkbcommon
-, xcbutil          # <-- изменено
-, xcbutil-cursor   # <-- изменено
+, xcbutil
+, xcbutilcursor    # <-- исправлено
 , glib
 , fontconfig
 , cairo
@@ -45,7 +45,7 @@ stdenv.mkDerivation {
     libxcb
     libxkbcommon
     xcbutil
-    xcbutil-cursor
+    xcbutilcursor
     glib
     cairo
     pango
