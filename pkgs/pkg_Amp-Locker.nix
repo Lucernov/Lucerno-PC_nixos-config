@@ -15,7 +15,7 @@ stdenv.mkDerivation {
 
   src = fetchurl {
     url = "https://audioassaultdownloads.s3.amazonaws.com/AmpLocker/AmpLocker109/AmpLockerLinux.zip";
-    hash = ""; # Получите при первой сборке
+    hash = "sha256-fklVvurJoN7TzhwRAnktJm02bMbKmnel6hSIY3QLRxM=";
   };
 
   nativeBuildInputs = [ unzip autoPatchelfHook makeWrapper ];
