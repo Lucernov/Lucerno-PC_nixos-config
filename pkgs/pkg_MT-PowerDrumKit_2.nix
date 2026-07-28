@@ -34,10 +34,6 @@ stdenv.mkDerivation {
     xorg.libXi
     xorg.libXrandr
     xorg.libxcb
-    xorg.xcb-util
-    xorg.xcb-util-cursor      # вместо libxcb-cursor
-    xorg.xcb-util-keysyms     # вместо libxcb-keysyms
-    # xorg.xcb-util-xkb       # если есть, можно добавить, но обычно необязательно
     libxkbcommon
     glib
     cairo
