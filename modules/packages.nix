@@ -201,6 +201,7 @@
     reaper-sws-extension                                          # Расширение SWS для REAPER (дополнительные команды и автоматизация)
     reaper-reapack-extension                                      # Менеджер скриптов ReaPack для REAPER (установка пользовательских скриптов)
     lsp-plugins                                                   # Набор VST/LV2-плагинов для обработки звука (LSP)
+    ratatouille-lv2
 
   ]);
 }
