@@ -58,15 +58,15 @@
     statix                                                        # Линтер Nix (статический анализ)
     deadnix                                                       # Поиск мёртвого (неиспользуемого) кода в Nix
     openh264                                                      # Кодек H.264 от Cisco с открытым исходным кодом. Используется для аппаратного кодирования
-    uv                                                            # Менеджер Python-проектов (альтернатива pip + virtualenv)
-    gsettings-desktop-schemas                                     # Схемы настроек для GSettings (используются GTK-приложениями)
     ffmpeg-full                                                   # Полная версия FFmpeg (кодирование/декодирование аудио/видео)
-    base16-schemes                                                # Набор цветовых схем Base16 (для терминалов, редакторов)
     libva-utils                                                   # Утилиты для VA-API (аппаратное ускорение видео)
     wayland-utils                                                 # Набор утилит для диагностики Wayland (например, wayland-info)
+    lact                                                          # Утилита для управления видеокартами NVIDIA и AMD (мониторинг, разгон, управление вентиляторами, настройка VF-кривой). Для NVIDIA требуется библиотека NVML
+    uv                                                            # Менеджер Python-проектов (альтернатива pip + virtualenv)
+    gsettings-desktop-schemas                                     # Схемы настроек для GSettings (используются GTK-приложениями)
+    base16-schemes                                                # Набор цветовых схем Base16 (для терминалов, редакторов)
     gearlever                                                     # Менеджер обновлений для AppImages приложений
     mission-center                                                # Графический монитор системы (альтернатива btop)
-    lact                                                          # Утилита для управления видеокартами NVIDIA и AMD (мониторинг, разгон, управление вентиляторами, настройка VF-кривой). Для NVIDIA требуется библиотека NVML
     strace                                                        # перехватывает и записывает все системные вызовы (поиск ошибок запуска программ)
     usbutils                                                      # Набор утилит для работы с USB (lsusb, usb-devices, диагностика USB-устройств)
     alsa-utils                                                    # Утилиты для работы с ALSA (aplay, arecord, alsamixer, управление звуковыми картами)
@@ -89,8 +89,6 @@
     fastfetch                                                     # Вывод информации о системе
     lsof                                                          # Просмотр открытых файлов и сокетов
     lnav                                                          # Просмотр лог-файлов с подсветкой и навигацией
-  # browsh                                                        # Консольный браузер на движке Firefox
-  # carbonyl                                                      # Консольный браузер на движке Chromium
     nvtopPackages.nvidia                                          # Монитор GPU NVIDIA в консоли (аналог htop для видеокарты)
     my-packages.btop                                              # Монитор ресурсов с графиками
     termshark                                                     # Анализатор сетевого трафика в терминале (альтернатива Wireshark)
@@ -98,6 +96,8 @@
     dust                                                          # Анализ размера папок/файлов с визуализацией (аналог du, но нагляднее)
     cava                                                          # Консольный аудиовизуализатор (спектроанализатор для музыки)
     neo                                                           # Матричный дождь из символов (эффект из фильма)
+  # browsh                                                        # Консольный браузер на движке Firefox
+  # carbonyl                                                      # Консольный браузер на движке Chromium
 
     # KDE приложения
     kdePackages.breeze-gtk                                        # Обеспечивает единый внешний вид GTK-программ в окружении KDE Plasma
@@ -125,12 +125,12 @@
     switcheroo                                                    # приложение для конвертации изображений
     optipng                                                       # Оптимизатор PNG файлов
     pinta                                                         # Простой растровый редактор
-    krita                                                         # Кастомный пакет Krita (цифровая живопись)
+    krita                                                         # Кастомный пакет Krita (цифровая живопись) берется из NIXOS 25.11
     inkscape                                                      # Векторная графика
 
     # 3D-моделирование
     blender-cuda.packages.${pkgs.stdenv.hostPlatform.system}.blender-with-cuda  # 3D редактор (бинарная версия с поддержкой CUDA)
-    freecad                                                       # Уже нормальный 3D кад
+    freecad                                                       # 3D кад программа
     prusa-slicer                                                  # Слайсер для 3D принтера
     printrun                                                      # Соединение с 3D принтером и отправка на печать по usb
 
@@ -170,39 +170,41 @@
     comfy-ui-cuda                                                 # ComfyUI с поддержкой CUDA для генерации изображений через нейросети
 
     # МУЗЫКА
-    my-packages.reaper                                            # REAPER – цифровая звуковая рабочая станция (DAW) БЕРЕТСЯ ИЗ НЕСТАБИЛЬНОГО КАНАЛА!!!!
+      # --- DAW и среда ---
+    my-packages.reaper                                            # REAPER – цифровая звуковая рабочая станция (DAW) БЕРЕТСЯ ИЗ НЕСТАБИЛЬНОГО КАНАЛА!!!
     wineWow64Packages.staging                                     # Wine с поддержкой 64 и 32 бит (staging‑патчи для аудио)
     yabridge                                                      # Мост для запуска Windows VST-плагинов в Linux (через Wine)
     yabridgectl                                                   # Утилита для управления yabridge (сканирование, синхронизация)
     winetricks                                                    # Вспомогательный скрипт для настройки Wine (установка DLL, зависимостей)
     coppwr                                                        # Графическая утилита для управления PipeWire (альтернатива pw-top)
+      # --- Синтезаторы и Сэмплеры ---
     vital                                                         # Синтезатор FM (VST-плагин)
     surge-xt                                                      # Синтезатор Surge XT
+    decent-sampler                                                # Сэмплер для библиотек DecentSampler (формат .dspreset, .dslibrary)
+      # --- Синтезаторы и Сэмплеры ударных ---
     geonkick                                                      # Синтезатор барабанов для создания ударных партий
     drumgizmo                                                     # Многоканальный сэмплер барабанов (реалистичные ударные)
-    x42-avldrums
-    decent-sampler                                                # Сэмплер для библиотек DecentSampler (формат .dspreset, .dslibrary)
-    linuxsampler                                                  # Движок-семплер (без графического интерфейса), поддерживает форматы GIG, SFZ и SF2. Управление через внешние фронтенды (qsampler, carla) по протоколу LSCP
-    qsampler                                                      # Графический интерфейс (Qt) для управления LinuxSampler: загрузка инструментов, настройки, просмотр состояния
-    fluida-lv2                                                    # LV2-обёртка вокруг FluidSynth. Позволяет использовать FluidSynth как LV2-плагин в DAW для воспроизведения SoundFont (SF2/SF3)
-    dragonfly-reverb                                              # Реверберация Dragonfly (VST/LV2)
-    calf                                                          # Calf Studio Gear один из самых известных и полных наборов аудио-плагинов для Linux
-    fretboard                                                     # Гитаровый гриф / MIDI-инструмент
-    lingot                                                        # гитарный тюнер
-    neural-amp-modeler-lv2                                        # Плагин LV2 для моделирования гитарных усилителей (Neural Amp Modeler)
+    x42-avldrums                                                  # Набор сэмплов ударных от x42 (AVL Drumkits) — качественные, записанные в студии
+    my-packages.mtpdk                                             # плагин ударной установки MT-PowerDrumKit 2
+    my-packages.drum-locker                                       # плагин ударной установки Drum Locker
+      # --- Гитарные процессоры и усилители ---
+    my-packages.amp-locker                                        # плагин эмулирующий стек гитарного тракта Amp-Locker
     guitarix                                                      # виртуальная гитарная станция с эффектами, усилителями, кабинетами и поддержкой NAM-моделей
     guitarix-vst                                                  # экспорт движка Guitarix в виде VST3-плагина для использования внутри DAW
-    gxplugins-lv2                                                 # набор дополнительных LV2-плагинов от разработчиков Guitarix
-    my-packages.mtpdk
-    my-packages.drum-locker
-    my-packages.amp-locker
+    gxplugins-lv2                                                 # набор дополнительных LV2-плагинов от разработчиков Guitarixx
+    neural-amp-modeler-lv2                                        # Плагин LV2 для моделирования гитарных усилителей (Neural Amp Modeler)
+    fretboard                                                     # Гитаровый гриф (примеры построения аккордов)
+    lingot                                                        # гитарный тюнер
+      # --- Эффекты (обработка звука) ---
+    lsp-plugins                                                   # Набор VST/LV2-плагинов для обработки звука (LSP)
+    calf                                                          # Calf Studio Gear один из самых известных и полных наборов аудио-плагинов для Linux
+    dragonfly-reverb                                              # Реверберация Dragonfly (VST/LV2)
 
     ] ++ (with pkgs-unstable; [                                   # Пакеты из нестабильного канала (более свежие версии)
     # МУЗЫКА
     reaper-sws-extension                                          # Расширение SWS для REAPER (дополнительные команды и автоматизация)
     reaper-reapack-extension                                      # Менеджер скриптов ReaPack для REAPER (установка пользовательских скриптов)
-    lsp-plugins                                                   # Набор VST/LV2-плагинов для обработки звука (LSP)
-    ratatouille-lv2
+    ratatouille-lv2                                               # плагин для загрузки и микширования нейросетевых моделей гитарных усилителей (аналог Neural Amp Model)
 
   ]);
 }
