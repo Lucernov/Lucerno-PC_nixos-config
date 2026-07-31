@@ -89,6 +89,7 @@ in
     "L+ ${myLib.home}/.config/geonkick - lucerno lucerno - ${myLib.home}/${configDir}/dotfiles/config/plugins/config_geonkick"
     "L+ ${myLib.home}/.config/lsp-plugins - lucerno lucerno - ${myLib.home}/${configDir}/dotfiles/config/plugins/config_lsp-plugins"
     "L+ ${myLib.home}/.config/3VStudio - lucerno lucerno - ${myLib.home}/${configDir}/dotfiles/config/plugins/config_3VStudio"
+    "L+ \"${myLib.home}/.config/My Company\" - lucerno lucerno - ${myLib.home}/${configDir}/dotfiles/config/plugins/config_My Company"
     "L+ ${myLib.home}/.config/MANDA_AUDIO - lucerno lucerno - ${myLib.home}/${configDir}/dotfiles/config/plugins/config_MANDA_AUDIO"
     "L+ ${myLib.home}/.local/share/geonkick - lucerno lucerno - ${myLib.home}/${configDir}/dotfiles/config/plugins/local_share_geonkick"
     "L+ \"${myLib.home}/.local/share/The Usual Suspects\" - lucerno lucerno - ${myLib.home}/${configDir}/dotfiles/config/plugins/local_share_The Usual Suspects"
