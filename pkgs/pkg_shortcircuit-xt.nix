@@ -60,7 +60,7 @@ stdenv.mkDerivation {
     runHook preInstall
 
     mkdir -p $out/lib/clap
-    cp "Shortcircuit XT.clap" $out/lib/clap/
+    cp "shortcircuit-products/Shortcircuit XT.clap" $out/lib/clap/
 
     runHook postInstall
   '';
