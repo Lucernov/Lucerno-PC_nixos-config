@@ -71,13 +71,18 @@ in
     "L+ \"${myLib.home}/Audio Assault/PluginData/Audio Assault/AmpLockerData\" - lucerno lucerno - /run/current-system/sw/share/amp-locker"
     "L+ \"${myLib.home}/Audio Assault/PluginData/Audio Assault/DrumLockerData\" - lucerno lucerno - /run/current-system/sw/share/drum-locker"
 
-    # ---------- Симлинки конфигов ----------
+    # ---------- Симлинки конфигов плагинов ----------
     "d ${myLib.home}/.config/REAPER/UserPlugins 0755 lucerno lucerno -"
     "L+ ${home}/.config/REAPER - lucerno lucerno - ${home}/${configDir}/dotfiles/config/REAPER"
     "L+ ${home}/.config/yabridgectl - lucerno lucerno - ${home}/${configDir}/dotfiles/config/yabridgectl"
     "L+ ${home}/.config/DecentSampler - lucerno lucerno - /mnt/sys_archiv/samples/DecentSampler"
-    "L+ ${home}/drum_sklad - lucerno lucerno - /mnt/sys_archiv/samples/drum_sklad"
+    "L+ \"${myLib.home}/.config/Amp Locker\" - lucerno lucerno - ${myLib.home}/${configDir}/dotfiles/config/plugins/config_Amp Locker"
+    "L+ \"${myLib.home}/.config/Audio Assault\" - lucerno lucerno - ${myLib.home}/${configDir}/dotfiles/config/plugins/config_Audio Assault"
+    "L+ ${myLib.home}/.config/geonkick - lucerno lucerno - ${myLib.home}/${configDir}/dotfiles/config/plugins/config_geonkick"
+    "L+ ${myLib.home}/.config/lsp-plugins - lucerno lucerno - ${myLib.home}/${configDir}/dotfiles/config/plugins/config_lsp-plugins"
+    "L+ ${myLib.home}/.config/MANDA_AUDIO - lucerno lucerno - ${myLib.home}/${configDir}/dotfiles/config/plugins/config_MANDA_AUDIO"
     "L+ ${home}/.local/share/vital - lucerno lucerno - /mnt/sys_archiv/samples/vital"
+    "L+ ${home}/drum_sklad - lucerno lucerno - /mnt/sys_archiv/samples/drum_sklad"
 
     # ---------- Каталоги для drop‑in файлов systemd --user ----------
     "d ${myLib.home}/.config/systemd 0755 lucerno lucerno -"
