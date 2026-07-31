@@ -12,7 +12,7 @@ stdenv.mkDerivation {
   srcs = [
     (fetchurl {
       url = "https://github.com/psemiletov/drumlabooh/releases/download/12.2.0/drumlabooh.lv2.zip";
-      hash = "";  # получите при первой сборке
+      hash = "sha256-IQ0XzIwJqGg+6FynmJBllyBIzWD3dgFfllOTEx0cMDM=";
     })
     (fetchurl {
       url = "https://github.com/psemiletov/drumlabooh/releases/download/12.2.0/drumlabooh-multi.lv2.zip";
