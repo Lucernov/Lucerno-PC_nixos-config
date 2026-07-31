@@ -57,16 +57,18 @@ in
 
   # ========== Правила tmpfiles для аудио и REAPER ==========
   systemd.tmpfiles.rules = [
+    "d ${myLib.home}/.clap 0755 lucerno lucerno -"
     "d ${myLib.home}/.vst3 0755 lucerno lucerno -"
     "L+ ${myLib.home}/.local/bin/wine64 - lucerno lucerno - ${pkgs-unstable.wineWow64Packages.staging}/bin/wine"  # wine64
     "L+ ${myLib.home}/.config/REAPER/UserPlugins/reaper_sws-x86_64.so - lucerno lucerno - ${pkgs-unstable.reaper-sws-extension}/UserPlugins/reaper_sws-x86_64.so"  # .so файлы REAPER
     "L+ ${myLib.home}/.config/REAPER/UserPlugins/reaper_reapack-x86_64.so - lucerno lucerno - ${pkgs-unstable.reaper-reapack-extension}/UserPlugins/reaper_reapack-x86_64.so"  # .so файлы REAPER
 
+    "L+ ${myLib.home}/.clap/OsTIrus.clap - lucerno lucerno - /run/current-system/sw/lib/clap/OsTIrus.clap"
     "L+ ${myLib.home}/.vst3/MT-PowerDrumKit.vst3 - lucerno lucerno - /run/current-system/sw/lib/vst3/MT-PowerDrumKit.vst3"
 
     # Создаём структуру каталогов для данных Amp Locker и Drum Locker
     "d \"${myLib.home}/Audio Assault\" 0755 lucerno lucerno -"
-    "d \"${myLib.home}/Audio Assault/PluginData\" 0755 lucerno lucerno -"
+    "d \"${myLib.home}/Audio Assault/PluginData\" 0755 lucыerno lucerno -"
     "d \"${myLib.home}/Audio Assault/PluginData/Audio Assault\" 0755 lucerno lucerno -"
     "L+ \"${myLib.home}/Audio Assault/PluginData/Audio Assault/AmpLockerData\" - lucerno lucerno - /run/current-system/sw/share/amp-locker"
     "L+ \"${myLib.home}/Audio Assault/PluginData/Audio Assault/DrumLockerData\" - lucerno lucerno - /run/current-system/sw/share/drum-locker"

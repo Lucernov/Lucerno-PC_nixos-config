@@ -181,12 +181,12 @@
       # --- Синтезаторы и Сэмплеры ---
     vital                                                         # Синтезатор FM (VST-плагин)
     surge-xt                                                      # Синтезатор Surge XT
+    my-packages.ostirus                                           #
     decent-sampler                                                # Сэмплер для библиотек DecentSampler (формат .dspreset, .dslibrary)
       # --- Синтезаторы и Сэмплеры ударных ---
     my-packages.mtpdk                                             # лёгкий плагин ударной установки MT-PowerDrumKit 2
     geonkick                                                      # Синтезатор барабанов для создания ударных партий
     drumgizmo                                                     # Многоканальный сэмплер барабанов (реалистичные ударные)
-    x42-avldrums                                                  # Набор сэмплов ударных от x42 (AVL Drumkits) — качественные, записанные в студии
     my-packages.drum-locker                                       # плагин ударной установки Drum Locker
       # --- Гитарные процессоры и усилители ---
     my-packages.amp-locker                                        # плагин эмулирующий стек гитарного тракта Amp-Locker
