@@ -131,6 +131,7 @@
     # 3D-моделирование
     blender-cuda.packages.${pkgs.stdenv.hostPlatform.system}.blender-with-cuda  # 3D редактор (бинарная версия с поддержкой CUDA)
     freecad                                                       # 3D кад программа
+  # dune3d                                                        # 3D кад программа
     prusa-slicer                                                  # Слайсер для 3D принтера
     printrun                                                      # Соединение с 3D принтером и отправка на печать по usb
 
