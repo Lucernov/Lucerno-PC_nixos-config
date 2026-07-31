@@ -181,7 +181,7 @@
       # --- Синтезаторы и Сэмплеры ---
     vital                                                         # Синтезатор FM (VST-плагин)
     surge-xt                                                      # Синтезатор Surge XT
-    my-packages.ostirus                                           #
+    my-packages.ostirus                                           # Эмуляция синтезатора Access Virus TI (CLAP)
     decent-sampler                                                # Сэмплер для библиотек DecentSampler (формат .dspreset, .dslibrary)
       # --- Синтезаторы и Сэмплеры ударных ---
     my-packages.mtpdk                                             # лёгкий плагин ударной установки MT-PowerDrumKit 2
