@@ -28,7 +28,7 @@ stdenv.mkDerivation {
 
   src = fetchurl {
     url = "https://github.com/dsp56300/gearmulator/releases/download/2.2.9/TheUsualSuspects-OsTIrus-CLAP-2.2.9-Linux_x86_64.zip";
-    hash = ""; # Получите при первой сборке
+    hash = "sha256-hyH5HkTxxXfuiWqQz2gsE2FTT5fWdjYFtGL7JcWMi/Q=";
   };
 
   nativeBuildInputs = [ unzip autoPatchelfHook ];
