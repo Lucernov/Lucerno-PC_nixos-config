@@ -16,7 +16,7 @@ stdenv.mkDerivation {
     })
     (fetchurl {
       url = "https://github.com/psemiletov/drumlabooh/releases/download/12.2.0/drumlabooh-multi.lv2.zip";
-      hash = "";  # получите при первой сборке
+      hash = "sha256-qdZJvXsUlEmmlTwUwO/C47OXM+gwRlu2cNRFGrJDi1A=";
     })
   ];
 
