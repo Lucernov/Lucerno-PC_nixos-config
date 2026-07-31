@@ -3,6 +3,8 @@
 , fetchurl
 , unzip
 , autoPatchelfHook
+, fontconfig
+, freetype
 }:
 
 stdenv.mkDerivation {
@@ -20,11 +22,16 @@ stdenv.mkDerivation {
     })
   ];
 
-  sourceRoot = ".";
-
   nativeBuildInputs = [ unzip autoPatchelfHook ];
 
-  # Распаковываем оба архива в текущую директорию
+  buildInputs = [
+    fontconfig
+    freetype
+    stdenv.cc.cc.lib
+  ];
+
+  sourceRoot = ".";
+
   unpackPhase = ''
     runHook preUnpack
     for src in $srcs; do
@@ -35,11 +42,9 @@ stdenv.mkDerivation {
 
   installPhase = ''
     runHook preInstall
-
     mkdir -p $out/lib/lv2
     cp -r drumlabooh.lv2 $out/lib/lv2/
     cp -r drumlabooh-multi.lv2 $out/lib/lv2/
-
     runHook postInstall
   '';
 
@@ -48,6 +53,5 @@ stdenv.mkDerivation {
     homepage = "https://github.com/psemiletov/drumlabooh";
     license = licenses.gpl3Plus;
     platforms = [ "x86_64-linux" ];
-    maintainers = [ ];
   };
 }
