@@ -67,24 +67,25 @@ in
     "L+ ${myLib.home}/.vst3/MT-PowerDrumKit.vst3 - lucerno lucerno - /run/current-system/sw/lib/vst3/MT-PowerDrumKit.vst3"
 
     # Создаём структуру каталогов для данных Amp Locker и Drum Locker
-    "d \"${myLib.home}/Audio Assault\" 0755 lucerno lucerno -"
-    "d \"${myLib.home}/Audio Assault/PluginData\" 0755 lucыerno lucerno -"
-    "d \"${myLib.home}/Audio Assault/PluginData/Audio Assault\" 0755 lucerno lucerno -"
-    "L+ \"${myLib.home}/Audio Assault/PluginData/Audio Assault/AmpLockerData\" - lucerno lucerno - /run/current-system/sw/share/amp-locker"
-    "L+ \"${myLib.home}/Audio Assault/PluginData/Audio Assault/DrumLockerData\" - lucerno lucerno - /run/current-system/sw/share/drum-locker"
+    "d '${myLib.home}/Audio Assault' 0755 lucerno lucerno -"
+    "d '${myLib.home}/Audio Assault/PluginData' 0755 lucerno lucerno -"
+    "d '${myLib.home}/Audio Assault/PluginData/Audio Assault' 0755 lucerno lucerno -"
+    "L+ '${myLib.home}/Audio Assault/PluginData/Audio Assault/AmpLockerData' - lucerno lucerno - /run/current-system/sw/share/amp-locker"
+    "L+ '${myLib.home}/Audio Assault/PluginData/Audio Assault/DrumLockerData' - lucerno lucerno - /run/current-system/sw/share/drum-locker"
 
     # ---------- Симлинки конфигов плагинов ----------
     "d ${myLib.home}/.config/REAPER/UserPlugins 0755 lucerno lucerno -"
     "L+ ${home}/.config/REAPER - lucerno lucerno - ${home}/${configDir}/dotfiles/config/REAPER"
     "L+ ${home}/.config/yabridgectl - lucerno lucerno - ${home}/${configDir}/dotfiles/config/yabridgectl"
     "L+ ${home}/.config/DecentSampler - lucerno lucerno - /mnt/sys_archiv/samples/DecentSampler"
-    "L+ \"${myLib.home}/.config/Amp Locker\" - lucerno lucerno - ${myLib.home}/${configDir}/dotfiles/config/plugins/config_Amp Locker"
-    "L+ \"${myLib.home}/.config/Audio Assault\" - lucerno lucerno - ${myLib.home}/${configDir}/dotfiles/config/plugins/config_Audio Assault"
+    "L+ '${myLib.home}/.config/Amp Locker' - lucerno lucerno - ${myLib.home}/${configDir}/dotfiles/config/plugins/config_Amp Locker"
+    "L+ '${myLib.home}/.config/Audio Assault' - lucerno lucerno - ${myLib.home}/${configDir}/dotfiles/config/plugins/config_Audio Assault"
     "L+ ${myLib.home}/.config/geonkick - lucerno lucerno - ${myLib.home}/${configDir}/dotfiles/config/plugins/config_geonkick"
     "L+ ${myLib.home}/.config/lsp-plugins - lucerno lucerno - ${myLib.home}/${configDir}/dotfiles/config/plugins/config_lsp-plugins"
+    "L+ ${myLib.home}/.config/3VStudio - lucerno lucerno - ${myLib.home}/${configDir}/dotfiles/config/plugins/config_3VStudio"
     "L+ ${myLib.home}/.config/MANDA_AUDIO - lucerno lucerno - ${myLib.home}/${configDir}/dotfiles/config/plugins/config_MANDA_AUDIO"
     "L+ ${myLib.home}/.local/share/geonkick - lucerno lucerno - ${myLib.home}/${configDir}/dotfiles/config/plugins/local_share_geonkick"
-    "L+ \"${myLib.home}/.local/share/The Usual Suspects\" - lucerno lucerno - ${myLib.home}/${configDir}/dotfiles/config/plugins/local_share_The Usual Suspects"
+    "L+ '${myLib.home}/.local/share/The Usual Suspects' - lucerno lucerno - ${myLib.home}/${configDir}/dotfiles/config/plugins/local_share_The Usual Suspects"
     "L+ ${home}/.local/share/vital - lucerno lucerno - /mnt/sys_archiv/samples/vital"
     "L+ ${home}/drum_sklad - lucerno lucerno - /mnt/sys_archiv/samples/drum_sklad"
 
