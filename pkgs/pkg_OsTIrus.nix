@@ -18,8 +18,8 @@
 , libXi
 , libXrandr
 , libxcb
-, xcb-util
-, xcb-util-cursor
+, xcbutil        # вместо xcb-util
+, xcbutilcursor  # вместо xcb-util-cursor
 }:
 
 stdenv.mkDerivation {
@@ -49,8 +49,8 @@ stdenv.mkDerivation {
     libXi
     libXrandr
     libxcb
-    xcb-util
-    xcb-util-cursor
+    xcbutil
+    xcbutilcursor
     stdenv.cc.cc.lib
   ];
 
