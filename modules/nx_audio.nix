@@ -65,11 +65,11 @@ in
     "L+ ${myLib.home}/.vst3/MT-PowerDrumKit.vst3 - lucerno lucerno - /run/current-system/sw/lib/vst3/MT-PowerDrumKit.vst3"
 
     # Создаём структуру каталогов для данных Amp Locker и Drum Locker
-    "d ${myLib.home}/Audio Assault 0755 lucerno lucerno -"
-    "d ${myLib.home}/Audio Assault/PluginData 0755 lucerno lucerno -"
-    "d ${myLib.home}/Audio Assault/PluginData/Audio Assault 0755 lucerno lucerno -"
-    "L+ ${myLib.home}/Audio Assault/PluginData/Audio Assault/AmpLockerData - lucerno lucerno - /run/current-system/sw/share/amp-locker"
-    "L+ ${myLib.home}/Audio Assault/PluginData/Audio Assault/DrumLockerData - lucerno lucerno - /run/current-system/sw/share/drum-locker"
+    "d \"${myLib.home}/Audio Assault\" 0755 lucerno lucerno -"
+    "d \"${myLib.home}/Audio Assault/PluginData\" 0755 lucerno lucerno -"
+    "d \"${myLib.home}/Audio Assault/PluginData/Audio Assault\" 0755 lucerno lucerno -"
+    "L+ \"${myLib.home}/Audio Assault/PluginData/Audio Assault/AmpLockerData\" - lucerno lucerno - /run/current-system/sw/share/amp-locker"
+    "L+ \"${myLib.home}/Audio Assault/PluginData/Audio Assault/DrumLockerData\" - lucerno lucerno - /run/current-system/sw/share/drum-locker"
 
     # ---------- Симлинки конфигов ----------
     "d ${myLib.home}/.config/REAPER/UserPlugins 0755 lucerno lucerno -"
