@@ -180,15 +180,16 @@
     coppwr                                                        # Графическая утилита для управления PipeWire (альтернатива pw-top)
       # --- Синтезаторы и Сэмплеры ---
     vital                                                         # Синтезатор FM (VST-плагин)
-    surge-xt                                                      # Синтезатор Surge XT
     my-packages.ostirus                                           # Эмуляция синтезатора Access Virus TI (CLAP)
+    surge-xt                                                      # Синтезатор Surge XT
+    my-packages.shortcircuit-xt                                   #
     decent-sampler                                                # Сэмплер для библиотек DecentSampler (формат .dspreset, .dslibrary)
       # --- Синтезаторы и Сэмплеры ударных ---
     my-packages.mtpdk                                             # лёгкий плагин ударной установки MT-PowerDrumKit 2
-    my-packages.drumlabooh                                        #
+    my-packages.drumlabooh                                        # LV2-сэмплер ударных с несколькими наборами (drumlabooh)
     my-packages.drum-locker                                       # плагин ударной установки Drum Locker
-    geonkick                                                      # Синтезатор барабанов для создания ударных партий
     drumgizmo                                                     # Многоканальный сэмплер барабанов (реалистичные ударные)
+    geonkick                                                      # Синтезатор барабанов для создания ударных партий
       # --- Гитарные процессоры и усилители ---
     my-packages.amp-locker                                        # плагин эмулирующий стек гитарного тракта Amp-Locker
     fretboard                                                     # Гитаровый гриф (примеры построения аккордов)

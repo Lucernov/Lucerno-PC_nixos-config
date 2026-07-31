@@ -14,4 +14,5 @@
   drumlabooh = pkgs.callPackage ./pkg_drumlabooh.nix { };
   drum-locker = pkgs.callPackage ./pkg_Drum-Locker.nix { };
   amp-locker = pkgs.callPackage ./pkg_Amp-Locker.nix { };
+  shortcircuit-xt = pkgs.callPackage ./pkg_shortcircuit-xt.nix { };
 }

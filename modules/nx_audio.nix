@@ -70,6 +70,7 @@ in
     "L+ ${myLib.home}/.lv2/drumlabooh.lv2 - lucerno lucerno - /run/current-system/sw/lib/lv2/drumlabooh.lv2"
     "L+ ${myLib.home}/.lv2/drumlabooh-multi.lv2 - lucerno lucerno - /run/current-system/sw/lib/lv2/drumlabooh-multi.lv2"
     "L+ ${myLib.home}/.vst3/MT-PowerDrumKit.vst3 - lucerno lucerno - /run/current-system/sw/lib/vst3/MT-PowerDrumKit.vst3"
+    "L+ \"${myLib.home}/.clap/Shortcircuit XT.clap\" - lucerno lucerno - /run/current-system/sw/lib/clap/Shortcircuit XT.clap"
 
     # Создаём структуру каталогов для данных Amp Locker и Drum Locker
     "d \"${myLib.home}/Audio Assault\" 0755 lucerno lucerno -"
