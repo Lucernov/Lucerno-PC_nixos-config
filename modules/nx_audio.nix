@@ -7,6 +7,8 @@ in
 
 {
   environment.sessionVariables = {
+    CLAP_PATH = "/run/current-system/sw/lib/clap:${myLib.home}/.clap";                                  # Устанавливаем переменную окружения для пользовательской папки CLAP
+    LV2_PATH = "/run/current-system/sw/lib/lv2:${myLib.home}/.lv2";                                     # Устанавливаем переменную окружения для пользовательской папки LV2
     VST3_PATH = "/run/current-system/sw/lib/vst3:${myLib.home}/.vst3";                                  # Устанавливаем переменную окружения для пользовательской папки VST3
     WINEPREFIX = "/mnt/music/wine-yabridge";                                                            # Префикс Wine для Windows-плагинов, используемых через yabridge
   };
@@ -58,34 +60,37 @@ in
   # ========== Правила tmpfiles для аудио и REAPER ==========
   systemd.tmpfiles.rules = [
     "d ${myLib.home}/.clap 0755 lucerno lucerno -"
+    "d ${myLib.home}/.lv2 0755 lucerno lucerno -"
     "d ${myLib.home}/.vst3 0755 lucerno lucerno -"
     "L+ ${myLib.home}/.local/bin/wine64 - lucerno lucerno - ${pkgs-unstable.wineWow64Packages.staging}/bin/wine"  # wine64
     "L+ ${myLib.home}/.config/REAPER/UserPlugins/reaper_sws-x86_64.so - lucerno lucerno - ${pkgs-unstable.reaper-sws-extension}/UserPlugins/reaper_sws-x86_64.so"  # .so файлы REAPER
     "L+ ${myLib.home}/.config/REAPER/UserPlugins/reaper_reapack-x86_64.so - lucerno lucerno - ${pkgs-unstable.reaper-reapack-extension}/UserPlugins/reaper_reapack-x86_64.so"  # .so файлы REAPER
 
     "L+ ${myLib.home}/.clap/OsTIrus.clap - lucerno lucerno - /run/current-system/sw/lib/clap/OsTIrus.clap"
+    "L+ ${myLib.home}/.lv2/drumlabooh.lv2 - lucerno lucerno - /run/current-system/sw/lib/lv2/drumlabooh.lv2"
+    "L+ ${myLib.home}/.lv2/drumlabooh-multi.lv2 - lucerno lucerno - /run/current-system/sw/lib/lv2/drumlabooh-multi.lv2"
     "L+ ${myLib.home}/.vst3/MT-PowerDrumKit.vst3 - lucerno lucerno - /run/current-system/sw/lib/vst3/MT-PowerDrumKit.vst3"
 
     # Создаём структуру каталогов для данных Amp Locker и Drum Locker
-    "d '${myLib.home}/Audio Assault' 0755 lucerno lucerno -"
-    "d '${myLib.home}/Audio Assault/PluginData' 0755 lucerno lucerno -"
-    "d '${myLib.home}/Audio Assault/PluginData/Audio Assault' 0755 lucerno lucerno -"
-    "L+ '${myLib.home}/Audio Assault/PluginData/Audio Assault/AmpLockerData' - lucerno lucerno - /run/current-system/sw/share/amp-locker"
-    "L+ '${myLib.home}/Audio Assault/PluginData/Audio Assault/DrumLockerData' - lucerno lucerno - /run/current-system/sw/share/drum-locker"
+    "d \"${myLib.home}/Audio Assault\" 0755 lucerno lucerno -"
+    "d \"${myLib.home}/Audio Assault/PluginData\" 0755 lucerno lucerno -"
+    "d \"${myLib.home}/Audio Assault/PluginData/Audio Assault\" 0755 lucerno lucerno -"
+    "L+ \"${myLib.home}/Audio Assault/PluginData/Audio Assault/AmpLockerData\" - lucerno lucerno - /run/current-system/sw/share/amp-locker"
+    "L+ \"${myLib.home}/Audio Assault/PluginData/Audio Assault/DrumLockerData\" - lucerno lucerno - /run/current-system/sw/share/drum-locker"
 
     # ---------- Симлинки конфигов плагинов ----------
     "d ${myLib.home}/.config/REAPER/UserPlugins 0755 lucerno lucerno -"
     "L+ ${home}/.config/REAPER - lucerno lucerno - ${home}/${configDir}/dotfiles/config/REAPER"
     "L+ ${home}/.config/yabridgectl - lucerno lucerno - ${home}/${configDir}/dotfiles/config/yabridgectl"
     "L+ ${home}/.config/DecentSampler - lucerno lucerno - /mnt/sys_archiv/samples/DecentSampler"
-    "L+ '${myLib.home}/.config/Amp Locker' - lucerno lucerno - ${myLib.home}/${configDir}/dotfiles/config/plugins/config_Amp Locker"
-    "L+ '${myLib.home}/.config/Audio Assault' - lucerno lucerno - ${myLib.home}/${configDir}/dotfiles/config/plugins/config_Audio Assault"
+    "L+ \"${myLib.home}/.config/Amp Locker\" - lucerno lucerno - ${myLib.home}/${configDir}/dotfiles/config/plugins/config_Amp Locker"
+    "L+ \"${myLib.home}/.config/Audio Assault\" - lucerno lucerno - ${myLib.home}/${configDir}/dotfiles/config/plugins/config_Audio Assault"
     "L+ ${myLib.home}/.config/geonkick - lucerno lucerno - ${myLib.home}/${configDir}/dotfiles/config/plugins/config_geonkick"
     "L+ ${myLib.home}/.config/lsp-plugins - lucerno lucerno - ${myLib.home}/${configDir}/dotfiles/config/plugins/config_lsp-plugins"
     "L+ ${myLib.home}/.config/3VStudio - lucerno lucerno - ${myLib.home}/${configDir}/dotfiles/config/plugins/config_3VStudio"
     "L+ ${myLib.home}/.config/MANDA_AUDIO - lucerno lucerno - ${myLib.home}/${configDir}/dotfiles/config/plugins/config_MANDA_AUDIO"
     "L+ ${myLib.home}/.local/share/geonkick - lucerno lucerno - ${myLib.home}/${configDir}/dotfiles/config/plugins/local_share_geonkick"
-    "L+ '${myLib.home}/.local/share/The Usual Suspects' - lucerno lucerno - ${myLib.home}/${configDir}/dotfiles/config/plugins/local_share_The Usual Suspects"
+    "L+ \"${myLib.home}/.local/share/The Usual Suspects\" - lucerno lucerno - ${myLib.home}/${configDir}/dotfiles/config/plugins/local_share_The Usual Suspects"
     "L+ ${home}/.local/share/vital - lucerno lucerno - /mnt/sys_archiv/samples/vital"
     "L+ ${home}/drum_sklad - lucerno lucerno - /mnt/sys_archiv/samples/drum_sklad"
 

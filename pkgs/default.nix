@@ -11,6 +11,7 @@
   };
   ostirus = pkgs.callPackage ./pkg_OsTIrus.nix { };
   mtpdk = pkgs.callPackage ./pkg_MT-PowerDrumKit_2.nix { };
+  drumlabooh = pkgs.callPackage ./pkg_drumlabooh.nix { };
   drum-locker = pkgs.callPackage ./pkg_Drum-Locker.nix { };
   amp-locker = pkgs.callPackage ./pkg_Amp-Locker.nix { };
 }

@@ -185,9 +185,10 @@
     decent-sampler                                                # Сэмплер для библиотек DecentSampler (формат .dspreset, .dslibrary)
       # --- Синтезаторы и Сэмплеры ударных ---
     my-packages.mtpdk                                             # лёгкий плагин ударной установки MT-PowerDrumKit 2
+    my-packages.drumlabooh                                        #
+    my-packages.drum-locker                                       # плагин ударной установки Drum Locker
     geonkick                                                      # Синтезатор барабанов для создания ударных партий
     drumgizmo                                                     # Многоканальный сэмплер барабанов (реалистичные ударные)
-    my-packages.drum-locker                                       # плагин ударной установки Drum Locker
       # --- Гитарные процессоры и усилители ---
     my-packages.amp-locker                                        # плагин эмулирующий стек гитарного тракта Amp-Locker
     fretboard                                                     # Гитаровый гриф (примеры построения аккордов)
