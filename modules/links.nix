@@ -140,7 +140,7 @@ in
       Icon=google-chrome
       Categories=Network;WebBrowser;
       Terminal=false
-      StartupWMClass=Google-chrome-stable
+      StartupWMClass=Google-chrome
     ''}"
 
     # ----------Ярлык TeamSpeak 6 с поддержкой X11 в Wayland ----------
