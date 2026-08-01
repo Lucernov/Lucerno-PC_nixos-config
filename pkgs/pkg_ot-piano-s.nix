@@ -4,7 +4,7 @@ stdenv.mkDerivation {
   pname = "ot-piano-s";
   version = "1.0";
 
-  src = builtins.toPath (toString ./. + "/dotfiles/repo/OT P1ANO S.so");
+  src = builtins.toPath (toString ./. + "../dotfiles/repo/OT P1ANO S.so");
 
   nativeBuildInputs = [ autoPatchelfHook ];
 
