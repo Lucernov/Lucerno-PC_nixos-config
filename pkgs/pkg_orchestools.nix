@@ -1,8 +1,6 @@
 { lib
 , stdenv
-, tar
 , xz
-, findutils
 , autoPatchelfHook
 , alsa-lib
 , freetype
@@ -22,7 +20,7 @@ stdenv.mkDerivation {
     ../dotfiles/repo/ORCHESTOOLS-WINDS-1.0.0.tar.xz
   ];
 
-  nativeBuildInputs = [ tar xz findutils autoPatchelfHook ];
+  nativeBuildInputs = [ xz autoPatchelfHook ];
 
   buildInputs = [
     alsa-lib
