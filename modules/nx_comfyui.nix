@@ -42,7 +42,7 @@ in
       AmbientCapabilities = [ "CAP_SYS_ADMIN" ];                                        # Дать процессу возможность монтировать (нужно для FUSE)
 
       # ---------- Дополнительные группы для доступа к оборудованию ----------
-      SupplementaryGroups = [ "fuse" "render" "video" "nvidia" ];                       # Группы для доступа к FUSE, GPU, NVIDIA
+      SupplementaryGroups = [ "fuse" "nvidia" ];                                        # Группы для доступа к FUSE, GPU, NVIDIA
 
       # ---------- Явное разрешение доступа к устройствам ----------
       DeviceAllow = [
