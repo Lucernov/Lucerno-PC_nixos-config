@@ -7,6 +7,7 @@
 , libX11
 , libXext
 , libxcb
+, libGL
 }:
 
 stdenv.mkDerivation {
@@ -28,6 +29,7 @@ stdenv.mkDerivation {
     libX11
     libXext
     libxcb
+    libGL
     stdenv.cc.cc.lib
   ];
 
@@ -39,7 +41,6 @@ stdenv.mkDerivation {
     for src in $srcs; do
       tmp=$(mktemp -d)
       tar -xf "$src" -C "$tmp"
-      # Копируем все папки .vst3, найденные на глубине до 2 уровней
       find "$tmp" -maxdepth 2 -type d -name "*.vst3" -exec cp -r {} $out/lib/vst3/ \;
       rm -rf "$tmp"
     done
