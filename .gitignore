@@ -30,4 +30,5 @@
 !/dotfiles/config/zsh/*
 !/dotfiles/config/yabridgectl/
 !/dotfiles/config/yabridgectl/*
-
+!/dotfiles/repo/
+!/dotfiles/repo/**/*
