@@ -9,6 +9,7 @@ in
   environment.sessionVariables = {
     CLAP_PATH = "/run/current-system/sw/lib/clap:${myLib.home}/.clap";                                  # Устанавливаем переменную окружения для пользовательской папки CLAP
     LV2_PATH = "/run/current-system/sw/lib/lv2:${myLib.home}/.lv2";                                     # Устанавливаем переменную окружения для пользовательской папки LV2
+    VST_PATH = "/run/current-system/sw/lib/vst:${myLib.home}/.vst";                                     # Устанавливаем переменную окружения для пользовательской папки VST
     VST3_PATH = "/run/current-system/sw/lib/vst3:${myLib.home}/.vst3";                                  # Устанавливаем переменную окружения для пользовательской папки VST3
     WINEPREFIX = "/mnt/music/wine-yabridge";                                                            # Префикс Wine для Windows-плагинов, используемых через yabridge
   };
@@ -61,16 +62,19 @@ in
   systemd.tmpfiles.rules = [
     "d ${myLib.home}/.clap 0755 lucerno lucerno -"
     "d ${myLib.home}/.lv2 0755 lucerno lucerno -"
+    "d ${myLib.home}/.vst 0755 lucerno lucerno -"
     "d ${myLib.home}/.vst3 0755 lucerno lucerno -"
     "L+ ${myLib.home}/.local/bin/wine64 - lucerno lucerno - ${pkgs-unstable.wineWow64Packages.staging}/bin/wine"  # wine64
     "L+ ${myLib.home}/.config/REAPER/UserPlugins/reaper_sws-x86_64.so - lucerno lucerno - ${pkgs-unstable.reaper-sws-extension}/UserPlugins/reaper_sws-x86_64.so"  # .so файлы REAPER
     "L+ ${myLib.home}/.config/REAPER/UserPlugins/reaper_reapack-x86_64.so - lucerno lucerno - ${pkgs-unstable.reaper-reapack-extension}/UserPlugins/reaper_reapack-x86_64.so"  # .so файлы REAPER
 
     "L+ ${myLib.home}/.clap/OsTIrus.clap - lucerno lucerno - /run/current-system/sw/lib/clap/OsTIrus.clap"
+    "L+ \"${myLib.home}/.clap/Shortcircuit XT.clap\" - lucerno lucerno - /run/current-system/sw/lib/clap/Shortcircuit XT.clap"
     "L+ ${myLib.home}/.lv2/drumlabooh.lv2 - lucerno lucerno - /run/current-system/sw/lib/lv2/drumlabooh.lv2"
     "L+ ${myLib.home}/.lv2/drumlabooh-multi.lv2 - lucerno lucerno - /run/current-system/sw/lib/lv2/drumlabooh-multi.lv2"
+    "L+ \"${myLib.home}/.vst/OT P1ANO S.so\" - lucerno lucerno - /run/current-system/sw/lib/vst/OT\ P1ANO\ S.so"
     "L+ ${myLib.home}/.vst3/MT-PowerDrumKit.vst3 - lucerno lucerno - /run/current-system/sw/lib/vst3/MT-PowerDrumKit.vst3"
-    "L+ \"${myLib.home}/.clap/Shortcircuit XT.clap\" - lucerno lucerno - /run/current-system/sw/lib/clap/Shortcircuit XT.clap"
+
 
     # Создаём структуру каталогов для данных Amp Locker и Drum Locker
     "d \"${myLib.home}/Audio Assault\" 0755 lucerno lucerno -"
