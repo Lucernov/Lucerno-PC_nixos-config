@@ -1,9 +1,12 @@
+# systemctl --user daemon-reload - перезагрузка сервисов
+# systemctl --user restart comfyui - перезагрузка comfyui
+# systemctl --user status comfyui - вывод статуса comfyui
 { pkgs, myLib, ... }:
 
 let
   inherit (myLib) home;
 
-  # Скрипты ComfyUI
+  # Скрипты ComfyUI (остаются как есть)
   startScript = pkgs.writeShellScript "start-comfyui" ''
     #!/usr/bin/env bash
     systemctl --user start comfyui
@@ -20,6 +23,59 @@ let
     #!/usr/bin/env bash
     kitty --title "ComfyUI Status" bash -c "systemctl --user status comfyui; echo 'Press any key to close...'; read -n 1"
   '';
+
+  # .desktop файлы
+  startDesktop = pkgs.writeTextFile {
+    name = "comfyui-start.desktop";
+    destination = "/share/applications/comfyui-start.desktop";
+    text = ''
+      [Desktop Entry]
+      Version=1.0
+      Type=Application
+      Name=Start ComfyUI
+      Comment=Start ComfyUI server
+      Exec=${startScript}/bin/start-comfyui
+      Icon=applications-development
+      Categories=Development;System;
+      Terminal=false
+      StartupNotify=false
+    '';
+  };
+
+  stopDesktop = pkgs.writeTextFile {
+    name = "comfyui-stop.desktop";
+    destination = "/share/applications/comfyui-stop.desktop";
+    text = ''
+      [Desktop Entry]
+      Version=1.0
+      Type=Application
+      Name=Stop ComfyUI
+      Comment=Stop ComfyUI server
+      Exec=${stopScript}/bin/stop-comfyui
+      Icon=applications-development
+      Categories=Development;System;
+      Terminal=false
+      StartupNotify=false
+    '';
+  };
+
+  statusDesktop = pkgs.writeTextFile {
+    name = "comfyui-status.desktop";
+    destination = "/share/applications/comfyui-status.desktop";
+    text = ''
+      [Desktop Entry]
+      Version=1.0
+      Type=Application
+      Name=ComfyUI Status
+      Comment=Show ComfyUI server status
+      Exec=${statusScript}/bin/status-comfyui
+      Icon=applications-development
+      Categories=Development;System;
+      Terminal=true   # запускаем в терминале, чтобы видеть статус
+      StartupNotify=false
+    '';
+  };
+
 in
 
 {
@@ -35,7 +91,7 @@ in
     # Group = myLib.userName;                                                           # Группа пользователя
       Type = "simple";                                                                  # Тип сервиса (простой процесс, не разветвляется)
       WorkingDirectory = "/mnt/ai/ComfyUI";                                             # Рабочая директория (где лежат модели и workflows)
-      ExecStart = "${pkgs.comfy-ui-cuda}/bin/comfy-ui --listen 127.0.0.1 --port 8188";  # Команда запуска - только локальный доступ
+      ExecStart = "${pkgs.comfy-ui-cuda}/bin/comfy-ui --listen 127.0.0.1 --port 8188 --normalvram --cuda-device 0"; # Команда запуска - только локальный доступ
       Restart = "on-failure";                                                           # Перезапускать сервис, если он упал с ошибкой
       RestartSec = 5;                                                                   # Задержка перед перезапуском (5 секунд)
       DevicePolicy = "closed";                                                          # Разрешать только явно перечисленные устройства (безопасность)
@@ -75,6 +131,10 @@ in
     "L+ /mnt/ai/start-comfyui.sh - lucerno lucerno - ${startScript}"
     "L+ /mnt/ai/stop-comfyui.sh - lucerno lucerno - ${stopScript}"
     "L+ /mnt/ai/status-comfyui.sh - lucerno lucerno - ${statusScript}"
+    # Симлинки для .desktop файлов
+    "L+ ${home}/.local/share/applications/comfyui-start.desktop - lucerno lucerno - ${startDesktop}/share/applications/comfyui-start.desktop"
+    "L+ ${home}/.local/share/applications/comfyui-stop.desktop - lucerno lucerno - ${stopDesktop}/share/applications/comfyui-stop.desktop"
+    "L+ ${home}/.local/share/applications/comfyui-status.desktop - lucerno lucerno - ${statusDesktop}/share/applications/comfyui-status.desktop"
 
     # линки ComfyUI
     "d /mnt/ai/ComfyUI/custom_nodes 0755 lucerno lucerno -"
