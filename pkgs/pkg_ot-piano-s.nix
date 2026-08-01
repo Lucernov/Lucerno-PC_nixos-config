@@ -4,7 +4,7 @@ stdenv.mkDerivation {
   pname = "ot-piano-s";
   version = "1.0";
 
-  src = builtins.toPath (toString ./. + "../dotfiles/repo/OT P1ANO S.so");
+  src = ../dotfiles/repo/OT_P1ANO_S.so;
 
   nativeBuildInputs = [ autoPatchelfHook ];
 
@@ -32,7 +32,7 @@ stdenv.mkDerivation {
 
   installPhase = ''
     mkdir -p $out/lib/vst
-    cp "$src" "$out/lib/vst/OT P1ANO S.so"
+    cp $src $out/lib/vst/OT_P1ANO_S.so
   '';
 
   meta = with lib; {
