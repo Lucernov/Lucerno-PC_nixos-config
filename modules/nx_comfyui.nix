@@ -2,19 +2,37 @@
 
 let
   inherit (myLib) home;
+
+  # Скрипты ComfyUI
+  startScript = pkgs.writeShellScript "start-comfyui" ''
+    #!/usr/bin/env bash
+    systemctl --user start comfyui
+    echo "ComfyUI server started"
+  '';
+
+  stopScript = pkgs.writeShellScript "stop-comfyui" ''
+    #!/usr/bin/env bash
+    systemctl --user stop comfyui
+    echo "ComfyUI server stopped"
+  '';
+
+  statusScript = pkgs.writeShellScript "status-comfyui" ''
+    #!/usr/bin/env bash
+    kitty --title "ComfyUI Status" bash -c "systemctl --user status comfyui; echo 'Press any key to close...'; read -n 1"
+  '';
 in
 
 {
   # Системный systemd-сервис для запуска ComfyUI. Запускается автоматически при загрузке (если включён wantedBy) или вручную systemctl start comfyui
-  systemd.services.comfyui = {
-    description = "ComfyUI server (system)";                                            # Описание сервиса (отображается в systemctl status)
+  systemd.user.services.comfyui = {
+    description = "ComfyUI server (user)";                                            # Описание сервиса (отображается в systemctl status)
     after = [ "network.target" ];                                                       # Запускать после того, как сеть поднята
     wantedBy = [];                                                                      # Не запускать при загрузке системы
   # wantedBy = [ "multi-user.target" ];                                                 # Автоматически запускать при загрузке системы
 
     serviceConfig = {
-      User = myLib.userName;                                                            # Запускать от имени пользователя lucerno (не от root)
-      Group = myLib.userName;                                                           # Группа пользователя
+    # User = myLib.userName;                                                            # Запускать от имени пользователя lucerno (не от root)
+    # Group = myLib.userName;                                                           # Группа пользователя
       Type = "simple";                                                                  # Тип сервиса (простой процесс, не разветвляется)
       WorkingDirectory = "/mnt/ai/ComfyUI";                                             # Рабочая директория (где лежат модели и workflows)
       ExecStart = "${pkgs.comfy-ui-cuda}/bin/comfy-ui --listen 127.0.0.1 --port 8188";  # Команда запуска - только локальный доступ
@@ -56,6 +74,11 @@ in
 
     # ========== Правила tmpfiles для папок монтирования ==========
   systemd.tmpfiles.rules = [
+    # ---------- Симлинки скриптов ComfyUI в /mnt/ai/ ----------
+    "L+ /mnt/ai/start-comfyui.sh - lucerno lucerno - ${startScript}"
+    "L+ /mnt/ai/stop-comfyui.sh - lucerno lucerno - ${stopScript}"
+    "L+ /mnt/ai/status-comfyui.sh - lucerno lucerno - ${statusScript}"
+
     # линки ComfyUI
     "d /mnt/ai/ComfyUI/custom_nodes 0755 lucerno lucerno -"
     "d /mnt/ai/ComfyUI/models/diffusion_models 0755 lucerno lucerno -"
