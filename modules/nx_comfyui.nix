@@ -91,7 +91,7 @@ in
     # Group = myLib.userName;                                                           # Группа пользователя
       Type = "simple";                                                                  # Тип сервиса (простой процесс, не разветвляется)
       WorkingDirectory = "/mnt/ai/ComfyUI";                                             # Рабочая директория (где лежат модели и workflows)
-      ExecStart = "${pkgs.comfy-ui-cuda}/bin/comfy-ui --listen 127.0.0.1 --port 8188 --normalvram --cuda-device 0"; # Команда запуска - только локальный доступ
+      ExecStart = "${pkgs.comfy-ui-cuda}/bin/comfy-ui --listen 127.0.0.1 --port 8188";  # Команда запуска - только локальный доступ
       Restart = "on-failure";                                                           # Перезапускать сервис, если он упал с ошибкой
       RestartSec = 5;                                                                   # Задержка перед перезапуском (5 секунд)
       DevicePolicy = "closed";                                                          # Разрешать только явно перечисленные устройства (безопасность)
