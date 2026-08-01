@@ -16,4 +16,5 @@
   amp-locker = pkgs.callPackage ./pkg_Amp-Locker.nix { };
   shortcircuit-xt = pkgs.callPackage ./pkg_shortcircuit-xt.nix { };
   ot-piano-s = pkgs.callPackage ./pkg_ot-piano-s.nix { };
+  orchestools = pkgs.callPackage ./pkg_orchestools.nix { };
 }
