@@ -32,7 +32,7 @@ stdenv.mkDerivation {
 
   installPhase = ''
     mkdir -p $out/lib/vst
-    cp $src $out/lib/vst/OT\ P1ANO\ S.so
+    cp "$src" "$out/lib/vst/OT P1ANO S.so"
   '';
 
   meta = with lib; {
