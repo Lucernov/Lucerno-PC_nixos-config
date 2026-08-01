@@ -187,6 +187,7 @@
     surge-xt                                                      # Синтезатор Surge XT
     my-packages.shortcircuit-xt                                   # Мощный открытый семплер (CLAP) от Surge Synth Team
     decent-sampler                                                # Сэмплер для библиотек DecentSampler (формат .dspreset, .dslibrary)
+    my-packages.ot-piano-s
       # --- Синтезаторы и Сэмплеры ударных ---
     my-packages.mtpdk                                             # лёгкий плагин ударной установки MT-PowerDrumKit 2
     my-packages.drumlabooh                                        # LV2-сэмплер ударных с несколькими наборами (drumlabooh)
