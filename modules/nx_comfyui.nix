@@ -36,7 +36,7 @@ let
       Comment=Start ComfyUI server
       Exec=${startScript}
       Icon=applications-development
-      Categories=Development;System;
+      Categories=Development;
       Terminal=false
       StartupNotify=false
     '';
@@ -53,7 +53,7 @@ let
       Comment=Stop ComfyUI server
       Exec=${stopScript}
       Icon=applications-development
-      Categories=Development;System;
+      Categories=Development;
       Terminal=false
       StartupNotify=false
     '';
@@ -70,7 +70,7 @@ let
       Comment=Show ComfyUI server status
       Exec=${statusScript}
       Icon=applications-development
-      Categories=Development;System;
+      Categories=Development;
       Terminal=true   # запускаем в терминале, чтобы видеть статус
       StartupNotify=false
     '';
