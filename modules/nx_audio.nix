@@ -72,8 +72,12 @@ in
     "L+ \"${myLib.home}/.clap/Shortcircuit XT.clap\" - lucerno lucerno - /run/current-system/sw/lib/clap/Shortcircuit XT.clap"
     "L+ ${myLib.home}/.lv2/drumlabooh.lv2 - lucerno lucerno - /run/current-system/sw/lib/lv2/drumlabooh.lv2"
     "L+ ${myLib.home}/.lv2/drumlabooh-multi.lv2 - lucerno lucerno - /run/current-system/sw/lib/lv2/drumlabooh-multi.lv2"
-    "L+ \"${myLib.home}/.vst/OT P1ANO S.so\" - lucerno lucerno - /run/current-system/sw/lib/vst/OT\ P1ANO\ S.so"
     "L+ ${myLib.home}/.vst3/MT-PowerDrumKit.vst3 - lucerno lucerno - /run/current-system/sw/lib/vst3/MT-PowerDrumKit.vst3"
+    "L+ \"${myLib.home}/.vst/OT P1ANO S.so\" - lucerno lucerno - /run/current-system/sw/lib/vst/OT\ P1ANO\ S.so"
+    "L+ \"${myLib.home}/.vst3/OT BRASS.vst3\" - lucerno lucerno - /run/current-system/sw/lib/vst3/OT BRASS.vst3"
+    "L+ \"${myLib.home}/.vst3/OT PERC.vst3\" - lucerno lucerno - /run/current-system/sw/lib/vst3/OT PERC.vst3"
+    "L+ \"${myLib.home}/.vst3/OT STRINGS.vst3\" - lucerno lucerno - /run/current-system/sw/lib/vst3/OT STRINGS.vst3"
+    "L+ \"${myLib.home}/.vst3/OT WINDS.vst3\" - lucerno lucerno - /run/current-system/sw/lib/vst3/OT WINDS.vst3"
 
 
     # Создаём структуру каталогов для данных Amp Locker и Drum Locker
