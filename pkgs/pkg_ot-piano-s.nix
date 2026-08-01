@@ -1,4 +1,4 @@
-{ lib, stdenv, autoPatchelfHook, alsa-lib, freetype, libGL, glib, gtk3, libX11, libXext, libXrender, libXcursor, libXfixes, libXi, libXrandr, libxcb, libxkbcommon, xcbutil, xcbutilcursor, ... }:
+{ lib, stdenv, autoPatchelfHook, alsa-lib, freetype, libX11, libXext, libxcb }:
 
 stdenv.mkDerivation {
   pname = "ot-piano-s";
@@ -11,20 +11,9 @@ stdenv.mkDerivation {
   buildInputs = [
     alsa-lib
     freetype
-    libGL
-    glib
-    gtk3
     libX11
     libXext
-    libXrender
-    libXcursor
-    libXfixes
-    libXi
-    libXrandr
     libxcb
-    libxkbcommon
-    xcbutil
-    xcbutilcursor
     stdenv.cc.cc.lib
   ];
 
