@@ -34,7 +34,7 @@ let
       Type=Application
       Name=Start ComfyUI
       Comment=Start ComfyUI server
-      Exec=${startScript}/bin/start-comfyui
+      Exec=${startScript}
       Icon=applications-development
       Categories=Development;System;
       Terminal=false
@@ -51,7 +51,7 @@ let
       Type=Application
       Name=Stop ComfyUI
       Comment=Stop ComfyUI server
-      Exec=${stopScript}/bin/stop-comfyui
+      Exec=${stopScript}
       Icon=applications-development
       Categories=Development;System;
       Terminal=false
@@ -68,7 +68,7 @@ let
       Type=Application
       Name=ComfyUI Status
       Comment=Show ComfyUI server status
-      Exec=${statusScript}/bin/status-comfyui
+      Exec=${statusScript}
       Icon=applications-development
       Categories=Development;System;
       Terminal=true   # запускаем в терминале, чтобы видеть статус
