@@ -131,7 +131,7 @@ in
     ''}"
 
     # --- Ярлык Google Chrome с принудительным X11 ---
-    "L+ ${home}/.local/share/applications/google-chrome.desktop - lucerno lucerno - ${pkgs.writeText "google-chrome.desktop" ''
+    "L+ ${home}/.local/share/applications/google-chrome-custom.desktop - lucerno lucerno - ${pkgs.writeText "google-chrome-custom.desktop" ''
       [Desktop Entry]
       Version=1.0
       Type=Application
