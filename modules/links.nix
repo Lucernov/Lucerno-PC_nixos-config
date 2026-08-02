@@ -135,7 +135,7 @@ in
       [Desktop Entry]
       Version=1.0
       Type=Application
-      Name=Google Chrome
+      Name=Chrome
       Exec=google-chrome-stable --ozone-platform=x11 %U
       Icon=google-chrome
       Categories=Network;WebBrowser;
