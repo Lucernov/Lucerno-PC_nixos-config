@@ -136,8 +136,7 @@ in
       Version=1.0
       Type=Application
       Name=Google Chrome
-      Exec=google-chrome
-      #Exec=google-chrome --ozone-platform=x11 %U
+      Exec=google-chrome --ozone-platform=x11 %U
       Icon=google-chrome
       Categories=Network;WebBrowser;
       Terminal=false
