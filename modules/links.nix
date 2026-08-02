@@ -141,6 +141,9 @@ in
       Categories=Network;WebBrowser;
       Terminal=false
       StartupWMClass=Google-chrome
+      StartupNotify=true
+      X-KDE-StartupNotify=true
+      X-KDE-Wayland-Startup=true
     ''}"
 
     # ----------Ярлык TeamSpeak 6 с поддержкой X11 в Wayland ----------
