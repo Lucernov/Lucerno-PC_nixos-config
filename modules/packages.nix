@@ -134,7 +134,6 @@
     rclone                                                        # Утилита для синхронизации и монтирования облачных хранилищ (Google Drive, OneDrive и др.)
     wget                                                          # Утилита для загрузки файлов из интернета
     authenticator                                                 # Приложение для двухфакторной аутентификации (TOTP, HOTP), например, для аккаунтов Google, GitHub и т.д.
-    google-chrome                                                 # Браузер Google Chrome
     parabolic                                                     # Загрузчик видео/аудио с YouTube (альтернатива yt-dlp)
   # (discord.override { withOpenASAR = true; })                   # Голосовой/текстовый чат
     (vesktop.override { withSystemVencord = false; })             # Голосовой/текстовый чат (альтернатиивный discord клиент в котором открываются видео ролики)
