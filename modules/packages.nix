@@ -45,7 +45,6 @@
     };
     firefox = {
       enable = true;
-      package = pkgs.firefox-wayland;                             # Выбираем сборку для Wayland
       languagePacks = [ "ru" ];                                   # Устанавливаем русский язык интерфейса
       preferences = {                                             # Базовые настройки about:config
         "browser.startup.homepage" = "https://duckduckgo.com";    # Домашняя страница при запуске браузера
