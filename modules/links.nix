@@ -130,22 +130,6 @@ in
       StartupNotify=true
     ''}"
 
-    # --- Ярлык Google Chrome с принудительным X11 ---
-    "L+ ${home}/.local/share/applications/google-chrome.desktop - lucerno lucerno - ${pkgs.writeText "google-chrome.desktop" ''
-      [Desktop Entry]
-      Version=1.0
-      Type=Application
-      Name=Google Chrome
-      Exec=google-chrome-stable --ozone-platform=x11 %U
-      Icon=google-chrome
-      Categories=Network;WebBrowser;
-      Terminal=false
-      StartupWMClass=Google-chrome
-      StartupNotify=true
-      X-KDE-StartupNotify=true
-      X-KDE-Wayland-Startup=true
-    ''}"
-
     # ----------Ярлык TeamSpeak 6 с поддержкой X11 в Wayland ----------
     "L+ ${home}/.local/share/applications/teamspeak6.desktop - lucerno lucerno - ${pkgs.writeText "teamspeak6.desktop" ''
       [Desktop Entry]
