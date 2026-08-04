@@ -43,6 +43,24 @@
         obs-source-clone                                          # Клонирование источников
       ];
     };
+    firefox = {
+      enable = true;
+      package = pkgs.firefox-wayland;                             # Выбираем сборку для Wayland
+      languagePacks = [ "ru" ];                                   # Устанавливаем русский язык интерфейса
+      preferences = {                                             # Базовые настройки about:config
+        "browser.startup.homepage" = "https://duckduckgo.com";    # Домашняя страница при запуске браузера
+        "browser.search.defaultenginename" = "DuckDuckGo";        # Поисковая система по умолчанию (используется в адресной строке и поиске)
+        "dom.security.https_only_mode" = true;                    # Принудительное использование HTTPS для всех сайтов (повышает безопасность)
+        "browser.search.region" = "RU";                           # Регион для поиска (Россия)
+        "extensions.pocket.enabled" = false;                      # Отключаем Pocket (не всем нужно)
+        "browser.urlbar.suggest.searches" = false;                # Не отправлять поисковые запросы в адресной строке
+      };
+      policies = {                                                # Корпоративные политики (имеют приоритет над preferences)
+        DisableTelemetry = true;                                  # Отключаем телеметрию
+        DisablePocket = true;                                     # Отключаем Pocket полностью
+        EnableTrackingProtection = true;                          # Включаем защиту от отслеживания
+      };
+    };
     # KDE приложения
     partition-manager.enable = true;                              # Включает модуль для KDE Partition Manager
     kdeconnect.enable = true;                                     # Включает интеграцию с телефоном через KDE Connect
