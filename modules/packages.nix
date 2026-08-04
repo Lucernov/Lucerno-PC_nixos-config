@@ -44,9 +44,10 @@
       ];
     };
     firefox = {
-      enable = true;
-      languagePacks = [ "ru" ];                                   # Устанавливаем русский язык интерфейса
+      enable = true;                                              # Установка браузера Firefox
+      languagePacks = [ "ru" ];                                   # Загружает РУ языковой файл (переводы) в систему
       preferences = {                                             # Базовые настройки about:config
+        "intl.locale.requested" = "ru";                           # Включить русский язык интерфейса
         "browser.startup.homepage" = "https://duckduckgo.com";    # Домашняя страница при запуске браузера
         "browser.search.defaultenginename" = "DuckDuckGo";        # Поисковая система по умолчанию (используется в адресной строке и поиске)
         "dom.security.https_only_mode" = true;                    # Принудительное использование HTTPS для всех сайтов (повышает безопасность)
