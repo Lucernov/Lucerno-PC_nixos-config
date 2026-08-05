@@ -56,7 +56,6 @@ in
 
       # ========== Приложения ==========
       parabolic = "org.nickvision.tubeconverter";                # запустить Parabolic (загрузчик видео/аудио с YouTube)
-      chrome    = "google-chrome-stable --ozone-platform=x11";   # запустить Chrome в X11-режиме (чтобы избежать проблем с Wayland)
 
       # ========== Замена утилит ==========
       cat = "bat";                                               # использовать bat вместо cat
