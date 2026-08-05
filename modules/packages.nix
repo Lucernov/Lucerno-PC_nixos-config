@@ -28,6 +28,7 @@
       remotePlay.openFirewall = true;                             # Открывает порты в фаерволе для Steam Remote Play (трансляция игры на другие устройства)
       dedicatedServer.openFirewall = true;                        # Открывает порты для выделенных серверов игр (например, для Counter-Strike, Garry's Mod)
       extraCompatPackages = [ pkgs-unstable.proton-ge-bin ];      # Дополнительные совместимые пакеты (Proton-GE) для запуска Windows-игр
+      gamemode.enable = true;                                     #
     };
     obs-studio = {
       enable = true;                                              # Включает поддержку OBS
@@ -169,7 +170,6 @@
     papers                                                        # Просмотрщик документов (PDF, DjVu, PostScript) — современная альтернатива Evince для GNOME
 
     # ИГРЫ
-    gamemode
     my-packages.minion                                            # Менеджер аддонов для TESO
     (bottles.override { removeWarningPopup = true; })             # Запуск Windows-приложений через Wine (без всплывающих предупреждений)
     goverlay                                                      # Оверлей для мониторинга системы и FPS (MangoHud, vkBasalt)
