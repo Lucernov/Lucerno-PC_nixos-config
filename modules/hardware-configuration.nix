@@ -68,6 +68,13 @@ in
       fsType = "ext4";
       options = [ "rw" "noatime" "discard" "nobarrier" ];
     };
+    # Bind mount для Steam (чтобы не засорять /home)
+    "/home/lucerno/.local/share/Steam/steamapps" = {
+      device = "/mnt/games/SteamLibrary/steamapps";
+      fsType = "none";
+      options = [ "bind" "rw" "noatime" ];
+      depends = [ "/mnt/games" ];
+    };
 
     # HDD для музыки (sdc1, btrfs с подтомом @music)
     "/mnt/music" = {
