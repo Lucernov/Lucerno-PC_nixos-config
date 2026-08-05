@@ -169,6 +169,7 @@
     papers                                                        # Просмотрщик документов (PDF, DjVu, PostScript) — современная альтернатива Evince для GNOME
 
     # ИГРЫ
+    gamemode
     my-packages.minion                                            # Менеджер аддонов для TESO
     (bottles.override { removeWarningPopup = true; })             # Запуск Windows-приложений через Wine (без всплывающих предупреждений)
     goverlay                                                      # Оверлей для мониторинга системы и FPS (MangoHud, vkBasalt)
