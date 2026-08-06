@@ -28,9 +28,6 @@
       remotePlay.openFirewall = true;                             # Открывает порты в фаерволе для Steam Remote Play (трансляция игры на другие устройства)
       dedicatedServer.openFirewall = true;                        # Открывает порты для выделенных серверов игр (например, для Counter-Strike, Garry's Mod)
       extraCompatPackages = [ pkgs-unstable.proton-ge-bin ];      # Дополнительные совместимые пакеты (Proton-GE) для запуска Windows-игр
-      package = pkgs.steam.override {
-        extraLibraries = pkgs: [ pkgs.gamemode ];
-      };
     };
     obs-studio = {
       enable = true;                                              # Включает поддержку OBS
