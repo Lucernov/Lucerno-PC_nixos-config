@@ -251,6 +251,8 @@ in
       # --- Устройства реального времени для аудио ---
       KERNEL=="rtc0", GROUP="audio"
       KERNEL=="hpet", GROUP="audio"
+
+      SUBSYSTEM=="usb", ATTRS{idVendor}=="84ef", ATTRS{idProduct}=="0031", MODE="0666"
     '';
 
     irqbalance.enable = true;                                               # Включает демон irqbalance, который распределяет аппаратные прерывания между ядрами CPU.
