@@ -170,7 +170,8 @@
 
     # ИГРЫ
     my-packages.minion                                            # Менеджер аддонов для TESO
-    #(bottles.override { removeWarningPopup = true; })             # Запуск Windows-приложений через Wine (без всплывающих предупреждений)
+    bottles                                                       # Запуск Windows-приложений через Wine
+  # (bottles.override { removeWarningPopup = true; })             # Запуск Windows-приложений через Wine (без всплывающих предупреждений)
     goverlay                                                      # Оверлей для мониторинга системы и FPS (MangoHud, vkBasalt)
     mangohud                                                      # Оверлей для отображения FPS и мониторинга системы в играх
     (retroarch.withCores (cores: with cores; [                    # Эмулятор приставок
