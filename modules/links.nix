@@ -45,6 +45,15 @@ in
     "L+ ${home}/.config/MangoHud - lucerno lucerno - ${home}/${configDir}/dotfiles/config/MangoHud"
     "L+ ${home}/.config/kglobalshortcutsrc - lucerno lucerno - ${home}/${configDir}/dotfiles/config/KDE/config-kglobalshortcutsrc"
 
+    # ---------- Kdenlive ----------
+    # Конфиги в ~/.config/
+    "L+ ${home}/.config/kdenlive-layoutsrc - lucerno lucerno - ${home}/${configDir}/dotfiles/config/kdenlive/kdenlive-layoutsrc"
+    "L+ ${home}/.config/kdenliverc - lucerno lucerno - ${home}/${configDir}/dotfiles/config/kdenlive/kdenliverc"
+    # Директории данных в ~/.local/share/kdenlive/
+    "d ${home}/.local/share/kdenlive 0755 lucerno lucerno -"
+    "L+ ${home}/.local/share/kdenlive/export - lucerno lucerno - ${home}/${configDir}/dotfiles/config/kdenlive/export"
+    "L+ ${home}/.local/share/kdenlive/layouts - lucerno lucerno - ${home}/${configDir}/dotfiles/config/kdenlive/layouts"
+
     # ---------- Симлинки для приложений и данных ----------
     "L+ ${home}/.config/AmneziaVPN.ORG - lucerno lucerno - /mnt/sys_archiv/secrets/AmneziaVPN.ORG"
     "L+ ${home}/.local/bin/socialstreamninja - lucerno lucerno - /mnt/sys_archiv/pkgs/AppImages/socialstreamninja_linux_v0.3.128_x86_64.AppImage"
