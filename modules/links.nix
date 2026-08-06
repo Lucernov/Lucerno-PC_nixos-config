@@ -118,7 +118,7 @@ in
       Type=Application
       Name=Ampero II
       Comment=Hotone Ampero II Editor
-      Exec=env WINEPREFIX="/mnt/music/wine/wine-guitar" wine "/mnt/music/wine/wine-guitar/drive_c/Program Files/Hotone/Ampero II/Ampero II.exe"
+      Exec=env WINEPREFIX="/mnt/music/MUSIC-WINE/guitar" wine "/mnt/music/MUSIC-WINE/guitar/drive_c/Program Files/Hotone/Ampero II/Ampero II.exe"
       Icon=${home}/${configDir}/dotfiles/sys-icons/icon-hotone.png
       Categories=Audio;AudioVideo;
       StartupNotify=true
