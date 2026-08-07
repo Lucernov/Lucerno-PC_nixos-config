@@ -91,7 +91,6 @@
     strace                                                        # перехватывает и записывает все системные вызовы (поиск ошибок запуска программ)
     usbutils                                                      # Набор утилит для работы с USB (lsusb, usb-devices, диагностика USB-устройств)
     alsa-utils                                                    # Утилиты для работы с ALSA (aplay, arecord, alsamixer, управление звуковыми картами)
-    gcc
 
     # ========== КОНСОЛЬНЫЕ УТИЛИТЫ ==========
     kitty                                                         # Эмулятор терминала с поддержкой GPU и лигатур
@@ -232,10 +231,9 @@
 
   ]);
 
-  virtualisation.virtualbox.host = {
-    enable = true;                                                #
-    enableExtensionPack = true;                                   #
-  };
+  # ========== Виртуализация ==========
+  virtualisation.libvirtd.enable = true;
+  virtualisation.spiceUSBRedirection.enable = true;
 }
 
 # ===== Быстрый запуск утилит без установки (через nix run) =====
