@@ -52,7 +52,19 @@
       isNormalUser = true;                                                                              # Обычный пользователь (не системный)
       hashedPasswordFile = "${myLib.home}/${myLib.configDirName}/secrets/lucerno-password.hash";        # Файл с хешем пароля
       group = "lucerno";                                                                                # Группа, к которой принадлежит пользователь
-      extraGroups = [ "wheel" "networkmanager" "audio" "video" "storage" "render" "powercap" "rtkit" "fuse" "nvidia" "libvirtd" ]; # Дополнительные группы
+      extraGroups = [
+        "wheel"                                                                                         # Доступ к командам sudo (администрирование системы)
+        "networkmanager"                                                                                # Управление сетями через NetworkManager (Wi‑Fi, VPN)
+        "audio"                                                                                         # Для низкоуровневого доступа к звуку (ALSA, PipeWire, PulseAudio)
+        "rtkit"                                                                                         # Приоритет реального времени для аудио (Realtime Kit, низкие задержки)
+        "video"                                                                                         # Доступ к видеоустройствам и аппаратному ускорению (VA‑API, VDPAU)
+        "nvidia"                                                                                        # Доступ к драйверу NVIDIA (CUDA, OpenCL, аппаратное ускорение)
+        "render"                                                                                        # Доступ к рендерингу через DRM (аппаратное ускорение графики)
+        "storage"                                                                                       # Управление дисками и хранилищами (монтирование, форматирование)
+        "fuse"                                                                                          # Доступ к FUSE (монтирование в пользовательском пространстве для rclone и др.)
+        "powercap"                                                                                      # Доступ к энергопотреблению CPU через RAPL (используется btop, powertop)
+        "libvirtd"                                                                                      # Управление виртуальными машинами через QEMU/KVM (libvirt)
+      ];
       shell = pkgs.zsh;                                                                                 # Командная оболочка по умолчанию (Zsh)
     };
   };
