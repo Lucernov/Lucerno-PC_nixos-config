@@ -231,6 +231,7 @@
     ratatouille-lv2                                               # плагин для загрузки и микширования нейросетевых моделей гитарных усилителей (аналог Neural Amp Model)
 
   ]);
+
   virtualisation.virtualbox.host = {
     enable = true;                                                #
     enableExtensionPack = true;                                   #
