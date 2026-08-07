@@ -61,6 +61,7 @@
         EnableTrackingProtection = true;                          # Включаем защиту от отслеживания
       };
     };
+    virt-manager.enable = true;
     # KDE приложения
     partition-manager.enable = true;                              # Включает модуль для KDE Partition Manager
     kdeconnect.enable = true;                                     # Включает интеграцию с телефоном через KDE Connect
