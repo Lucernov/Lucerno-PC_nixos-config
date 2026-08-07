@@ -61,6 +61,10 @@
         EnableTrackingProtection = true;                          # Включаем защиту от отслеживания
       };
     };
+    virtualbox = {
+      host.enable = true;                                         # Включает VirtualBox
+      host.enableExtensionPack = true;                            # Включает расширения (USB 2.0/3.0) — уже разрешено allowUnfree
+    };
     # KDE приложения
     partition-manager.enable = true;                              # Включает модуль для KDE Partition Manager
     kdeconnect.enable = true;                                     # Включает интеграцию с телефоном через KDE Connect
