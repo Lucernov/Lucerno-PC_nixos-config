@@ -61,10 +61,6 @@
         EnableTrackingProtection = true;                          # Включаем защиту от отслеживания
       };
     };
-    virtualisation.virtualbox.host = {
-      host.enable = true;                                         # Включает VirtualBox
-      host.enableExtensionPack = true;                            # Включает расширения (USB 2.0/3.0) — уже разрешено allowUnfree
-    };
     # KDE приложения
     partition-manager.enable = true;                              # Включает модуль для KDE Partition Manager
     kdeconnect.enable = true;                                     # Включает интеграцию с телефоном через KDE Connect
@@ -234,6 +230,10 @@
     ratatouille-lv2                                               # плагин для загрузки и микширования нейросетевых моделей гитарных усилителей (аналог Neural Amp Model)
 
   ]);
+  virtualisation.virtualbox.host = {
+    enable = true;                                                #
+    enableExtensionPack = true;                                   #
+  };
 }
 
 # ===== Быстрый запуск утилит без установки (через nix run) =====
