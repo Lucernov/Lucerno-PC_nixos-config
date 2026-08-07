@@ -61,7 +61,7 @@
         EnableTrackingProtection = true;                          # Включаем защиту от отслеживания
       };
     };
-    virtualbox = {
+    virtualisation.virtualbox.host = {
       host.enable = true;                                         # Включает VirtualBox
       host.enableExtensionPack = true;                            # Включает расширения (USB 2.0/3.0) — уже разрешено allowUnfree
     };
