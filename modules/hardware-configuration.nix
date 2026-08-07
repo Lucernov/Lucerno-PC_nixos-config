@@ -167,7 +167,7 @@ in
       "ntsync"                                                              # Модуль для улучшения синхронизации в Wine/Proton (игры)
       "nvidia_uvm"                                                          # Unified Virtual Memory для NVIDIA (CUDA, OpenCL, AI)
       "intel_rapl_msr"                                                      # Модуль для чтения энергопотребления процессора (RAPL). Нужен для btop, powertop и других утилит.
-    # "kvm-intel"                                                           # Модуль аппаратной виртуализации KVM для процессоров Intel
+      "kvm-intel"                                                           # Модуль аппаратной виртуализации KVM для процессоров Intel
     ];
 
     initrd.availableKernelModules = [                                       # Модули, которые могут быть загружены динамически при обнаружении оборудования
