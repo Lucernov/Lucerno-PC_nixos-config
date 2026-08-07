@@ -39,6 +39,7 @@ add_section "flake.lock" "flake.lock"
 add_section "flake.nix" "flake.nix"
 add_section "mylib.nix" "mylib.nix"
 add_section ".gitignore" ".gitignore"
+add_section ".gitattributes" ".gitattributes"
 
 # --- Пакеты (pkgs/) ---
 echo "# --- Пакеты (pkgs/) ---" >> "$OUTPUT_FILE"
