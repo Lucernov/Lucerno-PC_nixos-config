@@ -11,7 +11,7 @@ in
     LV2_PATH = "/run/current-system/sw/lib/lv2:${myLib.home}/.lv2";                                     # Устанавливаем переменную окружения для пользовательской папки LV2
     VST_PATH = "/run/current-system/sw/lib/vst:${myLib.home}/.vst";                                     # Устанавливаем переменную окружения для пользовательской папки VST
     VST3_PATH = "/run/current-system/sw/lib/vst3:${myLib.home}/.vst3";                                  # Устанавливаем переменную окружения для пользовательской папки VST3
-    WINEPREFIX = "/mnt/music/wine-yabridge";                                                            # Префикс Wine для Windows-плагинов, используемых через yabridge
+    WINEPREFIX = "/mnt/music/MUSIC-WINE/yabridge";                                                      # Префикс Wine для Windows-плагинов, используемых через yabridge
   };
 
   services = {
