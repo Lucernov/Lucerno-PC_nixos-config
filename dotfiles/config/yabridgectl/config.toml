@@ -1,6 +1,6 @@
 plugin_dirs = [
-    '/mnt/music/wine-yabridge/drive_c/Program Files/Common Files/VST3',
-    '/mnt/music/wine-yabridge/drive_c/Program Files/VSTPlugins',
+    '/mnt/music/MUSIC-WINE/yabridge/drive_c/Program Files/Common Files/VST3',
+    '/mnt/music/MUSIC-WINE/yabridge/drive_c/Program Files/VSTPlugins',
 ]
 vst2_location = 'centralized'
 no_verify = false
