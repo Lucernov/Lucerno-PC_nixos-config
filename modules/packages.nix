@@ -15,6 +15,7 @@
     nano.enable = true;                                           # Устанавливает Nano (простой текстовый редактор)
     htop.enable = true;                                           # Устанавливает htop (интерактивный монитор процессов)
     amnezia-vpn.enable = true;                                    # Включает сервис AmneziaVPN (VPN-клиент)
+    virt-manager.enable = true;                                   # Включает Virtual Machine Manager (графический интерфейс для управления QEMU/KVM через libvirt)
     appimage = {
       enable = true;                                              # Включает поддержку запуска AppImage-файлов
       binfmt = true;                                              # Автоматически настраивает загрузчик
@@ -61,7 +62,6 @@
         EnableTrackingProtection = true;                          # Включаем защиту от отслеживания
       };
     };
-    virt-manager.enable = true;
     # KDE приложения
     partition-manager.enable = true;                              # Включает модуль для KDE Partition Manager
     kdeconnect.enable = true;                                     # Включает интеграцию с телефоном через KDE Connect
@@ -119,7 +119,6 @@
     cava                                                          # Консольный аудиовизуализатор (спектроанализатор для музыки)
     neo                                                           # Матричный дождь из символов (эффект из фильма)
   # browsh                                                        # Консольный браузер на движке Firefox
-  # carbonyl                                                      # Консольный браузер на движке Chromium
 
     # KDE приложения
     kdePackages.breeze-gtk                                        # Обеспечивает единый внешний вид GTK-программ в окружении KDE Plasma
@@ -192,7 +191,7 @@
     comfy-ui-cuda                                                 # ComfyUI с поддержкой CUDA для генерации изображений через нейросети
 
     # ВИРТУАЛКА
-    virtio-win
+    virtio-win                                                    # Драйверы VirtIO для Windows (не ISO, а папка с драйверами, подключается через CD-ROM как папка)
 
     # МУЗЫКА
       # --- DAW и среда ---
@@ -236,8 +235,10 @@
   ]);
 
   # ========== Виртуализация ==========
-  virtualisation.libvirtd.enable = true;
-  virtualisation.spiceUSBRedirection.enable = true;
+  virtualisation = {
+    libvirtd.enable = true;                                       # Включает сервис libvirtd (демон для управления QEMU/KVM)
+    spiceUSBRedirection.enable = true;                            # Включает проброс USB-устройств через протокол SPICE (для виртуальных машин)
+  };
 }
 
 # ===== Быстрый запуск утилит без установки (через nix run) =====
