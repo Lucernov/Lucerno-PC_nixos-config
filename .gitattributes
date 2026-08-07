@@ -1,3 +1,2 @@
 dotfiles/repo/* filter=lfs diff=lfs merge=lfs -text
-dotfiles/wallpapers/* filter=lfs diff=lfs merge=lfs -text
 dotfiles/wallpapers/** filter=lfs diff=lfs merge=lfs -text
