@@ -1,8 +1,15 @@
-{ pkgs, pkgs-unstable, myLib, ... }:
+{ pkgs-unstable, myLib, ... }:
 
 let
   inherit (myLib) home;
   configDir = myLib.configDirName;
+  commonRealtime = {
+    CPUSchedulingPolicy = "fifo";
+    CPUSchedulingPriority = 85;
+    Nice = -11;
+    LimitRTPRIO = 89;
+    NoNewPrivileges = false;
+  };
 in
 
 {
@@ -60,27 +67,9 @@ in
 
   # ---------- Настройка приоритетов реального времени для PipeWire и WirePlumber ----------
   systemd.user.services = {
-    pipewire.serviceConfig = {
-      CPUSchedulingPolicy = "fifo";
-      CPUSchedulingPriority = 85;
-      Nice = -11;
-      LimitRTPRIO = 89;
-      NoNewPrivileges = false;
-    };
-    pipewire-pulse.serviceConfig = {
-      CPUSchedulingPolicy = "fifo";
-      CPUSchedulingPriority = 85;
-      Nice = -11;
-      LimitRTPRIO = 89;
-      NoNewPrivileges = false;
-    };
-    wireplumber.serviceConfig = {
-      CPUSchedulingPolicy = "fifo";
-      CPUSchedulingPriority = 85;
-      Nice = -11;
-      LimitRTPRIO = 89;
-      NoNewPrivileges = false;
-    };
+    pipewire.serviceConfig = commonRealtime;
+    pipewire-pulse.serviceConfig = commonRealtime;
+    wireplumber.serviceConfig = commonRealtime;
   };
 
   systemd.tmpfiles.rules = [
