@@ -58,35 +58,32 @@ in
     ];
   };
 
+  # ---------- Настройка приоритетов реального времени для PipeWire и WirePlumber ----------
+  systemd.user.services = {
+    pipewire.serviceConfig = {
+      CPUSchedulingPolicy = "fifo";
+      CPUSchedulingPriority = 85;
+      Nice = -11;
+      LimitRTPRIO = 89;
+      NoNewPrivileges = false;
+    };
+    pipewire-pulse.serviceConfig = {
+      CPUSchedulingPolicy = "fifo";
+      CPUSchedulingPriority = 85;
+      Nice = -11;
+      LimitRTPRIO = 89;
+      NoNewPrivileges = false;
+    };
+    wireplumber.serviceConfig = {
+      CPUSchedulingPolicy = "fifo";
+      CPUSchedulingPriority = 85;
+      Nice = -11;
+      LimitRTPRIO = 89;
+      NoNewPrivileges = false;
+    };
+  };
 
   systemd.tmpfiles.rules = [
-    # ---------- Настройка приоритетов реального времени для PipeWire и WirePlumber ----------
-    "f ${myLib.home}/.config/systemd/user/pipewire.service.d/99-realtime.conf 0644 lucerno lucerno - ${pkgs.writeText "99-realtime.conf" ''
-    [Service]
-    NoNewPrivileges=false
-    CPUSchedulingPolicy=fifo
-    CPUSchedulingPriority=85
-    Nice=-11
-    LimitRTPRIO=89
-    ''}"
-
-    "f ${myLib.home}/.config/systemd/user/pipewire-pulse.service.d/99-realtime.conf 0644 lucerno lucerno - ${pkgs.writeText "99-realtime.conf" ''
-    [Service]
-    NoNewPrivileges=false
-    CPUSchedulingPolicy=fifo
-    CPUSchedulingPriority=85
-    Nice=-11
-    LimitRTPRIO=89
-    ''}"
-
-    "f ${myLib.home}/.config/systemd/user/wireplumber.service.d/99-realtime.conf 0644 lucerno lucerno - ${pkgs.writeText "99-realtime.conf" ''
-    [Service]
-    NoNewPrivileges=false
-    CPUSchedulingPolicy=fifo
-    CPUSchedulingPriority=85
-    Nice=-11
-    LimitRTPRIO=89
-    ''}"
 
     # ========== Правила tmpfiles для аудио и REAPER ==========
     "d ${myLib.home}/.clap 0755 lucerno lucerno -"
@@ -177,8 +174,5 @@ in
     # ---------- Каталоги для drop‑in файлов systemd --user ----------
     "d ${myLib.home}/.config/systemd 0755 lucerno lucerno -"
     "d ${myLib.home}/.config/systemd/user 0755 lucerno lucerno -"
-    "d ${myLib.home}/.config/systemd/user/pipewire.service.d 0755 lucerno lucerno -"
-    "d ${myLib.home}/.config/systemd/user/pipewire-pulse.service.d 0755 lucerno lucerno -"
-    "d ${myLib.home}/.config/systemd/user/wireplumber.service.d 0755 lucerno lucerno -"
   ];
 }
