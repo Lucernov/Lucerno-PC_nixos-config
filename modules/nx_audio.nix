@@ -73,7 +73,6 @@ in
   };
 
   systemd.tmpfiles.rules = [
-
     # ========== Правила tmpfiles для аудио и REAPER ==========
     "d ${myLib.home}/.clap 0755 lucerno lucerno -"
     "d ${myLib.home}/.lv2 0755 lucerno lucerno -"
