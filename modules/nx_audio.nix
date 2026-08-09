@@ -63,6 +63,7 @@ in
     # ---------- Настройка приоритетов реального времени для PipeWire и WirePlumber ----------
     "f ${myLib.home}/.config/systemd/user/pipewire.service.d/99-realtime.conf 0644 lucerno lucerno - ${pkgs.writeText "99-realtime.conf" ''
     [Service]
+    NoNewPrivileges=false
     CPUSchedulingPolicy=fifo
     CPUSchedulingPriority=85
     Nice=-11
@@ -71,6 +72,7 @@ in
 
     "f ${myLib.home}/.config/systemd/user/pipewire-pulse.service.d/99-realtime.conf 0644 lucerno lucerno - ${pkgs.writeText "99-realtime.conf" ''
     [Service]
+    NoNewPrivileges=false
     CPUSchedulingPolicy=fifo
     CPUSchedulingPriority=85
     Nice=-11
@@ -79,6 +81,7 @@ in
 
     "f ${myLib.home}/.config/systemd/user/wireplumber.service.d/99-realtime.conf 0644 lucerno lucerno - ${pkgs.writeText "99-realtime.conf" ''
     [Service]
+    NoNewPrivileges=false
     CPUSchedulingPolicy=fifo
     CPUSchedulingPriority=85
     Nice=-11
