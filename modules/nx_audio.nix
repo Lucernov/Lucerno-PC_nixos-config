@@ -72,7 +72,7 @@ in
     wireplumber.serviceConfig = commonRealtime;
   };
 
-  systemd.tmpfiles.rules = [
+  systemd.tmpfiles.rules = [                                                                            # Правила tmpfiles
     # ========== Правила tmpfiles для аудио и REAPER ==========
     "d ${myLib.home}/.clap 0755 lucerno lucerno -"
     "d ${myLib.home}/.lv2 0755 lucerno lucerno -"
