@@ -34,7 +34,8 @@ in
           "context.properties" = {                                                                      # Основные свойства контекста PipeWire
             "default.clock.rate" = 48000;                                                               # Частота дискретизации по умолчанию (48 кГц)
             "default.clock.quantum" = 512;                                                              # Размер кванта (буфера) по умолчанию – 512 семплов (~10,6 мс при 48 кГц)
-            "default.clock.min-quantum" = 128;                                                          # Минимальный размер кванта – 128 семплов (~2,7 мс при 48 кГц) – для снижения задержки
+            "default.clock.min-quantum" = 64;                                                           # Минимальный размер кванта – 64 семпла (~1,3 мс при 48 кГц) – для снижения задержки
+          # "default.clock.min-quantum" = 128;                                                          # Минимальный размер кванта – 128 семплов (~2,7 мс при 48 кГц) – для снижения задержки
             "default.clock.max-quantum" = 2048;                                                         # Максимальный размер кванта – 2048 семплов (~42,7 мс) – для стабильности
             "default.clock.allowed-rates" = [ 44100 48000 ];                                            # Разрешённые частоты дискретизации (44.1 и 48 кГц)
           };
@@ -52,7 +53,7 @@ in
     };
   };
 
-  # ========== Настройки реального времени для аудио ==========
+  # ---------- Настройка приоритетов реального времени для PipeWire и WirePlumber ----------
   security = {
     rtkit.enable = true;                                                                                # Включаем rtkit (Realtime Kit) — демон, дающий процессам приоритет реального времени. Необходим для низких задержек в аудио.
     pam.loginLimits = [                                                                                 # Лимиты для аудио-группы (чтобы приложения имели приоритет реального времени и блокировку памяти)
@@ -65,7 +66,6 @@ in
     ];
   };
 
-  # ---------- Настройка приоритетов реального времени для PipeWire и WirePlumber ----------
   systemd.user.services = {
     pipewire.serviceConfig = commonRealtime;
     pipewire-pulse.serviceConfig = commonRealtime;
@@ -134,7 +134,6 @@ in
     "L+ \"${myLib.home}/.vst3/Surge XT.vst3\" - lucerno lucerno - /run/current-system/sw/lib/vst3/Surge XT.vst3"
     "L+ ${myLib.home}/.vst3/Vital.vst3 - lucerno lucerno - /run/current-system/sw/lib/vst3/Vital.vst3"
 
-
     # Создаём структуру каталогов для данных Amp Locker и Drum Locker
     "d \"${myLib.home}/Audio Assault\" 0755 lucerno lucerno -"
     "d \"${myLib.home}/Audio Assault/PluginData\" 0755 lucerno lucerno -"
@@ -158,9 +157,5 @@ in
     "L+ \"${myLib.home}/.local/share/The Usual Suspects\" - lucerno lucerno - ${myLib.home}/${configDir}/dotfiles/config/plugins/local_share_The Usual Suspects"
     "L+ ${home}/.local/share/vital - lucerno lucerno - /mnt/sys_archiv/samples/vital"
     "L+ ${home}/drum_sklad - lucerno lucerno - /mnt/sys_archiv/samples/drum_sklad"
-
-    # ---------- Каталоги для drop‑in файлов systemd --user ----------
-    "d ${myLib.home}/.config/systemd 0755 lucerno lucerno -"
-    "d ${myLib.home}/.config/systemd/user 0755 lucerno lucerno -"
   ];
 }
