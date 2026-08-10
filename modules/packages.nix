@@ -234,17 +234,12 @@
 
   ]);
 
-  # ========== Виртуализация ==========
-  virtualisation = {
-    libvirtd.enable = true;                                       # Включает сервис libvirtd (демон для управления QEMU/KVM)
-    spiceUSBRedirection.enable = true;                            # Включает проброс USB-устройств через протокол SPICE (для виртуальных машин)
-  };
 }
 
 # ===== Быстрый запуск утилит без установки (через nix run) =====
 #nix run nixpkgs#lm-sensors                                                 # Утилита для отображения температуры и состояния датчиков оборудования
 #nix run nixpkgs#genact                                                     # Генератор бессмысленной активности в терминале (имитация работы, для прикола)
 
-# ===== Настройка Plasma Manager (генерация конфигов) =====
+# ===== Генерация конфигов Plasma Manager =====
 #nix run github:nix-community/plasma-manager/trunk#rc2nix > plasma.nix      # Сгенерировать текущий конфиг Plasma в Nix-формате (rc2nix)
 #nix run github:nix-community/plasma-manager#rc2nix > plasma-current.nix    # Альтернативный способ (из главной ветки) получить Nix-конфиг Plasma
