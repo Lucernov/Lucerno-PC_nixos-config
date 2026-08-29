@@ -125,7 +125,6 @@
     kdePackages.kde-gtk-config                                    # Настройка GTK-тем для KDE (позволяет менять тему GTK через системные настройки Plasma)
     kdePackages.kcalc                                             # Калькулятор
     kdePackages.ktorrent                                          # Torrent-клиент
-    kdePackages.kdenlive                                          # Видеоредактор
     (tesseract.override { enableLanguages = [ "eng" "rus" ]; })   # Tesseract — движок оптического распознавания символов (OCR) + Добавляет языковые пакеты: английский и русский
 
     # ИНТЕРНЕТ
@@ -232,6 +231,8 @@
       # --- Гитарные процессоры и усилители ---
     ratatouille-lv2                                               # плагин для загрузки и микширования нейросетевых моделей гитарных усилителей (аналог Neural Amp Model)
 
+    # KDE приложения
+    kdePackages.kdenlive                                          # Видеоредактор
   ]);
 
 }
