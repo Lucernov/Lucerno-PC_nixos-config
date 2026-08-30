@@ -42,6 +42,7 @@
         obs-backgroundremoval                                     # Удаление фона
         obs-vintage-filter                                        # Винтажные эффекты
         obs-source-clone                                          # Клонирование источников
+        droidcam-obs                                              # вебкамера через iphone
       ];
     };
     firefox = {
