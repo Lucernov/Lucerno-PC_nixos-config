@@ -57,16 +57,11 @@
         config.allowUnfree = true;                                                                         # Разрешает установку пакетов с несвободными лицензиями
       };
 
-      pkgsMinion = import nixpkgs-minion-25-11 { # TEMP
-        localSystem = "x86_64-linux"; # TEMP
-        config.allowUnfree = true; # TEMP
-      }; # TEMP
-
       pkgsWithOverlay = import nixpkgs {                                                                   # Создаём экземпляр nixpkgs с оверлеем (кастомные пакеты)
         localSystem = "x86_64-linux";                                                                      # Здесь также используем localSystem
         config.allowUnfree = true;                                                                         # Разрешает установку пакетов с несвободными лицензиями
         overlays = [
-          (import ./pkgs/overlays.nix { pkgs-unstable = pkgsUnstable; pkgs-minion = pkgsMinion; })         # Подключаем оверлей с моими пакетами (my-packages)
+          (import ./pkgs/overlays.nix { pkgs-unstable = pkgsUnstable; })                                   # Подключаем оверлей с моими пакетами (my-packages)
           comfyui-nix.overlays.default                                                                     # Оверлей ComfyUI для добавления comfy-ui-cuda
           nix-cachyos-kernel.overlays.default                                                              # Оверлей ядра CachyOS (добавляет ядра linux-cachyos и др.)
           nix-cachyos-kernel.overlays.pinned                                                               # Оверлей фиксирует версию nixpkgs на ту, которая использовалась при сборке бинарного кэша для ядер CachyOS
@@ -92,15 +87,16 @@
             inherit nixpkgs-krita-25-11;                                                                   # Фиксированный nixpkgs для Krita
             pkgs-unstable = pkgsUnstable;                                                                  # Нестабильные пакеты для использования в модулях
             import-tree = inputs.import-tree;                                                              # Утилита для рекурсивного импорта
-            pkgs-minion = pkgsMinion; # TEMP
+            inherit nixpkgs-minion-25-11;                                                                  # TEMP
           };
 
           modules = [                                                                                      # Список модулей, из которых собирается система
             inputs.stylix.nixosModules.stylix                                                              # Модуль стилизации (stylix)
-            ({ config, pkgs, lib, nixpkgs-krita-25-11, ... }: {                                            # Переопределяем krita из фиксированного набора пакетов
+            ({ config, pkgs, lib, nixpkgs-krita-25-11, nixpkgs-minion-25-11, ... }: {                      # Переопределяем krita из фиксированного набора пакетов
               nixpkgs.overlays = [
                 (final: prev: {
                 krita = nixpkgs-krita-25-11.legacyPackages.${final.stdenv.hostPlatform.system}.krita;      # Берём krita из фиксированной версии
+                minion = nixpkgs-minion-25-11.legacyPackages.${final.stdenv.hostPlatform.system}.minion;   # Берём minion из фиксированной версии
                 })
               ];
             })

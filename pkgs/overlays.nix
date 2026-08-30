@@ -1,10 +1,9 @@
 # overlays.nix
-{ pkgs-unstable, pkgs-minion }:
+{ pkgs-unstable }:
 
 final: prev: {
   my-packages = import ./default.nix {
     pkgs = final;
     pkgs-unstable = pkgs-unstable;
-    pkgs-minion = pkgs-minion;
   };
 }
