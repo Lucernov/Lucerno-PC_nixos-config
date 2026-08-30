@@ -5,19 +5,24 @@
 , autoPatchelfHook
 , fontconfig
 , freetype
+, versions
 }:
+
+let
+  version = versions.drumlabooh;
+in
 
 stdenv.mkDerivation {
   pname = "drumlabooh";
-  version = "12.2.0";
+  inherit version;
 
   srcs = [
     (fetchurl {
-      url = "https://github.com/psemiletov/drumlabooh/releases/download/12.2.0/drumlabooh.lv2.zip";
+      url = "https://github.com/psemiletov/drumlabooh/releases/download/${version}/drumlabooh.lv2.zip";
       hash = "sha256-IQ0XzIwJqGg+6FynmJBllyBIzWD3dgFfllOTEx0cMDM=";
     })
     (fetchurl {
-      url = "https://github.com/psemiletov/drumlabooh/releases/download/12.2.0/drumlabooh-multi.lv2.zip";
+      url = "https://github.com/psemiletov/drumlabooh/releases/download/${version}/drumlabooh-multi.lv2.zip";
       hash = "sha256-qdZJvXsUlEmmlTwUwO/C47OXM+gwRlu2cNRFGrJDi1A=";
     })
   ];
