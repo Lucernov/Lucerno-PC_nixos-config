@@ -57,6 +57,11 @@
         config.allowUnfree = true;                                                                         # Разрешает установку пакетов с несвободными лицензиями
       };
 
+      pkgsMinion = import nixpkgs-minion-25-11 {
+        localSystem = "x86_64-linux";
+        config.allowUnfree = true;
+      };
+
       pkgsWithOverlay = import nixpkgs {                                                                   # Создаём экземпляр nixpkgs с оверлеем (кастомные пакеты)
         localSystem = "x86_64-linux";                                                                      # Здесь также используем localSystem
         config.allowUnfree = true;                                                                         # Разрешает установку пакетов с несвободными лицензиями
@@ -87,16 +92,16 @@
             inherit nixpkgs-krita-25-11;                                                                   # Фиксированный nixpkgs для Krita
             pkgs-unstable = pkgsUnstable;                                                                  # Нестабильные пакеты для использования в модулях
             import-tree = inputs.import-tree;                                                              # Утилита для рекурсивного импорта
-            inherit nixpkgs-minion-25-11;                                                                  # TEMP
+            pkgs-minion = pkgsMinion;                                                                      # TEMP
           };
 
           modules = [                                                                                      # Список модулей, из которых собирается система
             inputs.stylix.nixosModules.stylix                                                              # Модуль стилизации (stylix)
-            ({ config, pkgs, lib, nixpkgs-krita-25-11, nixpkgs-minion-25-11, ... }: {                      # Переопределяем krita из фиксированного набора пакетов
+            ({ config, pkgs, lib, nixpkgs-krita-25-11, pkgs-minion, ... }: {                      # Переопределяем krita из фиксированного набора пакетов
               nixpkgs.overlays = [
                 (final: prev: {
                 krita = nixpkgs-krita-25-11.legacyPackages.${final.stdenv.hostPlatform.system}.krita;      # Берём krita из фиксированной версии
-                minion = nixpkgs-minion-25-11.legacyPackages.${final.stdenv.hostPlatform.system}.minion;   # Берём minion из фиксированной версии
+                minion = pkgs-minion.minion;                                                               # Берём minion из фиксированной версии
                 })
               ];
             })
