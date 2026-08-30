@@ -20,11 +20,16 @@
 , libxcb
 , xcbutil
 , xcbutilcursor
+, versions
 }:
+
+let
+  version = versions.shortcircuit-xt;
+in
 
 stdenv.mkDerivation {
   pname = "shortcircuit-xt";
-  version = "nightly-2026-07-31";
+  inherit version;
 
   src = fetchurl {
     url = "https://github.com/surge-synthesizer/shortcircuit-xt/releases/download/Nightly/shortcircuit-xt-linux-2026-07-31-7d79b3a.zip";

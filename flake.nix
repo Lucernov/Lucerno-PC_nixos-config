@@ -66,7 +66,7 @@
         localSystem = "x86_64-linux";                                                                      # Здесь также используем localSystem
         config.allowUnfree = true;                                                                         # Разрешает установку пакетов с несвободными лицензиями
         overlays = [
-          (import ./pkgs/overlays.nix { pkgs-unstable = pkgsUnstable; })                                   # Подключаем оверлей с моими пакетами (my-packages)
+          (import ./pkgs/default.nix { pkgs-unstable = pkgsUnstable; })                                    # Подключаем оверлей с моими пакетами (my-packages)
           comfyui-nix.overlays.default                                                                     # Оверлей ComfyUI для добавления comfy-ui-cuda
           nix-cachyos-kernel.overlays.default                                                              # Оверлей ядра CachyOS (добавляет ядра linux-cachyos и др.)
           nix-cachyos-kernel.overlays.pinned                                                               # Оверлей фиксирует версию nixpkgs на ту, которая использовалась при сборке бинарного кэша для ядер CachyOS
@@ -97,7 +97,7 @@
 
           modules = [                                                                                      # Список модулей, из которых собирается система
             inputs.stylix.nixosModules.stylix                                                              # Модуль стилизации (stylix)
-            ({ config, pkgs, lib, nixpkgs-krita-25-11, pkgs-minion, ... }: {                      # Переопределяем krita из фиксированного набора пакетов
+            ({ config, pkgs, lib, nixpkgs-krita-25-11, pkgs-minion, ... }: {                               # Переопределяем krita из фиксированного набора пакетов
               nixpkgs.overlays = [
                 (final: prev: {
                 krita = nixpkgs-krita-25-11.legacyPackages.${final.stdenv.hostPlatform.system}.krita;      # Берём krita из фиксированной версии

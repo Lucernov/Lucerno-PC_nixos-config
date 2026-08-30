@@ -7,11 +7,16 @@
 , alsa-lib
 , freetype
 , curl
+, versions
 }:
+
+let
+  version = versions.drum-locker;
+in
 
 stdenv.mkDerivation {
   pname = "drum-locker";
-  version = "1.0.2";
+  inherit version;
 
   src = fetchurl {
     url = "https://audioassaultdownloads.s3.amazonaws.com/AmpLocker/AmpLocker109/DrumLockerLinux.zip";

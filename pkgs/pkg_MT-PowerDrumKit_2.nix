@@ -16,11 +16,16 @@
 , freetype
 , libpng
 , libxcb-keysyms
+, versions
 }:
+
+let
+  version = versions.mtpdk;
+in
 
 stdenv.mkDerivation {
   pname = "mtpdk";
-  version = "2.1.5.1";
+  inherit version;
 
   src = fetchurl {
     url = "https://resources.manda-audio.com/DOWNLOADS/products/mtpdk2_free/2.1.5/MTPDK-2.1.5.1-VST3-64bit-Linux-FULL.zip";
