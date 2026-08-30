@@ -1,8 +1,12 @@
-{ lib, stdenv, autoPatchelfHook, alsa-lib, freetype, libX11, libXext, libxcb }:
+{ lib, stdenv, autoPatchelfHook, alsa-lib, freetype, libX11, libXext, libxcb, versions }:
+
+let
+  version = versions.ot-piano-s;
+in
 
 stdenv.mkDerivation {
   pname = "ot-piano-s";
-  version = "1.0";
+  inherit version;
 
   src = ../dotfiles/repo/OT_P1ANO_S.so;
 

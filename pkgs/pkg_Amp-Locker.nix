@@ -7,11 +7,16 @@
 , alsa-lib
 , freetype
 , curl
+, versions
 }:
+
+let
+  version = versions.amp-locker;
+in
 
 stdenv.mkDerivation {
   pname = "amp-locker";
-  version = "1.5.4";
+  inherit version;
 
   src = fetchurl {
     url = "https://audioassaultdownloads.s3.amazonaws.com/AmpLocker/AmpLocker109/AmpLockerLinux.zip";

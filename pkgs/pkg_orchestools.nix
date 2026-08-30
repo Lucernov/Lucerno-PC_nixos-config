@@ -8,11 +8,16 @@
 , libXext
 , libxcb
 , libGL
+, versions
 }:
+
+let
+  version = versions.orchestools;
+in
 
 stdenv.mkDerivation {
   pname = "orchestools";
-  version = "1.0";
+  inherit version;
 
   srcs = [
     ../dotfiles/repo/ORCHESTOOLS-BRASS-1.0.1.tar.xz
