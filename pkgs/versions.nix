@@ -1,5 +1,6 @@
 # pkgs/versions.nix
 {
+  air-g-plugins = "1.0";
   amp-locker = "1.5.4";
   drum-locker = "1.0.2";
   drumlabooh = "12.2.0";
