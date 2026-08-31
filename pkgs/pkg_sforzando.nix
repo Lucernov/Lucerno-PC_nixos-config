@@ -19,7 +19,7 @@
 , libxkbcommon
 , libpulse
 , gtk3
-, gtkmm
+, gtkmm3
 , glibmm
 , libsigcxx
 , versions
@@ -57,7 +57,7 @@ stdenv.mkDerivation {
     libxkbcommon
     libpulse
     gtk3
-    gtkmm
+    gtkmm3
     glibmm
     libsigcxx
   ];
