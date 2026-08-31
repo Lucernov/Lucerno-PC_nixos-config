@@ -16,7 +16,7 @@
 , pango
 , fontconfig
 , curl
-, xcbutil
+, xorg
 , libxkbcommon
 , libpulseaudio
 , gtk3
@@ -54,7 +54,7 @@ stdenv.mkDerivation {
     pango
     fontconfig
     curl
-    xcbutil
+    xorg.xcbutil
     libxkbcommon
     libpulseaudio
     gtk3
@@ -90,11 +90,12 @@ stdenv.mkDerivation {
     mkdir -p $out/lib/clap
     cp -r extracted/usr/lib/clap/* $out/lib/clap/ || true
 
-    # Создаём обёртку для исполняемого файла
+    # Создаём обёртку для исполняемого файла с добавлением PATH для zenity
     mkdir -p $out/bin
     makeWrapper $out/share/plogue-sforzando/sforzando/sforzando $out/bin/sforzando \
       --set QT_QPA_PLATFORM xcb \
       --set GDK_BACKEND x11 \
+      --suffix PATH : /run/current-system/sw/bin \
       --chdir $out/share/plogue-sforzando/sforzando
 
     # Копируем .desktop, иконки, документацию
