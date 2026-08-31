@@ -68,7 +68,7 @@ let
     # Высота нового окна терминала по умолчанию
     initial_window_height 768
     # Прозрачность фона (0.95 = почти непрозрачный)
-    background_opacity 0.95
+    background_opacity 0.5
     # Включает размытие фона, радиус размытия (можно менять от 0 до 50; чем больше, тем сильнее размытие)
     background_blur 2
     background_blur_opacity 0.5
