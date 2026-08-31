@@ -8,5 +8,6 @@
   orchestools = "1.0";
   ostirus = "2.2.9";
   ot-piano-s = "1.0";
+  sforzando = "1.982";
   shortcircuit-xt = "nightly-2026-07-31";
 }
