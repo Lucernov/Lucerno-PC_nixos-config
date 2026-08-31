@@ -123,10 +123,11 @@ let
     margin_right 200
     # Отступ сверху
     margin_top 2
-    # Прозрачность фона 80%
-    background_opacity 0.80
+    # Прозрачность фона
+    background_opacity 0.5
     # Включает размытие фона, радиус размытия (можно менять от 0 до 50; чем больше, тем сильнее размытие)
-    background_blur 2
+    background_blur 1
+    background_blur_opacity 0.0
     # Убрать рамку окна
     hide_window_decorations yes
     # Не скрывать при запуске (показывать сразу)
@@ -139,6 +140,7 @@ let
     font_size 15
     # принудительно включает лигатуры и контекстные альтернативы
     font_features JetBrainsMono Nerd Font Mono:liga=1,calt=1
+    kitty_conf hide_window_decorations=titlebar-and-corners
   '';
 
 in
