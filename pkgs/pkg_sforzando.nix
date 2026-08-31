@@ -17,7 +17,7 @@
 , curl
 , xcbutil
 , libxkbcommon
-, libpulse
+, libpulseaudio
 , gtk3
 , gtkmm3
 , glibmm
@@ -55,7 +55,7 @@ stdenv.mkDerivation {
     curl
     xcbutil
     libxkbcommon
-    libpulse
+    libpulseaudio
     gtk3
     gtkmm3
     glibmm
