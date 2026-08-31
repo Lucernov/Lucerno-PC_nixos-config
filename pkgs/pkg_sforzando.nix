@@ -10,6 +10,7 @@
 , libGL
 , unzip
 , dpkg
+, makeWrapper
 , glib
 , cairo
 , pango
@@ -38,7 +39,7 @@ stdenv.mkDerivation {
     hash = "sha256-7ms1T9N1/50M4wgZaD9E07cSof5P9Tx35E3wNtqCqQA=";
   };
 
-  nativeBuildInputs = [ unzip dpkg autoPatchelfHook ];
+  nativeBuildInputs = [ unzip dpkg autoPatchelfHook makeWrapper ];
 
   buildInputs = [
     alsa-lib
@@ -78,30 +79,47 @@ stdenv.mkDerivation {
       dpkg-deb -x "$deb" extracted
     done
 
-    mkdir -p $out/opt
-    cp -r extracted/opt/Plogue $out/opt/
+    # Диагностика: проверим, что извлеклось
+    echo "=== Содержимое extracted/opt/Plogue ==="
+    ls -la extracted/opt/Plogue/ || echo "Папка отсутствует"
+    echo "=== Содержимое extracted/opt/Plogue/sforzando ==="
+    ls -la extracted/opt/Plogue/sforzando/ || echo "Папка отсутствует"
 
+    # Копируем opt/Plogue
+    mkdir -p $out/opt
+    if [ -d extracted/opt/Plogue ]; then
+      cp -r extracted/opt/Plogue $out/opt/
+    else
+      echo "Ошибка: extracted/opt/Plogue не найдена!"
+      exit 1
+    fi
+
+    # Копируем VST3 и CLAP
     mkdir -p $out/lib/vst3
     cp -r extracted/usr/lib/vst3/* $out/lib/vst3/ || true
 
     mkdir -p $out/lib/clap
     cp -r extracted/usr/lib/clap/* $out/lib/clap/ || true
 
+    # Создаём обёртку для исполняемого файла
     mkdir -p $out/bin
-    chmod +x $out/opt/Plogue/sforzando/sforzando
-    ln -s $out/opt/Plogue/sforzando/sforzando $out/bin/sforzando
+    makeWrapper $out/opt/Plogue/sforzando/sforzando $out/bin/sforzando \
+      --set QT_QPA_PLATFORM xcb \
+      --set GDK_BACKEND x11 \
+      --chdir $out/opt/Plogue/sforzando
 
+    # Копируем .desktop, иконки, документацию
     mkdir -p $out/share
     cp -r extracted/usr/share/applications $out/share/ || true
     cp -r extracted/usr/share/icons $out/share/ || true
     cp -r extracted/usr/share/doc $out/share/ || true
 
-    # Исправляем .desktop файл – меняем путь к исполняемому файлу
+    # Исправляем .desktop
     if [ -f $out/share/applications/plogue-sforzando.desktop ]; then
       sed -i 's|Exec=/opt/Plogue/sforzando/sforzando|Exec=sforzando|g' $out/share/applications/plogue-sforzando.desktop
     fi
 
-    # Создаём симлинк для иконки в pixmaps (чтобы .desktop нашёл её)
+    # Создаём симлинк для иконки в pixmaps
     mkdir -p $out/share/pixmaps
     if [ -f $out/share/icons/hicolor/256x256/apps/plogue-sforzando.png ]; then
       ln -s $out/share/icons/hicolor/256x256/apps/plogue-sforzando.png $out/share/pixmaps/plogue-sforzando.png
