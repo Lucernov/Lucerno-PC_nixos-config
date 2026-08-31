@@ -96,6 +96,17 @@ stdenv.mkDerivation {
     cp -r extracted/usr/share/icons $out/share/ || true
     cp -r extracted/usr/share/doc $out/share/ || true
 
+    # Исправляем .desktop файл – меняем путь к исполняемому файлу
+    if [ -f $out/share/applications/plogue-sforzando.desktop ]; then
+      sed -i 's|Exec=/opt/Plogue/sforzando/sforzando|Exec=sforzando|g' $out/share/applications/plogue-sforzando.desktop
+    fi
+
+    # Создаём симлинк для иконки в pixmaps (чтобы .desktop нашёл её)
+    mkdir -p $out/share/pixmaps
+    if [ -f $out/share/icons/hicolor/256x256/apps/plogue-sforzando.png ]; then
+      ln -s $out/share/icons/hicolor/256x256/apps/plogue-sforzando.png $out/share/pixmaps/plogue-sforzando.png
+    fi
+
     runHook postInstall
   '';
 
