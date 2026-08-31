@@ -16,13 +16,13 @@
 , pango
 , fontconfig
 , curl
-, xorg
 , libxkbcommon
 , libpulseaudio
 , gtk3
 , gtkmm3
 , glibmm
 , libsigcxx
+, libxcb-util
 , versions
 }:
 
@@ -54,7 +54,7 @@ stdenv.mkDerivation {
     pango
     fontconfig
     curl
-    xorg.xcbutil
+    libxcb-util
     libxkbcommon
     libpulseaudio
     gtk3
