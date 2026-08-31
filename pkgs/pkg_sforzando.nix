@@ -79,20 +79,9 @@ stdenv.mkDerivation {
       dpkg-deb -x "$deb" extracted
     done
 
-    # Диагностика: проверим, что извлеклось
-    echo "=== Содержимое extracted/opt/Plogue ==="
-    ls -la extracted/opt/Plogue/ || echo "Папка отсутствует"
-    echo "=== Содержимое extracted/opt/Plogue/sforzando ==="
-    ls -la extracted/opt/Plogue/sforzando/ || echo "Папка отсутствует"
-
-    # Копируем opt/Plogue
-    mkdir -p $out/opt
-    if [ -d extracted/opt/Plogue ]; then
-      cp -r extracted/opt/Plogue $out/opt/
-    else
-      echo "Ошибка: extracted/opt/Plogue не найдена!"
-      exit 1
-    fi
+    # Копируем все ресурсы в share
+    mkdir -p $out/share/plogue-sforzando
+    cp -r extracted/opt/Plogue/* $out/share/plogue-sforzando/
 
     # Копируем VST3 и CLAP
     mkdir -p $out/lib/vst3
@@ -103,10 +92,10 @@ stdenv.mkDerivation {
 
     # Создаём обёртку для исполняемого файла
     mkdir -p $out/bin
-    makeWrapper $out/opt/Plogue/sforzando/sforzando $out/bin/sforzando \
+    makeWrapper $out/share/plogue-sforzando/sforzando/sforzando $out/bin/sforzando \
       --set QT_QPA_PLATFORM xcb \
       --set GDK_BACKEND x11 \
-      --chdir $out/opt/Plogue/sforzando
+      --chdir $out/share/plogue-sforzando/sforzando
 
     # Копируем .desktop, иконки, документацию
     mkdir -p $out/share
