@@ -10,6 +10,18 @@
 , libGL
 , unzip
 , dpkg
+, glib
+, cairo
+, pango
+, fontconfig
+, curl
+, xcbutil
+, libxkbcommon
+, libpulse
+, gtk3
+, gtkmm
+, glibmm
+, libsigcxx
 , versions
 }:
 
@@ -36,6 +48,18 @@ stdenv.mkDerivation {
     libxcb
     libGL
     stdenv.cc.cc.lib
+    glib
+    cairo
+    pango
+    fontconfig
+    curl
+    xcbutil
+    libxkbcommon
+    libpulse
+    gtk3
+    gtkmm
+    glibmm
+    libsigcxx
   ];
 
   unpackPhase = ''
@@ -47,33 +71,26 @@ stdenv.mkDerivation {
   installPhase = ''
     runHook preInstall
 
-    # Переходим в папку с распакованными файлами (она содержит .deb)
     cd LINUX_plogue-sforzando_${version}_x86_64
 
-    # Распаковываем ВСЕ .deb пакеты в общую папку extracted
     mkdir -p extracted
     for deb in *.deb; do
       dpkg-deb -x "$deb" extracted
     done
 
-    # 1. opt/Plogue
     mkdir -p $out/opt
     cp -r extracted/opt/Plogue $out/opt/
 
-    # 2. VST3
     mkdir -p $out/lib/vst3
     cp -r extracted/usr/lib/vst3/* $out/lib/vst3/ || true
 
-    # 3. CLAP
     mkdir -p $out/lib/clap
     cp -r extracted/usr/lib/clap/* $out/lib/clap/ || true
 
-    # 4. Исполняемый файл (симлинк)
     mkdir -p $out/bin
     chmod +x $out/opt/Plogue/sforzando/sforzando
     ln -s $out/opt/Plogue/sforzando/sforzando $out/bin/sforzando
 
-    # 5. .desktop, иконки, документация
     mkdir -p $out/share
     cp -r extracted/usr/share/applications $out/share/ || true
     cp -r extracted/usr/share/icons $out/share/ || true
