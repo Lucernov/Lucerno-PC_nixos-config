@@ -124,7 +124,7 @@ let
     # Отступ сверху
     margin_top 2
     # Прозрачность фона
-    background_opacity 0.5
+    background_opacity 0.1
     # Включает размытие фона, радиус размытия (можно менять от 0 до 50; чем больше, тем сильнее размытие)
     background_blur 1
     background_blur_opacity 0.0
@@ -140,7 +140,6 @@ let
     font_size 15
     # принудительно включает лигатуры и контекстные альтернативы
     font_features JetBrainsMono Nerd Font Mono:liga=1,calt=1
-    kitty_conf hide_window_decorations=titlebar-and-corners
   '';
 
 in
