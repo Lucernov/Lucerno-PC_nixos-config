@@ -26,6 +26,7 @@ final: prev: {
     orchestools = pkgs.callPackage ./pkg_orchestools.nix { inherit versions; };
     ostirus = pkgs.callPackage ./pkg_OsTIrus.nix { inherit versions; };
     ot-piano-s = pkgs.callPackage ./pkg_ot-piano-s.nix { inherit versions; };
+    sforzando = pkgs.callPackage ./pkg_sforzando.nix { inherit versions; };
     shortcircuit-xt = pkgs.callPackage ./pkg_shortcircuit-xt.nix { inherit versions; };
   };
 }

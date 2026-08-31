@@ -209,6 +209,7 @@
     surge-xt                                                      # Синтезатор Surge XT
     my-packages.shortcircuit-xt                                   # Мощный открытый семплер (CLAP) от Surge Synth Team
     decent-sampler                                                # Сэмплер для библиотек DecentSampler (формат .dspreset, .dslibrary)
+    my-packages.sforzando                                         # Семплер форматов SFZ v1 \ v2 и  ARIA
     my-packages.orchestools                                       # Набор оркестровых VST3-инструментов (Brass, Perc, Strings, Winds)
     my-packages.ot-piano-s                                        # Пианино OT P1ANO S (VST2)
       # --- Синтезаторы и Сэмплеры ударных ---
