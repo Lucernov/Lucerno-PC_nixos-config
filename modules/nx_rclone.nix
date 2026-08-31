@@ -18,6 +18,18 @@ in
     "d /mnt/www-GoogleDrive 0755 lucerno users -"
     "d /mnt/www-OneDrive 0755 lucerno users -"
     "L+ ${home}/.config/rclone - lucerno lucerno - /mnt/sys_archiv/secrets/rclone"
+
+    # --- KIO настройки для ускорения корзины ---
+    "L+ ${home}/.config/kiorc - lucerno lucerno - ${pkgs.writeText "kiorc" ''
+      [Trash]
+      CheckMounts=false
+    ''}"
+
+    # --- Исключение сетевых папок из индексации Baloo ---
+    "L+ ${home}/.config/baloofilerc - lucerno lucerno - ${pkgs.writeText "baloofilerc" ''
+      [General]
+      exclude filters=/mnt/www-GoogleDrive/,/mnt/www-OneDrive/
+    ''}"
   ];
 
   systemd.services = {
