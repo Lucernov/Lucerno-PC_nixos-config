@@ -224,6 +224,7 @@
       # --- Эффекты (обработка звука) ---
     lsp-plugins                                                   # Набор VST/LV2-плагинов для обработки звука (LSP)
     calf                                                          # Calf Studio Gear один из самых известных и полных наборов аудио-плагинов для Linux
+    my-packages.air-g-plugins                                     # Коллекция VST3-плагинов на основе Airwindows для микширования и мастеринга
     dragonfly-reverb                                              # Реверберация Dragonfly (VST/LV2)
 
     ] ++ (with pkgs-unstable; [                                   # Пакеты из нестабильного канала (более свежие версии)
