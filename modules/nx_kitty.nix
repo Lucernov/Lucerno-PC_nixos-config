@@ -70,7 +70,7 @@ let
     # Прозрачность фона (0.95 = почти непрозрачный)
     background_opacity 0.0
     # Включает размытие фона, радиус размытия (можно менять от 0 до 50; чем больше, тем сильнее размытие)
-    background_blur 0
+    background_blur 0.01
     background_blur_opacity 0.0
     # Убрать рамку окна (закомментировано)
     # hide_window_decorations yes
