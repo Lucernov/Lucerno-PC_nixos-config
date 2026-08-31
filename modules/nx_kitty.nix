@@ -69,6 +69,10 @@ let
     initial_window_height 768
     # Прозрачность фона (0.95 = почти непрозрачный)
     background_opacity 0.95
+    # Включает размытие фона
+    background_blur true
+    # Радиус размытия (можно менять от 0 до 50; чем больше, тем сильнее размытие)
+    blur_radius 10
     # Убрать рамку окна (закомментировано)
     # hide_window_decorations yes
 
@@ -122,6 +126,10 @@ let
     margin_top 2
     # Прозрачность фона 80%
     background_opacity 0.80
+    # Включает размытие фона
+    background_blur true
+    # Радиус размытия (можно менять от 0 до 50; чем больше, тем сильнее размытие)
+    blur_radius 10
     # Убрать рамку окна
     hide_window_decorations yes
     # Не скрывать при запуске (показывать сразу)
