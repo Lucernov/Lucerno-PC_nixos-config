@@ -18,6 +18,7 @@ final: prev: {
     qmmp = pkgs.callPackage ./pkg_qmmp.nix { };
 
     # ====== ДЕРИВАЦИИ ======
+    air-g-plugins = pkgs.callPackage ./pkg_air-g-plugins.nix { inherit versions; };
     amp-locker = pkgs.callPackage ./pkg_Amp-Locker.nix { inherit versions; };
     drum-locker = pkgs.callPackage ./pkg_Drum-Locker.nix { inherit versions; };
     drumlabooh = pkgs.callPackage ./pkg_drumlabooh.nix { inherit versions; };
