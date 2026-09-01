@@ -128,7 +128,7 @@
     kdePackages.kde-gtk-config                                    # Настройка GTK-тем для KDE (позволяет менять тему GTK через системные настройки Plasma)
     kdePackages.kcalc                                             # Калькулятор
     kdePackages.ktorrent                                          # Torrent-клиент
-    kdePackages.kdialog
+    #kdePackages.kdialog
     (tesseract.override { enableLanguages = [ "eng" "rus" ]; })   # Tesseract — движок оптического распознавания символов (OCR) + Добавляет языковые пакеты: английский и русский
 
     # ИНТЕРНЕТ
