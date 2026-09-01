@@ -81,6 +81,7 @@ in
     "L+ ${myLib.home}/.local/bin/wine64 - lucerno lucerno - ${pkgs-unstable.wineWow64Packages.staging}/bin/wine"  # wine64
     "L+ ${myLib.home}/.config/REAPER/UserPlugins/reaper_sws-x86_64.so - lucerno lucerno - ${pkgs-unstable.reaper-sws-extension}/UserPlugins/reaper_sws-x86_64.so"  # .so файлы REAPER
     "L+ ${myLib.home}/.config/REAPER/UserPlugins/reaper_reapack-x86_64.so - lucerno lucerno - ${pkgs-unstable.reaper-reapack-extension}/UserPlugins/reaper_reapack-x86_64.so"  # .so файлы REAPER
+    #"L+ /usr/bin/zenity - - - - /run/current-system/sw/bin/zenity" # нужно для работы вывода меню выбора пресетов внутри плагина
 
     # ---------- Симлинки для CLAP-плагинов ----------
     "L+ \"${myLib.home}/.clap/DragonflyEarlyReflections.clap\" - lucerno lucerno - /run/current-system/sw/lib/clap/DragonflyEarlyReflections.clap"
