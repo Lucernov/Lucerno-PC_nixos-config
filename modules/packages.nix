@@ -42,7 +42,7 @@
         obs-backgroundremoval                                     # Удаление фона
         obs-vintage-filter                                        # Винтажные эффекты
         obs-source-clone                                          # Клонирование источников
-        droidcam-obs                                              # вебкамера через iphone
+        droidcam-obs                                              # вебкамера через яблофон
       ];
     };
     firefox = {
@@ -58,9 +58,9 @@
         "browser.urlbar.suggest.searches" = false;                # Не отправлять поисковые запросы в адресной строке
       };
       policies = {                                                # Корпоративные политики (имеют приоритет над preferences)
-        DisableTelemetry = true;                                  # Отключаем телеметрию
-        DisablePocket = true;                                     # Отключаем Pocket полностью
-        EnableTrackingProtection = true;                          # Включаем защиту от отслеживания
+        DisableTelemetry = true;                                  # Отключает телеметрию
+        DisablePocket = true;                                     # Отключает Pocket полностью
+        EnableTrackingProtection = true;                          # Включает защиту от отслеживания
       };
     };
     # KDE приложения
