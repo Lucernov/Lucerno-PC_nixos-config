@@ -34,7 +34,7 @@
     wantedBy = [ "graphical-session.target" ];
     serviceConfig = {
       Type = "oneshot";
-      ExecStart = "${pkgs.plasma-workspace}/bin/plasma-apply-wallpaperimage ${myLib.wallpaperPath}";
+      ExecStart = "${pkgs.kdePackages.plasma-workspace}/bin/plasma-apply-wallpaperimage ${myLib.wallpaperPath}";
     };
   };
 }
