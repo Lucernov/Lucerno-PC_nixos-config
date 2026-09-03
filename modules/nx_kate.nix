@@ -48,7 +48,7 @@ let
   sessionFile = "${myLib.home}/.local/share/kate/anonymous.katesession";
 
   # Читаем флаг из myLib (по умолчанию false)
-  autoUpdate = myLib.kate.autoUpdateSession or false;
+  autoUpdate = myLib.all.autoUpdateSession or false;
 in
 {
   # Если флаг включён — заменяем файл сессии при каждой активации
@@ -57,16 +57,16 @@ in
     text = ''
       mkdir -p "${myLib.home}/.local/share/kate"
       cp "${sessionTemplate}" "${sessionFile}"
-      chown lucerno:lucerno "${sessionFile}"
+      chown ${myLib.userName}:${myLib.userName} "${sessionFile}"
       echo "✅ Kate session set to default plugins (auto-update enabled)."
     '';
   };
 
   # ====== Симлинки для статичных настроек ======
   systemd.tmpfiles.rules = [
-    "L+ ${myLib.home}/.config/katerc - lucerno lucerno - ${dotfilesKate}/katerc"                                          # Основной файл конфигурации Kate
-    "L+ ${myLib.home}/.config/kate-externaltoolspluginrc - lucerno lucerno - ${dotfilesKate}/kate-externaltoolspluginrc"  # Настройки плагина внешних инструментов (глобальные)
-    "L+ ${myLib.home}/.config/katevirc - lucerno lucerno - ${dotfilesKate}/katevirc"                                      # Настройки Vi-режима
-    "L+ ${myLib.home}/.config/kate - lucerno lucerno - ${dotfilesKate}/kate"                                              # Папка с внешними инструментами и LSP-клиентом (.config/kate/lspclient/settings.json)
+    "L+ ${myLib.home}/.config/katerc - ${myLib.userName} ${myLib.userName} - ${dotfilesKate}/katerc"                                          # Основной файл конфигурации Kate
+    "L+ ${myLib.home}/.config/kate-externaltoolspluginrc - ${myLib.userName} ${myLib.userName} - ${dotfilesKate}/kate-externaltoolspluginrc"  # Настройки плагина внешних инструментов (глобальные)
+    "L+ ${myLib.home}/.config/katevirc - ${myLib.userName} ${myLib.userName} - ${dotfilesKate}/katevirc"                                      # Настройки Vi-режима
+    "L+ ${myLib.home}/.config/kate - ${myLib.userName} ${myLib.userName} - ${dotfilesKate}/kate"                                              # Папка с внешними инструментами и LSP-клиентом (.config/kate/lspclient/settings.json)
   ];
 }

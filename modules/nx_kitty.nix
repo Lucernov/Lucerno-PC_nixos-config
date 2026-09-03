@@ -146,9 +146,9 @@ in
 
 {
   systemd.tmpfiles.rules = [
-    "L+ ${myLib.home}/.config/kitty/kitty.conf - lucerno lucerno - ${kittyConf}"
-    "L+ ${myLib.home}/.config/kitty/quick-access-terminal.conf - lucerno lucerno - ${quickAccessConf}"
-    "L+ ${myLib.home}/.local/share/applications/net.local.toggle-kitty.desktop - lucerno lucerno - ${pkgs.writeText "net.local.toggle-kitty.desktop" ''
+    "L+ ${myLib.home}/.config/kitty/kitty.conf - ${myLib.userName} ${myLib.userName} - ${kittyConf}"
+    "L+ ${myLib.home}/.config/kitty/quick-access-terminal.conf - ${myLib.userName} ${myLib.userName} - ${quickAccessConf}"
+    "L+ ${myLib.home}/.local/share/applications/net.local.toggle-kitty.desktop - ${myLib.userName} ${myLib.userName} - ${pkgs.writeText "net.local.toggle-kitty.desktop" ''
       [Desktop Entry]
       Exec=${myLib.home}/.local/bin/toggle-kitty
       Name=Toggle Kitty
@@ -160,7 +160,7 @@ in
     # Удаляем старый сокет Kitty, чтобы новый создавался с правильным именем
     "R /tmp/kitty-sock - - - - -"
     # Скрипт запуска Kitty через Win+Z (открыть/закрыть выпадающее окно)
-    "L+ ${myLib.home}/.local/bin/toggle-kitty 0755 lucerno lucerno - ${pkgs.writeShellScript "toggle-kitty" ''
+    "L+ ${myLib.home}/.local/bin/toggle-kitty 0755 ${myLib.userName} ${myLib.userName} - ${pkgs.writeShellScript "toggle-kitty" ''
       export KITTY_LISTEN_ON=/tmp/kitty-sock
       if kitty @ get-window-id --match title:"quick-access" 2>/dev/null; then
           kitty @ close-window --match title:"quick-access"

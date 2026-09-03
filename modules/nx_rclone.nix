@@ -15,18 +15,18 @@ in
 
   # ========== Правила tmpfiles для папок монтирования ==========
   systemd.tmpfiles.rules = [
-    "d /mnt/www-GoogleDrive 0755 lucerno users -"
-    "d /mnt/www-OneDrive 0755 lucerno users -"
-    "L+ ${home}/.config/rclone - lucerno lucerno - /mnt/sys_archiv/secrets/rclone"
+    "d /mnt/www-GoogleDrive 0755 ${myLib.userName} ${myLib.userName} -"
+    "d /mnt/www-OneDrive 0755 ${myLib.userName} ${myLib.userName} -"
+    "L+ ${home}/.config/rclone - ${myLib.userName} ${myLib.userName} - /mnt/sys_archiv/secrets/rclone"
 
     # --- KIO настройки для ускорения корзины ---
-    "L+ ${home}/.config/kiorc - lucerno lucerno - ${pkgs.writeText "kiorc" ''
+    "L+ ${home}/.config/kiorc - ${myLib.userName} ${myLib.userName} - ${pkgs.writeText "kiorc" ''
       [Trash]
       CheckMounts=false
     ''}"
 
     # --- Исключение сетевых папок из индексации Baloo ---
-    "L+ ${home}/.config/baloofilerc - lucerno lucerno - ${pkgs.writeText "baloofilerc" ''
+    "L+ ${home}/.config/baloofilerc - ${myLib.userName} ${myLib.userName} - ${pkgs.writeText "baloofilerc" ''
       [General]
       exclude filters=/mnt/www-GoogleDrive/,/mnt/www-OneDrive/
     ''}"
@@ -41,7 +41,7 @@ in
       wantedBy = [ "multi-user.target" ];                                           # Автоматически запускать при загрузке системы
       serviceConfig = {
         User = myLib.userName;                                                      # Запускать от имени пользователя lucerno
-        Group = "users";                                                            # Группа users (стандартная для обычных пользователей)
+        Group = myLib.userName;                                                     # Группа users (стандартная для обычных пользователей)
         Type = "simple";                                                            # Простой процесс (не разветвляется)
 
         # ---------- Отключение ограничений systemd для работы с FUSE ----------
@@ -78,7 +78,7 @@ in
       wantedBy = [ "multi-user.target" ];                                           # Автозапуск при загрузке
       serviceConfig = {
         User = myLib.userName;                                                      # Запускать от пользователя lucerno
-        Group = "users";                                                            # Группа users
+        Group = myLib.userName;                                                     # Группа users
         Type = "simple";                                                            # Простой процесс
 
         # ---------- Отключение ограничений systemd для работы с FUSE ----------
