@@ -170,7 +170,6 @@
     libreoffice-qt-still                                          # Офисный пакет LibreOffice (стабильная ветка) с интеграцией в KDE Plasma через Qt
     hunspellDicts.ru_RU                                           # Словарь для проверки орфографии (русский язык)
     hyphenDicts.ru_RU                                             # Словарь для автоматической расстановки переносов (русский язык)
-    papers                                                        # Просмотрщик документов (PDF, DjVu, PostScript) — современная альтернатива Evince для GNOME
 
     # ИГРЫ
     minion                                                        # Менеджер аддонов для TESO
