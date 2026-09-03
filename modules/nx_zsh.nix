@@ -30,6 +30,8 @@ let
       npm
       node
       python
+      zsh-syntax-highlighting
+      zsh-autosuggestions
     )
     source $ZSH/oh-my-zsh.sh
 
@@ -64,6 +66,9 @@ let
 
     # ====== Автодополнение ======
     autoload -Uz compinit && compinit
+
+    # ====== command-not-found (nix-index) ======
+    source ${pkgs.nix-index}/etc/profile.d/command-not-found.sh
   '';
 
   # Генерируем ~/.zshenv для отключения глобальных rc-файлов (опционально)
