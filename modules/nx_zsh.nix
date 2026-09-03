@@ -78,9 +78,8 @@ let
   '';
 
 in
-{
-  programs.zsh.enable = true;  # регистрируем Zsh как оболочку
 
+{
   systemd.tmpfiles.rules = [
     # Создаём симлинк на наш .zshrc
     "L+ ${myLib.home}/.zshrc - ${myLib.userName} ${myLib.userName} - ${zshrcContent}"
