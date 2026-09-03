@@ -27,11 +27,14 @@
     '')
   ];
 
-    # ========== Обои рабочего стола ==========
-  system.activationScripts.wallpaper = {
-    supportsDryActivation = true;
-    text = ''
-      ${pkgs.plasma-workspace}/bin/plasma-apply-wallpaperimage ${myLib.wallpaperPath}
-    '';
+  # Установка обоев при старте сессии (от пользователя)
+  systemd.user.services.set-wallpaper = {
+    description = "Set Plasma wallpaper";
+    after = [ "graphical-session.target" ];
+    wantedBy = [ "graphical-session.target" ];
+    serviceConfig = {
+      Type = "oneshot";
+      ExecStart = "${pkgs.plasma-workspace}/bin/plasma-apply-wallpaperimage ${myLib.wallpaperPath}";
+    };
   };
 }
