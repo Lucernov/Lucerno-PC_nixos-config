@@ -30,8 +30,8 @@ let
       npm
       node
       python
-      zsh-syntax-highlighting
-      zsh-autosuggestions
+      syntax-highlighting
+      autosuggestions
     )
     source $ZSH/oh-my-zsh.sh
 
