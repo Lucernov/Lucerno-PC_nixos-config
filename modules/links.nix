@@ -43,7 +43,12 @@ in
     "L+ ${home}/.config/SocialStream - ${myLib.userName} ${myLib.userName} - ${home}/${configDir}/dotfiles/config/SocialStream"
     "L+ ${home}/.config/obs-studio - ${myLib.userName} ${myLib.userName} - ${home}/${configDir}/dotfiles/config/obs-studio"
     "L+ ${home}/.config/MangoHud - ${myLib.userName} ${myLib.userName} - ${home}/${configDir}/dotfiles/config/MangoHud"
-    "L+ ${home}/.config/kglobalshortcutsrc - ${myLib.userName} ${myLib.userName} - ${home}/${configDir}/dotfiles/config/KDE/config-kglobalshortcutsrc"
+    "L+ ${home}/.config/kdeglobals - ${myLib.userName} ${myLib.userName} - ${home}/${configDir}/dotfiles/config/KDE/config_kdeglobals"
+    "L+ ${home}/.config/kglobalshortcutsrc - ${myLib.userName} ${myLib.userName} - ${home}/${configDir}/dotfiles/config/KDE/config_kglobalshortcutsrc"
+    "L+ ${home}/.config/kwinrc - ${myLib.userName} ${myLib.userName} - ${home}/${configDir}/dotfiles/config/KDE/config_kwinrc"
+    "L+ ${home}/.config/kxkbrc - ${myLib.userName} ${myLib.userName} - ${home}/${configDir}/dotfiles/config/KDE/config_kxkbrc"
+    "L+ ${home}/.config/plasmarc - ${myLib.userName} ${myLib.userName} - ${home}/${configDir}/dotfiles/config/KDE/config_plasmarc"
+
 
     # ---------- Kdenlive ----------
     # Конфиги в ~/.config/
