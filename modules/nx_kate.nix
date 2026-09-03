@@ -1,9 +1,14 @@
-{ myLib, ... }:
+# modules/nx_kate.nix
+{ myLib, pkgs, ... }:
 
 let
   dotfilesKate = "${myLib.home}/${myLib.configDirName}/dotfiles/config/kate";                                             # Корень ваших dotfiles для Kate
   pluginsTemplate = "${dotfilesKate}/kate-plugins.ini";                                                                   # Файл-шаблон с настройками плагинов (секция [Kate Plugins])
   sessionFile = "${myLib.home}/.local/share/kate/anonymous.katesession";                                                  # Путь к файлу анонимной сессии
+
+  # Полные пути к утилитам, чтобы они были доступны в активационном скрипте
+  coreutilsBin = "${pkgs.coreutils}/bin";
+  sedBin = "${pkgs.sed}/bin";
 in
 {
   # Симлинки для статичных настроек Kate (не сессия)
@@ -19,33 +24,33 @@ in
     supportsDryActivation = true;
     text = ''
       # Убедимся, что папка для сессии существует
-      mkdir -p "${myLib.home}/.local/share/kate"
+      ${coreutilsBin}/mkdir -p "${myLib.home}/.local/share/kate"
 
       # Если файла сессии нет, просто копируем шаблон
       if [ ! -f "${sessionFile}" ]; then
-        cp "${pluginsTemplate}" "${sessionFile}"
-        chown lucerno:lucerno "${sessionFile}"
+        ${coreutilsBin}/cp "${pluginsTemplate}" "${sessionFile}"
+        ${coreutilsBin}/chown lucerno:lucerno "${sessionFile}"
       else
         # Иначе заменяем существующую секцию [Kate Plugins]
-        tmpfile=$(mktemp)
+        tmpfile=$(${coreutilsBin}/mktemp)
         # Проверяем, есть ли секция в файле
-        if grep -q "^\[Kate Plugins\]" "${sessionFile}"; then
+        if ${sedBin}/sed -n '/^\[Kate Plugins\]/q0; q1' "${sessionFile}" 2>/dev/null; then
           # Копируем всё до секции [Kate Plugins] (не включая её)
-          sed -n '1,/^\[Kate Plugins\]/p' "${sessionFile}" | sed '$d' > "$tmpfile"
+          ${sedBin}/sed -n '1,/^\[Kate Plugins\]/p' "${sessionFile}" | ${sedBin}/sed '$d' > "$tmpfile"
           # Добавляем новую секцию из шаблона
-          cat "${pluginsTemplate}" >> "$tmpfile"
+          ${coreutilsBin}/cat "${pluginsTemplate}" >> "$tmpfile"
           # Добавляем всё, что после секции (до следующей секции или до конца файла)
-          sed -n '/^\[Kate Plugins\]/,/^\[/p' "${sessionFile}" | tail -n +2 | sed -n '/^\[/,$p' >> "$tmpfile"
+          ${sedBin}/sed -n '/^\[Kate Plugins\]/,/^\[/p' "${sessionFile}" | ${coreutilsBin}/tail -n +2 | ${sedBin}/sed -n '/^\[/,$p' >> "$tmpfile"
         else
           # Если секции нет, просто дописываем шаблон в конец
-          cat "${sessionFile}" > "$tmpfile"
-          echo "" >> "$tmpfile"
-          cat "${pluginsTemplate}" >> "$tmpfile"
+          ${coreutilsBin}/cat "${sessionFile}" > "$tmpfile"
+          ${coreutilsBin}/echo "" >> "$tmpfile"
+          ${coreutilsBin}/cat "${pluginsTemplate}" >> "$tmpfile"
         fi
         # Заменяем оригинал
-        mv "$tmpfile" "${sessionFile}"
+        ${coreutilsBin}/mv "$tmpfile" "${sessionFile}"
         # Устанавливаем правильного владельца, чтобы Kate мог перезаписывать файл
-        chown lucerno:lucerno "${sessionFile}"
+        ${coreutilsBin}/chown lucerno:lucerno "${sessionFile}"
       fi
     '';
   };
