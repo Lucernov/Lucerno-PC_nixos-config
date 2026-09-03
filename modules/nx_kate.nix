@@ -1,9 +1,11 @@
 # modules/nx_kate.nix
-{ myLib, pkgs, ... }:
+{ myLib, pkgs, lib, ... }:
 
 let
+  # Абсолютный путь к папке с конфигами Kate в вашем репозитории
   dotfilesKate = "${myLib.home}/${myLib.configDirName}/dotfiles/config/kate";
 
+  # Секция [Kate Plugins] прямо в коде (без внешнего файла)
   pluginsSection = ''
     [Kate Plugins]
     bookmarksplugin=false
@@ -40,25 +42,31 @@ let
     tabswitcherplugin=true
     templateplugin=false
     textfilterplugin=true
-    # проверка
   '';
 
   sessionTemplate = pkgs.writeText "anonymous.katesession" pluginsSection;
+  sessionFile = "${myLib.home}/.local/share/kate/anonymous.katesession";
+
+  # Читаем флаг из myLib (по умолчанию false)
+  autoUpdate = myLib.kate.autoUpdateSession or false;
 in
 {
-  system.activationScripts.kate-plugins = {
+  # Если флаг включён — заменяем файл сессии при каждой активации
+  system.activationScripts.kate-plugins = lib.mkIf autoUpdate {
     supportsDryActivation = true;
     text = ''
       mkdir -p "${myLib.home}/.local/share/kate"
-      cp "${sessionTemplate}" "${myLib.home}/.local/share/kate/anonymous.katesession"
-      chown lucerno:lucerno "${myLib.home}/.local/share/kate/anonymous.katesession"
+      cp "${sessionTemplate}" "${sessionFile}"
+      chown lucerno:lucerno "${sessionFile}"
+      echo "✅ Kate session set to default plugins (auto-update enabled)."
     '';
   };
 
+  # ====== Симлинки для статичных настроек ======
   systemd.tmpfiles.rules = [
-    "L+ ${myLib.home}/.config/katerc - lucerno lucerno - ${dotfilesKate}/katerc"
-    "L+ ${myLib.home}/.config/kate-externaltoolspluginrc - lucerno lucerno - ${dotfilesKate}/kate-externaltoolspluginrc"
-    "L+ ${myLib.home}/.config/katevirc - lucerno lucerno - ${dotfilesKate}/katevirc"
-    "L+ ${myLib.home}/.config/kate - lucerno lucerno - ${dotfilesKate}/kate"
+    "L+ ${myLib.home}/.config/katerc - lucerno lucerno - ${dotfilesKate}/katerc"                                          # Основной файл конфигурации Kate
+    "L+ ${myLib.home}/.config/kate-externaltoolspluginrc - lucerno lucerno - ${dotfilesKate}/kate-externaltoolspluginrc"  # Настройки плагина внешних инструментов (глобальные)
+    "L+ ${myLib.home}/.config/katevirc - lucerno lucerno - ${dotfilesKate}/katevirc"                                      # Настройки Vi-режима
+    "L+ ${myLib.home}/.config/kate - lucerno lucerno - ${dotfilesKate}/kate"                                              # Папка с внешними инструментами и LSP-клиентом (.config/kate/lspclient/settings.json)
   ];
 }
