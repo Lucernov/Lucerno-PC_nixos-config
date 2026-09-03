@@ -26,4 +26,12 @@
       background=${myLib.wallpaperPath}
     '')
   ];
+
+    # ========== Обои рабочего стола ==========
+  system.activationScripts.wallpaper = {
+    supportsDryActivation = true;
+    text = ''
+      ${pkgs.plasma-workspace}/bin/plasma-apply-wallpaperimage ${myLib.wallpaperPath}
+    '';
+  };
 }
