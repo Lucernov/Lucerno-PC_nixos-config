@@ -1,10 +1,10 @@
 # Модуль для настройки файлового сервера Samba с автобнаружением в локальной сети (для macOS и Windows)
-{ lib, ... }:
+{ lib, myLib, ... }:
 
 {
   # ========== Создание и настройка общей папки через systemd-tmpfiles ==========
   systemd.tmpfiles.rules = lib.mkAfter [
-    "d /mnt/archiv/FTP/ 0775 lucerno users - -"
+    "d /mnt/archiv/FTP/ 0775 ${myLib.userName} ${myLib.userName} - -"
   ];
 
   services = {
@@ -18,8 +18,8 @@
         global = {
           "disable netbios" = "yes";                          # Отключает старый NetBIOS (для Windows‑клиентов до Windows 10)
           "workgroup" = "pautinko";                           # Рабочая группа (должна совпадать с настройками клиентов)
-          "server string" = "lucerno-pc";                     # Описание сервера в сети
-          "netbios name" = "lucerno-pc";                      # Имя сервера в NetBIOS
+          "server string" = myLib.hostName;                   # Описание сервера в сети
+          "netbios name" = myLib.hostName;                    # Имя сервера в NetBIOS
           "security" = "user";                                # Аутентификация через пользователей системы (гостевой доступ отдельно)
           "hosts allow" = "192.168.0. 127.0.0.1 localhost";   # Разрешаем подключения из локальной сети
           "guest account" = "nobody";                         # Системный аккаунт для гостей
@@ -32,8 +32,8 @@
           "guest ok" = "yes";                                 # Доступ гостям без пароля
           "create mask" = "0644";                             # Права на создаваемые файлы
           "directory mask" = "0755";                          # Права на создаваемые папки
-          "force user" = "lucerno";                           # Все операции выполняются от имени указанного пользователя
-          "force group" = "users";                            # Группа для создаваемых файлов
+          "force user" = myLib.userName;                      # Все операции выполняются от имени указанного пользователя
+          "force group" = myLib.userName;                     # Группа для создаваемых файлов
         };
       };
     };

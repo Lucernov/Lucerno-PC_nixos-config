@@ -112,7 +112,7 @@ in
       Environment = [
         "CUDA_VISIBLE_DEVICES=0"                                                        # Использовать только первую видеокарту NVIDIA (GTX 3070)
         "LD_LIBRARY_PATH=/run/opengl-driver/lib:/run/opengl-driver/lib64"               # Путь к библиотекам драйвера NVIDIA
-        "HOME=/home/lucerno"                                                            # Домашняя папка, необходима для ComfyUI (ищет .cache, .config)
+        "HOME=/home/${myLib.userName}"                                                  # Домашняя папка, необходима для ComfyUI (ищет .cache, .config)
       ];
 
       # ---------- Отключение ограничений systemd, мешающих работе с GPU и FUSE ----------
@@ -128,44 +128,44 @@ in
     # ========== Правила tmpfiles для папок монтирования ==========
   systemd.tmpfiles.rules = [
     # ---------- Симлинки скриптов ComfyUI в /mnt/ai/ ----------
-    "L+ /mnt/ai/start-comfyui.sh - lucerno lucerno - ${startScript}"
-    "L+ /mnt/ai/stop-comfyui.sh - lucerno lucerno - ${stopScript}"
-    "L+ /mnt/ai/status-comfyui.sh - lucerno lucerno - ${statusScript}"
+    "L+ /mnt/ai/start-comfyui.sh - ${myLib.userName} ${myLib.userName} - ${startScript}"
+    "L+ /mnt/ai/stop-comfyui.sh - ${myLib.userName} ${myLib.userName} - ${stopScript}"
+    "L+ /mnt/ai/status-comfyui.sh - ${myLib.userName} ${myLib.userName} - ${statusScript}"
     # Симлинки для .desktop файлов
-    "L+ ${home}/.local/share/applications/comfyui-start.desktop - lucerno lucerno - ${startDesktop}/share/applications/comfyui-start.desktop"
-    "L+ ${home}/.local/share/applications/comfyui-stop.desktop - lucerno lucerno - ${stopDesktop}/share/applications/comfyui-stop.desktop"
-    "L+ ${home}/.local/share/applications/comfyui-status.desktop - lucerno lucerno - ${statusDesktop}/share/applications/comfyui-status.desktop"
+    "L+ ${home}/.local/share/applications/comfyui-start.desktop - ${myLib.userName} ${myLib.userName} - ${startDesktop}/share/applications/comfyui-start.desktop"
+    "L+ ${home}/.local/share/applications/comfyui-stop.desktop - ${myLib.userName} ${myLib.userName} - ${stopDesktop}/share/applications/comfyui-stop.desktop"
+    "L+ ${home}/.local/share/applications/comfyui-status.desktop - ${myLib.userName} ${myLib.userName} - ${statusDesktop}/share/applications/comfyui-status.desktop"
 
     # линки ComfyUI
-    "d /mnt/ai/ComfyUI/custom_nodes 0755 lucerno lucerno -"
-    "d /mnt/ai/ComfyUI/models/diffusion_models 0755 lucerno lucerno -"
-    "d /mnt/ai/ComfyUI/models/inpaint 0755 lucerno lucerno -"
-    "d /mnt/ai/ComfyUI/models/loras 0755 lucerno lucerno -"
-    "d /mnt/ai/ComfyUI/models/text_encoders 0755 lucerno lucerno -"
-    "d /mnt/ai/ComfyUI/models/upscale_models 0755 lucerno lucerno -"
-    "d /mnt/ai/ComfyUI/models/vae 0755 lucerno lucerno -"
+    "d /mnt/ai/ComfyUI/custom_nodes 0755 ${myLib.userName} ${myLib.userName} -"
+    "d /mnt/ai/ComfyUI/models/diffusion_models 0755 ${myLib.userName} ${myLib.userName} -"
+    "d /mnt/ai/ComfyUI/models/inpaint 0755 ${myLib.userName} ${myLib.userName} -"
+    "d /mnt/ai/ComfyUI/models/loras 0755 ${myLib.userName} ${myLib.userName} -"
+    "d /mnt/ai/ComfyUI/models/text_encoders 0755 ${myLib.userName} ${myLib.userName} -"
+    "d /mnt/ai/ComfyUI/models/upscale_models 0755 ${myLib.userName} ${myLib.userName} -"
+    "d /mnt/ai/ComfyUI/models/vae 0755 ${myLib.userName} ${myLib.userName} -"
 
     # ---------- Симлинки ComfyUI (в /mnt/ai) ----------
-    "L+ ${home}/.config/comfy-ui - lucerno lucerno - /mnt/ai/ComfyUI"
-    "L+ /mnt/ai/ComfyUI/custom_nodes/comfyui_controlnet_aux - lucerno lucerno - /mnt/ai/ComfyUI_krita-ai-diffusion/comfyui_controlnet_aux"
-    "L+ /mnt/ai/ComfyUI/custom_nodes/comfyui-inpaint-nodes - lucerno lucerno - /mnt/ai/ComfyUI_krita-ai-diffusion/comfyui-inpaint-nodes"
-    "L+ /mnt/ai/ComfyUI/custom_nodes/ComfyUI_IPAdapter_plus - lucerno lucerno - /mnt/ai/ComfyUI_krita-ai-diffusion/ComfyUI_IPAdapter_plus"
-    "L+ /mnt/ai/ComfyUI/custom_nodes/comfyui-tooling-nodes - lucerno lucerno - /mnt/ai/ComfyUI_krita-ai-diffusion/comfyui-tooling-nodes"
+    "L+ ${home}/.config/comfy-ui - ${myLib.userName} ${myLib.userName} - /mnt/ai/ComfyUI"
+    "L+ /mnt/ai/ComfyUI/custom_nodes/comfyui_controlnet_aux - ${myLib.userName} ${myLib.userName} - /mnt/ai/ComfyUI_krita-ai-diffusion/comfyui_controlnet_aux"
+    "L+ /mnt/ai/ComfyUI/custom_nodes/comfyui-inpaint-nodes - ${myLib.userName} ${myLib.userName} - /mnt/ai/ComfyUI_krita-ai-diffusion/comfyui-inpaint-nodes"
+    "L+ /mnt/ai/ComfyUI/custom_nodes/ComfyUI_IPAdapter_plus - ${myLib.userName} ${myLib.userName} - /mnt/ai/ComfyUI_krita-ai-diffusion/ComfyUI_IPAdapter_plus"
+    "L+ /mnt/ai/ComfyUI/custom_nodes/comfyui-tooling-nodes - ${myLib.userName} ${myLib.userName} - /mnt/ai/ComfyUI_krita-ai-diffusion/comfyui-tooling-nodes"
 
     # Модели
-    "L+ /mnt/ai/ComfyUI/models/diffusion_models/flux-2-klein-4b-fp8.safetensors - lucerno lucerno - /mnt/ai/ComfyUI_krita-ai-diffusion/models/diffusion_models/flux-2-klein-4b-fp8.safetensors"
-    "L+ /mnt/ai/ComfyUI/models/diffusion_models/flux-2-klein-4b-Q6_K.gguf - lucerno lucerno - /mnt/ai/ComfyUI_krita-ai-diffusion/models/diffusion_models/flux-2-klein-4b-Q6_K.gguf"
-    "L+ /mnt/ai/ComfyUI/models/inpaint/MAT_Places512_G_fp16.safetensors - lucerno lucerno - /mnt/ai/ComfyUI_krita-ai-diffusion/models/inpaint/MAT_Places512_G_fp16.safetensors"
-    "L+ /mnt/ai/ComfyUI/models/loras/LyNiaZ53Tudg0J6sT8Xbx_pytorch_lora_weights_comfy_converted.safetensors - lucerno lucerno - /mnt/ai/ComfyUI_krita-ai-diffusion/models/loras/LyNiaZ53Tudg0J6sT8Xbx_pytorch_lora_weights_comfy_converted.safetensors"
-    "L+ /mnt/ai/ComfyUI/models/text_encoders/Qwen3-4B-Q4_K_M.gguf - lucerno lucerno - /mnt/ai/ComfyUI_krita-ai-diffusion/models/text_encoders/Qwen3-4B-Q4_K_M.gguf"
+    "L+ /mnt/ai/ComfyUI/models/diffusion_models/flux-2-klein-4b-fp8.safetensors - ${myLib.userName} ${myLib.userName} - /mnt/ai/ComfyUI_krita-ai-diffusion/models/diffusion_models/flux-2-klein-4b-fp8.safetensors"
+    "L+ /mnt/ai/ComfyUI/models/diffusion_models/flux-2-klein-4b-Q6_K.gguf - ${myLib.userName} ${myLib.userName} - /mnt/ai/ComfyUI_krita-ai-diffusion/models/diffusion_models/flux-2-klein-4b-Q6_K.gguf"
+    "L+ /mnt/ai/ComfyUI/models/inpaint/MAT_Places512_G_fp16.safetensors - ${myLib.userName} ${myLib.userName} - /mnt/ai/ComfyUI_krita-ai-diffusion/models/inpaint/MAT_Places512_G_fp16.safetensors"
+    "L+ /mnt/ai/ComfyUI/models/loras/LyNiaZ53Tudg0J6sT8Xbx_pytorch_lora_weights_comfy_converted.safetensors - ${myLib.userName} ${myLib.userName} - /mnt/ai/ComfyUI_krita-ai-diffusion/models/loras/LyNiaZ53Tudg0J6sT8Xbx_pytorch_lora_weights_comfy_converted.safetensors"
+    "L+ /mnt/ai/ComfyUI/models/text_encoders/Qwen3-4B-Q4_K_M.gguf - ${myLib.userName} ${myLib.userName} - /mnt/ai/ComfyUI_krita-ai-diffusion/models/text_encoders/Qwen3-4B-Q4_K_M.gguf"
 
     # Upscale модели
-    "L+ /mnt/ai/ComfyUI/models/upscale_models/4x_NMKD-Superscale-SP_178000_G.pth - lucerno lucerno - /mnt/ai/ComfyUI_krita-ai-diffusion/models/upscale_models/4x_NMKD-Superscale-SP_178000_G.pth"
-    "L+ /mnt/ai/ComfyUI/models/upscale_models/HAT_SRx4_ImageNet-pretrain.pth - lucerno lucerno - /mnt/ai/ComfyUI_krita-ai-diffusion/models/upscale_models/HAT_SRx4_ImageNet-pretrain.pth"
-    "L+ /mnt/ai/ComfyUI/models/upscale_models/OmniSR_X2_DIV2K.safetensors - lucerno lucerno - /mnt/ai/ComfyUI_krita-ai-diffusion/models/upscale_models/OmniSR_X2_DIV2K.safetensors"
-    "L+ /mnt/ai/ComfyUI/models/upscale_models/OmniSR_X3_DIV2K.safetensors - lucerno lucerno - /mnt/ai/ComfyUI_krita-ai-diffusion/models/upscale_models/OmniSR_X3_DIV2K.safetensors"
-    "L+ /mnt/ai/ComfyUI/models/upscale_models/OmniSR_X4_DIV2K.safetensors - lucerno lucerno - /mnt/ai/ComfyUI_krita-ai-diffusion/models/upscale_models/OmniSR_X4_DIV2K.safetensors"
-    "L+ /mnt/ai/ComfyUI/models/upscale_models/Real_HAT_GAN_sharper.pth - lucerno lucerno - /mnt/ai/ComfyUI_krita-ai-diffusion/models/upscale_models/Real_HAT_GAN_sharper.pth"
-    "L+ /mnt/ai/ComfyUI/models/vae/flux2-vae.safetensors - lucerno lucerno - /mnt/ai/ComfyUI_krita-ai-diffusion/models/vae/flux2-vae.safetensors"
+    "L+ /mnt/ai/ComfyUI/models/upscale_models/4x_NMKD-Superscale-SP_178000_G.pth - ${myLib.userName} ${myLib.userName} - /mnt/ai/ComfyUI_krita-ai-diffusion/models/upscale_models/4x_NMKD-Superscale-SP_178000_G.pth"
+    "L+ /mnt/ai/ComfyUI/models/upscale_models/HAT_SRx4_ImageNet-pretrain.pth - ${myLib.userName} ${myLib.userName} - /mnt/ai/ComfyUI_krita-ai-diffusion/models/upscale_models/HAT_SRx4_ImageNet-pretrain.pth"
+    "L+ /mnt/ai/ComfyUI/models/upscale_models/OmniSR_X2_DIV2K.safetensors - ${myLib.userName} ${myLib.userName} - /mnt/ai/ComfyUI_krita-ai-diffusion/models/upscale_models/OmniSR_X2_DIV2K.safetensors"
+    "L+ /mnt/ai/ComfyUI/models/upscale_models/OmniSR_X3_DIV2K.safetensors - ${myLib.userName} ${myLib.userName} - /mnt/ai/ComfyUI_krita-ai-diffusion/models/upscale_models/OmniSR_X3_DIV2K.safetensors"
+    "L+ /mnt/ai/ComfyUI/models/upscale_models/OmniSR_X4_DIV2K.safetensors - ${myLib.userName} ${myLib.userName} - /mnt/ai/ComfyUI_krita-ai-diffusion/models/upscale_models/OmniSR_X4_DIV2K.safetensors"
+    "L+ /mnt/ai/ComfyUI/models/upscale_models/Real_HAT_GAN_sharper.pth - ${myLib.userName} ${myLib.userName} - /mnt/ai/ComfyUI_krita-ai-diffusion/models/upscale_models/Real_HAT_GAN_sharper.pth"
+    "L+ /mnt/ai/ComfyUI/models/vae/flux2-vae.safetensors - ${myLib.userName} ${myLib.userName} - /mnt/ai/ComfyUI_krita-ai-diffusion/models/vae/flux2-vae.safetensors"
   ];
 }

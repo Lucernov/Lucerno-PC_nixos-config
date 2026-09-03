@@ -7,10 +7,10 @@ in
 {
   systemd.tmpfiles.rules = [
 
-    "L+ ${home}/.git-credentials - lucerno lucerno - /mnt/sys_archiv/secrets/git-credentials"
+    "L+ ${home}/.git-credentials - ${myLib.userName} ${myLib.userName} - /mnt/sys_archiv/secrets/git-credentials"
 
     # Конфигурационный файл Git (~/.gitconfig)
-    "L+ ${home}/.gitconfig - lucerno lucerno - ${pkgs.writeText "gitconfig" ''
+    "L+ ${home}/.gitconfig - ${myLib.userName} ${myLib.userName} - ${pkgs.writeText "gitconfig" ''
       [user]
         name = Lucernov
         email = jin.riv@gmail.com
@@ -29,7 +29,7 @@ in
     ''}"
 
     # Глобальный файл игнорирования Git (~/.gitignore)
-    "L+ ${home}/.gitignore - lucerno lucerno - ${pkgs.writeText "gitignore" ''
+    "L+ ${home}/.gitignore - ${myLib.userName} ${myLib.userName} - ${pkgs.writeText "gitignore" ''
       *.swp
       *~
       .Trash-*

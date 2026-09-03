@@ -70,6 +70,7 @@
 
   environment.systemPackages = with pkgs; [
     # СИСТЕМНЫЕ
+    oh-my-zsh                                                     # Пакет Oh My Zsh (фреймворк для управления конфигурацией Zsh)
     manix                                                         # Универсальный поиск по документации Nix
     nix-tree                                                      # Просмотр дерева зависимостей Nix
     nil                                                           # LSP-сервер для Nix
