@@ -1,16 +1,21 @@
 # modules/nx_zsh.nix
-{ pkgs, myLib, ... }:
+{ config, pkgs, myLib, lib, ... }:
 
 let
   configDir = myLib.configDirName;
 
-  # Генерируем .zshrc — сначала загружаем системный файл, затем наши дополнения
-  zshrcContent = pkgs.writeText ".zshrc" ''
-    # Загружаем системные настройки (включая алиасы из aliases.nix)
-    source /etc/zshrc
+  # Получаем алиасы из модуля aliases.nix (они определены как programs.zsh.shellAliases)
+  aliases = config.programs.zsh.shellAliases or {};
+  # Превращаем атрибуты в строки alias
+  aliasLines = lib.mapAttrsToList (name: value: "alias ${name}='${value}'") aliases;
+  aliasString = builtins.concatStringsSep "\n" aliasLines;
 
-    # ====== Дополнительные настройки поверх системных ======
-    # Подключаем Oh My Zsh (если системный не подключает)
+  # Генерируем .zshrc без системного файла
+  zshrcContent = pkgs.writeText ".zshrc" ''
+    # ====== Алиасы (из aliases.nix) ======
+    ${aliasString}
+
+    # ====== Oh My Zsh ======
     export ZSH="${pkgs.oh-my-zsh}/share/oh-my-zsh"
     ZSH_THEME=""   # Отключаем тему Oh My Zsh, используем Powerlevel10k отдельно
     plugins=(
@@ -28,14 +33,14 @@ let
     )
     source $ZSH/oh-my-zsh.sh
 
-    # Подключаем Powerlevel10k (если системный не подключает)
+    # ====== Powerlevel10k ======
     source ${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/powerlevel10k.zsh-theme
     [[ -f ~/.p10k.zsh ]] && source ~/.p10k.zsh
 
-    # Инициализация zoxide (если системный не инициализирует)
+    # ====== zoxide ======
     eval "$(zoxide init zsh)"
 
-    # Виджет fzf+zoxide (Ctrl+F)
+    # ====== Виджет fzf+zoxide (Ctrl+F) ======
     fzf-zoxide-widget() {
       local selected=$(zoxide query -l | fzf --preview 'tree -C {} | head -200')
       if [ -n "$selected" ]; then
@@ -46,7 +51,7 @@ let
     zle -N fzf-zoxide-widget
     bindkey '^F' fzf-zoxide-widget
 
-    # Дополнительные настройки истории (если системные не устраивают)
+    # ====== Настройки истории ======
     setopt EXTENDED_HISTORY
     setopt HIST_EXPIRE_DUPS_FIRST
     setopt HIST_IGNORE_DUPS
@@ -57,9 +62,15 @@ let
     SAVEHIST=10000
     HISTSIZE=10000
 
-    # Автодополнение (если системное не включено)
+    # ====== Автодополнение ======
     autoload -Uz compinit && compinit
   '';
+
+  # Генерируем ~/.zshenv для отключения глобальных rc-файлов (опционально)
+  zshenvContent = pkgs.writeText ".zshenv" ''
+    setopt no_global_rcs
+  '';
+
 in
 {
   programs.zsh.enable = true;  # регистрируем Zsh как оболочку
@@ -67,6 +78,8 @@ in
   systemd.tmpfiles.rules = [
     # Создаём симлинк на наш .zshrc
     "L+ ${myLib.home}/.zshrc - ${myLib.userName} ${myLib.userName} - ${zshrcContent}"
+    # Создаём симлинк на .zshenv (отключает системные файлы)
+    "L+ ${myLib.home}/.zshenv - ${myLib.userName} ${myLib.userName} - ${zshenvContent}"
     # Симлинк для пользовательского .p10k.zsh (если есть)
     "L+ ${myLib.home}/.p10k.zsh - ${myLib.userName} ${myLib.userName} - ${myLib.home}/${configDir}/dotfiles/config/zsh/.p10k.zsh"
   ];
