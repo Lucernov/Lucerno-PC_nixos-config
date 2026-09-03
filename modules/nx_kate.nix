@@ -42,6 +42,7 @@ let
     tabswitcherplugin=true
     templateplugin=false
     textfilterplugin=true
+    # проверка
   '';
 
   # Готовый файл сессии в Nix store (только секция плагинов)
@@ -50,10 +51,10 @@ in
 {
   systemd.tmpfiles.rules = [
     # Симлинки для статичных настроек — используем абсолютные пути к файлам в репозитории
-    "L+ ${myLib.home}/.config/katerc - lucerno lucerno - ${dotfilesKate}/katerc"
-    "L+ ${myLib.home}/.config/kate-externaltoolspluginrc - lucerno lucerno - ${dotfilesKate}/kate-externaltoolspluginrc"
-    "L+ ${myLib.home}/.config/katevirc - lucerno lucerno - ${dotfilesKate}/katevirc"
-    "L+ ${myLib.home}/.config/kate - lucerno lucerno - ${dotfilesKate}/kate"
+    "L+ ${myLib.home}/.config/katerc - lucerno lucerno - ${dotfilesKate}/katerc"                                          # Основной файл конфигурации Kate
+    "L+ ${myLib.home}/.config/kate-externaltoolspluginrc - lucerno lucerno - ${dotfilesKate}/kate-externaltoolspluginrc"  # Настройки плагина внешних инструментов (глобальные)
+    "L+ ${myLib.home}/.config/katevirc - lucerno lucerno - ${dotfilesKate}/katevirc"                                      # Настройки Vi-режима
+    "L+ ${myLib.home}/.config/kate - lucerno lucerno - ${dotfilesKate}/kate"                                              # Папка с внешними инструментами и LSP-клиентом (.config/kate/lspclient/settings.json)
 
     # Копируем шаблон сессии из store в домашнюю папку при загрузке (тип 'C')
     "C ${myLib.home}/.local/share/kate/anonymous.katesession - lucerno lucerno - ${sessionTemplate}"
