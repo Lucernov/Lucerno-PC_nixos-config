@@ -145,7 +145,8 @@ in
       modesetting.enable = true;                                            # Обязательно для Wayland
       nvidiaSettings = true;                                                # Устанавливает утилиту nvidia-settings
       powerManagement.enable = false;                                       # Отключаем управление питанием (на десктопе не нужно)
-      package = config.boot.kernelPackages.nvidiaPackages.stable;           # Версия драйвера
+      package = config.boot.kernelPackages.nvidiaPackages.beta;             # Версия драйвера
+     #package = config.boot.kernelPackages.nvidiaPackages.stable;           # Версия драйвера
     };
     ksm.enable = false;                                                     # Kernel Same‑page Merging – отключено (нужно только для виртуализации)
     xone.enable = true;                                                     # Включает поддержку беспроводных геймпадов Xbox (через официальный драйвер xone)
