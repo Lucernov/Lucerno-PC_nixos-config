@@ -81,12 +81,12 @@
           nix-cachyos-kernel.overlays.pinned                                                               # Оверлей фиксирует версию nixpkgs на ту, которая использовалась при сборке бинарного кэша для ядер CachyOS
           nur.overlays.default                                                                             # Теперь все пакеты из NUR доступны как pkgs.nur.repos.<пользователь>.<пакет>
           # ----- НОВЫЙ ОВЕРЛЕЙ ДЛЯ ПАТЧА ДРАЙВЕРА -----
-          (final: prev: {
-            nvidiaPackages = prev.nvidiaPackages // {
-              stable = prev.nvidiaPackages.stable.overrideAttrs (old: {
-                patches = (old.patches or []) ++ [ ./patches/nvidia-strncpy.patch ];
-              });
-            };
+          (final: prev: let
+            patchFile = ./patches/nvidia-strncpy.patch;
+          in {
+            nvidia-open = prev.nvidia-open.overrideAttrs (old: {
+              patches = (old.patches or []) ++ [ (builtins.trace "Applying nvidia patch from ${toString patchFile}" patchFile) ];
+            });
           })
         ];
       };
