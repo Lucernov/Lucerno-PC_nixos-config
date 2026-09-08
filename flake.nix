@@ -46,6 +46,10 @@
     nixpkgs-krita-25-11.url = "github:NixOS/nixpkgs/b77b3de8775677f84492abe84635f87b0e153f0f";             # Фиксированная версия nixpkgs для Krita (новая версия пока не работает с ComfyUI)
     nixpkgs-minion-25-11.url = "github:NixOS/nixpkgs/b77b3de8775677f84492abe84635f87b0e153f0f"; # TEMP
 
+    nixpkgs-zen71 = {
+      url = "github:NixOS/nixpkgs/6713828a351efa628b025a1adf7f43cbf8597513";                               # временная фиксациия ядра на 7.1
+    };
+
  #   fufexan/nix-gaming nickm8/nix-gaming TophC7/play.nix
   };
 
@@ -58,6 +62,11 @@
       };
 
       pkgsMinion = import nixpkgs-minion-25-11 {
+        localSystem = "x86_64-linux";
+        config.allowUnfree = true;
+      };
+
+      pkgsZen71 = import inputs.nixpkgs-zen71 {
         localSystem = "x86_64-linux";
         config.allowUnfree = true;
       };
@@ -93,6 +102,7 @@
             pkgs-unstable = pkgsUnstable;                                                                  # Нестабильные пакеты для использования в модулях
             import-tree = inputs.import-tree;                                                              # Утилита для рекурсивного импорта
             pkgs-minion = pkgsMinion;                                                                      # TEMP
+            inherit pkgsZen71;
           };
 
           modules = [                                                                                      # Список модулей, из которых собирается система
