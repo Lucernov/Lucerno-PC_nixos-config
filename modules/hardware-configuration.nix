@@ -141,7 +141,7 @@ in
       extraPackages = with pkgs; [ nvidia-vaapi-driver ];                   # VA‑API драйвер для NVIDIA
     };
     nvidia = {
-      open = false;                                                         # Используем открытые модули
+      open = true;                                                         # Используем открытые модули
       modesetting.enable = true;                                            # Обязательно для Wayland
       nvidiaSettings = true;                                                # Устанавливает утилиту nvidia-settings
       powerManagement.enable = false;                                       # Отключаем управление питанием (на десктопе не нужно)
@@ -154,8 +154,8 @@ in
   # ========== ЗАГРУЗКА И ЯДРО ==========
   boot = {
   # kernelPackages = inputs.nix-cachyos-kernel.legacyPackages.${pkgs.stdenv.hostPlatform.system}."linuxPackages-cachyos-bore-lto-x86_64-v3";  # Установка кастомного CachyOS ядра для intel i5 13400f процессора
-    kernelPackages = pkgs.linuxPackages_zen;                                # Установка кастомного ZEN ядра
-  # kernelPackages = pkgs.linuxPackages;                                    # Базовое ядро
+  # kernelPackages = pkgs.linuxPackages_zen;                                # Установка кастомного ZEN ядра
+    kernelPackages = pkgs.linuxPackages;                                    # Базовое ядро
 
     initrd.kernelModules = [                                                # Модули, загружаемые на раннем этапе (initrd)
       "nvidia"                                                              # Основной драйвер NVIDIA
