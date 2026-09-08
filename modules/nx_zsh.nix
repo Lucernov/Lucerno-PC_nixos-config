@@ -12,8 +12,7 @@ let
 
   # Генерируем .zshrc без системного файла
   zshrcContent = pkgs.writeText ".zshrc" ''
-    # ====== Алиасы (из aliases.nix) ======
-    ${aliasString}
+
 
     # ====== Oh My Zsh ======
     export ZSH="${pkgs.oh-my-zsh}/share/oh-my-zsh"
@@ -70,6 +69,9 @@ let
 
     # ====== Автоподсказки ======
     source ${pkgs.zsh-autosuggestions}/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+
+    # ====== Алиасы (из aliases.nix) ======
+    ${aliasString}
   '';
 
   # Генерируем ~/.zshenv для отключения глобальных rc-файлов (опционально)
