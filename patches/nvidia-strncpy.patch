@@ -1,0 +1,19 @@
+--- a/kernel-open/nvidia/os-interface.c
++++ b/kernel-open/nvidia/os-interface.c
+@@ -39,6 +39,7 @@
+ #include <linux/module.h>
+ #include <linux/pci.h>
+ #include <linux/pid_namespace.h>
++#include <linux/string.h>
+ #if defined(CONFIG_LOCKDEP)
+ #include <linux/lockdep.h>
+ #endif
+@@ -761,7 +762,7 @@
+     char *buf, unsigned int len)
+ {
+     if (len > 0) {
+-        strncpy(buf, current->comm, len - 1);
++        strscpy(buf, current->comm, len);
+         buf[len - 1] = '\0';
+     }
+ }
