@@ -28,7 +28,6 @@ in
     "d ${home}/.config 0755 ${myLib.userName} ${myLib.userName} -"
     "d ${home}/.config/autostart 0755 ${myLib.userName} ${myLib.userName} -"
     "d ${home}/${configDir}/secrets 0750 ${myLib.userName} ${myLib.userName} -"
-    "d ${home}/.config/mc 0755 ${myLib.userName} ${myLib.userName} -"
 
     # ДИСКИ
     "d /mnt/ai 0755 ${myLib.userName} ${myLib.userName} -"
@@ -49,7 +48,7 @@ in
     "L+ ${home}/.config/kwinrc - ${myLib.userName} ${myLib.userName} - ${home}/${configDir}/dotfiles/config/KDE/config_kwinrc"
     "L+ ${home}/.config/kxkbrc - ${myLib.userName} ${myLib.userName} - ${home}/${configDir}/dotfiles/config/KDE/config_kxkbrc"
     "L+ ${home}/.config/plasmarc - ${myLib.userName} ${myLib.userName} - ${home}/${configDir}/dotfiles/config/KDE/config_plasmarc"
-    "L+ ${home}/.config/mc/ini - ${myLib.userName} ${myLib.userName} - ${home}/${configDir}/dotfiles/config/mc/ini"
+    "L+ ${home}/.config/mc/ini - ${myLib.userName} ${myLib.userName} - ${home}/${configDir}/dotfiles/config/mc"
 
 
     # ---------- Kdenlive ----------
