@@ -84,7 +84,7 @@
           (final: prev: {
             nvidiaPackages = prev.nvidiaPackages // {
               stable = prev.nvidiaPackages.stable.overrideAttrs (old: {
-                patches = (old.patches or []) ++ [ (import ./patches/nvidia-strncpy.patch) ];
+                patches = (old.patches or []) ++ [ ./patches/nvidia-strncpy.patch ];
               });
             };
           })
