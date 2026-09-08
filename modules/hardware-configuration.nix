@@ -1,4 +1,4 @@
-{ config, pkgs, lib, modulesPath, myLib, inputs, ... }:
+{ config, pkgs, lib, modulesPath, myLib, pkgsZen71, ... }:
 
 let
   # UUID дисков
@@ -153,9 +153,10 @@ in
 
   # ========== ЗАГРУЗКА И ЯДРО ==========
   boot = {
+    boot.kernelPackages = pkgsZen71.linuxPackages_zen;                      # Установка кастомного ZEN ядра
   # kernelPackages = inputs.nix-cachyos-kernel.legacyPackages.${pkgs.stdenv.hostPlatform.system}."linuxPackages-cachyos-bore-lto-x86_64-v3";  # Установка кастомного CachyOS ядра для intel i5 13400f процессора
   # kernelPackages = pkgs.linuxPackages_zen;                                # Установка кастомного ZEN ядра
-    kernelPackages = pkgs.linuxPackages;                                    # Базовое ядро
+  # kernelPackages = pkgs.linuxPackages;                                    # Базовое ядро
 
     initrd.kernelModules = [                                                # Модули, загружаемые на раннем этапе (initrd)
       "nvidia"                                                              # Основной драйвер NVIDIA
