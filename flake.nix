@@ -81,19 +81,18 @@
           nix-cachyos-kernel.overlays.pinned                                                               # Оверлей фиксирует версию nixpkgs на ту, которая использовалась при сборке бинарного кэша для ядер CachyOS
           nur.overlays.default                                                                             # Теперь все пакеты из NUR доступны как pkgs.nur.repos.<пользователь>.<пакет>
           # ----- НОВЫЙ ОВЕРЛЕЙ ДЛЯ ПАТЧА ДРАЙВЕРА -----
-          (final: prev: {
-            nvidia-open = prev.nvidia-open.overrideAttrs (old: {
-              postUnpack = (old.postUnpack or "") + ''
-                echo "=== postUnpack: looking for os-interface.c ==="
-                find . -name "os-interface.c" -print
-                echo "=== applying sed to replace strncpy with strscpy ==="
-                find . -name "os-interface.c" -exec sed -i 's/strncpy( *buf, *current->comm, *len *- *1 *);/strscpy(buf, current->comm, len);/g' {} \;
-                find . -name "os-interface.c" -exec grep -q '#include <linux/string.h>' {} \; || \
-                  find . -name "os-interface.c" -exec sed -i '/#include <linux\/pid_namespace.h>/a #include <linux/string.h>' {} \;
-                echo "=== postUnpack done ==="
-              '';
-            });
-          })
+(final: prev: {
+  nvidia-open = prev.nvidia-open.overrideAttrs (old: {
+    buildPhase = (old.buildPhase or "") + ''
+      echo "=== buildPhase: patching os-interface.c ==="
+      sed -i 's/strncpy( *buf, *current->comm, *len *- *1 *);/strscpy(buf, current->comm, len);/g' nvidia/os-interface.c
+      grep -q '#include <linux/string.h>' nvidia/os-interface.c || \
+        sed -i '/#include <linux\/pid_namespace.h>/a #include <linux/string.h>' nvidia/os-interface.c
+      echo "=== patching done, building ==="
+      make -j$NIX_BUILD_CORES
+    '';
+  });
+})
         ];
       };
 
