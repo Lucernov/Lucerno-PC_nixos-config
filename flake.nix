@@ -80,12 +80,6 @@
           nix-cachyos-kernel.overlays.default                                                              # Оверлей ядра CachyOS (добавляет ядра linux-cachyos и др.)
           nix-cachyos-kernel.overlays.pinned                                                               # Оверлей фиксирует версию nixpkgs на ту, которая использовалась при сборке бинарного кэша для ядер CachyOS
           nur.overlays.default                                                                             # Теперь все пакеты из NUR доступны как pkgs.nur.repos.<пользователь>.<пакет>
-          # ----- НОВЫЙ ОВЕРЛЕЙ ДЛЯ ПАТЧА ДРАЙВЕРА -----
-(final: prev: builtins.trace "🔧 Applying patch to nvidia-open" {
-  nvidia-open = prev.nvidia-open.overrideAttrs (old: {
-    patches = (old.patches or []) ++ [ ./patches/nvidia-strncpy.patch ];
-  });
-})
         ];
       };
 
