@@ -41,6 +41,14 @@ add_section "mylib.nix" "mylib.nix"
 add_section ".gitignore" ".gitignore"
 add_section ".gitattributes" ".gitattributes"
 
+# --- Пакеты (patches/) ---
+echo "# --- Патчии (patches/) ---" >> "$OUTPUT_FILE"
+echo "" >> "$OUTPUT_FILE"
+while IFS= read -r file; do
+    rel_path="${file#./}"
+    add_section "$rel_path" "$file"
+done < <(find patches -type f -name "*.patch" | sort)
+
 # --- Пакеты (pkgs/) ---
 echo "# --- Пакеты (pkgs/) ---" >> "$OUTPUT_FILE"
 echo "" >> "$OUTPUT_FILE"
