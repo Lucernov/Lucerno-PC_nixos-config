@@ -1,5 +1,5 @@
---- a/kernel-open/nvidia/os-interface.c
-+++ b/kernel-open/nvidia/os-interface.c
+--- a/src/nvidia/os-interface.c
++++ b/src/nvidia/os-interface.c
 @@ -39,6 +39,7 @@
  #include <linux/module.h>
  #include <linux/pci.h>
