@@ -15,9 +15,6 @@ let
     # ====== Алиасы (из aliases.nix) ======
     ${aliasString}
 
-    # ====== Переменные окружения ======
-    export MC_COLOR_TABLE="directory=white"
-
     # ====== Oh My Zsh ======
     export ZSH="${pkgs.oh-my-zsh}/share/oh-my-zsh"
     ZSH_THEME=""   # Отключаем тему Oh My Zsh, используем Powerlevel10k отдельно
