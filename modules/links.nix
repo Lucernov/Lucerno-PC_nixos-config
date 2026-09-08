@@ -49,6 +49,7 @@ in
     "L+ ${home}/.config/kxkbrc - ${myLib.userName} ${myLib.userName} - ${home}/${configDir}/dotfiles/config/KDE/config_kxkbrc"
     "L+ ${home}/.config/plasmarc - ${myLib.userName} ${myLib.userName} - ${home}/${configDir}/dotfiles/config/KDE/config_plasmarc"
     "L+ ${home}/.config/mc - ${myLib.userName} ${myLib.userName} - ${home}/${configDir}/dotfiles/config/mc"
+    "L+ ${home}/.config/cliamp - ${myLib.userName} ${myLib.userName} - ${home}/${configDir}/dotfiles/config/cliamp"
 
 
     # ---------- Kdenlive ----------
