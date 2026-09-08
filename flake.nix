@@ -81,14 +81,14 @@
           nix-cachyos-kernel.overlays.pinned                                                               # Оверлей фиксирует версию nixpkgs на ту, которая использовалась при сборке бинарного кэша для ядер CachyOS
           nur.overlays.default                                                                             # Теперь все пакеты из NUR доступны как pkgs.nur.repos.<пользователь>.<пакет>
           # ----- НОВЫЙ ОВЕРЛЕЙ ДЛЯ ПАТЧА ДРАЙВЕРА -----
-          (final: prev: builtins.trace "🔧 Patching nvidia-open via postPatch" {
+          (final: prev: builtins.trace "🔧 Patching nvidia-open via preConfigure" {
             nvidia-open = prev.nvidia-open.overrideAttrs (old: {
-              postPatch = (old.postPatch or "") + ''
-                echo "=== postPatch: patching os-interface.c ==="
+              preConfigure = (old.preConfigure or "") + ''
+                echo "=== preConfigure: patching os-interface.c ==="
                 find . -name "os-interface.c" -type f -exec sed -i 's/strncpy( *buf, *current->comm, *len *- *1 *);/strscpy(buf, current->comm, len);/g' {} \;
                 find . -name "os-interface.c" -type f -exec grep -q '#include <linux/string.h>' {} \; || \
                   find . -name "os-interface.c" -type f -exec sed -i '/#include <linux\/pid_namespace.h>/a #include <linux/string.h>' {} \;
-                echo "=== postPatch done ==="
+                echo "=== preConfigure done ==="
               '';
             });
           })
