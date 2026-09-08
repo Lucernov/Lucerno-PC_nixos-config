@@ -81,13 +81,21 @@
           nix-cachyos-kernel.overlays.pinned                                                               # Оверлей фиксирует версию nixpkgs на ту, которая использовалась при сборке бинарного кэша для ядер CachyOS
           nur.overlays.default                                                                             # Теперь все пакеты из NUR доступны как pkgs.nur.repos.<пользователь>.<пакет>
           # ----- НОВЫЙ ОВЕРЛЕЙ ДЛЯ ПАТЧА ДРАЙВЕРА -----
-          (final: prev: builtins.trace "🔧 Applying nvidia-open patch via sed" {
+          (final: prev: builtins.trace "🔧 Applying nvidia-open patch via sed (find method)" {
             nvidia-open = prev.nvidia-open.overrideAttrs (old: {
               postPatch = (old.postPatch or "") + ''
-                echo "Patching os-interface.c with sed..."
-                sed -i 's|strncpy(buf, current->comm, len - 1);|strscpy(buf, current->comm, len);|g' kernel-open/nvidia/os-interface.c
-                grep -q '#include <linux/string.h>' kernel-open/nvidia/os-interface.c || \
-                  sed -i '/#include <linux\/pid_namespace.h>/a #include <linux/string.h>' kernel-open/nvidia/os-interface.c
+                echo "=== Patching os-interface.c with sed (find) ==="
+                # Находим все os-interface.c и выводим их пути
+                find . -name "os-interface.c" -type f -print -exec echo "Found: {}" \;
+                # Заменяем strncpy на strscpy
+                find . -name "os-interface.c" -type f -exec sed -i 's|strncpy(buf, current->comm, len - 1);|strscpy(buf, current->comm, len);|g' {} \;
+                # Добавляем #include <linux/string.h>, если его нет
+                find . -name "os-interface.c" -type f -exec grep -q '#include <linux/string.h>' {} \; || \
+                  find . -name "os-interface.c" -type f -exec sed -i '/#include <linux\/pid_namespace.h>/a #include <linux/string.h>' {} \;
+                # Проверка: выводим изменённые строки вокруг замены
+                echo "=== Проверка изменений ==="
+                find . -name "os-interface.c" -type f -exec grep -n "strscpy" {} \; || echo "strscpy не найдена"
+                find . -name "os-interface.c" -type f -exec grep -n "linux/string.h" {} \; || echo "linux/string.h не найдена"
               '';
             });
           })
