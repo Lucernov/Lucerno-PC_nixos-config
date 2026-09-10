@@ -43,11 +43,11 @@
 
     import-tree.url = "github:vic/import-tree";                                                            # Утилита для рекурсивного импорта файлов
     comfyui-nix.url = "github:utensils/comfyui-nix";                                                       # Flake для ComfyUI
-    nixpkgs-krita-25-11.url = "github:NixOS/nixpkgs/b77b3de8775677f84492abe84635f87b0e153f0f";             # Фиксированная версия nixpkgs для Krita (новая версия пока не работает с ComfyUI)
+    nixpkgs-krita-25-11.url = "github:NixOS/nixpkgs/b77b3de8775677f84492abe84635f87b0e153f0f";             # Фиксированная версия Krita (новая версия пока не работает с ComfyUI)
     nixpkgs-minion-25-11.url = "github:NixOS/nixpkgs/b77b3de8775677f84492abe84635f87b0e153f0f";            # Фиксированная версия minion, пакет в репозитории сломался из-за изменений в Яве. Пока чинят https://github.com/NixOS/nixpkgs/pull/539572 !!! TEMP !!!
 
     nixpkgs-zen71 = {
-      url = "github:NixOS/nixpkgs/6713828a351efa628b025a1adf7f43cbf8597513";                               # временная фиксациия ядра на 7.1 !!! TEMP !!!
+      url = "github:NixOS/nixpkgs/6713828a351efa628b025a1adf7f43cbf8597513";                               # Фиксированная версия ядра на 7.1.10 драйвер nvidia не собирается на ядре 7.2 https://discourse.nixos.org/t/production-nvidia-failed-build-on-linux-7-2/79845 !!! TEMP !!!
     };
 
  #   fufexan/nix-gaming nickm8/nix-gaming TophC7/play.nix
