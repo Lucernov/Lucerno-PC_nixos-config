@@ -141,11 +141,19 @@ in
       extraPackages = with pkgs; [ nvidia-vaapi-driver ];                   # VA‑API драйвер для NVIDIA
     };
     nvidia = {
-      open = true;                                                         # Используем открытые модули
+      open = true;                                                          # Используем открытые модули
       modesetting.enable = true;                                            # Обязательно для Wayland
       nvidiaSettings = true;                                                # Устанавливает утилиту nvidia-settings
       powerManagement.enable = false;                                       # Отключаем управление питанием (на десктопе не нужно)
-      package = config.boot.kernelPackages.nvidiaPackages.stable;           # Версия драйвера
+    # package = config.boot.kernelPackages.nvidiaPackages.stable;           # Версия драйвера
+      package = config.boot.kernelPackages.nvidiaPackages.mkDriver {       # !!! НОВЫЙ ДРАЙВЕР 595.99.02 (работает с ядром 7.2)
+        version = "595.99.02";
+        sha256_64bit = "sha256-6HR3lYv3YwcFSTJL1a1slI66btIQ5EAFs+/4SUD24ew=";
+        sha256_aarch64 = "sha256-CCqHZTN2KNOZ4yZp2rDcuRJp9pHfRw47k4m4dWnS/2w=";
+        openSha256 = "sha256-T36x/jx8yQ8l3LFp1rZIrTfcSwbGy8YSAvXOUSptpb4=";
+        settingsSha256 = "sha256-GYCcnxfKPrTCrsmd25sMyzfC5cqJQJx0c31haooyTYM=";
+        persistencedSha256 = "sha256-VyKtF/HdHPQrHHK6opSO69M72LmnGZtauuchj9uuje8=";
+      };
     };
     ksm.enable = false;                                                     # Kernel Same‑page Merging – отключено (нужно только для виртуализации)
     xone.enable = true;                                                     # Включает поддержку беспроводных геймпадов Xbox (через официальный драйвер xone)
@@ -153,11 +161,11 @@ in
 
   # ========== ЗАГРУЗКА И ЯДРО ==========
   boot = {
-    kernelPackages = pkgsZen71.linuxPackages_zen;                           # Установка кастомного ии жестко зафиксированного на версии 7.1 ZEN ядра пока не починят дрова нвидиа для версиии 7.2
-  # kernelPackages = inputs.nix-cachyos-kernel.legacyPackages.${pkgs.stdenv.hostPlatform.system}."linuxPackages-cachyos-bore-lto-x86_64-v3";  # Установка кастомного CachyOS ядра для intel i5 13400f процессора
-  # kernelPackages = pkgs.linuxPackages_zen;                                # Установка кастомного ZEN ядра
   # kernelPackages = pkgs.linuxPackages;                                    # Базовое ядро
   # kernelPackages = pkgs.linuxPackages_latest;                             # Базовое ядро последней версии
+    kernelPackages = pkgs.linuxPackages_zen;                                # Установка кастомного ZEN ядра
+  # kernelPackages = inputs.nix-cachyos-kernel.legacyPackages.${pkgs.stdenv.hostPlatform.system}."linuxPackages-cachyos-bore-lto-x86_64-v3";  # Установка кастомного CachyOS ядра для intel i5 13400f процессора
+  # kernelPackages = pkgsZen71.linuxPackages_zen;                           # Установка кастомного ии жестко зафиксированного на версии 7.1 ZEN ядра пока не починят дрова нвидиа для версиии 7.2
 
     initrd.kernelModules = [                                                # Модули, загружаемые на раннем этапе (initrd)
       "nvidia"                                                              # Основной драйвер NVIDIA
