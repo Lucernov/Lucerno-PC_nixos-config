@@ -1,4 +1,4 @@
-{ config, pkgs, lib, modulesPath, myLib, pkgsZen71, ... }:
+{ config, pkgs, lib, modulesPath, myLib, ... }:
 
 let
   # UUID дисков
@@ -165,7 +165,7 @@ in
   # kernelPackages = pkgs.linuxPackages_latest;                             # Базовое ядро последней версии
     kernelPackages = pkgs.linuxPackages_zen;                                # Установка кастомного ZEN ядра
   # kernelPackages = inputs.nix-cachyos-kernel.legacyPackages.${pkgs.stdenv.hostPlatform.system}."linuxPackages-cachyos-bore-lto-x86_64-v3";  # Установка кастомного CachyOS ядра для intel i5 13400f процессора
-  # kernelPackages = pkgsZen71.linuxPackages_zen;                           # Установка кастомного ии жестко зафиксированного на версии 7.1 ZEN ядра пока не починят дрова нвидиа для версиии 7.2
+  # kernelPackages = pkgsZen71.linuxPackages_zen;                           # Установка кастомного и жестко зафиксированного на версии 7.1.10 ZEN url = "github:NixOS/nixpkgs/6713828a351efa628b025a1adf7f43cbf8597513";
 
     initrd.kernelModules = [                                                # Модули, загружаемые на раннем этапе (initrd)
       "nvidia"                                                              # Основной драйвер NVIDIA

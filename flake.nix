@@ -46,10 +46,6 @@
     nixpkgs-krita-25-11.url = "github:NixOS/nixpkgs/b77b3de8775677f84492abe84635f87b0e153f0f";             # Фиксированная версия Krita (новая версия пока не работает с ComfyUI)
     nixpkgs-minion-25-11.url = "github:NixOS/nixpkgs/b77b3de8775677f84492abe84635f87b0e153f0f";            # Фиксированная версия minion, пакет в репозитории сломался из-за изменений в Яве. Пока чинят https://github.com/NixOS/nixpkgs/pull/539572 !!! TEMP !!!
 
-    nixpkgs-zen71 = {
-      url = "github:NixOS/nixpkgs/6713828a351efa628b025a1adf7f43cbf8597513";                               # Фиксированная версия ядра на 7.1.10 драйвер nvidia не собирается на ядре 7.2 https://discourse.nixos.org/t/production-nvidia-failed-build-on-linux-7-2/79845 !!! TEMP !!!
-    };
-
  #   fufexan/nix-gaming nickm8/nix-gaming TophC7/play.nix
   };
 
@@ -66,11 +62,6 @@
         config.allowUnfree = true;
       };
 
-      pkgsZen71 = import inputs.nixpkgs-zen71 {
-        localSystem = "x86_64-linux";
-        config.allowUnfree = true;
-      };
-
       pkgsWithOverlay = import nixpkgs {                                                                   # Создаём экземпляр nixpkgs с оверлеем (кастомные пакеты)
         localSystem = "x86_64-linux";                                                                      # Здесь также используем localSystem
         config.allowUnfree = true;                                                                         # Разрешает установку пакетов с несвободными лицензиями
@@ -80,6 +71,7 @@
           nix-cachyos-kernel.overlays.default                                                              # Оверлей ядра CachyOS (добавляет ядра linux-cachyos и др.)
           nix-cachyos-kernel.overlays.pinned                                                               # Оверлей фиксирует версию nixpkgs на ту, которая использовалась при сборке бинарного кэша для ядер CachyOS
           nur.overlays.default                                                                             # Теперь все пакеты из NUR доступны как pkgs.nur.repos.<пользователь>.<пакет>
+          (final: prev: { comfy-ui-cuda = prev.comfy-ui-cuda.override { cudaArch = "sm86"; }; })           # Использовать только для RTX 3070 (Ampere)
         ];
       };
 
@@ -102,7 +94,6 @@
             pkgs-unstable = pkgsUnstable;                                                                  # Нестабильные пакеты для использования в модулях
             import-tree = inputs.import-tree;                                                              # Утилита для рекурсивного импорта
             pkgs-minion = pkgsMinion;                                                                      # !!! TEMP !!!
-            inherit pkgsZen71;                                                                             # !!! TEMP !!!
           };
 
           modules = [                                                                                      # Список модулей, из которых собирается система
