@@ -161,7 +161,7 @@ in
     "R /tmp/kitty-sock - - - - -"
     # Скрипт запуска Kitty через Win+Z (открыть/закрыть выпадающее окно)
     "L+ ${myLib.home}/.local/bin/toggle-kitty 0755 ${myLib.userName} ${myLib.userName} - ${pkgs.writeShellScript "toggle-kitty" ''
-      export KITTY_LISTEN_ON=/tmp/kitty-sock
+      export KITTY_LISTEN_ON=unix:/tmp/kitty-sock
       if kitty @ get-window-id --match title:"quick-access" 2>/dev/null; then
           kitty @ close-window --match title:"quick-access"
       else
