@@ -12,7 +12,8 @@ let
 
   # Генерируем .zshrc без системного файла
   zshrcContent = pkgs.writeText ".zshrc" ''
-
+    # ====== PATH (обязательно в начале, до oh-my-zsh) ======
+    export PATH="$HOME/.local/bin:$PATH"
 
     # ====== Oh My Zsh ======
     export ZSH="${pkgs.oh-my-zsh}/share/oh-my-zsh"
