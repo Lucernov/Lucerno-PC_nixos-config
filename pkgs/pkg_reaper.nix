@@ -11,6 +11,7 @@ symlinkJoin {
     cat > $out/bin/reaper <<EOF
     #!/bin/sh
     export GDK_BACKEND=x11
+    export WINEPREFIX="/mnt/music/MUSIC-WINE/yabridge"
     exec taskset -c 2-11 $out/bin/.reaper-unwrapped "\$@"
     EOF
     chmod +x $out/bin/reaper

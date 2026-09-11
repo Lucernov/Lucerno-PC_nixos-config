@@ -98,7 +98,6 @@
       PROTON_NO_FSYNC = "1";                                                                                # Отключает старую синхронизацию fsync (Futex), так как используется NTSync
       LIBVA_DRIVER_NAME = "nvidia";                                                                         # Указывает FFmpeg и браузерам использовать аппаратное кодирование/декодирование через NVIDIA (VA-API)
       TESSDATA_PREFIX = "/run/current-system/sw/share/tessdata";                                            # Путь к языковым данным Tesseract для OCR в Spectacle
-      PATH = "$HOME/.local/bin:$PATH";                                                                      # PATH для всех PAM-сессий (KDE, SDDM, SSH, .desktop)
     };
   };
 
