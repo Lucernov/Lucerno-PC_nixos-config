@@ -10,7 +10,13 @@ in
     "d ${home}/.config/plasma-workspace/env 0755 ${myLib.userName} ${myLib.userName} -"
     "L+ ${home}/.config/plasma-workspace/env/path.sh - ${myLib.userName} ${myLib.userName} - ${pkgs.writeText "path.sh" ''
       #!/bin/sh
-      export PATH="$HOME/.local/bin:$PATH"
+      # Идемпотентное добавление ~/.local/bin в PATH.
+      # KDE может source'ить этот файл несколько раз за сессию (startplasma, рестарт plasmashell, ksmserver re-exec) — без проверки
+      # каждый source добавляет ещё одну копию .local/bin в PATH. case — POSIX-совместимо (работает в sh, bash, zsh, dash).
+      case ":$PATH:" in
+        *":$HOME/.local/bin:"*) ;;
+        *) export PATH="$HOME/.local/bin:$PATH" ;;
+      esac
     ''}"
 
     # ---------- Переопределение путей пдомашних папок (генерируемые через pkgs.writeText) ----------
