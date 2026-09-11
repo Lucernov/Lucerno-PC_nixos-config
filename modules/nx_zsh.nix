@@ -68,9 +68,18 @@ let
     setopt HIST_IGNORE_SPACE
     setopt HIST_VERIFY
     setopt SHARE_HISTORY
+    setopt HIST_FCNTL_LOCK
     HISTFILE=$HOME/.zsh_history
     SAVEHIST=10000
     HISTSIZE=10000
+
+    # ====== Цвета для стандартных утилит (ls, grep, tree) ======
+    # Использует GNU dircolors. Не влияет на lsd/eza/bat — у них свои цвета.
+    eval "$(dircolors -b)"
+
+    # ====== Клавиатурные биндинги (Home/End/Delete/Ctrl+Left/Ctrl+Right/Ctrl+Backspace/PageUp/PageDown) ======
+    # ~/.zshenv содержит `no_global_rcs` — глобальный /etc/zshrc НЕ читается, а значит /etc/zinputrc, который он подключает, тоже. Подключаем вручную.
+    [[ -f /etc/zinputrc ]] && source /etc/zinputrc
 
     # ====== Автодополнение ======
     autoload -Uz compinit && compinit
