@@ -94,10 +94,6 @@ let
     map ctrl+w close_tab
     # То же для русской раскладки (буква 'ц')
     map ctrl+ц close_tab
-    # Ctrl+Right – следующая вкладка
-    map ctrl+right next_tab
-    # Ctrl+Left – предыдущая вкладка
-    map ctrl+left previous_tab
     # Разделение окна по горизонтали (верх/низ)
     map ctrl+alt+e launch --location=hsplit
     # Русская раскладка (буква 'у')

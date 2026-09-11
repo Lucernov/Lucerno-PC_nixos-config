@@ -77,10 +77,6 @@ let
     # Использует GNU dircolors. Не влияет на lsd/eza/bat — у них свои цвета.
     eval "$(dircolors -b)"
 
-    # ====== Клавиатурные биндинги (Home/End/Delete/Ctrl+Left/Ctrl+Right/Ctrl+Backspace/PageUp/PageDown) ======
-    # ~/.zshenv содержит `no_global_rcs` — глобальный /etc/zshrc НЕ читается, а значит /etc/zinputrc, который он подключает, тоже. Подключаем вручную.
-    [[ -f /etc/zinputrc ]] && source /etc/zinputrc
-
     # ====== Автодополнение ======
     autoload -Uz compinit && compinit
 
