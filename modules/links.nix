@@ -6,12 +6,6 @@ let
 in
 {
   systemd.tmpfiles.rules = [
-    # ── PATH для systemd --user (влияет на все user-сервисы) ──
-    "d ${home}/.config/environment.d 0755 ${myLib.userName} ${myLib.userName} -"
-    "L+ ${home}/.config/environment.d/10-path.conf - ${myLib.userName} ${myLib.userName} - ${pkgs.writeText "10-path.conf" ''
-      PATH=''${HOME}/.local/bin:''${PATH}
-    ''}"
-
     # ── PATH для KDE Plasma (влияет на .desktop и все KDE-приложения) ──
     "d ${home}/.config/plasma-workspace/env 0755 ${myLib.userName} ${myLib.userName} -"
     "L+ ${home}/.config/plasma-workspace/env/path.sh - ${myLib.userName} ${myLib.userName} - ${pkgs.writeText "path.sh" ''

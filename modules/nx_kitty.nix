@@ -145,6 +145,25 @@ let
 in
 
 {
+  # ─────────────────────────────────────────────────────────────────────────
+  # ⚠️ ВАЖНО: почему внутри kitty в $PATH появляется «хвост» из nix-store
+  # Если внутри окна kitty выполнить `echo $PATH`, в конце можно увидеть
+  # пути вида:
+  #   /nix/store/...-kitty-0.48.2/bin
+  #   /nix/store/...-imagemagick-7.1.2-30/bin
+  #   /nix/store/...-ncurses-6.6-dev/bin
+  # Это НЕ ошибка конфига и НЕ утечка из nix develop. Это штатный wrapper
+  # пакета kitty из nixpkgs. Обёртка (makeBinaryWrapper) делает:
+  #   --suffix PATH : '...kitty/bin:...imagemagick/bin:...ncurses/bin'
+  # Зачем:
+  #   • kitty/bin        — нужен kitten'ам (icat, ssh, diff и др. сабкоманды)
+  #   • imagemagick/bin  — для kitten icat (конвертация картинок в терминале)
+  #   • ncurses/bin      — для tic, чтобы установить terminfo-запись kitty
+  # Эти пути добавляются ТОЛЬКО внутри процесса kitty и его потомков.
+  # В Konsole, SSH-сессии, systemd --user и KDE-сессии $PATH остаётся чистым.
+  # Ничего исправлять не нужно.
+  # ─────────────────────────────────────────────────────────────────────────
+
   systemd.tmpfiles.rules = [
     "L+ ${myLib.home}/.config/kitty/kitty.conf - ${myLib.userName} ${myLib.userName} - ${kittyConf}"
     "L+ ${myLib.home}/.config/kitty/quick-access-terminal.conf - ${myLib.userName} ${myLib.userName} - ${quickAccessConf}"

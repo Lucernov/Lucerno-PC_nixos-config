@@ -13,6 +13,7 @@ let
   # Генерируем .zshrc без системного файла
   zshrcContent = pkgs.writeText ".zshrc" ''
     # ====== PATH (обязательно в начале, до oh-my-zsh) ======
+    # NB: внутри kitty в PATH появится хвост nix-store (kitty/imagemagick/ncurses) — это штатный wrapper nixpkgs, см. комментарий в modules/nx_kitty.nix
     export PATH="$HOME/.local/bin:$PATH"
 
     # ====== Oh My Zsh ======
@@ -32,6 +33,9 @@ let
       python
     )
     source $ZSH/oh-my-zsh.sh
+
+    # ====== Nix окружение - nix-shell запускает zsh вместо bash ======
+    export NIX_BUILD_SHELL=zsh
 
     # ====== Powerlevel10k ======
     source ${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/powerlevel10k.zsh-theme
