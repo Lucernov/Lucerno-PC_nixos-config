@@ -23,7 +23,7 @@
 
       # ========== Управление конфигурацией Nix ==========
       sync   = "cd ${myLib.home}/${myLib.configDirName} && git add -A && (git commit -m \"$(date '+%Y-%m-%d %H:%M:%S')\" || true) && git push"; # синхронизировать конфиг с Git
-      update = "cd ${myLib.home}/${myLib.configDirName} && git add -A && git commit -m \"pre-rebuild\" && git push && nh os switch";  # пересобрать NixOS без обновления входов
+      update = "cd ${myLib.home}/${myLib.configDirName} && git add -A && (git commit -m \"pre-rebuild\" || true) && git push && nh os switch";  # пересобрать NixOS без обновления входов
       upgrade = "cd ${myLib.home}/${myLib.configDirName} && git add -A && (git commit -m \"pre-upgrade: $(date '+%Y-%m-%d %H:%M:%S')\" || true) && git push && nh os switch --update && git add flake.lock && (git commit -m \"upgrade: $(date '+%Y-%m-%d %H:%M:%S')\" || true) && git push";  # пересобрать NixOS с обновлением flake.lock
       clean = "nh clean all --keep 2 && nh os switch";  # очистить старые поколения и переключиться
 
@@ -34,7 +34,7 @@
       bt = "btop";                                               # использовать btop
 
       # ========== Замена софта ==========
-      cat = "bat";                                               # использовать bat вместо cat
+      cat = "bat --paging=never";                                # bat с подсветкой, но БЕЗ pager (чтобы вести себя как cat)
 
       # ========== Эффекты ==========
       neo- = "neo --defaultbg";                                  # матричный дождь на фоне терминала

@@ -96,7 +96,7 @@ stdenv.mkDerivation {
       --set QT_QPA_PLATFORM xcb \
       --set GDK_BACKEND x11 \
       --suffix PATH : /run/current-system/sw/bin \
-      --set DBUS_SESSION_BUS_ADDRESS "unix:path=/run/user/1000/bus" \
+      --run 'export DBUS_SESSION_BUS_ADDRESS="unix:path=$XDG_RUNTIME_DIR/bus"' \
       --chdir $out/share/plogue-sforzando/sforzando
 
     # Копируем .desktop, иконки, документацию

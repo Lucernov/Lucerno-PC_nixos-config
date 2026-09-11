@@ -21,31 +21,7 @@ _ :
         enabled = true
         port    = ssh
         filter  = sshd
-        logpath = /var/log/auth.log
-        maxretry = 3
-        bantime  = 1d
-        findtime = 10m
-        action  = nftables-set
-      '';
-
-      # Тюрьма для авторизации Nginx
-      nginx-http-auth = ''
-        enabled = true
-        port    = http,https
-        filter  = nginx-http-auth
-        logpath = /var/log/nginx/error.log
-        maxretry = 5
-        bantime  = 1d
-        findtime = 10m
-        action  = nftables-set
-      '';
-
-      # Тюрьма для Postfix (почтовый сервер)
-      postfix = ''
-        enabled = true
-        port    = smtp,ssmtp
-        filter  = postfix
-        logpath = /var/log/mail.log
+        journalmatch = _SYSTEMD_UNIT=sshd.service + _COMM=sshd
         maxretry = 3
         bantime  = 1d
         findtime = 10m

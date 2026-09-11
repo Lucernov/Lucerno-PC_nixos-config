@@ -54,12 +54,14 @@ in
       device = "/dev/disk/by-uuid/${sysBackupUUID}";
       fsType = "btrfs";
       options = [ "subvol=@sys-archiv" "compress=zstd" "noatime" "space_cache=v2" "ssd" "discard=async" ];
+      neededForBoot = true;
     };
 
     "/mnt/ai" = {
       device = "/dev/disk/by-uuid/${sysBackupUUID}";
       fsType = "btrfs";
       options = [ "subvol=@ai" "compress=zstd" "noatime" "space_cache=v2" "ssd" "discard=async" ];
+      neededForBoot = true;
     };
 
     # NVMe SSD для игр (ext4)
@@ -81,6 +83,7 @@ in
       device = "/dev/disk/by-uuid/${musicUUID}";
       fsType = "btrfs";
       options = [ "subvol=@music" "compress=zstd" "noatime" "space_cache=v2" ];
+      neededForBoot = true;
     };
 
   # HDD с несколькими подтомами (sdb1)
@@ -94,18 +97,21 @@ in
       device = "/dev/disk/by-uuid/${dataUUID}";
       fsType = "btrfs";
       options = [ "subvol=@docs" "compress=zstd" "noatime" "space_cache=v2" ];
+      neededForBoot = true;
     };
 
     "/mnt/images" = {
       device = "/dev/disk/by-uuid/${dataUUID}";
       fsType = "btrfs";
       options = [ "subvol=@images" "nodatacow" "noatime" "space_cache=v2" ];
+      neededForBoot = true;
     };
 
     "/mnt/video" = {
       device = "/dev/disk/by-uuid/${dataUUID}";
       fsType = "btrfs";
       options = [ "subvol=@video" "nodatacow" "noatime" "space_cache=v2" ];
+      neededForBoot = true;
     };
 
     "/mnt/video-temp" = {
@@ -204,7 +210,7 @@ in
       "usbcore.autosuspend=-1"                                              # Отключить автоматическую приостановку USB-устройств
       "clocksource=tsc"                                                     # Использовать TSC (Time Stamp Counter) как источник времени
       "tsc=reliable"                                                        # Считать TSC надёжным (не сбрасывается при состояниях сна)
-      "irqaffinity=0"                                                       # Перенаправить все аппаратные прерывания на процессор 0
+      "irqaffinity=0"                                                       # Перенаправить все аппаратные прерывания на ядро 0
       "nowatchdog"                                                          # Отключить сторожевые таймеры (watchdog)
       "quiet"                                                               # Подавляет большую часть сообщений ядра в консоли (оставляет только важные предупреждения и ошибки)
       "rd.systemd.show_status=auto"                                         # Управляет выводом статуса systemd в initrd: показывает только ошибки и важные события. Значение auto — systemd сам решает, когда показывать статус
@@ -257,7 +263,7 @@ in
       # Все HDD (mq-deadline – планировщик, разработанный для HDD, обеспечивает минимальную задержку операций)
       ACTION=="add|change", ATTR{queue/rotational}=="1", ATTR{queue/scheduler}="mq-deadline"
       # NVMe диск для игр (специфические настройки read-ahead)
-      ACTION=="add|change", KERNEL=="nvme0n1", ATTR{bdi/read_ahead_kb}="512"
+      ACTION=="add|change", KERNEL=="nvme[0-9]n[0-9]", ATTR{bdi/read_ahead_kb}="512"
       # HDD — увеличенный read-ahead для повышения производительности при чтении больших файлов
       ACTION=="add|change", ATTR{queue/rotational}=="1", ATTR{bdi/read_ahead_kb}="1024"
 
@@ -268,7 +274,6 @@ in
       SUBSYSTEM=="usb", ATTRS{idVendor}=="84ef", ATTRS{idProduct}=="0031", MODE="0666"
     '';
 
-    irqbalance.enable = true;                                               # Включает демон irqbalance, который распределяет аппаратные прерывания между ядрами CPU.
     fwupd.enable = true;                                                    # Включает демон fwupd для автоматического обновления прошивок устройств (UEFI, USB, диски и др.)
     xserver.videoDrivers = [ "nvidia" ];                                    # Использовать проприетарный драйвер NVIDIA (NVIDIA RTX 3070)
   };
