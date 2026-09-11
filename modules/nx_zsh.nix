@@ -12,9 +12,15 @@ let
 
   # Генерируем .zshrc без системного файла
   zshrcContent = pkgs.writeText ".zshrc" ''
-    # ====== PATH (обязательно в начале, до oh-my-zsh) ======
-    # NB: внутри kitty в PATH появится хвост nix-store (kitty/imagemagick/ncurses) — это штатный wrapper nixpkgs, см. комментарий в modules/nx_kitty.nix
-    export PATH="$HOME/.local/bin:$PATH"
+    # ====== PATH ======
+    # В этом файле PATH НЕ задаётся — это сделано осознанно, чтобы не плодить дубли.
+    # Источники PATH в системе:
+    #   1. ~/.zshenv                                    — ~/.local/bin для ВСЕХ zsh
+    #   2. ~/.config/plasma-workspace/env/path.sh      — ~/.local/bin для всех KDE приложений
+    #   3. NixOS PAM (/etc/pam/environment)            — базовые системные пути
+    #   4. kitty wrapper nixpkgs                        — хвост nix-store внутри kitty
+    #                                                      (см. modules/nx_kitty.nix)
+    # Проверка:  echo $PATH | tr ':' '\n'
 
     # ====== Oh My Zsh ======
     export ZSH="${pkgs.oh-my-zsh}/share/oh-my-zsh"
@@ -79,9 +85,16 @@ let
     ${aliasString}
   '';
 
-  # Генерируем ~/.zshenv для отключения глобальных rc-файлов (опционально)
+  # Генерируем ~/.zshenv: отключает глобальные rc-файлы и добавляет ~/.local/bin в PATH.
+  # Читается ВСЕМИ zsh-шеллами (login и non-login), поэтому покрывает TTY/SSH.
   zshenvContent = pkgs.writeText ".zshenv" ''
     setopt no_global_rcs
+
+    # Идемпотентное добавление ~/.local/bin в PATH.
+    # Проверка нужна, чтобы повторный source не создал дубль.
+    if [[ ":$PATH:" != *":$HOME/.local/bin:"* ]]; then
+      export PATH="$HOME/.local/bin:$PATH"
+    fi
   '';
 
 in
