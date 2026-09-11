@@ -28,18 +28,6 @@ _:
           timeout 10s
           size 1000
         }
-        set limit-web {
-          type ipv4_addr
-          flags dynamic, timeout
-          timeout 10s
-          size 1000
-        }
-        set limit-mail {
-          type ipv4_addr
-          flags dynamic, timeout
-          timeout 10s
-          size 1000
-        }
 
         chain fail2ban-input {
           type filter hook input priority -1; policy accept;
@@ -49,10 +37,6 @@ _:
 
           # 2) Лимиты соединений
           tcp dport 22 ct state new add @limit-ssh { ip saddr timeout 10s } \
-            reject with icmp port-unreachable
-          tcp dport { 80, 443 } ct state new add @limit-web { ip saddr timeout 10s } \
-            reject with icmp port-unreachable
-          tcp dport { 25, 465, 587 } ct state new add @limit-mail { ip saddr timeout 10s } \
             reject with icmp port-unreachable
         }
       '';
