@@ -10,7 +10,6 @@
       efi.canTouchEfiVariables = true;                                                                      # Разрешить запись в EFI-переменные (нужно для добавления записей загрузки)
       systemd-boot.consoleMode = "auto";                                                                    # детализация вывода загрузчика
     };
-    supportedFilesystems = [ "exfat" ];                                                                     # Поддержка файловой системы exFAT (для флешек и внешних дисков)
     #system.nixos-init.enable = true;                                                                       # Альтернативная система инициализации (пока не используется)
 
     extraModprobeConfig = ''

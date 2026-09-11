@@ -25,19 +25,19 @@ in
     "/" = {
       device = "/dev/disk/by-uuid/${sysUUID}";
       fsType = "btrfs";
-      options = [ "subvol=@" "compress=zstd" "noatime" "space_cache=v2" "ssd" ];
+      options = [ "subvol=@" "compress=zstd" "noatime" "space_cache=v2" "ssd" "discard=async" ];
     };
 
     "/nix" = {
       device = "/dev/disk/by-uuid/${sysUUID}";
       fsType = "btrfs";
-      options = [ "subvol=@nix" "compress=zstd" "noatime" "space_cache=v2" "ssd" ];
+      options = [ "subvol=@nix" "compress=zstd" "noatime" "space_cache=v2" "ssd" "discard=async" ];
     };
 
     "/home" = {
       device = "/dev/disk/by-uuid/${sysUUID}";
       fsType = "btrfs";
-      options = [ "subvol=@home" "compress=zstd" "noatime" "space_cache=v2" "ssd" ];
+      options = [ "subvol=@home" "compress=zstd" "noatime" "space_cache=v2" "ssd" "discard=async" ];
       neededForBoot = true;
     };
 
@@ -47,26 +47,26 @@ in
     "/home/lucerno/${myLib.configDirName}" = {
       device = "/dev/disk/by-uuid/${sysBackupUUID}";
       fsType = "btrfs";
-      options = [ "subvol=@${myLib.configDirName}" "compress=zstd" "noatime" "space_cache=v2" "ssd" ];
+      options = [ "subvol=@${myLib.configDirName}" "compress=zstd" "noatime" "space_cache=v2" "ssd" "discard=async" ];
     };
 
     "/mnt/sys_archiv" = {
       device = "/dev/disk/by-uuid/${sysBackupUUID}";
       fsType = "btrfs";
-      options = [ "subvol=@sys-archiv" "compress=zstd" "noatime" "space_cache=v2" "ssd" ];
+      options = [ "subvol=@sys-archiv" "compress=zstd" "noatime" "space_cache=v2" "ssd" "discard=async" ];
     };
 
     "/mnt/ai" = {
       device = "/dev/disk/by-uuid/${sysBackupUUID}";
       fsType = "btrfs";
-      options = [ "subvol=@ai" "compress=zstd" "noatime" "space_cache=v2" "ssd" ];
+      options = [ "subvol=@ai" "compress=zstd" "noatime" "space_cache=v2" "ssd" "discard=async" ];
     };
 
     # NVMe SSD для игр (ext4)
     "/mnt/games" = {
       device = "/dev/disk/by-uuid/${gamesUUID}";
       fsType = "ext4";
-      options = [ "rw" "noatime" "discard" "nobarrier" ];
+      options = [ "rw" "noatime"];
     };
     # Bind mount для Steam (чтобы не засорять /home)
     "/home/lucerno/.local/share/Steam/steamapps" = {
@@ -240,10 +240,13 @@ in
     tmp.cleanOnBoot = true;                                                 # Автоматически очищает каталог /tmp при каждой загрузке системы. Повышает безопасность (удаляет временные файлы, созданные другими пользователями)
   };
 
-    # ========== СЕТЬ ==========
+  # ========== СЕТЬ ==========
   networking = {
     hostName = "Lucerno-PC";                                                # Имя компьютера в сети
     networkmanager.enable = true;                                           # Включает NetworkManager (управление сетями, Wi‑Fi, VPN)
+
+  # ========== ВНЕШНИЕ ДИСКИ ==========
+  supportedFilesystems = [ "exfat" ];                                       # Поддержка exFAT для внешних USB-дисков
   };
 
   # ========== Services (общий блок) ==========
