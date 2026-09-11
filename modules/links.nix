@@ -63,7 +63,7 @@ in
 
     # ---------- Симлинки для приложений и данных ----------
     "L+ ${home}/.config/AmneziaVPN.ORG - ${myLib.userName} ${myLib.userName} - /mnt/sys_archiv/secrets/AmneziaVPN.ORG"
-    "L+ ${home}/.local/bin/socialstreamninja - ${myLib.userName} ${myLib.userName} - /mnt/sys_archiv/pkgs/AppImages/socialstreamninja_linux_v0.3.128_x86_64.AppImage"
+    "L+ ${home}/.local/bin/socialstreamninja - ${myLib.userName} ${myLib.userName} - /mnt/sys_archiv/pkgs/AppImages/socialstreamninja_linux_v0.4.28_x86_64.AppImage"
 
     # ---------- Автозапуск ----------
     # AmneziaVPN
