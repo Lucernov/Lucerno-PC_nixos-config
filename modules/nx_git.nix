@@ -8,7 +8,11 @@ in
 {
   systemd.tmpfiles.rules = [
 
+    "d ${home}/.config/nix 0755 ${myLib.userName} ${myLib.userName} -"
     "L+ ${home}/.git-credentials - ${myLib.userName} ${myLib.userName} - ${home}/${configDir}/secrets/git-credentials"
+    "L+ ${home}/.config/nix/nix.conf - ${myLib.userName} ${myLib.userName} - ${pkgs.writeText "nix.conf" ''
+      include ${home}/${configDir}/secrets/github-token
+    ''}"
 
     # Конфигурационный файл Git (~/.gitconfig)
     "L+ ${home}/.gitconfig - ${myLib.userName} ${myLib.userName} - ${pkgs.writeText "gitconfig" ''
