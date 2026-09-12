@@ -74,7 +74,7 @@ in
     "L+ ${home}/.local/share/kdenlive/layouts - ${myLib.userName} ${myLib.userName} - ${home}/${configDir}/dotfiles/config/kdenlive/layouts"
 
     # ---------- Симлинки для приложений и данных ----------
-    "L+ ${home}/.config/AmneziaVPN.ORG - ${myLib.userName} ${myLib.userName} - /mnt/sys_archiv/secrets/AmneziaVPN.ORG"
+    "L+ ${home}/.config/AmneziaVPN.ORG - ${myLib.userName} ${myLib.userName} - ${home}/${configDir}/secrets/AmneziaVPN.ORG"
     "L+ ${home}/.local/bin/socialstreamninja - ${myLib.userName} ${myLib.userName} - /mnt/sys_archiv/pkgs/AppImages/socialstreamninja.AppImage" # v0.4.28
 
     # ---------- Автозапуск ----------
