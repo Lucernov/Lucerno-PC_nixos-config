@@ -3,25 +3,6 @@
 {
   system.stateVersion = myLib.channelVersion;                                                               # Версия состояния системы (соответствует каналу NixOS)
 
-  # ========== Загрузчик и ядро ==========
-  boot = {
-    loader = {
-      systemd-boot.enable = true;                                                                           # Используем простой UEFI загрузчик systemd-boot
-      efi.canTouchEfiVariables = true;                                                                      # Разрешить запись в EFI-переменные (нужно для добавления записей загрузки)
-      systemd-boot.consoleMode = "auto";                                                                    # детализация вывода загрузчика
-    };
-    #system.nixos-init.enable = true;                                                                       # Альтернативная система инициализации (пока не используется)
-
-    extraModprobeConfig = ''
-      # Отключаем авто-отключение питания Bluetooth-адаптера (чтобы не терял связь)
-      options btusb enable_autosuspend=0
-      # Принудительно ограничиваем количество пакетов (стабилизирует USB-аудио)
-      options snd-usb-audio nrpacks=1
-      # Включаем неявный обратный канал (помогает при проблемах синхронизации)
-      options snd_usb_audio implicit_fb=1
-    '';
-  };
-
   # ========== Настройки времени и локали ==========
   time = { timeZone = "Europe/Moscow"; };                                                                   # Часовой пояс (Europe/Moscow)
   i18n = {
@@ -68,7 +49,7 @@
     };
   };
 
-  # ========== Безопасность (sudo, rtkit, лимиты) ==========
+  # ========== Безопасность (sudo) ==========
   security = {
     sudo = {
       enable = true;                                                                                        # Включаем sudo
