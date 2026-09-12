@@ -13,14 +13,12 @@ let
   # Генерируем .zshrc без системного файла
   zshrcContent = pkgs.writeText ".zshrc" ''
     # ====== PATH ======
-    # В этом файле PATH НЕ задаётся — это сделано осознанно, чтобы не плодить дубли.
-    # Источники PATH в системе:
+    # В этом файле PATH НЕ задаётся. Источники PATH в системе:
     #   1. ~/.zshenv                                    — ~/.local/bin для ВСЕХ zsh
     #   2. ~/.config/plasma-workspace/env/path.sh      — ~/.local/bin для всех KDE приложений
     #   3. NixOS PAM (/etc/pam/environment)            — базовые системные пути
     #   4. kitty wrapper nixpkgs                        — хвост nix-store внутри kitty
-    #                                                      (см. modules/nx_kitty.nix)
-    # Проверка:  echo $PATH | tr ':' '\n'
+    # (см. modules/nx_kitty.nix) Проверка:  echo $PATH | tr ':' '\n'
 
     # ====== Oh My Zsh ======
     export ZSH="${pkgs.oh-my-zsh}/share/oh-my-zsh"
