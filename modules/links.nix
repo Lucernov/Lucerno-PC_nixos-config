@@ -63,6 +63,7 @@ in
     "L+ ${home}/.config/mc - ${myLib.userName} ${myLib.userName} - ${home}/${configDir}/dotfiles/config/mc"
     "L+ ${home}/.config/cliamp - ${myLib.userName} ${myLib.userName} - ${home}/${configDir}/dotfiles/config/cliamp"
     "L+ ${home}/.config/fastfetch - ${myLib.userName} ${myLib.userName} - ${home}/${configDir}/dotfiles/config/fastfetch"
+    "L+ ${home}/.config/KDE - ${myLib.userName} ${myLib.userName} - ${home}/${configDir}/dotfiles/config/KDE/KDE"
 
 
     # ---------- Kdenlive ----------
