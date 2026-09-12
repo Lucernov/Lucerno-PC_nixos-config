@@ -3,6 +3,7 @@
 
 let
   inherit (myLib) home;
+  configDir = myLib.configDirName;
 in
 
 {
@@ -17,7 +18,7 @@ in
   systemd.tmpfiles.rules = [
     "d /mnt/www-GoogleDrive 0755 ${myLib.userName} ${myLib.userName} -"
     "d /mnt/www-OneDrive 0755 ${myLib.userName} ${myLib.userName} -"
-    "L+ ${home}/.config/rclone - ${myLib.userName} ${myLib.userName} - /mnt/sys_archiv/secrets/rclone"
+    "L+ ${home}/.config/rclone - ${myLib.userName} ${myLib.userName} - ${home}/${configDir}/secrets/rclone"
 
     # --- KIO настройки для ускорения корзины ---
     "L+ ${home}/.config/kiorc - ${myLib.userName} ${myLib.userName} - ${pkgs.writeText "kiorc" ''
