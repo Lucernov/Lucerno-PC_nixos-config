@@ -151,8 +151,8 @@ in
       modesetting.enable = true;                                            # Обязательно для Wayland
       nvidiaSettings = true;                                                # Устанавливает утилиту nvidia-settings
       powerManagement.enable = false;                                       # Отключаем управление питанием (на десктопе не нужно)
-    # package = config.boot.kernelPackages.nvidiaPackages.stable;           # Версия драйвера
-      package = config.boot.kernelPackages.nvidiaPackages.mkDriver {       # !!! НОВЫЙ ДРАЙВЕР 595.99.02 (работает с ядром 7.2)
+    # package = config.boot.kernelPackages.nvidiaPackages.stable;           # Стабильный nvidia драйвер (НЕ работает с ядром 7.2)
+      package = config.boot.kernelPackages.nvidiaPackages.mkDriver {        # !!! НОВЫЙ ДРАЙВЕР 595.99.02 (работает с ядром 7.2)
         version = "595.99.02";
         sha256_64bit = "sha256-6HR3lYv3YwcFSTJL1a1slI66btIQ5EAFs+/4SUD24ew=";
         sha256_aarch64 = "sha256-CCqHZTN2KNOZ4yZp2rDcuRJp9pHfRw47k4m4dWnS/2w=";
@@ -167,18 +167,17 @@ in
 
   # ========== ЗАГРУЗКА И ЯДРО ==========
   boot = {
-  # kernelPackages = pkgs.linuxPackages;                                    # Базовое ядро
-  # kernelPackages = pkgs.linuxPackages_latest;                             # Базовое ядро последней версии
+  # kernelPackages = pkgs.linuxPackages;                                    # Базовое LTS ядро
+  # kernelPackages = pkgs.linuxPackages_latest;                             # Базовое ядро последней стабильной версии
     kernelPackages = pkgs.linuxPackages_zen;                                # Установка кастомного ZEN ядра
   # kernelPackages = inputs.nix-cachyos-kernel.legacyPackages.${pkgs.stdenv.hostPlatform.system}."linuxPackages-cachyos-bore-lto-x86_64-v3";  # Установка кастомного CachyOS ядра для intel i5 13400f процессора
-  # kernelPackages = pkgsZen71.linuxPackages_zen;                           # Установка кастомного и жестко зафиксированного на версии 7.1.10 ZEN url = "github:NixOS/nixpkgs/6713828a351efa628b025a1adf7f43cbf8597513";
 
     loader = {
-      systemd-boot.enable = true;                                                                           # Используем простой UEFI загрузчик systemd-boot
-      efi.canTouchEfiVariables = true;                                                                      # Разрешить запись в EFI-переменные (нужно для добавления записей загрузки)
-      systemd-boot.consoleMode = "auto";                                                                    # детализация вывода загрузчика
+      systemd-boot.enable = true;                                           # Используем простой UEFI загрузчик systemd-boot
+      efi.canTouchEfiVariables = true;                                      # Разрешить запись в EFI-переменные (нужно для добавления записей загрузки)
+      systemd-boot.consoleMode = "auto";                                    # детализация вывода загрузчика
     };
-    #system.nixos-init.enable = true;                                                                       # Альтернативная система инициализации (пока не используется)
+    #system.nixos-init.enable = true;                                       # Альтернативная система инициализации (пока не используется)
 
     kernelModules = [                                                       # Модули на основном этапе
       "ntsync"                                                              # Модуль для улучшения синхронизации в Wine/Proton (игры)

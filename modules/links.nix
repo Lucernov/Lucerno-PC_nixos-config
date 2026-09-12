@@ -60,8 +60,8 @@ in
     "L+ ${home}/.config/kxkbrc - ${myLib.userName} ${myLib.userName} - ${home}/${configDir}/dotfiles/config/KDE/config_kxkbrc"
     "L+ ${home}/.config/plasmarc - ${myLib.userName} ${myLib.userName} - ${home}/${configDir}/dotfiles/config/KDE/config_plasmarc"
     "L+ ${home}/.config/mc - ${myLib.userName} ${myLib.userName} - ${home}/${configDir}/dotfiles/config/mc"
-    "L+ ${home}/.config/cliamp - ${myLib.userName} ${myLib.userName} - ${home}/${configDir}/dotfiles/config/cliamp"
     "L+ ${home}/.config/fastfetch - ${myLib.userName} ${myLib.userName} - ${home}/${configDir}/dotfiles/config/fastfetch"
+    "L+ ${home}/.config/TeamSpeak - ${myLib.userName} ${myLib.userName} - ${home}/${configDir}/dotfiles/config/TeamSpeak"
     "L+ ${home}/.config/KDE - ${myLib.userName} ${myLib.userName} - ${home}/${configDir}/dotfiles/config/KDE/KDE"
 
 
@@ -73,6 +73,13 @@ in
     "d ${home}/.local/share/kdenlive 0755 ${myLib.userName} ${myLib.userName} -"
     "L+ ${home}/.local/share/kdenlive/export - ${myLib.userName} ${myLib.userName} - ${home}/${configDir}/dotfiles/config/kdenlive/export"
     "L+ ${home}/.local/share/kdenlive/layouts - ${myLib.userName} ${myLib.userName} - ${home}/${configDir}/dotfiles/config/kdenlive/layouts"
+
+    # ---------- cliamp ----------
+    # ~/.config/cliamp — РЕАЛЬНАЯ директория, потому что cliamp создаёт внутри cliamp.sock и cliamp.log. Если симлинковать всю папку — сокет попадёт в репозиторий и сломает `nix eval`.
+    "d ${home}/.config/cliamp 0755 ${myLib.userName} ${myLib.userName} -"
+    "L+ ${home}/.config/cliamp/playlists - ${myLib.userName} ${myLib.userName} - ${home}/${configDir}/dotfiles/config/cliamp/playlists"
+    "L+ ${home}/.config/cliamp/config.toml - ${myLib.userName} ${myLib.userName} - ${home}/${configDir}/dotfiles/config/cliamp/config.toml"
+    "L+ ${home}/.config/cliamp/radio_favorites.toml - ${myLib.userName} ${myLib.userName} - ${home}/${configDir}/dotfiles/config/cliamp/radio_favorites.toml"
 
     # ---------- Симлинки для приложений и данных ----------
     "L+ ${home}/.config/AmneziaVPN.ORG - ${myLib.userName} ${myLib.userName} - ${home}/${configDir}/secrets/AmneziaVPN.ORG"
