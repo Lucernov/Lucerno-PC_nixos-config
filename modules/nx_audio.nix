@@ -4,11 +4,11 @@ let
   inherit (myLib) home;
   configDir = myLib.configDirName;
   commonRealtime = {
-    CPUSchedulingPolicy = "fifo";
-    CPUSchedulingPriority = 85;
-    Nice = -11;
-    LimitRTPRIO = 89;
-    NoNewPrivileges = false;
+    CPUSchedulingPolicy = "fifo";                                                                       # SCHED_FIFO — планировщик RT
+    CPUSchedulingPriority = 85;                                                                         # RT-приоритет (1..99)
+    Nice = -11;                                                                                         # nice для не-RT частей
+    LimitRTPRIO = 89;                                                                                   # жёсткий лимит RT (совпадает с pam.loginLimits)
+    NoNewPrivileges = false;                                                                            # разрешаем менять приоритеты
   };
 in
 
@@ -34,7 +34,6 @@ in
             "default.clock.rate" = 48000;                                                               # Частота дискретизации по умолчанию (48 кГц)
             "default.clock.quantum" = 512;                                                              # Размер кванта (буфера) по умолчанию – 512 семплов (~10,6 мс при 48 кГц)
             "default.clock.min-quantum" = 64;                                                           # Минимальный размер кванта – 64 семпла (~1,3 мс при 48 кГц) – для снижения задержки
-          # "default.clock.min-quantum" = 128;                                                          # Минимальный размер кванта – 128 семплов (~2,7 мс при 48 кГц) – для снижения задержки
             "default.clock.max-quantum" = 2048;                                                         # Максимальный размер кванта – 2048 семплов (~42,7 мс) – для стабильности
             "default.clock.allowed-rates" = [ 44100 48000 ];                                            # Разрешённые частоты дискретизации (44.1 и 48 кГц)
           };
@@ -65,6 +64,7 @@ in
     ];
   };
 
+  # RT-приоритеты для PipeWire (см. commonRealtime в let-блоке)
   systemd.user.services = {
     pipewire.serviceConfig = commonRealtime;
     pipewire-pulse.serviceConfig = commonRealtime;
@@ -175,6 +175,7 @@ in
     "L+ ${myLib.home}/.config/3VStudio - ${myLib.userName} ${myLib.userName} - ${myLib.home}/${configDir}/dotfiles/config/plugins/config_3VStudio"
     "L+ \"${myLib.home}/.config/My Company\" - ${myLib.userName} ${myLib.userName} - ${myLib.home}/${configDir}/dotfiles/config/plugins/config_My Company"
     "L+ ${myLib.home}/.config/MANDA_AUDIO - ${myLib.userName} ${myLib.userName} - ${myLib.home}/${configDir}/dotfiles/config/plugins/config_MANDA_AUDIO"
+    "L+ ${myLib.home}/.config/Plogue - ${myLib.userName} ${myLib.userName} - ${myLib.home}/${configDir}/dotfiles/config/plugins/config_Plogue"
     "L+ ${myLib.home}/.local/share/geonkick - ${myLib.userName} ${myLib.userName} - ${myLib.home}/${configDir}/dotfiles/config/plugins/local_share_geonkick"
     "L+ \"${myLib.home}/.local/share/The Usual Suspects\" - ${myLib.userName} ${myLib.userName} - ${myLib.home}/${configDir}/dotfiles/config/plugins/local_share_The Usual Suspects"
     "L+ ${home}/.local/share/vital - ${myLib.userName} ${myLib.userName} - /mnt/sys_archiv/samples/vital"
