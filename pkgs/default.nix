@@ -22,6 +22,7 @@ final: prev: {
     amp-locker = pkgs.callPackage ./pkg_Amp-Locker.nix { inherit versions; };
     drum-locker = pkgs.callPackage ./pkg_Drum-Locker.nix { inherit versions; };
     drumlabooh = pkgs.callPackage ./pkg_drumlabooh.nix { inherit versions; };
+    je8086 = pkgs.callPackage ./pkg_JE8086.nix { inherit versions; };
     mtpdk = pkgs.callPackage ./pkg_MT-PowerDrumKit_2.nix { inherit versions; };
     orchestools = pkgs.callPackage ./pkg_orchestools.nix { inherit versions; };
     ostirus = pkgs.callPackage ./pkg_OsTIrus.nix { inherit versions; };
