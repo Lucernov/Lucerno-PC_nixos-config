@@ -173,11 +173,12 @@ in
   # kernelPackages = inputs.nix-cachyos-kernel.legacyPackages.${pkgs.stdenv.hostPlatform.system}."linuxPackages-cachyos-bore-lto-x86_64-v3";  # Установка кастомного CachyOS ядра для intel i5 13400f процессора
   # kernelPackages = pkgsZen71.linuxPackages_zen;                           # Установка кастомного и жестко зафиксированного на версии 7.1.10 ZEN url = "github:NixOS/nixpkgs/6713828a351efa628b025a1adf7f43cbf8597513";
 
-    initrd.kernelModules = [                                                # Модули, загружаемые на раннем этапе (initrd)
-      "nvidia"                                                              # Основной драйвер NVIDIA
-      "nvidia_modeset"                                                      # Управление режимами видеовыхода (необходимо для Wayland)
-      "nvidia_drm"                                                          # Интеграция NVIDIA с DRM (Direct Rendering Manager)
-    ];
+    loader = {
+      systemd-boot.enable = true;                                                                           # Используем простой UEFI загрузчик systemd-boot
+      efi.canTouchEfiVariables = true;                                                                      # Разрешить запись в EFI-переменные (нужно для добавления записей загрузки)
+      systemd-boot.consoleMode = "auto";                                                                    # детализация вывода загрузчика
+    };
+    #system.nixos-init.enable = true;                                                                       # Альтернативная система инициализации (пока не используется)
 
     kernelModules = [                                                       # Модули на основном этапе
       "ntsync"                                                              # Модуль для улучшения синхронизации в Wine/Proton (игры)
@@ -186,15 +187,14 @@ in
       "kvm-intel"                                                           # Модуль аппаратной виртуализации KVM для процессоров Intel
     ];
 
-    initrd.availableKernelModules = [                                       # Модули, которые могут быть загружены динамически при обнаружении оборудования
-      "vmd"                                                                 # Intel Volume Management Device (для NVMe и RAID)
-      "xhci_pci"                                                            # USB 3.0/3.1 контроллеры
-      "ahci"                                                                # SATA контроллеры (AHCI)
-      "nvme"                                                                # NVMe SSD
-      "usbhid"                                                              # USB HID-устройства (клавиатуры, мыши)
-      "usb_storage"                                                         # USB Mass Storage (флешки, внешние диски)
-      "sd_mod"                                                              # SCSI диск (SD-карты, некоторые HDD/SSD)
-    ];
+    extraModprobeConfig = ''
+      # Отключаем авто-отключение питания Bluetooth-адаптера (чтобы не терял связь)
+      options btusb enable_autosuspend=0
+      # Принудительно ограничиваем количество пакетов (стабилизирует USB-аудио)
+      options snd-usb-audio nrpacks=1
+      # Включаем неявный обратный канал (помогает при проблемах синхронизации)
+      options snd_usb_audio implicit_fb=1
+    '';
 
     extraModulePackages = [ ];                                              # Дополнительные пакеты модулей ядра (пусто – не используются)
 
@@ -225,7 +225,7 @@ in
       "kernel.sched_base_slice_ns" = 2000000;                               # Базовая длительность кванта времени для планировщика (2 мс) – влияет на отзывчивость
       "vm.swappiness" = 10;                                                 # Предпочтение подкачке: 0..100. 10 – система будет почти всегда держать данные в ОЗУ
       "vm.vfs_cache_pressure" = 50;                                         # Давление на кэш VFS (50 – уменьшает вытеснение inode/dentry из памяти, повышает производительность)
-      "vm.dirty_bytes" = 536870912;                                         # Максимальное количество "грязных" данных (кэш записи) в байтах (512 MiB)
+      "vm.dirty_bytes" = 536870912;                                         # Максимальное количество грязных данных (кэш записи) в байтах (512 MiB)
       "vm.dirty_background_bytes" = 134217728;                              # Порог для фоновой записи грязных данных (128 MiB) – когда начинается сброс на диск
       "vm.stat_interval" = 10;                                              # Интервал статистики VM (10 секунд)
       "vm.dirty_writeback_centisecs" = 500;                                 # Интервал сброса грязных данных (500 сотых секунды = 5 секунд)
@@ -240,9 +240,21 @@ in
     initrd = {
       systemd.enable = true;                                                # Использовать systemd в initrd вместо скриптов. Ускоряет загрузку, позволяет параллельно запускать службы
       verbose = false;                                                      # Отключает подробный вывод сообщений initrd (делает загрузку более чистой и быстрой).
-
-    # ========== ВНЕШНИЕ ДИСКИ ==========
-    supportedFilesystems = [ "exfat" ];                                       # Поддержка exFAT для внешних USB-дисков
+      supportedFilesystems = [ "exfat" ];                                   # Поддержка exFAT для внешних USB-дисков
+      kernelModules = [                                                     # Модули, загружаемые на раннем этапе (initrd)
+        "nvidia"                                                            # Основной драйвер NVIDIA
+        "nvidia_modeset"                                                    # Управление режимами видеовыхода (необходимо для Wayland)
+        "nvidia_drm"                                                        # Интеграция NVIDIA с DRM (Direct Rendering Manager)
+      ];
+      availableKernelModules = [                                            # Модули, которые могут быть загружены динамически при обнаружении оборудования
+        "vmd"                                                               # Intel Volume Management Device (для NVMe и RAID)
+        "xhci_pci"                                                          # USB 3.0/3.1 контроллеры
+        "ahci"                                                              # SATA контроллеры (AHCI)
+        "nvme"                                                              # NVMe SSD
+        "usbhid"                                                            # USB HID-устройства (клавиатуры, мыши)
+        "usb_storage"                                                       # USB Mass Storage (флешки, внешние диски)
+        "sd_mod"                                                            # SCSI диск (SD-карты, некоторые HDD/SSD)
+      ];
     };
 
     consoleLogLevel = 3;                                                    # Устанавливает минимальный уровень важности сообщений ядра, выводимых на консоль. Будут показаны только ошибки и критические сообщения (уровень KERN_ERR и выше).
