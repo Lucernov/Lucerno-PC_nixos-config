@@ -2,12 +2,13 @@
 
 let
   inherit (myLib) home;
+  configDir = myLib.configDirName;
 in
 
 {
   systemd.tmpfiles.rules = [
 
-    "L+ ${home}/.git-credentials - ${myLib.userName} ${myLib.userName} - /mnt/sys_archiv/secrets/git-credentials"
+    "L+ ${home}/.git-credentials - ${myLib.userName} ${myLib.userName} - ${home}/${configDir}/secrets/git-credentials"
 
     # Конфигурационный файл Git (~/.gitconfig)
     "L+ ${home}/.gitconfig - ${myLib.userName} ${myLib.userName} - ${pkgs.writeText "gitconfig" ''
