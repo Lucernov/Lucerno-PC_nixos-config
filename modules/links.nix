@@ -49,7 +49,6 @@ in
     "z /sys/class/powercap/intel-rapl:*/energy_uj 0640 root powercap -"
 
     # ---------- Симлинки конфигов (из ~/nixos-config/dotfiles/config) ----------
-    "L+ ${home}/.config/nix - ${myLib.userName} ${myLib.userName} - ${home}/${configDir}/dotfiles/config/nix"
     "L+ ${home}/.config/btop - ${myLib.userName} ${myLib.userName} - ${home}/${configDir}/dotfiles/config/btop"
     "L+ ${home}/.config/qmmp - ${myLib.userName} ${myLib.userName} - ${home}/${configDir}/dotfiles/config/qmmp"
     "L+ ${home}/.config/SocialStream - ${myLib.userName} ${myLib.userName} - ${home}/${configDir}/dotfiles/config/SocialStream"
