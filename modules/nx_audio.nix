@@ -88,6 +88,7 @@ in
     "L+ \"${myLib.home}/.clap/DragonflyHallReverb.clap\" - ${myLib.userName} ${myLib.userName} - /run/current-system/sw/lib/clap/DragonflyHallReverb.clap"
     "L+ \"${myLib.home}/.clap/DragonflyPlateReverb.clap\" - ${myLib.userName} ${myLib.userName} - /run/current-system/sw/lib/clap/DragonflyPlateReverb.clap"
     "L+ \"${myLib.home}/.clap/DragonflyRoomReverb.clap\" - ${myLib.userName} ${myLib.userName} - /run/current-system/sw/lib/clap/DragonflyRoomReverb.clap"
+    "L+ ${myLib.home}/.clap/JE8086.clap - ${myLib.userName} ${myLib.userName} - /run/current-system/sw/lib/clap/JE8086.clap"
     "L+ ${myLib.home}/.clap/lsp-plugins.clap - ${myLib.userName} ${myLib.userName} - /run/current-system/sw/lib/clap/lsp-plugins.clap"
     "L+ ${myLib.home}/.clap/OsTIrus.clap - ${myLib.userName} ${myLib.userName} - /run/current-system/sw/lib/clap/OsTIrus.clap"
     "L+ ${myLib.home}/.clap/Ratatouille.clap - ${myLib.userName} ${myLib.userName} - /run/current-system/sw/lib/clap/Ratatouille.clap"
