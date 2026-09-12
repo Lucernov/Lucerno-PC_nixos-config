@@ -62,6 +62,7 @@ in
     "L+ ${home}/.config/plasmarc - ${myLib.userName} ${myLib.userName} - ${home}/${configDir}/dotfiles/config/KDE/config_plasmarc"
     "L+ ${home}/.config/mc - ${myLib.userName} ${myLib.userName} - ${home}/${configDir}/dotfiles/config/mc"
     "L+ ${home}/.config/cliamp - ${myLib.userName} ${myLib.userName} - ${home}/${configDir}/dotfiles/config/cliamp"
+    "L+ ${home}/.config/fastfetch - ${myLib.userName} ${myLib.userName} - ${home}/${configDir}/dotfiles/config/fastfetch"
 
 
     # ---------- Kdenlive ----------
