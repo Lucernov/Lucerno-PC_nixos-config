@@ -33,7 +33,7 @@ stdenv.mkDerivation {
 
   src = fetchurl {
     url = "https://github.com/dsp56300/gearmulator/releases/download/${version}/TheUsualSuspects-JE8086-CLAP-${version}-Linux_x86_64.zip";
-    hash = "sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA="; # Заменить на реальный
+    hash = "sha256-KoBRwHO2YJLl/bpAtzB/TPKYn2abiZ+hDaCjVqI+LFU=";
   };
 
   nativeBuildInputs = [ unzip autoPatchelfHook ];
