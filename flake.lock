@@ -171,7 +171,9 @@
     "comfyui-nix": {
       "inputs": {
         "flake-parts": "flake-parts_2",
-        "nixpkgs": "nixpkgs"
+        "nixpkgs": [
+          "nixpkgs"
+        ]
       },
       "locked": {
         "lastModified": 1788968328,
@@ -408,16 +410,16 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1788752844,
-        "narHash": "sha256-VaWGJ6+cIYN2erfSecbRV+4ljI185Ty2wUrXyvQbgOw=",
+        "lastModified": 1789114715,
+        "narHash": "sha256-ugpsyk3NM2s87vXfUiIIiibbJ4Pp0JPS5p/3mfs+q+c=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "dc5d91f840324650bac8c379428c7037a416959a",
+        "rev": "21a67dc470149f337cecafbe965d8d252a390518",
         "type": "github"
       },
       "original": {
         "owner": "NixOS",
-        "ref": "nixos-unstable",
+        "ref": "nixos-26.05",
         "repo": "nixpkgs",
         "type": "github"
       }
@@ -515,22 +517,6 @@
         "type": "github"
       }
     },
-    "nixpkgs_2": {
-      "locked": {
-        "lastModified": 1789114715,
-        "narHash": "sha256-ugpsyk3NM2s87vXfUiIIiibbJ4Pp0JPS5p/3mfs+q+c=",
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "21a67dc470149f337cecafbe965d8d252a390518",
-        "type": "github"
-      },
-      "original": {
-        "owner": "NixOS",
-        "ref": "nixos-26.05",
-        "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
     "nur": {
       "inputs": {
         "flake-parts": "flake-parts_5",
@@ -539,11 +525,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1789288954,
-        "narHash": "sha256-42topi5WMkCrk9HPnduyUhYwP4NNCJsVE0MIcbEdoyE=",
+        "lastModified": 1789289933,
+        "narHash": "sha256-CYhMYtzq+0UzHOibYtHARw6lJ5ppFzbruuXdcTyp0fM=",
         "owner": "nix-community",
         "repo": "NUR",
-        "rev": "0371ebef3f346149c9e391aa00a4857da1661e58",
+        "rev": "a0fc0e1b6d29fa9446f550acdaedd5667e22a72e",
         "type": "github"
       },
       "original": {
@@ -597,7 +583,7 @@
         "flake-parts": "flake-parts_3",
         "import-tree": "import-tree",
         "nix-cachyos-kernel": "nix-cachyos-kernel",
-        "nixpkgs": "nixpkgs_2",
+        "nixpkgs": "nixpkgs",
         "nixpkgs-krita-25-11": "nixpkgs-krita-25-11",
         "nixpkgs-minion-25-11": "nixpkgs-minion-25-11",
         "nixpkgs-unstable": "nixpkgs-unstable",
