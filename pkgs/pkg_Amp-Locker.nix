@@ -11,7 +11,9 @@
 }:
 
 let
-  version = versions.amp-locker;
+  version    = versions.amp-locker.version;
+  hash       = versions.amp-locker.hash;
+  urlVersion = versions.audioAssault.urlVersion;
 in
 
 stdenv.mkDerivation {
@@ -19,8 +21,8 @@ stdenv.mkDerivation {
   inherit version;
 
   src = fetchurl {
-    url = "https://audioassaultdownloads.s3.amazonaws.com/AmpLocker/AmpLocker109/AmpLockerLinux.zip";
-    hash = "sha256-fklVvurJoN7TzhwRAnktJm02bMbKmnel6hSIY3QLRxM=";
+    url = "https://audioassaultdownloads.s3.amazonaws.com/AmpLocker/AmpLocker${urlVersion}/AmpLockerLinux.zip";
+    inherit hash;
   };
 
   nativeBuildInputs = [ unzip autoPatchelfHook makeWrapper ];

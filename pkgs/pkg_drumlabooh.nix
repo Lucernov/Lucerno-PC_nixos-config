@@ -9,7 +9,7 @@
 }:
 
 let
-  version = versions.drumlabooh;
+  version = versions.drumlabooh.version;
 in
 
 stdenv.mkDerivation {
@@ -19,11 +19,11 @@ stdenv.mkDerivation {
   srcs = [
     (fetchurl {
       url = "https://github.com/psemiletov/drumlabooh/releases/download/${version}/drumlabooh.lv2.zip";
-      hash = "sha256-IQ0XzIwJqGg+6FynmJBllyBIzWD3dgFfllOTEx0cMDM=";
+      hash = versions.drumlabooh.hash;
     })
     (fetchurl {
       url = "https://github.com/psemiletov/drumlabooh/releases/download/${version}/drumlabooh-multi.lv2.zip";
-      hash = "sha256-qdZJvXsUlEmmlTwUwO/C47OXM+gwRlu2cNRFGrJDi1A=";
+      hash = versions.drumlabooh.hashMulti;
     })
   ];
 
