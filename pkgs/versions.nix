@@ -56,6 +56,6 @@
   shortcircuit-xt = {                                                   # обновляется активно
     version       = "2026-09-14-8cda0ce";                               # https://github.com/surge-synthesizer/shortcircuit-xt/releases/
     releaseTag    = "Nightly";
-    hash          = "sha256-dbod6Bc7W2+ul0IUXFg9Olai75VhLAtXMobj3kgdklI=";
+    hash          = "sha256-wOCqKyDl/AjpZGsTUOWjFlkXMVZoiEavJpFHv/N6ksw=";
   };
 }
