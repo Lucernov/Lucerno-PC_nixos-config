@@ -8,7 +8,7 @@
     urlVersion = "109";
   };
 
-  amp-locker = {                                                        # обновляется активно
+  amp-locker = {                                                        # обновляется активно (Audio Assault)
     version  = "1.5.6";
     hash     = "sha256-pHh4SN6Vb7CFOOQD+9VFLlNch0lv4dU8EWXjSE68iv8=";
   };
