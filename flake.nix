@@ -16,13 +16,13 @@
       inputs.nixpkgs.follows = "nixpkgs";                                                                  # Зависимости используют основной nixpkgs
     };
 
-    flake-parts = {                                                                                        # Flake-parts — фреймворк для модульной организации flake
-      url = "github:hercules-ci/flake-parts";
-      inputs.nixpkgs-lib.follows = "nixpkgs";                                                              # Зависимости используют основной nixpkgs
-    };
-
     blender-cuda = {                                                                                       # Бинарная сборка Blender с поддержкой cuda
       url = "github:adithyagenie/blender-cuda-nixos";
+      inputs.nixpkgs.follows = "nixpkgs";                                                                  # Зависимости используют основной nixpkgs
+    };
+
+    comfyui-nix = {                                                                                         # Flake для ComfyUI
+      url = "github:utensils/comfyui-nix";
       inputs.nixpkgs.follows = "nixpkgs";                                                                  # Зависимости используют основной nixpkgs
     };
 
@@ -41,13 +41,12 @@
       inputs.nixpkgs.follows = "nixpkgs";                                                                  # Зависимости используют основной nixpkgs
     };
 
-    comfyui-nix = {
-      url = "github:utensils/comfyui-nix";                                                                 # Flake для ComfyUI
-      inputs.nixpkgs.follows = "nixpkgs";
+    flake-parts = {                                                                                        # Flake-parts — фреймворк для модульной организации flake
+      url = "github:hercules-ci/flake-parts";
+      inputs.nixpkgs-lib.follows = "nixpkgs";                                                              # Зависимости используют основной nixpkgs
     };
 
     import-tree.url = "github:vic/import-tree";                                                            # Утилита для рекурсивного импорта файлов
-  # comfyui-nix.url = "github:utensils/comfyui-nix";                                                       # Flake для ComfyUI
     nixpkgs-krita-25-11.url = "github:NixOS/nixpkgs/b77b3de8775677f84492abe84635f87b0e153f0f";             # Фиксированная версия Krita (новая версия пока не работает с ComfyUI)
     nixpkgs-minion-25-11.url = "github:NixOS/nixpkgs/b77b3de8775677f84492abe84635f87b0e153f0f";            # Фиксированная версия minion, пакет в репозитории сломался из-за изменений в Яве. Пока чинят https://github.com/NixOS/nixpkgs/pull/539572 !!! TEMP !!!
 
@@ -62,10 +61,10 @@
         config.allowUnfree = true;                                                                         # Разрешает установку пакетов с несвободными лицензиями
       };
 
-      pkgsMinion = import nixpkgs-minion-25-11 {
-        localSystem = "x86_64-linux";
-        config.allowUnfree = true;
-      };
+      pkgsMinion = import nixpkgs-minion-25-11 {                                                           # !!! TEMP !!!
+        localSystem = "x86_64-linux";                                                                      # !!! TEMP !!!
+        config.allowUnfree = true;                                                                         # !!! TEMP !!!
+      };                                                                                                   # !!! TEMP !!!
 
       pkgsWithOverlay = import nixpkgs {                                                                   # Создаём экземпляр nixpkgs с оверлеем (кастомные пакеты)
         localSystem = "x86_64-linux";                                                                      # Здесь также используем localSystem

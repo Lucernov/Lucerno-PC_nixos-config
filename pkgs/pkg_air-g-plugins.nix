@@ -11,7 +11,7 @@
 }:
 
 let
-  version = versions.air-g-plugins;
+  version = versions.air-g-plugins.version;
 in
 
 stdenv.mkDerivation {

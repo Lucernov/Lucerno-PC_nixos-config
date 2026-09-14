@@ -20,7 +20,7 @@
 }:
 
 let
-  version = versions.mtpdk;
+  inherit (versions.mtpdk) version urlVersion hash;
 in
 
 stdenv.mkDerivation {
@@ -28,8 +28,8 @@ stdenv.mkDerivation {
   inherit version;
 
   src = fetchurl {
-    url = "https://resources.manda-audio.com/DOWNLOADS/products/mtpdk2_free/2.1.5/MTPDK-2.1.5.1-VST3-64bit-Linux-FULL.zip";
-    hash = "sha256-lb8RuIdLgDC2y9KSF6hlWXWKlt4jI8tndWk/WVanpGo=";
+    url = "https://resources.manda-audio.com/DOWNLOADS/products/mtpdk2_free/${urlVersion}/MTPDK-${version}-VST3-64bit-Linux-FULL.zip";
+    inherit hash;
   };
 
   nativeBuildInputs = [ unzip autoPatchelfHook ];
