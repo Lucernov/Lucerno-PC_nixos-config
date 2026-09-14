@@ -1,4 +1,4 @@
-# pkgs/versions.nix
+# pkgs/versions.nix шаблон sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=
 {
   air-g-plugins = {                                                     # не обновляется (локальный репозиторий)
     version     = "1.0";
@@ -15,7 +15,7 @@
 
   drum-locker = {                                                       # обновляется иногда
     version   = "1.0.3";                                                # https://audioassault.mx/downloadAudioAssault
-    hash      = "sha256-";
+    hash      = "sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=";
   };
 
   drumlabooh  = {                                                       # обновляется иногда
