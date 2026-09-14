@@ -52,10 +52,14 @@
         "intl.locale.requested" = "ru";                           # Включить русский язык интерфейса
         "browser.startup.homepage" = "https://duckduckgo.com";    # Домашняя страница при запуске браузера
         "browser.search.defaultenginename" = "DuckDuckGo";        # Поисковая система по умолчанию (используется в адресной строке и поиске)
-        "dom.security.https_only_mode" = true;                    # Принудительное использование HTTPS для всех сайтов (повышает безопасность)
         "browser.search.region" = "RU";                           # Регион для поиска (Россия)
-        "extensions.pocket.enabled" = false;                      # Отключаем Pocket (не всем нужно)
         "browser.urlbar.suggest.searches" = false;                # Не отправлять поисковые запросы в адресной строке
+        "dom.security.https_only_mode" = true;                    # Принудительное использование HTTPS для всех сайтов
+        "extensions.pocket.enabled" = false;                      # Отключаем Pocket
+        "gfx.webrender.all" = true;                               # Включает WebRender для всей отрисовки
+        "gfx.webrender.compositor" = true;                        # Включает композитор WebRender
+        "media.hardware-video-decoding.force-enabled" = true;     # Принудительно включает VA-API
+        "media.rdd-ffmpeg.enabled" = true;                        # Разрешить использование FFmpeg в RDD-процессе (необходимо для работы VA-API)
       };
       policies = {                                                # Корпоративные политики (имеют приоритет над preferences)
         DisableTelemetry = true;                                  # Отключает телеметрию
