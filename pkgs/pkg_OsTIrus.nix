@@ -24,7 +24,8 @@
 }:
 
 let
-  version = versions.ostirus;
+  version = versions.ostirus.version;
+  hash    = versions.ostirus.hash;
 in
 
 stdenv.mkDerivation {
@@ -33,7 +34,7 @@ stdenv.mkDerivation {
 
   src = fetchurl {
     url = "https://github.com/dsp56300/gearmulator/releases/download/${version}/TheUsualSuspects-OsTIrus-CLAP-${version}-Linux_x86_64.zip";
-    hash = "sha256-+3g9yEOb2Psjj/K9ZIY6GXYeIwIsRCtIEOrcUZ980eY=";
+    inherit hash;
   };
 
   nativeBuildInputs = [ unzip autoPatchelfHook ];

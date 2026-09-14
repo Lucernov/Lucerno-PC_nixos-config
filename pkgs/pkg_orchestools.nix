@@ -12,7 +12,7 @@
 }:
 
 let
-  version = versions.orchestools;
+  version = versions.orchestools.version;
 in
 
 stdenv.mkDerivation {
