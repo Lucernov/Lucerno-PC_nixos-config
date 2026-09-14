@@ -15,7 +15,7 @@
 
   drum-locker = {                                                       # обновляется иногда
     version   = "1.0.3";                                                # https://audioassault.mx/downloadAudioAssault
-    hash      = "sha256-fX6k5C64wNlHK1QsrdClitWlFR33jymEdVO7QIVFNGs=";
+    hash      = "sha256-";
   };
 
   drumlabooh  = {                                                       # обновляется иногда
