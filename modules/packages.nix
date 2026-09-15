@@ -195,6 +195,7 @@
       beetle-psx-hw                                               # Ядро PlayStation 1
       pcsx2                                                       # Ядро PlayStation 2
     ]))
+    rpcs3                                                         # мулятор PlayStation 3
   # lutris                                                        # Игровой лаунчер для управления играми
   # heroic                                                        # Лаунчер для Epic Games Store и GOG
 
