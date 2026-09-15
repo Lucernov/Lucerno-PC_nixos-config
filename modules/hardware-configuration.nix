@@ -282,9 +282,16 @@ in
       KERNEL=="rtc0", GROUP="audio"
       KERNEL=="hpet", GROUP="audio"
 
+      # ДОБАВИТЬ: Доступ к iPhone/iPad для группы idevice
+      SUBSYSTEM=="usb", ATTR{idVendor}=="05ac", MODE="0660", GROUP="idevice"
+
       SUBSYSTEM=="usb", ATTRS{idVendor}=="84ef", ATTRS{idProduct}=="0031", MODE="0666"
     '';
 
+    usbmuxd = {
+      enable = true;                                                        # Включаем демон для связи с iPhone по USB
+      package = pkgs.usbmuxd2;
+    };
     fwupd.enable = true;                                                    # Включает демон fwupd для автоматического обновления прошивок устройств (UEFI, USB, диски и др.)
     xserver.videoDrivers = [ "nvidia" ];                                    # Использовать проприетарный драйвер NVIDIA (NVIDIA RTX 3070)
   };
