@@ -290,7 +290,7 @@ in
 
     usbmuxd = {
       enable = true;                                                        # Включаем демон для связи с iPhone по USB
-      package = pkgs.usbmuxd2;
+      package = pkgs.usbmuxd2;                                              # Используем альтернативную реализацию usbmuxd2 (лучше совместима с новыми версиями iOS, чем стандартный usbmuxd)
     };
     fwupd.enable = true;                                                    # Включает демон fwupd для автоматического обновления прошивок устройств (UEFI, USB, диски и др.)
     xserver.videoDrivers = [ "nvidia" ];                                    # Использовать проприетарный драйвер NVIDIA (NVIDIA RTX 3070)

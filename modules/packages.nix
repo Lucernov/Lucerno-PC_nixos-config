@@ -104,8 +104,8 @@
     alsa-utils                                                    # Утилиты для работы с ALSA (aplay, arecord, alsamixer, управление звуковыми картами)
     zenity                                                        # Утилита для графических диалогов (GTK). Требуется Sforzando для выбора папки Aria Engine при первом запуске
     file                                                          # Определение типа файла (ELF, PNG, tar, ...)
-    libimobiledevice
-    ifuse
+    libimobiledevice                                              # Библиотека и набор утилит для связи с устройствами Apple (iPhone, iPad) по USB
+    ifuse                                                         # Утилита для монтирования файловой системы iPhone/iPad как обычной папки в Linux (через FUSE)
 
     # ========== КОНСОЛЬНЫЕ УТИЛИТЫ ==========
     kitty                                                         # Эмулятор терминала с поддержкой GPU и лигатур
