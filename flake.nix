@@ -2,7 +2,7 @@
   description = "Попробуем всё подряд, пока не заработает!";
 
   # ========== Входные данные (inputs) ==========
-  inputs = {                                                                                               # Здесь перечисляются все внешние зависимости (flake-репозитории)
+  inputs = {                                                                                               # Все внешние зависимости (flake-репозитории)
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-26.05";                                                      # Стабильный канал Nixpkgs
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";                                          # Нестабильный канал Nixpkgs (последние обновления)
 
