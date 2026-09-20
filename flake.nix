@@ -58,7 +58,12 @@
     let
       pkgsUnstable = import nixpkgs-unstable {                                                             # Создаём экземпляр нестабильного nixpkgs (для свежих пакетов)
         localSystem = "x86_64-linux";                                                                      # Новый синтаксис с атрибутом localSystem вместо устаревшего `system`
-        config.allowUnfree = true;                                                                         # Разрешает установку пакетов с несвободными лицензиями
+        config = {
+          allowUnfree = true;
+          cudaSupport = true;
+          cudaCapabilities = [ "8.6" ];
+          cudaForwardCompat = false;
+        };
       };
 
       pkgsMinion = import nixpkgs-minion-25-11 {                                                           # !!! TEMP !!!
@@ -68,7 +73,12 @@
 
       pkgsWithOverlay = import nixpkgs {                                                                   # Создаём экземпляр nixpkgs с оверлеем (кастомные пакеты)
         localSystem = "x86_64-linux";                                                                      # Здесь также используем localSystem
-        config.allowUnfree = true;                                                                         # Разрешает установку пакетов с несвободными лицензиями
+        config = {
+          allowUnfree = true;                                                                              # Разрешает установку пакетов с несвободными лицензиями
+          cudaSupport = true;                                                                              # Включаем поддержку CUDA глобально
+          cudaCapabilities = [ "8.6" ];                                                                    # Только Ampere (RTX 3070). Не тратим время на sm_70, sm_75, sm_80, sm_89 и т.д.
+          cudaForwardCompat = false;                                                                       # Не генерируем PTX для будущих архитектур – экономит ещё больше времени
+        };
         overlays = [
           (import ./pkgs/default.nix { pkgs-unstable = pkgsUnstable; })                                    # Подключаем оверлей с моими пакетами (my-packages)
           comfyui-nix.overlays.default                                                                     # Оверлей ComfyUI для добавления comfy-ui-cuda
