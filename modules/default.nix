@@ -63,9 +63,9 @@
   environment = {
     sessionVariables = {
       __GLX_VENDOR_LIBRARY_NAME = "nvidia";                                                                 # Принудительно указываем Vulkan-драйвер NVIDIA для OpenGL/GLX приложений
-      __GL_VRR_ALLOWED = "1";                                                                               # Разрешает Variable Refresh Rate (VRR / G-Sync / FreeSync) Включает адаптивную синхронизацию для совместимых мониторов
+      __GL_VRR_ALLOWED = "1";                                                                               # Разрешает Variable Refresh Rate (VRR / G-Sync / FreeSync). Включает адаптивную синхронизацию для совместимых мониторов
       GBM_BACKEND = "nvidia-drm";                                                                           # Указывает бэкенд Graphics Buffer Manager (GBM) от NVIDIA. Необходимо для корректной работы Wayland с проприетарным драйвером
-      CHROME_FLAGS = "--ozone-platform-hint=auto";                                                          # Флаги для браузеров на базе Chromium (Chrome, Edge, Brave и др.) Принудительно включает поддержку Wayland через Ozone
+      CHROME_FLAGS = "--ozone-platform-hint=auto";                                                          # Флаги для браузеров на базе Chromium (Chrome, Edge, Brave и др.). Принудительно включает поддержку Wayland через Ozone
       ELECTRON_OZONE_PLATFORM_HINT = "auto";                                                                # Для приложений на Electron (VS Code, Discord, Telegram и др.) Заставляет их использовать Wayland вместо XWayland
       ELECTRON_FORCE_WAYLAND = "1";                                                                         # Принудительно запускает Electron-приложения в нативном режиме Wayland вместо XWayland
       QT_QPA_PLATFORM = "wayland";                                                                          # Задаёт бэкенд Qt для работы через Wayland (вместо X11)
@@ -117,6 +117,7 @@
         "https://chaotic-nyx.cachix.org"                                                                    # Дополнительный кеш с большим количеством популярных пакетов
         "https://devenv.cachix.org"                                                                         # Кеш для сред разработки (devenv)
         "https://attic.xuyh0120.win/lantian"                                                                # Добавляем кэш аттика от xuyh0120 (содержит множество готовых сборок для CachyOS пакетов)
+        "https://comfyui.cachix.org"                                                                        # Кэш готовых сборок ComfyUI (в т.ч. CUDA-wheels PyTorch) – избавляет от многочасовой компиляции из исходников
       ];
       trusted-public-keys = [                                                                               # Публичные ключи для проверки подписей пакетов из соответствующих кэшей
         "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="                                    # Ключ основного кэша
@@ -127,6 +128,7 @@
         "chaotic-nyx.cachix.org-1:HfnXSw4pj95iI/n17rIDy40agHj12WfF+Gqk6SonIT8="                             # Ключ chaotic-nyx
         "devenv.cachix.org-1:w1cLUi8dv3hnoSPGAuibQv+f9TZLr6cv/Hm9XgU50cw="                                  # Ключ devenv
         "lantian:EeAUQ+W+6r7EtwnmYjeVwx5kOGEBpjlBfPlzGlTNvHc="                                              # Публичный ключ для проверки подписей пакетов из указанного аттика.
+        "comfyui.cachix.org-1:33mf9VzoIjzVbp0zwj+fT51HG0y31ZTK3nzYZAX0rec="                                 # Публичный ключ кэша ComfyUI (официальный ключ из flake.nix проекта utensils/comfyui-nix)
       ];
     };
     gc = {                                                                                                  # Настройки автоматической очистки старых поколений (garbage collection)
