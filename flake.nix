@@ -21,7 +21,7 @@
       inputs.nixpkgs.follows = "nixpkgs";                                                                  # Зависимости используют основной nixpkgs
     };
 
-    comfyui-nix = {                                                                                         # Flake для ComfyUI
+    comfyui-nix = {                                                                                        # Flake для ComfyUI
       url = "github:utensils/comfyui-nix";
       inputs.nixpkgs.follows = "nixpkgs";                                                                  # Зависимости используют основной nixpkgs
     };
@@ -41,11 +41,6 @@
       inputs.nixpkgs.follows = "nixpkgs";                                                                  # Зависимости используют основной nixpkgs
     };
 
-    flake-parts = {                                                                                        # Flake-parts — фреймворк для модульной организации flake
-      url = "github:hercules-ci/flake-parts";
-      inputs.nixpkgs-lib.follows = "nixpkgs";                                                              # Зависимости используют основной nixpkgs
-    };
-
     import-tree.url = "github:vic/import-tree";                                                            # Утилита для рекурсивного импорта файлов
     nixpkgs-krita-25-11.url = "github:NixOS/nixpkgs/b77b3de8775677f84492abe84635f87b0e153f0f";             # Фиксированная версия Krita (новая версия пока не работает с ComfyUI)
     nixpkgs-minion-25-11.url = "github:NixOS/nixpkgs/b77b3de8775677f84492abe84635f87b0e153f0f";            # Фиксированная версия minion, пакет в репозитории сломался из-за изменений в Яве. Пока чинят https://github.com/NixOS/nixpkgs/pull/539572 !!! TEMP !!!
@@ -54,15 +49,12 @@
   };
 
   # ========== Выходные данные (outputs) ==========
-  outputs = inputs@{ nixpkgs, nixpkgs-unstable, nur, nix-cachyos-kernel, flake-parts, stylix, blender-cuda, comfyui-nix, nixpkgs-krita-25-11, nixpkgs-minion-25-11, ... }: # Функция, которая принимает все входы и возвращает результаты сборки
+  outputs = inputs@{ nixpkgs, nixpkgs-unstable, nur, nix-cachyos-kernel, stylix, blender-cuda, comfyui-nix, nixpkgs-krita-25-11, nixpkgs-minion-25-11, ... }: # Функция, которая принимает все входы и возвращает результаты сборки
     let
       pkgsUnstable = import nixpkgs-unstable {                                                             # Создаём экземпляр нестабильного nixpkgs (для свежих пакетов)
         localSystem = "x86_64-linux";                                                                      # Новый синтаксис с атрибутом localSystem вместо устаревшего `system`
         config = {
           allowUnfree = true;
-        # cudaSupport = true;                                                                              # Включаем поддержку CUDA глобально
-        # cudaCapabilities = [ "8.6" ];                                                                    # Только Ampere (RTX 3070). Не тратим время на sm_70, sm_75, sm_80, sm_89 и т.д.
-        # cudaForwardCompat = false;                                                                       # Не генерируем PTX для будущих архитектур – экономит ещё больше времени
         };
       };
 
@@ -75,9 +67,6 @@
         localSystem = "x86_64-linux";                                                                      # Здесь также используем localSystem
         config = {
           allowUnfree = true;                                                                              # Разрешает установку пакетов с несвободными лицензиями
-        # cudaSupport = true;                                                                              # Включаем поддержку CUDA глобально
-        # cudaCapabilities = [ "8.6" ];                                                                    # Только Ampere (RTX 3070). Не тратим время на sm_70, sm_75, sm_80, sm_89 и т.д.
-        # cudaForwardCompat = false;                                                                       # Не генерируем PTX для будущих архитектур – экономит ещё больше времени
         };
         overlays = [
           (import ./pkgs/default.nix { pkgs-unstable = pkgsUnstable; })                                    # Подключаем оверлей с моими пакетами (my-packages)
@@ -90,41 +79,32 @@
 
       myLib = import ./mylib.nix;                                                                          # Импорт моего файла библиотеки с общими переменными
     in
-
-    flake-parts.lib.mkFlake { inherit inputs; } {                                                          # Используем flake-parts для построения flake
-      systems = [ "x86_64-linux" ];                                                                        # Целевая архитектура (один компьютер x86_64)
-      imports = [ ];                                                                                       # Список дополнительных модулей flake-parts (пока пуст)
-
-      # Основное содержимое флейка - системные и пользовательские конфигурации, оверлеи, пакеты
-      flake = {
-        nixosConfigurations.Lucerno-PC = nixpkgs.lib.nixosSystem {                                         # Системная конфигурация NixOS (для пересборки всей ОС)
-          system = "x86_64-linux";                                                                         # Архитектура системы. Для nixosSystem ВСЁ ЕЩЁ используется параметр `system` (требование API NixOS)
-          specialArgs = {                                                                                  # Дополнительные аргументы, передаваемые во все модули
-            inherit myLib;                                                                                 # Мои общие переменные
-            inherit inputs;                                                                                # Все входы (flake-зависимости)
-            inherit blender-cuda;                                                                          # Flake с Blender+CUDA для передачи в пакеты
-            inherit nixpkgs-krita-25-11;                                                                   # Фиксированный nixpkgs для Krita
-            pkgs-unstable = pkgsUnstable;                                                                  # Нестабильные пакеты для использования в модулях
-            import-tree = inputs.import-tree;                                                              # Утилита для рекурсивного импорта
-            pkgs-minion = pkgsMinion;                                                                      # !!! TEMP !!!
-          };
-
-          modules = [                                                                                      # Список модулей, из которых собирается система
-            inputs.stylix.nixosModules.stylix                                                              # Модуль стилизации (stylix)
-            ({ config, pkgs, lib, nixpkgs-krita-25-11, pkgs-minion, ... }: {                               # Переопределяем krita из фиксированного набора пакетов
-              nixpkgs.overlays = [
-                (final: prev: {
-                krita = nixpkgs-krita-25-11.legacyPackages.${final.stdenv.hostPlatform.system}.krita;      # Берём krita из фиксированной версии
-                minion = pkgs-minion.minion;                                                               # Берём minion из фиксированной версии
-                })
-              ];
-            })
-            { nixpkgs.pkgs = pkgsWithOverlay; }                                                            # Переопределяем pkgs для всей системы (с оверлеем)
-            (inputs.import-tree ./modules)                                                                 # Основной модуль config nixos. Рекурсивно импортируем все модули из папки modules/nixos
-          ];
+    {
+      nixosConfigurations.Lucerno-PC = nixpkgs.lib.nixosSystem {                                           # Системная конфигурация NixOS (для пересборки всей ОС)
+        system = "x86_64-linux";                                                                           # Архитектура системы. Для nixosSystem ВСЁ ЕЩЁ используется параметр `system` (требование API NixOS)
+        specialArgs = {                                                                                    # Дополнительные аргументы, передаваемые во все модули
+          inherit myLib;                                                                                   # Мои общие переменные
+          inherit inputs;                                                                                  # Все входы (flake-зависимости)
+          inherit blender-cuda;                                                                            # Flake с Blender+CUDA для передачи в пакеты
+          inherit nixpkgs-krita-25-11;                                                                     # Фиксированный nixpkgs для Krita
+          pkgs-unstable = pkgsUnstable;                                                                    # Нестабильные пакеты для использования в модулях
+          import-tree = inputs.import-tree;                                                                # Утилита для рекурсивного импорта
+          pkgs-minion = pkgsMinion;                                                                        # !!! TEMP !!!
         };
-      };
 
-      perSystem = { config, pkgs, ... }: { };                                                              # Заглушка для будущих системно-зависимых настроек (например, для сборки пакетов под конкретную систему)
+        modules = [                                                                                        # Список модулей, из которых собирается система
+          inputs.stylix.nixosModules.stylix                                                                # Модуль стилизации (stylix)
+          ({ config, pkgs, lib, nixpkgs-krita-25-11, pkgs-minion, ... }: {                                 # Переопределяем krita из фиксированного набора пакетов
+            nixpkgs.overlays = [
+              (final: prev: {
+              krita = nixpkgs-krita-25-11.legacyPackages.${final.stdenv.hostPlatform.system}.krita;        # Берём krita из фиксированной версии
+              minion = pkgs-minion.minion;                                                                 # Берём minion из фиксированной версии
+              })
+            ];
+          })
+          { nixpkgs.pkgs = pkgsWithOverlay; }                                                              # Переопределяем pkgs для всей системы (с оверлеем)
+          (inputs.import-tree ./modules)                                                                   # Основной модуль config nixos. Рекурсивно импортируем все модули из папки modules/nixos
+        ];
+      };
     };
 }
