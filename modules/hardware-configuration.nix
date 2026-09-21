@@ -64,6 +64,14 @@ in
       neededForBoot = true;
     };
 
+    # ========== SWAP НА ДИСКЕ ==========
+    # Подтом @swap на бэкап-SSD. nodatacow обязателен: иначе swapon откажет с "Invalid argument" ( особые права на директорию, проверка - sudo lsattr -d /swap )
+    "/swap" = {
+      device = "/dev/disk/by-uuid/${sysBackupUUID}";
+      fsType = "btrfs";
+      options = [ "subvol=@swap" "noatime" "nodatacow" ];
+    };
+
     # NVMe SSD для игр (ext4)
     "/mnt/games" = {
       device = "/dev/disk/by-uuid/${gamesUUID}";
@@ -121,8 +129,6 @@ in
     };
   };
 
-  swapDevices = [ ];                                                        # Традиционный swap-раздел/файл не используется (отключён)
-
   # ========== ВИРТУАЛЬНЫЙ ДИСК Zram0 ==========
   zramSwap = {
     enable = true;                                                          # Включить сжатие оперативной памяти в ZRAM (используется как подкачка)
@@ -130,6 +136,18 @@ in
     algorithm = "lz4";                                                      # Алгоритм сжатия (lz4 – быстрый, хорошая степень сжатия)
     priority = 100;                                                         # Приоритет использования zram-устройства (чем выше, тем предпочтительнее)
   };
+
+  # ========== SWAP УСТРОЙСТВА ==========
+  # Приоритет 10 — ниже, чем у zram (100). Значит:
+  #   1. Сначала ядро использует zram (быстро, сжатие в RAM).
+  #   2. Диск подключается ТОЛЬКО когда zram+RAM реально кончились.
+  # Это защищает от OOM-killer при тяжёлых сборках (libnvshmem, torch).
+  swapDevices = [
+    {
+      device = "/swap/swapfile";
+      priority = 10;
+    }
+  ];
 
   # ========== КОНЕЦ РАЗДЕЛА ДИСКОВ ==========
 
