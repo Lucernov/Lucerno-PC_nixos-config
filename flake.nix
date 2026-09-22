@@ -31,10 +31,10 @@
       inputs.nixpkgs.follows = "nixpkgs";                                                                  # Зависимости используют основной nixpkgs
     };
 
-    zapret-rust = {
-      url = "github:Sergeydigl3/zapret-discord-youtube-rust";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+#     zapret-rust = {
+#       url = "github:Sergeydigl3/zapret-discord-youtube-rust";
+#       inputs.nixpkgs.follows = "nixpkgs";
+#     };
 
     import-tree.url = "github:vic/import-tree";                                                            # Утилита для рекурсивного импорта файлов
     nixpkgs-krita-25-11.url = "github:NixOS/nixpkgs/b77b3de8775677f84492abe84635f87b0e153f0f";             # Фиксированная версия Krita (новая версия пока не работает с ComfyUI)
@@ -44,7 +44,7 @@
   };
 
   # ========== Выходные данные (outputs) ==========
-  outputs = inputs@{ nixpkgs, nixpkgs-unstable, nur, stylix, blender-cuda, comfyui-nix, nixpkgs-krita-25-11, nixpkgs-minion-25-11, zapret-rust, ... }: # Функция, которая принимает все входы и возвращает результаты сборки
+  outputs = inputs@{ nixpkgs, nixpkgs-unstable, nur, stylix, blender-cuda, comfyui-nix, nixpkgs-krita-25-11, nixpkgs-minion-25-11, ... }: # Функция, которая принимает все входы и возвращает результаты сборки
     let
       pkgsUnstable = import nixpkgs-unstable {                                                             # Создаём экземпляр нестабильного nixpkgs (для свежих пакетов)
         localSystem = "x86_64-linux";                                                                      # Новый синтаксис с атрибутом localSystem вместо устаревшего `system`
@@ -83,7 +83,7 @@
           pkgs-unstable = pkgsUnstable;                                                                    # Нестабильные пакеты для использования в модулях
           import-tree = inputs.import-tree;                                                                # Утилита для рекурсивного импорта
           pkgs-minion = pkgsMinion;                                                                        # !!! TEMP !!!
-          inherit zapret-rust;
+          #inherit zapret-rust;
         };
 
         modules = [                                                                                        # Список модулей, из которых собирается система

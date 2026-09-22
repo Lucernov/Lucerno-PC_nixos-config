@@ -10,6 +10,7 @@ _:
       allowPing = false;                        # Отключить ICMP-запросы (ping)
       logRefusedConnections = false;            # Логирование отклонённых подключений отключаем
       logRefusedPackets = false;                # Логирование отклонённых пакетов отключаем
+      checkReversePath = false;
     };
 
     # ========== Таблица для fail2ban ==========
