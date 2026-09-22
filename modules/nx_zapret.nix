@@ -1,14 +1,12 @@
-_ :
+{ zapret-rust, ... }:
 
 {
-  services.zapret = {
+  imports = [ zapret-rust.nixosModules.zapret-rust ];
+
+  services.zapret-rust = {
     enable = true;
-    params = [
-      "--dpi-desync=fake,disorder2"
-      "--dpi-desync-ttl=1"
-      "--dpi-desync-autottl=2"
-    ];
-    # whitelist = [ "youtube.com" "googlevideo.com" ]; # Раскомментируйте для обхода только этих доменов
-    # httpMode = "full"; # Раскомментируйте, если http не работает
+    interface = "any";              # или конкретный, например "enp5s0"
+    strategy = "general.bat";       # стратегия (можно подобрать)
+    backend = "nftables";           # ← ключевой параметр
   };
 }
