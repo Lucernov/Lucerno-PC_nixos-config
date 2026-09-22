@@ -570,7 +570,8 @@
         "nixpkgs-minion-25-11": "nixpkgs-minion-25-11",
         "nixpkgs-unstable": "nixpkgs-unstable",
         "nur": "nur",
-        "stylix": "stylix"
+        "stylix": "stylix",
+        "zapret-rust": "zapret-rust"
       }
     },
     "rust-analyzer-src": {
@@ -831,6 +832,28 @@
         "owner": "NixOS",
         "ref": "nixos-unstable",
         "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "zapret-rust": {
+      "inputs": {
+        "flake-utils": "flake-utils",
+        "naersk": "naersk",
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1789458503,
+        "narHash": "sha256-C4rYEl66L3iWdFjt1IAnoAHoOCUNBf5vlbHQc7GujsU=",
+        "owner": "Sergeydigl3",
+        "repo": "zapret-discord-youtube-rust",
+        "rev": "76540dcc38ffde5b7ef6a1526ac5cbdd3265b963",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Sergeydigl3",
+        "repo": "zapret-discord-youtube-rust",
         "type": "github"
       }
     }
