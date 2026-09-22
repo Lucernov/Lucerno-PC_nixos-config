@@ -62,12 +62,11 @@
   # ========== Переменные окружения ==========
   environment = {
     sessionVariables = {
-      __GLX_VENDOR_LIBRARY_NAME = "nvidia";                                                                 # Принудительно указываем Vulkan-драйвер NVIDIA для OpenGL/GLX приложений
+      __GLX_VENDOR_LIBRARY_NAME = "nvidia";                                                                 # Принудительно указывает Vulkan-драйвер NVIDIA для OpenGL/GLX приложений
       __GL_VRR_ALLOWED = "1";                                                                               # Разрешает Variable Refresh Rate (VRR / G-Sync / FreeSync). Включает адаптивную синхронизацию для совместимых мониторов
       GBM_BACKEND = "nvidia-drm";                                                                           # Указывает бэкенд Graphics Buffer Manager (GBM) от NVIDIA. Необходимо для корректной работы Wayland с проприетарным драйвером
-      CHROME_FLAGS = "--ozone-platform-hint=auto";                                                          # Флаги для браузеров на базе Chromium (Chrome, Edge, Brave и др.). Принудительно включает поддержку Wayland через Ozone
-      ELECTRON_OZONE_PLATFORM_HINT = "auto";                                                                # Для приложений на Electron (VS Code, Discord, Telegram и др.) Заставляет их использовать Wayland вместо XWayland
       ELECTRON_FORCE_WAYLAND = "1";                                                                         # Принудительно запускает Electron-приложения в нативном режиме Wayland вместо XWayland
+      ELECTRON_OZONE_PLATFORM_HINT = "auto";                                                                # Для приложений на Electron (VS Code, Discord, Telegram и др.) Заставляет их использовать Wayland вместо XWayland
       QT_QPA_PLATFORM = "wayland";                                                                          # Задаёт бэкенд Qt для работы через Wayland (вместо X11)
       GDK_BACKEND = "wayland";                                                                              # Указывает GTK-приложениям использовать Wayland
       SDL_VIDEODRIVER = "wayland";                                                                          # Задаёт драйвер для SDL (используется в играх и мультимедиа) – Wayland
