@@ -260,7 +260,8 @@ in
       supportedFilesystems = [ "exfat" ];                                   # Поддержка exFAT для внешних USB-дисков
       kernelModules = [                                                     # Модули, загружаемые на раннем этапе (initrd)
         "nvidia"                                                            # Основной драйвер NVIDIA
-        "nvidia_modeset"                                                    # Управление режимами видеовыхода (необходимо для Wayland)
+        "nvidia_modeset"                                                    # Kernel Mode Setting. Задаёт разрешение, частоту обновления и формат вывода на уровне ядра, а не через пользовательские утилиты (необходимо для Wayland)
+        "nvidia_uvm"                                                        # Unified Virtual Memory: единое адресное пространство CPU↔GPU. ОБЯЗАТЕЛЕН для CUDA, OpenCL и compute-задач
         "nvidia_drm"                                                        # Интеграция NVIDIA с DRM (Direct Rendering Manager)
       ];
       availableKernelModules = [                                            # Модули, которые могут быть загружены динамически при обнаружении оборудования
