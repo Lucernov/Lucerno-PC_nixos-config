@@ -31,11 +31,6 @@
       inputs.nixpkgs.follows = "nixpkgs";                                                                  # Зависимости используют основной nixpkgs
     };
 
-#     zapret-rust = {
-#       url = "github:Sergeydigl3/zapret-discord-youtube-rust";
-#       inputs.nixpkgs.follows = "nixpkgs";
-#     };
-
     import-tree.url = "github:vic/import-tree";                                                            # Утилита для рекурсивного импорта файлов
     nixpkgs-krita-25-11.url = "github:NixOS/nixpkgs/b77b3de8775677f84492abe84635f87b0e153f0f";             # Фиксированная версия Krita (новая версия пока не работает с ComfyUI)
     nixpkgs-minion-25-11.url = "github:NixOS/nixpkgs/b77b3de8775677f84492abe84635f87b0e153f0f";            # Фиксированная версия minion, пакет в репозитории сломался из-за изменений в Яве. Пока чинят https://github.com/NixOS/nixpkgs/pull/539572 !!! TEMP !!!
@@ -83,7 +78,6 @@
           pkgs-unstable = pkgsUnstable;                                                                    # Нестабильные пакеты для использования в модулях
           import-tree = inputs.import-tree;                                                                # Утилита для рекурсивного импорта
           pkgs-minion = pkgsMinion;                                                                        # !!! TEMP !!!
-         # inherit zapret-rust;
         };
 
         modules = [                                                                                        # Список модулей, из которых собирается система
