@@ -5,7 +5,7 @@ let
   configDir = myLib.configDirName;
   commonRealtime = {
     CPUSchedulingPolicy = "fifo";                                                                       # SCHED_FIFO — планировщик RT
-    CPUSchedulingPriority = 85;                                                                         # RT-приоритет (1..99)
+    CPUSchedulingPriority = 85;                                                                         # RT-приоритет, выровнена иерархия RT-приоритетов (85 control / 88 data / 89 limit)
     Nice = -11;                                                                                         # nice для не-RT частей
     LimitRTPRIO = 89;                                                                                   # жёсткий лимит RT (совпадает с pam.loginLimits)
     NoNewPrivileges = false;                                                                            # разрешаем менять приоритеты
@@ -28,24 +28,21 @@ in
       alsa.support32Bit = true;                                                                         # Поддержка 32-битных ALSA-клиентов (для игр и старого софта)
       jack.enable = true;                                                                               # Эмуляция PulseAudio (чтобы приложения, ожидающие PulseAudio, работали)
       wireplumber.enable = true;                                                                        # WirePlumber — менеджер сессий для PipeWire (более современный, чем старый media-session)
-      extraConfig = {                                                                                   # Дополнительная конфигурация для низкой задержки (low-latency)
-        pipewire."99-low-latency" = {                                                                   # Создаём профиль с именем "99-low-latency"
-          "context.properties" = {                                                                      # Основные свойства контекста PipeWire
+      extraConfig = {
+        pipewire."99-low-latency" = {
+          # ========== Основные параметры контекста PipeWire ==========
+          "context.properties" = {
             "default.clock.rate" = 48000;                                                               # Частота дискретизации по умолчанию (48 кГц)
-            "default.clock.quantum" = 512;                                                              # Размер кванта (буфера) по умолчанию – 512 семплов (~10,6 мс при 48 кГц)
-            "default.clock.min-quantum" = 64;                                                           # Минимальный размер кванта – 64 семпла (~1,3 мс при 48 кГц) – для снижения задержки
-            "default.clock.max-quantum" = 2048;                                                         # Максимальный размер кванта – 2048 семплов (~42,7 мс) – для стабильности
-            "default.clock.allowed-rates" = [ 44100 48000 ];                                            # Разрешённые частоты дискретизации (44.1 и 48 кГц)
+            "default.clock.quantum" = 512;                                                              # Буфер по умолчанию для приложений, которые не задают его сами (браузер, игры, плееры) — ~10,6 мс при 48 кГц
+            "default.clock.min-quantum" = 64;                                                           # Минимальный буфер, который может запросить приложение (REAPER через JACK просит 64) — ~1,3 мс при 48 кГц
+            "default.clock.max-quantum" = 2048;                                                         # Максимальный буфер для тяжёлых приложений — ~42,7 мс, страхует от xrun
+            "default.clock.allowed-rates" = [ 44100 48000 ];                                            # Разрешённые частоты дискретизации
           };
-          "context.modules" = [                                                                         # Загружаемые модули с параметрами реального времени
-            {
-              name = "libpipewire-module-rt";                                                           # Модуль для поддержки реального времени (realtime)
-              args = {
-                "nice.level" = -11;                                                                     # Приоритет (nice) – отрицательное значение даёт более высокий приоритет
-                "rt.prio" = 85;                                                                         # Приоритет реального времени (rtprio) – 85 (требует прав через rtkit)
-              };
-            }
-          ];
+          # ========== Аргументы модуля реального времени ==========
+          "module.rt.args" = {                                                                          # Переопределяем параметры уже загруженного libpipewire-module-rt
+            "nice.level" = -11;                                                                         # Приоритет nice для не-RT частей (диапазон: -20..19, отрицательное = выше)
+            "rt.prio" = 88;                                                                             # RT-приоритет аудио-потока (диапазон: 1..99, ограничен pam.loginLimits rtprio=89)
+          };
         };
       };
     };
