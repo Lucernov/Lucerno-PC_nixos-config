@@ -153,6 +153,17 @@ in
     "L+ \"${myLib.home}/.vst3/AirGVelvetMini.vst3\" - ${myLib.userName} ${myLib.userName} - /run/current-system/sw/lib/vst3/AirGVelvetMini.vst3"
     "L+ \"${myLib.home}/.vst3/AirGVolt.vst3\" - ${myLib.userName} ${myLib.userName} - /run/current-system/sw/lib/vst3/AirGVolt.vst3"
     "L+ \"${myLib.home}/.vst3/AirGVoltMini.vst3\" - ${myLib.userName} ${myLib.userName} - /run/current-system/sw/lib/vst3/AirGVoltMini.vst3"
+    # Air-G Plugins — педальные версии (новые)
+    "L+ \"${myLib.home}/.vst3/AirGAutopanPedal.vst3\" - ${myLib.userName} ${myLib.userName} - /run/current-system/sw/lib/vst3/AirGAutopanPedal.vst3"
+    "L+ \"${myLib.home}/.vst3/AirGChorusPedal.vst3\" - ${myLib.userName} ${myLib.userName} - /run/current-system/sw/lib/vst3/AirGChorusPedal.vst3"
+    "L+ \"${myLib.home}/.vst3/AirGCompPedal.vst3\" - ${myLib.userName} ${myLib.userName} - /run/current-system/sw/lib/vst3/AirGCompPedal.vst3"
+    "L+ \"${myLib.home}/.vst3/AirGDelayPedal.vst3\" - ${myLib.userName} ${myLib.userName} - /run/current-system/sw/lib/vst3/AirGDelayPedal.vst3"
+    "L+ \"${myLib.home}/.vst3/AirGDistPedal.vst3\" - ${myLib.userName} ${myLib.userName} - /run/current-system/sw/lib/vst3/AirGDistPedal.vst3"
+    "L+ \"${myLib.home}/.vst3/AirGDualDrivePedal.vst3\" - ${myLib.userName} ${myLib.userName} - /run/current-system/sw/lib/vst3/AirGDualDrivePedal.vst3"
+    "L+ \"${myLib.home}/.vst3/AirGEqPedal.vst3\" - ${myLib.userName} ${myLib.userName} - /run/current-system/sw/lib/vst3/AirGEqPedal.vst3"
+    "L+ \"${myLib.home}/.vst3/AirGTremPedal.vst3\" - ${myLib.userName} ${myLib.userName} - /run/current-system/sw/lib/vst3/AirGTremPedal.vst3"
+    "L+ \"${myLib.home}/.vst3/AirGVerbPedal.vst3\" - ${myLib.userName} ${myLib.userName} - /run/current-system/sw/lib/vst3/AirGVerbPedal.vst3"
+    "L+ \"${myLib.home}/.vst3/AirGVibraPedal.vst3\" - ${myLib.userName} ${myLib.userName} - /run/current-system/sw/lib/vst3/AirGVibraPedal.vst3"
 
     # Создаём структуру каталогов для данных Amp Locker и Drum Locker
     "d \"${myLib.home}/Audio Assault\" 0755 ${myLib.userName} ${myLib.userName} -"
