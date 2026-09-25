@@ -15,6 +15,7 @@
 , libXext
 , libxcb
 , libGL
+, curl
 , versions
 }:
 
@@ -34,6 +35,7 @@ let
         libXext
         libxcb
         libGL
+        curl
         stdenv.cc.cc.lib
       ];
 
