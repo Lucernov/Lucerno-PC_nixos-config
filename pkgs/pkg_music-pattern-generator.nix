@@ -24,6 +24,7 @@
 , libXrender
 , libXtst
 , libXScrnSaver
+, libxshmfence
 , gtk3
 , glib
 , nss
@@ -35,6 +36,11 @@
 , freetype
 , libdrm
 , mesa
+, libGL
+, libgbm
+, libcap
+, libnotify
+, gdk-pixbuf
 , pango
 , cairo
 , atk
@@ -42,6 +48,11 @@
 , at-spi2-core
 , libxkbcommon
 , libpulseaudio
+, systemd
+, ffmpeg
+, libuuid
+, sqlite
+, udev
 , versions
 }:
 
@@ -73,6 +84,7 @@ stdenv.mkDerivation {
     libXrender
     libXtst
     libXScrnSaver
+    libxshmfence
     gtk3
     glib
     nss
@@ -84,6 +96,11 @@ stdenv.mkDerivation {
     freetype
     libdrm
     mesa
+    libGL
+    libgbm
+    libcap
+    libnotify
+    gdk-pixbuf
     pango
     cairo
     atk
@@ -91,6 +108,11 @@ stdenv.mkDerivation {
     at-spi2-core
     libxkbcommon
     libpulseaudio
+    systemd
+    ffmpeg
+    libuuid
+    sqlite
+    udev
     stdenv.cc.cc.lib
   ];
 
@@ -106,6 +128,9 @@ stdenv.mkDerivation {
 
     mkdir -p $out/opt/music-pattern-generator
     cp -r opt/music-pattern-generator/. $out/opt/music-pattern-generator/
+
+    # Симлинк для libudev.so.0 (NW.js/Chromium ищет именно эту старую версию)
+    ln -sf ${lib.getLib systemd}/lib/libudev.so $out/opt/music-pattern-generator/libudev.so.0
 
     # .desktop-файл
     mkdir -p $out/share/applications
@@ -135,11 +160,13 @@ stdenv.mkDerivation {
       --chdir "$out/opt/music-pattern-generator" \
       --set GDK_BACKEND x11 \
       --set QT_QPA_PLATFORM xcb \
-      --prefix LD_LIBRARY_PATH : "$out/opt/music-pattern-generator/lib:${lib.makeLibraryPath [
+      --prefix LD_LIBRARY_PATH : "$out/opt/music-pattern-generator:$out/opt/music-pattern-generator/lib:${lib.makeLibraryPath [
         alsa-lib libX11 libXext libxcb libXcomposite libXdamage libXfixes
         libXrandr libXcursor libXi libXrender libXtst libXScrnSaver
-        gtk3 glib nss nspr cups dbus expat fontconfig freetype libdrm mesa
-        pango cairo atk at-spi2-atk at-spi2-core libxkbcommon libpulseaudio
+        libxshmfence gtk3 glib nss nspr cups dbus expat fontconfig freetype
+        libdrm mesa libGL libgbm libcap libnotify gdk-pixbuf pango cairo atk
+        at-spi2-atk at-spi2-core libxkbcommon libpulseaudio systemd ffmpeg
+        libuuid sqlite udev
         stdenv.cc.cc.lib
       ]}"
 
