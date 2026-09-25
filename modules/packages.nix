@@ -222,7 +222,7 @@
     my-packages.shortcircuit-xt                                   # Мощный открытый семплер (CLAP) от Surge Synth Team
     decent-sampler                                                # Сэмплер для библиотек DecentSampler (формат .dspreset, .dslibrary)
     my-packages.sforzando                                         # Семплер форматов SFZ v1 \ v2 и  ARIA
-    floe.packages.${pkgs.stdenv.hostPlatform.system}.floe         # Floe – сэмплер-синтезатор (CLAP/VST3) с 3 слоями, гранулярным синтезом и Lua-скриптингом
+  # floe.packages.${pkgs.stdenv.hostPlatform.system}.floe         # Floe – сэмплер-синтезатор (CLAP/VST3) с 3 слоями, гранулярным синтезом и Lua-скриптингом
     my-packages.orchestools                                       # Набор оркестровых VST3-инструментов (Brass, Perc, Strings, Winds)
     my-packages.ot-piano-s                                        # Пианино OT P1ANO S (VST2)
     ripplerx                                                      # Физически моделируемый синтезатор (модальный синтез) с двойными резонаторами, аналог AAS Chromaphone и Ableton Collision
