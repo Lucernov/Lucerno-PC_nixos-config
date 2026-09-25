@@ -133,6 +133,8 @@ stdenv.mkDerivation {
     mkdir -p $out/bin
     makeWrapper $out/opt/music-pattern-generator/nw $out/bin/mpg \
       --chdir "$out/opt/music-pattern-generator" \
+      --add-flags "--ozone-platform-hint=auto" \
+      --add-flags "--enable-features=WaylandWindowDecorations" \
       --prefix LD_LIBRARY_PATH : "$out/opt/music-pattern-generator/lib:${lib.makeLibraryPath [
         alsa-lib libX11 libXext libxcb libXcomposite libXdamage libXfixes
         libXrandr libXcursor libXi libXrender libXtst libXScrnSaver
