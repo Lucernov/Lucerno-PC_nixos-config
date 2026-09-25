@@ -81,7 +81,7 @@ in
 {
   # Системный systemd-сервис для запуска ComfyUI. Запускается автоматически при загрузке (если включён wantedBy) или вручную systemctl start comfyui
   systemd.user.services.comfyui = {
-    description = "ComfyUI server (user)";                                            # Описание сервиса (отображается в systemctl status)
+    description = "ComfyUI server (user)";                                              # Описание сервиса (отображается в systemctl status)
     after = [ "network.target" ];                                                       # Запускать после того, как сеть поднята
     wantedBy = [];                                                                      # Не запускать при загрузке системы
   # wantedBy = [ "multi-user.target" ];                                                 # Автоматически запускать при загрузке системы

@@ -31,15 +31,20 @@
       inputs.nixpkgs.follows = "nixpkgs";                                                                  # Зависимости используют основной nixpkgs
     };
 
+    floe = {                                                                                               # сэмплер-синтезатор (CLAP/VST3) с 3 слоями, гранулярным синтезом и Lua-скриптингом
+      url = "github:floe-audio/Floe";
+      inputs.nixpkgs.follows = "nixpkgs";                                                                  # Зависимости используют основной nixpkgs
+    };
+
     import-tree.url = "github:vic/import-tree";                                                            # Утилита для рекурсивного импорта файлов
     nixpkgs-krita-25-11.url = "github:NixOS/nixpkgs/b77b3de8775677f84492abe84635f87b0e153f0f";             # Фиксированная версия Krita (новая версия пока не работает с ComfyUI)
-    nixpkgs-minion-25-11.url = "github:NixOS/nixpkgs/b77b3de8775677f84492abe84635f87b0e153f0f";            # Фиксированная версия minion, пакет в репозитории сломался из-за изменений в Яве. Пока чинят https://github.com/NixOS/nixpkgs/pull/539572 !!! TEMP !!!
+    nixpkgs-minion-25-11.url = "github:NixOS/nixpkgs/b77b3de8775677f84492abe84635f87b0e153f0f";            # Фиксированная версия minion, пакет в репозитории поломан из-за изменений в Яве. Пока чинят https://github.com/NixOS/nixpkgs/pull/539572 !!! TEMP !!!
 
  #   fufexan/nix-gaming nickm8/nix-gaming TophC7/play.nix
   };
 
   # ========== Выходные данные (outputs) ==========
-  outputs = inputs@{ nixpkgs, nixpkgs-unstable, nur, stylix, blender-cuda, comfyui-nix, nixpkgs-krita-25-11, nixpkgs-minion-25-11, ... }: # Функция, которая принимает все входы и возвращает результаты сборки
+  outputs = inputs@{ nixpkgs, nixpkgs-unstable, nur, stylix, blender-cuda, comfyui-nix, floe, nixpkgs-krita-25-11, nixpkgs-minion-25-11, ... }: # Функция, которая принимает все входы и возвращает результаты сборки
     let
       pkgsUnstable = import nixpkgs-unstable {                                                             # Создаём экземпляр нестабильного nixpkgs (для свежих пакетов)
         localSystem = "x86_64-linux";                                                                      # Новый синтаксис с атрибутом localSystem вместо устаревшего `system`
@@ -75,6 +80,7 @@
           inherit inputs;                                                                                  # Все входы (flake-зависимости)
           inherit blender-cuda;                                                                            # Flake с Blender+CUDA для передачи в пакеты
           inherit nixpkgs-krita-25-11;                                                                     # Фиксированный nixpkgs для Krita
+          inherit floe;                                                                                    # сэмплер-синтезатор (CLAP/VST3) с 3 слоями, гранулярным синтезом и Lua-скриптингом
           pkgs-unstable = pkgsUnstable;                                                                    # Нестабильные пакеты для использования в модулях
           import-tree = inputs.import-tree;                                                                # Утилита для рекурсивного импорта
           pkgs-minion = pkgsMinion;                                                                        # !!! TEMP !!!
