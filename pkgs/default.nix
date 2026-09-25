@@ -27,6 +27,7 @@ final: prev: {
     lostTapes    = (pkgs.callPackage ./pkg_SuperflyDSP.nix { inherit versions; }).lostTapes;
     lostVinyls   = (pkgs.callPackage ./pkg_SuperflyDSP.nix { inherit versions; }).lostVinyls;
     mtpdk = pkgs.callPackage ./pkg_MT-PowerDrumKit_2.nix { inherit versions; };
+    music-pattern-generator = pkgs.callPackage ./pkg_music-pattern-generator.nix { inherit versions; };
     orchestools = pkgs.callPackage ./pkg_orchestools.nix { inherit versions; };
     ostirus = pkgs.callPackage ./pkg_OsTIrus.nix { inherit versions; };
     ot-piano-s = pkgs.callPackage ./pkg_ot-piano-s.nix { inherit versions; };

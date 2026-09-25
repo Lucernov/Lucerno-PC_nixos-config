@@ -237,8 +237,9 @@
     my-packages.amp-locker                                        # Плагин, эмулирующий стек гитарного тракта Amp-Locker
     fretboard                                                     # Гитаровый гриф (примеры построения аккордов)
     lingot                                                        # Гитарный тюнер
-      # --- Секвенсоры ---
+      # --- Секвенсоры и генераторы ---
     stochas                                                       # Мощный вероятностный секвенсор (VST3/CLAP)
+    my-packages.music-pattern-generator                           # Music Pattern Generator – визуальный MIDI-секвенсор (NW.js)
       # --- Эффекты (обработка звука) ---
     lsp-plugins                                                   # Набор VST/LV2-плагинов для обработки звука (LSP)
     my-packages.air-g-plugins                                     # Коллекция VST3-плагинов на основе Airwindows для микширования и мастеринга + педали еще туда засунул
