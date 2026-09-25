@@ -227,16 +227,18 @@
     my-packages.ot-piano-s                                        # Пианино OT P1ANO S (VST2)
     ripplerx                                                      # Физически моделируемый синтезатор (модальный синтез) с двойными резонаторами, аналог AAS Chromaphone и Ableton Collision
       # --- Синтезаторы и Сэмплеры ударных ---
-    my-packages.mtpdk                                             # лёгкий плагин ударной установки MT-PowerDrumKit 2
+    my-packages.mtpdk                                             # Лёгкий плагин ударной установки MT-PowerDrumKit 2
     my-packages.drumlabooh                                        # LV2-сэмплер ударных с несколькими наборами (drumlabooh)
-    my-packages.drum-locker                                       # плагин ударной установки Drum Locker
+    my-packages.drum-locker                                       # Плагин ударной установки Drum Locker
     drumgizmo                                                     # Многоканальный сэмплер барабанов (реалистичные ударные)
     drumkv1                                                       # Old-school сэмплер ударных (LV2) в стиле старых драм-машин со стерео-эффектами
     geonkick                                                      # Синтезатор барабанов для создания ударных партий
       # --- Гитарные процессоры и усилители ---
-    my-packages.amp-locker                                        # плагин эмулирующий стек гитарного тракта Amp-Locker
+    my-packages.amp-locker                                        # Плагин, эмулирующий стек гитарного тракта Amp-Locker
     fretboard                                                     # Гитаровый гриф (примеры построения аккордов)
-    lingot                                                        # гитарный тюнер
+    lingot                                                        # Гитарный тюнер
+      # --- Секвенсоры ---
+    stochas                                                       # Мощный вероятностный секвенсор (VST3/CLAP)
       # --- Эффекты (обработка звука) ---
     lsp-plugins                                                   # Набор VST/LV2-плагинов для обработки звука (LSP)
     my-packages.air-g-plugins                                     # Коллекция VST3-плагинов на основе Airwindows для микширования и мастеринга + педали еще туда засунул
