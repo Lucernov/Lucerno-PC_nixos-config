@@ -1,5 +1,5 @@
 # modules/packages.nix
-{ pkgs, pkgs-unstable, myLib, blender-cuda, ... }:
+{ pkgs, pkgs-unstable, myLib, blender-cuda, floe, ... }:
 
 {
   # ========== Включение системных модулей для программ ==========
@@ -13,7 +13,7 @@
     zsh.enable = true;                                            # Регистрирует Zsh как системную оболочку
     vim.enable = true;                                            # Устанавливает Vim (текстовый редактор)
     nano.enable = true;                                           # Устанавливает Nano (простой текстовый редактор)
-    htop.enable = true;                                           # Устанавливает htop (интерактивный монитор процессов)
+    htop.enable = true;                                           # Устанавливает htop (монитор процессов)
     amnezia-vpn.enable = true;                                    # Включает сервис AmneziaVPN (VPN-клиент)
     virt-manager.enable = true;                                   # Включает Virtual Machine Manager (графический интерфейс для управления QEMU/KVM через libvirt)
     appimage = {
@@ -21,14 +21,14 @@
       binfmt = true;                                              # Автоматически настраивает загрузчик
     };
     nh = {
-      enable = true;                                              # Включает утилиту nh (Nix Helper)
+      enable = true;                                              # Включает Nix Helper
       flake = "${myLib.home}/${myLib.configDirName}";             # Указывает путь к flake
     };
     steam = {
-      enable = true;                                              # Включает поддержку Steam (устанавливает пакет, добавляет 32-битную среду)
+      enable = true;                                              # Включает поддержку Steam
       remotePlay.openFirewall = true;                             # Открывает порты в фаерволе для Steam Remote Play (трансляция игры на другие устройства)
-      dedicatedServer.openFirewall = true;                        # Открывает порты для выделенных серверов игр (например, для Counter-Strike, Garry's Mod)
-      extraCompatPackages = [ pkgs-unstable.proton-ge-bin ];      # Дополнительные совместимые пакеты (Proton-GE) для запуска Windows-игр
+      dedicatedServer.openFirewall = true;                        # Открывает порты для выделенных серверов игр (DST)
+      extraCompatPackages = [ pkgs-unstable.proton-ge-bin ];      # Устанавливает Proton-GE
     };
     obs-studio = {
       enable = true;                                              # Включает поддержку OBS
@@ -128,7 +128,7 @@
     termshark                                                     # Анализатор сетевого трафика в терминале (альтернатива Wireshark)
     duf                                                           # Просмотр использования дискового пространства (удобная альтернатива df)
     dust                                                          # Анализ размера папок/файлов с визуализацией (аналог du, но нагляднее)
-    cliamp                                                        # Консольный музыкальный плеер в стиле Winamp с поддержкой YouTube, Spotify, подкастов и визуализацией спектра
+    cliamp                                                        # Консольный музыкальный плеер с поддержкой YouTube, Spotify, подкастов и радио
     cava                                                          # Консольный аудиовизуализатор (спектроанализатор для музыки)
     neo                                                           # Матричный дождь из символов (эффект из фильма)
 
@@ -196,7 +196,7 @@
       beetle-psx-hw                                               # Ядро PlayStation 1
       pcsx2                                                       # Ядро PlayStation 2
     ]))
-    rpcs3                                                         # мулятор PlayStation 3
+    rpcs3                                                         # Эмулятор PlayStation 3
   # lutris                                                        # Игровой лаунчер для управления играми
   # heroic                                                        # Лаунчер для Epic Games Store и GOG
 
@@ -208,7 +208,7 @@
 
     # МУЗЫКА
       # --- DAW и среда ---
-    my-packages.reaper                                            # REAPER – цифровая звуковая рабочая станция (DAW) БЕРЕТСЯ ИЗ НЕСТАБИЛЬНОГО КАНАЛА!!!
+    my-packages.reaper                                            # REAPER – цифровая звуковая рабочая станция (DAW) БЕРЕТСЯ ИЗ НЕСТАБИЛЬНОГО КАНАЛА через оверлей!!!
     wineWow64Packages.staging                                     # Wine с поддержкой 64 и 32 бит (staging‑патчи для аудио)
     yabridge                                                      # Мост для запуска Windows VST-плагинов в Linux (через Wine)
     yabridgectl                                                   # Утилита для управления yabridge (сканирование, синхронизация)
@@ -222,13 +222,16 @@
     my-packages.shortcircuit-xt                                   # Мощный открытый семплер (CLAP) от Surge Synth Team
     decent-sampler                                                # Сэмплер для библиотек DecentSampler (формат .dspreset, .dslibrary)
     my-packages.sforzando                                         # Семплер форматов SFZ v1 \ v2 и  ARIA
+    floe.packages.${pkgs.stdenv.hostPlatform.system}.floe         # Floe – сэмплер-синтезатор (CLAP/VST3) с 3 слоями, гранулярным синтезом и Lua-скриптингом
     my-packages.orchestools                                       # Набор оркестровых VST3-инструментов (Brass, Perc, Strings, Winds)
     my-packages.ot-piano-s                                        # Пианино OT P1ANO S (VST2)
+    ripplerx                                                      # Физически моделируемый синтезатор (модальный синтез) с двойными резонаторами, аналог AAS Chromaphone и Ableton Collision
       # --- Синтезаторы и Сэмплеры ударных ---
     my-packages.mtpdk                                             # лёгкий плагин ударной установки MT-PowerDrumKit 2
     my-packages.drumlabooh                                        # LV2-сэмплер ударных с несколькими наборами (drumlabooh)
     my-packages.drum-locker                                       # плагин ударной установки Drum Locker
     drumgizmo                                                     # Многоканальный сэмплер барабанов (реалистичные ударные)
+    drumkv1                                                       # Old-school сэмплер ударных (LV2) в стиле старых драм-машин со стерео-эффектами
     geonkick                                                      # Синтезатор барабанов для создания ударных партий
       # --- Гитарные процессоры и усилители ---
     my-packages.amp-locker                                        # плагин эмулирующий стек гитарного тракта Amp-Locker
@@ -236,8 +239,9 @@
     lingot                                                        # гитарный тюнер
       # --- Эффекты (обработка звука) ---
     lsp-plugins                                                   # Набор VST/LV2-плагинов для обработки звука (LSP)
-    my-packages.air-g-plugins                                     # Коллекция VST3-плагинов на основе Airwindows для микширования и мастеринга
+    my-packages.air-g-plugins                                     # Коллекция VST3-плагинов на основе Airwindows для микширования и мастеринга + педали еще туда засунул
     dragonfly-reverb                                              # Реверберация Dragonfly (VST/LV2)
+    fire                                                          # Fire – многополосный плагин дисторшна с открытым исходным кодом от Wings Music (VST3)
 
     ] ++ (with pkgs-unstable; [                                   # Пакеты из нестабильного канала (более свежие версии)
     # МУЗЫКА
@@ -246,9 +250,14 @@
     reaper-reapack-extension                                      # Менеджер скриптов ReaPack для REAPER (установка пользовательских скриптов)
       # --- Гитарные процессоры и усилители ---
     ratatouille-lv2                                               # плагин для загрузки и микширования нейросетевых моделей гитарных усилителей (аналог Neural Amp Model)
+      # --- Эффекты (обработка звука) ---
+    zlequalizer                                                   # ZL Equalizer – 16-полосный динамический эквалайзер с поддержкой Mid/Side и режима Dynamic
+    zlspectrumequalizer                                           # ZL Spectrum Analyzer – анализатор спектра в реальном времени с настраиваемым разрешением и режимом сравнения
+    zlcompressor                                                  # ZL Compressor – компрессор с несколькими режимами (VCA/FET/OPT), sidechain и Mid/Side обработкой
+    zlsplitter                                                    # ZL Splitter – частотный сплиттер для многополосной обработки (2–4 полосы с настраиваемыми кроссоверами)
 
     # KDE приложения
-    kdePackages.kdenlive                                          # Видеоредактор
+    kdePackages.kdenlive                                          # Видеоредактор (пока тут, т.к. в нестабильном уже можно перемещать дорожки)
   ]);
 
 }

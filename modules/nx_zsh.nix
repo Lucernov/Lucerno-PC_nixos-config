@@ -104,11 +104,8 @@ in
 
 {
   systemd.tmpfiles.rules = [
-    # Создаём симлинк на наш .zshrc
-    "L+ ${myLib.home}/.zshrc - ${myLib.userName} ${myLib.userName} - ${zshrcContent}"
-    # Создаём симлинк на .zshenv (отключает системные файлы)
-    "L+ ${myLib.home}/.zshenv - ${myLib.userName} ${myLib.userName} - ${zshenvContent}"
-    # Симлинк для пользовательского .p10k.zsh (если есть)
-    "L+ ${myLib.home}/.p10k.zsh - ${myLib.userName} ${myLib.userName} - ${myLib.home}/${configDir}/dotfiles/config/zsh/.p10k.zsh"
+    "L+ ${myLib.home}/.zshrc - ${myLib.userName} ${myLib.userName} - ${zshrcContent}"                                             # Симлинк на .zshrc
+    "L+ ${myLib.home}/.zshenv - ${myLib.userName} ${myLib.userName} - ${zshenvContent}"                                           # Симлинк на .zshenv (отключает системные файлы)
+    "L+ ${myLib.home}/.p10k.zsh - ${myLib.userName} ${myLib.userName} - ${myLib.home}/${configDir}/dotfiles/config/zsh/.p10k.zsh" # Симлинк для пользовательского .p10k.zsh
   ];
 }
