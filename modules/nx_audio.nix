@@ -175,6 +175,10 @@ in
     "L+ \"${myLib.home}/.vst3/AirGTremPedal.vst3\" - ${myLib.userName} ${myLib.userName} - /run/current-system/sw/lib/vst3/AirGTremPedal.vst3"
     "L+ \"${myLib.home}/.vst3/AirGVerbPedal.vst3\" - ${myLib.userName} ${myLib.userName} - /run/current-system/sw/lib/vst3/AirGVerbPedal.vst3"
     "L+ \"${myLib.home}/.vst3/AirGVibraPedal.vst3\" - ${myLib.userName} ${myLib.userName} - /run/current-system/sw/lib/vst3/AirGVibraPedal.vst3"
+    # SuperflyDSP
+    "L+ \"${myLib.home}/.vst3/Lost-Samplers.vst3\" - ${myLib.userName} ${myLib.userName} - /run/current-system/sw/lib/vst3/Lost-Samplers.vst3"
+    "L+ \"${myLib.home}/.vst3/Lost-Tapes.vst3\" - ${myLib.userName} ${myLib.userName} - /run/current-system/sw/lib/vst3/Lost-Tapes.vst3"
+    "L+ \"${myLib.home}/.vst3/Lost-Vinyls.vst3\" - ${myLib.userName} ${myLib.userName} - /run/current-system/sw/lib/vst3/Lost-Vinyls.vst3"
 
     # Создаём структуру каталогов для данных Amp Locker и Drum Locker
     "d \"${myLib.home}/Audio Assault\" 0755 ${myLib.userName} ${myLib.userName} -"

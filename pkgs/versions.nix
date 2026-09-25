@@ -29,6 +29,24 @@
     hash    = "sha256-KoBRwHO2YJLl/bpAtzB/TPKYn2abiZ+hDaCjVqI+LFU=";
   };
 
+  lostSamplers = {                                                      # SuperflyDSP Lost Samplers – эмуляция шумов сэмплеров
+    version = "1.1.5";
+    url     = "https://superflydsp.com/wp-content/uploads/2023/04/LostSamplers_1.1.5_Linux.zip";
+    hash    = "sha256-dvHrEaDT9pLZMPPFv98/J2eAHSRWJS4F4d7a+gnVzoo=";
+  };
+
+  lostTapes = {                                                         # SuperflyDSP Lost Tapes – эмуляция магнитофона
+    version = "1.0";
+    url     = "https://superflydsp.com/wp-content/uploads/2022/05/LostTapes_Linux.zip";
+    hash    = "sha256-c/LJcmJzS0cxB9uZTskfnkh/AM69qHmQh2wHum7yqbU=";
+  };
+
+  lostVinyls = {                                                        # SuperflyDSP Lost Vinyls – эмуляция винилового проигрывателя
+    version = "1.3.0";
+    url     = "https://superflydsp.com/wp-content/uploads/2023/04/Lost-vinyls_v1.3.0_Linux.zip";
+    hash    = "sha256-QT3WIh2wBiD6xnKINWvsV/jn7rA1GN/jj/B1OqFBwzs=";
+  };
+
   mtpdk        = {
     urlVersion = "2.1.5";
     version    = "2.1.5.1";
@@ -58,4 +76,5 @@
     releaseTag    = "Nightly";
     hash          = "sha256-wOCqKyDl/AjpZGsTUOWjFlkXMVZoiEavJpFHv/N6ksw=";
   };
+
 }
