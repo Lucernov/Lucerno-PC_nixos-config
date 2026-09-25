@@ -53,6 +53,11 @@
     hash       = "sha256-lb8RuIdLgDC2y9KSF6hlWXWKlt4jI8tndWk/WVanpGo=";
   };
 
+  music-pattern-generator = {                                          # обновляется редко
+    version = "2.2.0";                                                 # https://github.com/hisschemoller/music-pattern-generator/releases
+    hash    = "sha256-L83MCo1TqSbt+4MwRXWCVgegpuYEYNLrjrJnzPMwLwE=";
+  };
+
   orchestools = {                                                       # не обновляется (локальный репозиторий)
     version   = "1.0";
   };
