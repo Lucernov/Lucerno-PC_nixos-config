@@ -34,7 +34,7 @@ in
           "context.properties" = {
             "default.clock.rate" = 48000;                                                               # Частота дискретизации по умолчанию (48 кГц)
             "default.clock.quantum" = 512;                                                              # Буфер по умолчанию для приложений, которые не задают его сами (браузер, игры, плееры) — ~10,6 мс при 48 кГц
-            "default.clock.min-quantum" = 64;                                                           # Минимальный буфер, который может запросить приложение (REAPER через JACK просит 64) — ~1,3 мс при 48 кГц
+            "default.clock.min-quantum" = 64;                                                           # Минимальный буфер, который может запросить приложение (REAPER через JACK выставлен в 64) — ~1,3 мс при 48 кГц
             "default.clock.max-quantum" = 2048;                                                         # Максимальный буфер для тяжёлых приложений — ~42,7 мс, страхует от xrun
             "default.clock.allowed-rates" = [ 44100 48000 ];                                            # Разрешённые частоты дискретизации
           };
@@ -172,7 +172,7 @@ in
     "L+ \"${myLib.home}/Audio Assault/PluginData/Audio Assault/AmpLockerData\" - ${myLib.userName} ${myLib.userName} - /run/current-system/sw/share/amp-locker"
     "L+ \"${myLib.home}/Audio Assault/PluginData/Audio Assault/DrumLockerData\" - ${myLib.userName} ${myLib.userName} - /run/current-system/sw/share/drum-locker"
 
-    # ---------- Симлинки конфигов плагинов ----------
+    # ---------- Симлинки конфигов остальных плагинов ----------
     "d ${myLib.home}/.config/REAPER/UserPlugins 0755 ${myLib.userName} ${myLib.userName} -"
     "L+ ${home}/.config/REAPER - ${myLib.userName} ${myLib.userName} - ${home}/${configDir}/dotfiles/config/REAPER"
     "L+ ${home}/.config/yabridgectl - ${myLib.userName} ${myLib.userName} - ${home}/${configDir}/dotfiles/config/yabridgectl"
