@@ -253,6 +253,7 @@
     my-packages.lostTapes                                         # SuperflyDSP Lost Tapes – эмуляция магнитофона (VST3)
     my-packages.lostVinyls                                        # SuperflyDSP Lost Vinyls – эмуляция винилового проигрывателя (VST3)
     my-packages.pitchnet                                          # Нейросетевой корректор высоты тона (только VST3, standalone не собираю)
+    my-packages.tal-vocoder-2                                     # TAL-Vocoder-2 — винтажный вокодер (VST3 + CLAP)
 
     ] ++ (with pkgs-unstable; [                                   # Пакеты из нестабильного канала (более свежие версии)
     # МУЗЫКА
