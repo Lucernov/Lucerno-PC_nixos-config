@@ -248,6 +248,7 @@
     lsp-plugins                                                   # Набор VST/LV2-плагинов для обработки звука (LSP)
     my-packages.air-g-plugins                                     # Коллекция VST3-плагинов на основе Airwindows для микширования и мастеринга + педали еще туда засунул
     dragonfly-reverb                                              # Реверберация Dragonfly (VST/LV2)
+    my-packages.tape-echo-2                                       # Эмуляция Roland Space Echo (VST3 + CLAP + LV2)
     fire                                                          # Fire – многополосный плагин дисторшна с открытым исходным кодом от Wings Music (VST3)
     my-packages.lostSamplers                                      # SuperflyDSP Lost Samplers – эмуляция шумов сэмплеров (VST3)
     my-packages.lostTapes                                         # SuperflyDSP Lost Tapes – эмуляция магнитофона (VST3)
