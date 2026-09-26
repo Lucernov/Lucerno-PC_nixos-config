@@ -25,10 +25,6 @@ in
 
   services = {
     pulseaudio.enable = false;                                                                          # Отключаем старый звуковой сервер PulseAudio (полностью заменяем на PipeWire)
-    rtirq = {
-      enable = true;                                                                                    # Включаем rtirq — при старте повышает RT-приоритет IRQ-потоков для указанных звуковых драйверов
-      highList = "snd_hrtimer snd_usb_audio";                                                           # Драйверы, чьи IRQ получат высокий приоритет: snd_hrtimer (высокоточный таймер ALSA) и snd_usb_audio (MOTU M4)
-    };
     pipewire = {                                                                                        # Основные настройки PipeWire
       enable = true;                                                                                    # Включаем PipeWire как основной звуковой сервер
       alsa.enable = true;                                                                               # Поддержка ALSA (эмуляция для старых приложений)
