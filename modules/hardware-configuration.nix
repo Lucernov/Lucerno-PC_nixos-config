@@ -202,6 +202,8 @@ in
       "nvidia_uvm"                                                          # Unified Virtual Memory для NVIDIA (CUDA, OpenCL, AI)
       "intel_rapl_msr"                                                      # Модуль для чтения энергопотребления процессора (RAPL). Нужен для btop, powertop и других утилит.
       "kvm-intel"                                                           # Модуль аппаратной виртуализации KVM для процессоров Intel
+      "snd-seq"                                                             # ALSA Sequencer — ядро MIDI-подсистемы Linux (нужен для MIDI в REAPER)
+      "snd-rawmidi"                                                         # Raw MIDI — низкоуровневый драйвер для доступа к MIDI-устройствам (Axiom Pro 25, NUX NPK-20)
     ];
 
     extraModprobeConfig = ''
@@ -300,6 +302,8 @@ in
       # --- Устройства реального времени для аудио ---
       KERNEL=="rtc0", GROUP="audio"
       KERNEL=="hpet", GROUP="audio"
+      # Разрешает группе audio управлять C-states CPU (для отключения глубокого сна в DAW)
+      DEVPATH=="/devices/virtual/misc/cpu_dma_latency", OWNER="root", GROUP="audio", MODE="0660"
 
       # ДОБАВИТЬ: Доступ к iPhone/iPad для группы idevice
       SUBSYSTEM=="usb", ATTR{idVendor}=="05ac", MODE="0660", GROUP="idevice"

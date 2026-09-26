@@ -1,4 +1,13 @@
-{ lib, stdenv, autoPatchelfHook, alsa-lib, freetype, libX11, libXext, libxcb, versions }:
+{ lib
+, stdenv
+, autoPatchelfHook
+, alsa-lib
+, freetype
+, libX11
+, libXext
+, libxcb
+, versions
+}:
 
 let
   version = versions.ot-piano-s.version;

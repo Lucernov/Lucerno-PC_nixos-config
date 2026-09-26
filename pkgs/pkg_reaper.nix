@@ -1,5 +1,5 @@
 # pkgs/reaper.nix
-{ symlinkJoin, reaper }:
+{ symlinkJoin, reaper, cpupower }:
 
 symlinkJoin {
   name = "reaper-wrapped";
@@ -12,7 +12,15 @@ symlinkJoin {
     #!/bin/sh
     export GDK_BACKEND=x11
     export WINEPREFIX="/mnt/music/MUSIC-WINE/yabridge"
-    exec taskset -c 2-11 $out/bin/.reaper-unwrapped "\$@"
+
+    # Устанавливаем governor в performance перед запуском REAPER (для минимальной задержки аудио)
+    ${cpupower}/bin/cpupower frequency-set -g performance > /dev/null 2>&1
+
+    # Запускаем REAPER
+    taskset -c 2-11 $out/bin/.reaper-unwrapped "\$@"
+
+    # После завершения REAPER возвращаем governor в powersave (системный default NixOS - "cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor")
+    ${cpupower}/bin/cpupower frequency-set -g powersave > /dev/null 2>&1
     EOF
     chmod +x $out/bin/reaper
   '';
