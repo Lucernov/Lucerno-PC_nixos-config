@@ -1,3 +1,19 @@
+# pkgs/pkg_pitchnet.nix
+#
+# Особенности:
+#   - PitchNet распространяется как Makeself-архив (.run), не tar/zip.
+#     Распаковываем через `sh $src --noexec --target .` — распаковка без
+#     запуска install.sh (который требует root и ставит в /opt).
+#   - libonnxruntime.so.1 и libonnxruntime_providers_shared.so — бандл
+#     в payload/opt/Session Loops/PitchNet/lib/. Их нет в buildInputs,
+#     поэтому добавлены в autoPatchelfIgnoreMissingDeps.
+#   - postFixup добавляет $out/share/pitchnet/lib в rpath VST3, иначе
+#     autoPatchelfHook прописывает только системные пути, и onnxruntime
+#     не находится.
+#   - Standalone НЕ устанавливается: падает при старте с SEGV в
+#     juce::Component::centreWithSize (баг JUCE на Linux). VST3 в REAPER
+#     работает нормально.
+
 { lib
 , stdenv
 , fetchurl

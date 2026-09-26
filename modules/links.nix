@@ -19,7 +19,7 @@ in
       esac
     ''}"
 
-    # ---------- Переопределение путей пдомашних папок (генерируемые через pkgs.writeText) ----------
+    # ---------- Переопределение путей домашних папок (генерируемые через pkgs.writeText) ----------
     "L+ ${home}/.config/user-dirs.dirs - ${myLib.userName} ${myLib.userName} - ${pkgs.writeText "user-dirs.dirs" ''
       XDG_DESKTOP_DIR="$HOME/Desktop"
       XDG_DOWNLOAD_DIR="$HOME/Загрузки"
