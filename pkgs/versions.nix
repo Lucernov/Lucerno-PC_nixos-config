@@ -71,6 +71,11 @@
     version  = "1.0";
   };
 
+  pitchnet = {
+    version = "0.6.1";                                                  # https://github.com/SessionLoops/PitchNet/releases
+    hash    = "sha256-3nXBa/tmfM/KSQ9YBJ/Tcmr5+Pk47BRprZDWYTz2ujA=";
+  };
+
   sforzando = {                                                         # обновляется иногда
     version = "1.982";                                                  # https://www.plogue.com/downloads.html
     hash    = "sha256-7ms1T9N1/50M4wgZaD9E07cSof5P9Tx35E3wNtqCqQA=";
