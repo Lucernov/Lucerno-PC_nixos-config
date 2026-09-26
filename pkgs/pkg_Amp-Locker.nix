@@ -53,6 +53,21 @@ stdenv.mkDerivation {
     cp "Amp Locker Standalone" $out/bin/amp-locker-standalone
     chmod +x $out/bin/amp-locker-standalone
 
+    # .desktop — иначе standalone не видно в меню KDE
+    mkdir -p $out/share/applications
+    cat > $out/share/applications/amp-locker.desktop <<EOF
+    [Desktop Entry]
+    Version=1.0
+    Type=Application
+    Name=Amp Locker
+    Comment=Guitar amp simulator by Audio Assault
+    Exec=amp-locker-standalone
+    Icon=amp-locker
+    Categories=AudioVideo;Audio;Music;
+    Terminal=false
+    StartupNotify=true
+    EOF
+
     runHook postInstall
   '';
 

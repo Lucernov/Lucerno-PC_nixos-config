@@ -4,14 +4,17 @@
 # Лицензия проприетарная (unfree), но сам плагин бесплатный.
 #
 # Особенности:
-#   - 380 МБ сэмплов (.numalib/.numares) лежат в /usr/lib/Numa Player/ в .deb.
-#   - Плагин ищет их по абсолютному пути /usr/lib/Numa Player (через `access()`),
-#     относительно себя (../lib/) он их НЕ находит — проверено strace.
-#     Поэтому в nx_audio.nix создаётся симлинк /usr/lib/Numa Player → $out/lib/Numa Player.
-#   - Пресеты (Factory/, Organs/, User/) создаются самим плагином в
+#   - В .deb лежат данные (.numalib/.numares, ~380 МБ), но мы их НЕ копируем.
+#     Плагин сам скачивает нужные библиотеки в ~/.config/Studiologic/Numa Player/
+#     при первом использовании. Проверено: работает без данных из .deb.
+#     В store остаются только бинарники (VST3 + standalone).
+#   - Пресеты (Factory/, Organs/, User/) плагин создаёт сам в
 #     ~/Documents/Studiologic/Numa Player/ при первом запуске.
-#   - X11-библиотеки подгружаются через dlopen, поэтому используется
-#     runtimeDependencies (как в TAL-Vocoder-2).
+#   - X11-библиотеки подгружаются через dlopen → runtimeDependencies.
+#   - Standalone оборачивается makeWrapper с АБСОЛЮТНЫМ путём к бинарнику
+#     ($out/libexec/numa-player/Numa Player), иначе обёртка запоминает
+#     относительный путь и ломается при запуске из другого cwd.
+#   - Categories=AudioVideo;... в .desktop — иначе KDE кладёт в «Прочее».
 
 { lib
 , stdenv
@@ -76,9 +79,9 @@ stdenv.mkDerivation {
     mkdir -p $out/lib/vst3
     cp -r "usr/lib/vst3/Numa Player.vst3" $out/lib/vst3/
 
-    # Данные — 380 МБ сэмплов (.numalib/.numares)
-    mkdir -p "$out/lib/Numa Player"
-    cp -r "usr/lib/Numa Player/." "$out/lib/Numa Player/"
+    # Данные (.numalib/.numares) НЕ копируем — 380 МБ балласта.
+    # Плагин сам скачивает нужные библиотеки в ~/.config/Studiologic/Numa Player/Libraries/
+    # при первом использовании. Проверено: работает без этих данных.
 
     # Standalone — сначала копируем в $out/libexec, затем оборачиваем.
     # ВАЖНО: путь к бинарнику в makeWrapper должен быть абсолютным ($out/...),
@@ -96,11 +99,22 @@ stdenv.mkDerivation {
         stdenv.cc.cc.lib
       ]}"
 
-    # .desktop
-    mkdir -p $out/share/applications
-    cp "usr/share/applications/Numa Player.desktop" $out/share/applications/
-    sed -i 's|^Exec=.*|Exec=numa-player|' "$out/share/applications/Numa Player.desktop"
-    sed -i 's|^Icon=.*|Icon=NumaPlayer|' "$out/share/applications/Numa Player.desktop"
+    # Копируем .desktop под именем без пробела (KDE не любит пробелы)
+    cp "usr/share/applications/Numa Player.desktop" \
+       "$out/share/applications/numa-player.desktop"
+    sed -i \
+      -e 's|^Exec=.*|Exec=numa-player|' \
+      -e 's|^Icon=.*|Icon=NumaPlayer|' \
+      "$out/share/applications/numa-player.desktop"
+
+    # Categories — иначе KDE кладёт в «Прочее».
+    if grep -q '^Categories=' "$out/share/applications/numa-player.desktop"; then
+      sed -i 's|^Categories=.*|Categories=AudioVideo;Audio;Music;|' \
+        "$out/share/applications/numa-player.desktop"
+    else
+      echo 'Categories=AudioVideo;Audio;Music;' >> \
+        "$out/share/applications/numa-player.desktop"
+    fi
 
     # Иконка
     mkdir -p $out/share/icons/hicolor/256x256/apps
