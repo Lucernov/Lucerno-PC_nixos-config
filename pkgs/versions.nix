@@ -92,4 +92,10 @@
     hash          = "sha256-wOCqKyDl/AjpZGsTUOWjFlkXMVZoiEavJpFHv/N6ksw=";
   };
 
+  tal-vocoder-2 = {                                                     # TAL-Vocoder-2 (VST3 + CLAP)
+    version = "2";                                                      # https://tal-software.com/products/tal-vocoder
+    url     = "https://tal-software.com/downloads/plugins/TAL-Vocoder-2_64_linux.zip";
+    hash    = "sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=";
+  };
+
 }

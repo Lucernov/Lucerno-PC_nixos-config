@@ -101,6 +101,7 @@ in
     "L+ \"${myLib.home}/.clap/Shortcircuit XT.clap\" - ${myLib.userName} ${myLib.userName} - /run/current-system/sw/lib/clap/Shortcircuit XT.clap"
     "L+ \"${myLib.home}/.clap/Surge XT Effects.clap\" - ${myLib.userName} ${myLib.userName} - /run/current-system/sw/lib/clap/Surge XT Effects.clap"
     "L+ \"${myLib.home}/.clap/Surge XT.clap\" - ${myLib.userName} ${myLib.userName} - /run/current-system/sw/lib/clap/Surge XT.clap"
+    "L+ ${myLib.home}/.clap/TAL-Vocoder-2.clap - ${myLib.userName} ${myLib.userName} - /run/current-system/sw/lib/clap/TAL-Vocoder-2.clap"
     "L+ ${myLib.home}/.clap/Vital.clap - ${myLib.userName} ${myLib.userName} - /run/current-system/sw/lib/clap/Vital.clap"
     # ---------- Симлинки для LV2-плагинов ----------
     "L+ \"${myLib.home}/.lv2/Amp Locker.lv2\" - ${myLib.userName} ${myLib.userName} - /run/current-system/sw/lib/lv2/Amp Locker.lv2"
@@ -149,6 +150,7 @@ in
     "L+ \"${myLib.home}/.vst3/sforzando.vst3\" - ${myLib.userName} ${myLib.userName} - /run/current-system/sw/lib/vst3/sforzando.vst3"
     "L+ \"${myLib.home}/.vst3/Surge XT Effects.vst3\" - ${myLib.userName} ${myLib.userName} - /run/current-system/sw/lib/vst3/Surge XT Effects.vst3"
     "L+ \"${myLib.home}/.vst3/Surge XT.vst3\" - ${myLib.userName} ${myLib.userName} - /run/current-system/sw/lib/vst3/Surge XT.vst3"
+    "L+ \"${myLib.home}/.vst3/TAL-Vocoder-2.vst3\" - ${myLib.userName} ${myLib.userName} - /run/current-system/sw/lib/vst3/TAL-Vocoder-2.vst3"
     "L+ ${myLib.home}/.vst3/Vital.vst3 - ${myLib.userName} ${myLib.userName} - /run/current-system/sw/lib/vst3/Vital.vst3"
     "L+ \"${myLib.home}/.vst3/ZL Compressor.vst3\" - ${myLib.userName} ${myLib.userName} - /run/current-system/sw/lib/vst3/ZL Compressor.vst3"
     "L+ \"${myLib.home}/.vst3/ZL Equalizer 2.vst3\" - ${myLib.userName} ${myLib.userName} - /run/current-system/sw/lib/vst3/ZL Equalizer 2.vst3"

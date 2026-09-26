@@ -34,5 +34,6 @@ final: prev: {
     pitchnet = pkgs.callPackage ./pkg_pitchnet.nix { inherit versions; };
     sforzando = pkgs.callPackage ./pkg_sforzando.nix { inherit versions; };
     shortcircuit-xt = pkgs.callPackage ./pkg_shortcircuit-xt.nix { inherit versions; };
+    tal-vocoder-2 = pkgs.callPackage ./pkg_tal-vocoder-2.nix { inherit versions; };
   };
 }
