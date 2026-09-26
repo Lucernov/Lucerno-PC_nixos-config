@@ -31,9 +31,9 @@
   };
 
   lostSamplers = {                                                      # SuperflyDSP Lost Samplers – эмуляция шумов сэмплеров
-    version = "1.1.5";
-    url     = "https://superflydsp.com/wp-content/uploads/2023/04/LostSamplers_1.1.5_Linux.zip";
-    hash    = "sha256-dvHrEaDT9pLZMPPFv98/J2eAHSRWJS4F4d7a+gnVzoo=";
+    version    = "1.1.5";
+    url        = "https://superflydsp.com/wp-content/uploads/2023/04/LostSamplers_1.1.5_Linux.zip";
+    hash       = "sha256-dvHrEaDT9pLZMPPFv98/J2eAHSRWJS4F4d7a+gnVzoo=";
   };
 
   lostTapes = {                                                         # SuperflyDSP Lost Tapes – эмуляция магнитофона
@@ -43,9 +43,9 @@
   };
 
   lostVinyls = {                                                        # SuperflyDSP Lost Vinyls – эмуляция винилового проигрывателя
-    version = "1.3.0";
-    url     = "https://superflydsp.com/wp-content/uploads/2023/04/Lost-vinyls_v1.3.0_Linux.zip";
-    hash    = "sha256-QT3WIh2wBiD6xnKINWvsV/jn7rA1GN/jj/B1OqFBwzs=";
+    version  = "1.3.0";
+    url      = "https://superflydsp.com/wp-content/uploads/2023/04/Lost-vinyls_v1.3.0_Linux.zip";
+    hash     = "sha256-QT3WIh2wBiD6xnKINWvsV/jn7rA1GN/jj/B1OqFBwzs=";
   };
 
   mtpdk        = {
@@ -54,8 +54,8 @@
     hash       = "sha256-lb8RuIdLgDC2y9KSF6hlWXWKlt4jI8tndWk/WVanpGo=";
   };
 
-  music-pattern-generator = {                                          # обновляется редко
-    version = "2.2.0";                                                 # https://github.com/hisschemoller/music-pattern-generator/releases
+  music-pattern-generator = {                                           # обновляется редко
+    version = "2.2.0";                                                  # https://github.com/hisschemoller/music-pattern-generator/releases
     url     = "https://github.com/hisschemoller/music-pattern-generator/releases/download/v2.2.0/mpg_2_2_installer_lin.deb";
     hash    = "sha256-L83MCo1TqSbt+4MwRXWCVgegpuYEYNLrjrJnzPMwLwE=";
   };
@@ -74,7 +74,7 @@
     version  = "1.0";
   };
 
-  pitchnet = {
+  pitchnet  = {
     version = "0.6.1";                                                  # https://github.com/SessionLoops/PitchNet/releases
     url     = "https://github.com/SessionLoops/PitchNet/releases/download/v0.6.1/PitchNet-Linux-x86_64.run";
     hash    = "sha256-3nXBa/tmfM/KSQ9YBJ/Tcmr5+Pk47BRprZDWYTz2ujA=";
@@ -93,9 +93,15 @@
   };
 
   tal-vocoder-2 = {                                                     # TAL-Vocoder-2 (VST3 + CLAP)
-    version = "2";                                                      # https://tal-software.com/products/tal-vocoder
-    url     = "https://tal-software.com/downloads/plugins/TAL-Vocoder-2_64_linux.zip";
-    hash    = "sha256-vOSpQqN8DEK4f5vISeQnZBpxhW3AaW1+/0ImajeoPsY=";
+    version     = "2";                                                  # https://tal-software.com/products/tal-vocoder
+    url         = "https://tal-software.com/downloads/plugins/TAL-Vocoder-2_64_linux.zip";
+    hash        = "sha256-vOSpQqN8DEK4f5vISeQnZBpxhW3AaW1+/0ImajeoPsY=";
+  };
+
+  tape-echo-2 = {                                                       # Dusk Audio, GPL-3, обновляется активно
+    version   = "1.0.7";                                                # https://github.com/dusk-audio/dusk-audio-plugins/releases
+    url       = "https://github.com/dusk-audio/dusk-audio-plugins/releases/download/tape-echo-2-v1.0.7/tape-echo-2-linux.zip";
+    hash      = "sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=";
   };
 
 }
