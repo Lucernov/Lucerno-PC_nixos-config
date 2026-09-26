@@ -10,7 +10,7 @@ final: prev: {
     pkgs = final;
   in {
     btop = pkgs.callPackage ./pkg_btop.nix { };
-    reaper = pkgs.callPackage ./pkg_reaper.nix { inherit (pkgs-unstable) reaper; cpupower = pkgs.cpupower; };
+    reaper = pkgs.callPackage ./pkg_reaper.nix { inherit (pkgs-unstable) reaper; cpupower = pkgs.linuxPackages_zen.cpupower; };
     teamspeak = pkgs.callPackage ./pkg_teamspeak.nix {
       teamspeak6-client = pkgs.teamspeak6-client;
       coreutils = pkgs.coreutils;

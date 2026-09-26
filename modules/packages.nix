@@ -105,7 +105,7 @@
     file                                                          # Определение типа файла (ELF, PNG, tar, ...)
     libimobiledevice                                              # Библиотека и набор утилит для связи с устройствами Apple (iPhone, iPad) по USB
     ifuse                                                         # Утилита для монтирования файловой системы iPhone/iPad как обычной папки в Linux (через FUSE)
-    cpupower                                                      # Утилита для управления частотой CPU (используется для смены governor)
+    linuxPackages_zen.cpupower                                    # Утилита для управления частотой CPU (используется для смены governor)
   # rtcqs                                                         # Real-Time Config Quick Scan – диагностика системы для аудио (пока нет в NIXOS)
 
     # ========== КОНСОЛЬНЫЕ УТИЛИТЫ ==========

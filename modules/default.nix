@@ -61,7 +61,7 @@
           users = [ myLib.userName ];                                                                       # Правило применяется к пользователю lucerno
           commands = [
             {
-              command = "${pkgs.cpupower}/bin/cpupower frequency-set -g *";                                 # Разрешаем менять CPU governor (performance / schedutil / powersave)
+              command = "${pkgs.linuxPackages_zen.cpupower}/bin/cpupower frequency-set -g *";               # Разрешаем менять CPU governor (performance / schedutil / powersave)
               options = [ "NOPASSWD" ];                                                                     # Без запроса пароля
             }
           ];
