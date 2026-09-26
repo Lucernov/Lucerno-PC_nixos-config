@@ -11,9 +11,7 @@
 }:
 
 let
-  version    = versions.drum-locker.version;
-  hash       = versions.drum-locker.hash;
-  urlVersion = versions.audioAssault.urlVersion;
+  inherit (versions.drum-locker) version url hash;
 in
 
 stdenv.mkDerivation {
@@ -21,8 +19,7 @@ stdenv.mkDerivation {
   inherit version;
 
   src = fetchurl {
-    url = "https://audioassaultdownloads.s3.amazonaws.com/AmpLocker/AmpLocker${urlVersion}/DrumLockerLinux.zip";
-    inherit hash;
+    inherit url hash;
   };
 
   nativeBuildInputs = [ unzip autoPatchelfHook makeWrapper ];

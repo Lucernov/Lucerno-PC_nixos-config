@@ -10,15 +10,15 @@
 }:
 
 let
-  inherit (versions.pitchnet) version hash;
+  inherit (versions.pitchnet) version url hash;
 in
+
 stdenv.mkDerivation {
   pname = "pitchnet";
   inherit version;
 
   src = fetchurl {
-    url = "https://github.com/SessionLoops/PitchNet/releases/download/v${version}/PitchNet-Linux-x86_64.run";
-    inherit hash;
+    inherit url hash;
   };
 
   nativeBuildInputs = [ autoPatchelfHook patchelf ];

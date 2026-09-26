@@ -24,7 +24,7 @@
 }:
 
 let
-  inherit (versions.shortcircuit-xt) version releaseTag hash;
+  inherit (versions.shortcircuit-xt) version url hash;
 in
 
 stdenv.mkDerivation {
@@ -32,8 +32,7 @@ stdenv.mkDerivation {
   inherit version;
 
   src = fetchurl {
-    url = "https://github.com/surge-synthesizer/shortcircuit-xt/releases/download/${releaseTag}/shortcircuit-xt-linux-${version}.zip";
-    inherit hash;
+    inherit url hash;
   };
 
   nativeBuildInputs = [ unzip autoPatchelfHook ];

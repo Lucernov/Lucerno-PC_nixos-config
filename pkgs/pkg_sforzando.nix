@@ -27,8 +27,7 @@
 }:
 
 let
-  version = versions.sforzando.version;
-  hash    = versions.sforzando.hash;
+  inherit (versions.sforzando) version url hash;
 in
 
 stdenv.mkDerivation {
@@ -36,8 +35,7 @@ stdenv.mkDerivation {
   inherit version;
 
   src = fetchurl {
-    url = "https://sforzando.s3.us-east-1.amazonaws.com/LINUX_plogue-sforzando_${version}_x86_64.zip";
-    inherit hash;
+    inherit url hash;
   };
 
   nativeBuildInputs = [ unzip dpkg autoPatchelfHook makeWrapper ];
