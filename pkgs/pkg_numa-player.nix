@@ -99,15 +99,18 @@ stdenv.mkDerivation {
         stdenv.cc.cc.lib
       ]}"
 
-    # Копируем .desktop под именем без пробела (KDE не любит пробелы)
+    # .desktop — копируем под именем без пробела (KDE не любит пробелы)
+    mkdir -p $out/share/applications
     cp "usr/share/applications/Numa Player.desktop" \
        "$out/share/applications/numa-player.desktop"
+
     sed -i \
       -e 's|^Exec=.*|Exec=numa-player|' \
       -e 's|^Icon=.*|Icon=NumaPlayer|' \
       "$out/share/applications/numa-player.desktop"
 
     # Categories — иначе KDE кладёт в «Прочее».
+    # AudioVideo первой → раздел «Мультимедиа → Аудио и музыка».
     if grep -q '^Categories=' "$out/share/applications/numa-player.desktop"; then
       sed -i 's|^Categories=.*|Categories=AudioVideo;Audio;Music;|' \
         "$out/share/applications/numa-player.desktop"
