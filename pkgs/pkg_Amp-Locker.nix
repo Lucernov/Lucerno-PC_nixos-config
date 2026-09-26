@@ -1,9 +1,16 @@
+# pkgs/pkg_Amp-Locker.nix
+#
+# Amp Locker от Audio Assault (VST3 + LV2).
+#
+# Standalone НЕ устанавливается: бинарник падает с SEGV в
+# juce::StandaloneFilterWindow::StandaloneFilterWindow (баг JUCE на Linux,
+# тот же, что у PitchNet). VST3/LV2 в REAPER работают нормально.
+
 { lib
 , stdenv
 , fetchurl
 , unzip
 , autoPatchelfHook
-, makeWrapper
 , alsa-lib
 , freetype
 , curl
@@ -22,7 +29,7 @@ stdenv.mkDerivation {
     inherit url hash;
   };
 
-  nativeBuildInputs = [ unzip autoPatchelfHook makeWrapper ];
+  nativeBuildInputs = [ unzip autoPatchelfHook ];
 
   buildInputs = [
     alsa-lib
@@ -36,43 +43,26 @@ stdenv.mkDerivation {
   installPhase = ''
     runHook preInstall
 
-    # Устанавливаем VST3
+    # VST3
     mkdir -p $out/lib/vst3
     cp -r "Amp Locker.vst3" $out/lib/vst3/
 
-    # Устанавливаем LV2
+    # LV2
     mkdir -p $out/lib/lv2
     cp -r "Amp Locker.lv2" $out/lib/lv2/
 
-    # Устанавливаем данные
+    # Данные (пресеты, импульсы)
     mkdir -p $out/share/amp-locker
     cp -r AmpLockerData/* $out/share/amp-locker/
 
-    # Устанавливаем standalone приложение
-    mkdir -p $out/bin
-    cp "Amp Locker Standalone" $out/bin/amp-locker-standalone
-    chmod +x $out/bin/amp-locker-standalone
-
-    # .desktop — иначе standalone не видно в меню KDE
-    mkdir -p $out/share/applications
-    cat > $out/share/applications/amp-locker.desktop <<EOF
-    [Desktop Entry]
-    Version=1.0
-    Type=Application
-    Name=Amp Locker
-    Comment=Guitar amp simulator by Audio Assault
-    Exec=amp-locker-standalone
-    Icon=amp-locker
-    Categories=AudioVideo;Audio;Music;
-    Terminal=false
-    StartupNotify=true
-    EOF
+    # Standalone НЕ копируем — падает при старте из-за бага JUCE.
+    # VST3/LV2 в REAPER работают нормально.
 
     runHook postInstall
   '';
 
   meta = with lib; {
-    description = "Guitar amp simulator by Audio Assault";
+    description = "Guitar amp simulator by Audio Assault (VST3 + LV2)";
     homepage = "https://audioassault.mx/amplocker";
     license = licenses.unfree;
     platforms = [ "x86_64-linux" ];
