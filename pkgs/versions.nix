@@ -63,7 +63,7 @@
   numa-player = {
     version = "2.2.2";                                                  # https://www.studiologic-music.com/products/numaplayer/
     url     = "https://www.studiologic-music.com/api/get-files/NumaPlayer_2.2.2.deb";
-    hash    = "sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=";
+    hash    = "sha256-+3PvtSDyjhStYux+1Qd1azRpnAwRbRibAxK7kWLVM8o=";
   };
 
   orchestools = {                                                       # не обновляется (локальный репозиторий)
