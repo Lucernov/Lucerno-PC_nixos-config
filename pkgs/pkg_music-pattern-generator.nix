@@ -57,15 +57,15 @@
 }:
 
 let
-  inherit (versions.music-pattern-generator) version hash;
+  inherit (versions.music-pattern-generator) version url hash;
 in
+
 stdenv.mkDerivation {
   pname = "music-pattern-generator";
   inherit version;
 
   src = fetchurl {
-    url = "https://github.com/hisschemoller/music-pattern-generator/releases/download/v${version}/mpg_2_2_installer_lin.deb";
-    inherit hash;
+    inherit url hash;
   };
 
   nativeBuildInputs = [ dpkg autoPatchelfHook makeWrapper ];

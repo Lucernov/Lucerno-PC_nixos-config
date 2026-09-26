@@ -24,8 +24,7 @@
 }:
 
 let
-  version = versions.je8086.version;
-  hash    = versions.je8086.hash;
+  inherit (versions.je8086) version url hash;
 in
 
 stdenv.mkDerivation {
@@ -33,8 +32,7 @@ stdenv.mkDerivation {
   inherit version;
 
   src = fetchurl {
-    url = "https://github.com/dsp56300/gearmulator/releases/download/${version}/TheUsualSuspects-JE8086-CLAP-${version}-Linux_x86_64.zip";
-    inherit hash;
+    inherit url hash;
   };
 
   nativeBuildInputs = [ unzip autoPatchelfHook ];

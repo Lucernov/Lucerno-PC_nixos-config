@@ -4,28 +4,29 @@
     version     = "1.0";
   };
 
-  audioAssault = {                                                      # Общий сегмент пути для всех плагинов Audio Assault
-    urlVersion = "109";
-  };
-
   amp-locker = {                                                        # обновляется иногда
     version  = "1.5.6";                                                 # https://audioassault.mx/downloadAudioAssault
+    url      = "https://audioassaultdownloads.s3.amazonaws.com/AmpLocker/AmpLocker109/AmpLockerLinux.zip";
     hash     = "sha256-pHh4SN6Vb7CFOOQD+9VFLlNch0lv4dU8EWXjSE68iv8=";
   };
 
   drum-locker = {                                                       # обновляется иногда
     version   = "1.0.3";                                                # https://audioassault.mx/downloadAudioAssault
+    url       = "https://audioassaultdownloads.s3.amazonaws.com/AmpLocker/AmpLocker109/DrumLockerLinux.zip";
     hash      = "sha256-YPf3ZCVPP4qgVPdj0t5odSQLK1KhnwzrPuJIHF90tL0=";
   };
 
   drumlabooh  = {                                                       # обновляется иногда
     version   = "12.2.0";                                               # https://github.com/psemiletov/drumlabooh/releases
+    url       = "https://github.com/psemiletov/drumlabooh/releases/download/12.2.0/drumlabooh.lv2.zip";
+    urlMulti  = "https://github.com/psemiletov/drumlabooh/releases/download/12.2.0/drumlabooh-multi.lv2.zip";
     hash      = "sha256-IQ0XzIwJqGg+6FynmJBllyBIzWD3dgFfllOTEx0cMDM=";  # одноканальный
     hashMulti = "sha256-qdZJvXsUlEmmlTwUwO/C47OXM+gwRlu2cNRFGrJDi1A=";  # мультиканальный
   };
 
   je8086    = {                                                         # обновляется активно
     version = "2.2.16";                                                 # https://theusualsuspects.io/builds/downloads?product=JE8086&format=All&os=Linux_x86_64
+    url     = "https://github.com/dsp56300/gearmulator/releases/download/2.2.16/TheUsualSuspects-JE8086-CLAP-2.2.16-Linux_x86_64.zip";
     hash    = "sha256-KoBRwHO2YJLl/bpAtzB/TPKYn2abiZ+hDaCjVqI+LFU=";
   };
 
@@ -48,13 +49,14 @@
   };
 
   mtpdk        = {
-    urlVersion = "2.1.5";
     version    = "2.1.5.1";
+    url        = "https://resources.manda-audio.com/DOWNLOADS/products/mtpdk2_free/2.1.5/MTPDK-2.1.5.1-VST3-64bit-Linux-FULL.zip";
     hash       = "sha256-lb8RuIdLgDC2y9KSF6hlWXWKlt4jI8tndWk/WVanpGo=";
   };
 
   music-pattern-generator = {                                          # обновляется редко
     version = "2.2.0";                                                 # https://github.com/hisschemoller/music-pattern-generator/releases
+    url     = "https://github.com/hisschemoller/music-pattern-generator/releases/download/v2.2.0/mpg_2_2_installer_lin.deb";
     hash    = "sha256-L83MCo1TqSbt+4MwRXWCVgegpuYEYNLrjrJnzPMwLwE=";
   };
 
@@ -64,6 +66,7 @@
 
   ostirus   = {                                                         # обновляется активно
     version = "2.2.16";                                                 # https://theusualsuspects.io/builds/downloads?product=OsTIrus&format=All&os=Linux_x86_64
+    url     = "https://github.com/dsp56300/gearmulator/releases/download/2.2.16/TheUsualSuspects-OsTIrus-CLAP-2.2.16-Linux_x86_64.zip";
     hash    = "sha256-+3g9yEOb2Psjj/K9ZIY6GXYeIwIsRCtIEOrcUZ980eY=";
   };
 
@@ -73,17 +76,19 @@
 
   pitchnet = {
     version = "0.6.1";                                                  # https://github.com/SessionLoops/PitchNet/releases
+    url     = "https://github.com/SessionLoops/PitchNet/releases/download/v0.6.1/PitchNet-Linux-x86_64.run";
     hash    = "sha256-3nXBa/tmfM/KSQ9YBJ/Tcmr5+Pk47BRprZDWYTz2ujA=";
   };
 
   sforzando = {                                                         # обновляется иногда
     version = "1.982";                                                  # https://www.plogue.com/downloads.html
+    url     = "https://sforzando.s3.us-east-1.amazonaws.com/LINUX_plogue-sforzando_1.982_x86_64.zip";
     hash    = "sha256-7ms1T9N1/50M4wgZaD9E07cSof5P9Tx35E3wNtqCqQA=";
   };
 
   shortcircuit-xt = {                                                   # обновляется активно
     version       = "2026-09-14-8cda0ce";                               # https://github.com/surge-synthesizer/shortcircuit-xt/releases/
-    releaseTag    = "Nightly";
+    url           = "https://github.com/surge-synthesizer/shortcircuit-xt/releases/download/Nightly/shortcircuit-xt-linux-2026-09-14-8cda0ce.zip";
     hash          = "sha256-wOCqKyDl/AjpZGsTUOWjFlkXMVZoiEavJpFHv/N6ksw=";
   };
 
