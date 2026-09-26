@@ -1,3 +1,25 @@
+# pkgs/pkg_tal-vocoder-2.nix
+#
+# Особенность сборки:
+#   Плагин (и CLAP, и VST3) подгружает общую библиотеку libTAL-Vocoder-2.so
+#   через dlopen() во время работы, а НЕ через NEEDED-секцию ELF.
+#   Это значит, что autoPatchelfHook её «не видит» и не прописывает в rpath.
+#
+#   Что делаем:
+#     1. Кладём libTAL-Vocoder-2.so РЯДОМ с каждым плагином
+#        (в одну папку с .clap и в Contents/x86_64-linux/ с .so).
+#     2. Через appendRunpaths = [ "$ORIGIN" ] добавляем $ORIGIN в rpath
+#        обоих плагинов. $ORIGIN = папка самого бинарника, поэтому
+#        dlopen найдёт libTAL по относительному пути, и rpath будет
+#        работать даже если store переедет.
+#
+#   Почему не postFixup с patchelf --add-rpath:
+#     autoPatchelfHook после себя вызывает shrink-rpath, который вырезает
+#     из rpath всё, что не соответствует NEEDED-зависимостям. $ORIGIN
+#     туда не попадает (libTAL не в NEEDED), и он удаляется.
+#     appendRunpaths — официальный механизм autoPatchelfHook, который
+#     добавляет пути ПОСЛЕ формирования финального rpath.
+
 { lib
 , stdenv
 , fetchurl
