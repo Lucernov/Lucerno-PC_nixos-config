@@ -9,7 +9,7 @@
 }:
 
 let
-  version = versions.drumlabooh.version;
+  inherit (versions.drumlabooh) version url urlMulti hash hashMulti;
 in
 
 stdenv.mkDerivation {
@@ -17,14 +17,8 @@ stdenv.mkDerivation {
   inherit version;
 
   srcs = [
-    (fetchurl {
-      url = "https://github.com/psemiletov/drumlabooh/releases/download/${version}/drumlabooh.lv2.zip";
-      hash = versions.drumlabooh.hash;
-    })
-    (fetchurl {
-      url = "https://github.com/psemiletov/drumlabooh/releases/download/${version}/drumlabooh-multi.lv2.zip";
-      hash = versions.drumlabooh.hashMulti;
-    })
+    (fetchurl { url = url;      inherit hash; })
+    (fetchurl { url = urlMulti; hash = hashMulti; })
   ];
 
   nativeBuildInputs = [ unzip autoPatchelfHook ];

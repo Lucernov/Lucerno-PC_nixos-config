@@ -20,7 +20,7 @@
 }:
 
 let
-  inherit (versions.mtpdk) version urlVersion hash;
+  inherit (versions.mtpdk) version url hash;
 in
 
 stdenv.mkDerivation {
@@ -28,8 +28,7 @@ stdenv.mkDerivation {
   inherit version;
 
   src = fetchurl {
-    url = "https://resources.manda-audio.com/DOWNLOADS/products/mtpdk2_free/${urlVersion}/MTPDK-${version}-VST3-64bit-Linux-FULL.zip";
-    inherit hash;
+    inherit url hash;
   };
 
   nativeBuildInputs = [ unzip autoPatchelfHook ];

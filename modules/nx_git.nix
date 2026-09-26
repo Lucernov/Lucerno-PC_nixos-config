@@ -36,6 +36,8 @@ in
     # Глобальный файл игнорирования Git (~/.gitignore)
     "L+ ${home}/.gitignore - ${myLib.userName} ${myLib.userName} - ${pkgs.writeText "gitignore" ''
       *.swp
+      *.kate-swp
+      .*.kate-swp
       *~
       .Trash-*
       result
