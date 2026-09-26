@@ -252,7 +252,7 @@
     my-packages.lostSamplers                                      # SuperflyDSP Lost Samplers – эмуляция шумов сэмплеров (VST3)
     my-packages.lostTapes                                         # SuperflyDSP Lost Tapes – эмуляция магнитофона (VST3)
     my-packages.lostVinyls                                        # SuperflyDSP Lost Vinyls – эмуляция винилового проигрывателя (VST3)
-    my-packages.pitchnet                                          # Нейросетевой корректор высоты тона (VST3 + standalone)
+    my-packages.pitchnet                                          # Нейросетевой корректор высоты тона (только VST3, standalone не собираю)
 
     ] ++ (with pkgs-unstable; [                                   # Пакеты из нестабильного канала (более свежие версии)
     # МУЗЫКА
