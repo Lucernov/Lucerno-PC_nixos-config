@@ -101,7 +101,7 @@
   tape-echo-2 = {                                                       # Dusk Audio, GPL-3, обновляется активно
     version   = "1.0.7";                                                # https://github.com/dusk-audio/dusk-audio-plugins/releases
     url       = "https://github.com/dusk-audio/dusk-audio-plugins/releases/download/tape-echo-2-v1.0.7/tape-echo-2-linux.zip";
-    hash      = "sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=";
+    hash      = "sha256-8KJ/qGzGKhGRGpKvrdu3Mbs+8A4gPGIovTKrfDCpL0g=";
   };
 
 }
