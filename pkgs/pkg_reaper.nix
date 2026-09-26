@@ -25,7 +25,7 @@ symlinkJoin {
     # Правило NOPASSWD для этой команды задано в modules/default.nix (security.sudo.extraRules)
     sudo ${cpupower}/bin/cpupower frequency-set -g performance > /dev/null 2>&1
 
-    # Запускаем REAPER
+    # Запустить REAPER игнорируя первое ядро (на него выведены все систеемные прерывания) и игнорировать энергосберегающие ядра
     taskset -c 2-11 $out/bin/.reaper-unwrapped "\$@"
 
     # После завершения REAPER возвращаем governor в powersave (системный default NixOS)
