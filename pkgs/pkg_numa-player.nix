@@ -80,9 +80,16 @@ stdenv.mkDerivation {
     mkdir -p "$out/lib/Numa Player"
     cp -r "usr/lib/Numa Player/." "$out/lib/Numa Player/"
 
-    # Standalone
+    # Standalone — сначала копируем в $out/libexec, затем оборачиваем.
+    # ВАЖНО: путь к бинарнику в makeWrapper должен быть абсолютным ($out/...),
+    # иначе обёртка запомнит относительный путь и сломается при запуске
+    # из любого другого cwd.
+    mkdir -p $out/libexec/numa-player
+    cp "usr/bin/Numa Player" "$out/libexec/numa-player/Numa Player"
+    chmod +x "$out/libexec/numa-player/Numa Player"
+
     mkdir -p $out/bin
-    makeWrapper "usr/bin/Numa Player" $out/bin/numa-player \
+    makeWrapper "$out/libexec/numa-player/Numa Player" $out/bin/numa-player \
       --prefix LD_LIBRARY_PATH : "${lib.makeLibraryPath [
         alsa-lib freetype fontconfig curl
         libX11 libXcursor libXext libXinerama libXrandr
