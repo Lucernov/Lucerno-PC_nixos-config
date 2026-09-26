@@ -1,7 +1,6 @@
 { lib
 , stdenv
 , fetchurl
-, makeWrapper
 , autoPatchelfHook
 , patchelf
 , alsa-lib
@@ -22,10 +21,8 @@ stdenv.mkDerivation {
     inherit hash;
   };
 
-  nativeBuildInputs = [ autoPatchelfHook makeWrapper patchelf ];
+  nativeBuildInputs = [ autoPatchelfHook patchelf ];
 
-  # autoPatchelfHook сам найдёт из этих пакетов libasound, libfontconfig,
-  # libfreetype, libstdc++ и пропишет их в rpath обоим бинарникам.
   buildInputs = [
     alsa-lib
     freetype
@@ -33,14 +30,11 @@ stdenv.mkDerivation {
     stdenv.cc.cc.lib
   ];
 
-  # libonnxruntime.so.1 — это бандл от разработчика, не из buildInputs.
-  # Скажем autoPatchelfHook не ругаться на него.
   autoPatchelfIgnoreMissingDeps = [
     "libonnxruntime.so.1"
     "libonnxruntime_providers_shared.so"
   ];
 
-  # Makeself: распаковываем без запуска install.sh
   unpackPhase = ''
     runHook preUnpack
     sh $src --noexec --target .
@@ -50,52 +44,36 @@ stdenv.mkDerivation {
   installPhase = ''
     runHook preInstall
 
-    # Standalone + все ресурсы (fonts, lang, lib, models)
+    # Только ресурсы, которые нужны VST3-плагину.
+    # Standalone-бинарник PitchNet НЕ устанавливается:
+    # он падает при старте из-за бага JUCE (centreWithSize в initialise()).
+    # Сам VST3 в REAPER работает нормально.
     mkdir -p $out/share/pitchnet
-    cp -r "payload/opt/Session Loops/PitchNet/." $out/share/pitchnet/
+    cp -r "payload/opt/Session Loops/PitchNet/models" $out/share/pitchnet/
+    cp -r "payload/opt/Session Loops/PitchNet/lib"    $out/share/pitchnet/
+    cp -r "payload/opt/Session Loops/PitchNet/fonts"  $out/share/pitchnet/
+    cp -r "payload/opt/Session Loops/PitchNet/lang"   $out/share/pitchnet/
     chmod -R u+w $out/share/pitchnet
-    chmod +x $out/share/pitchnet/PitchNet
 
     # VST3
     mkdir -p $out/lib/vst3
     cp -r payload/vst3/PitchNet.vst3 $out/lib/vst3/
     chmod -R u+w $out/lib/vst3/PitchNet.vst3
 
-    # .desktop + иконка
-    mkdir -p $out/share/applications
-    cp payload/usr/share/applications/pitchnet.desktop $out/share/applications/
-    mkdir -p $out/share/icons/hicolor/512x512/apps
-    cp payload/usr/share/icons/hicolor/512x512/apps/pitchnet.png \
-       $out/share/icons/hicolor/512x512/apps/
-
-    sed -i 's|^Exec=.*|Exec=PitchNet|' $out/share/applications/pitchnet.desktop
-
-    # Обёртка для standalone
-    mkdir -p $out/bin
-    makeWrapper $out/share/pitchnet/PitchNet $out/bin/PitchNet \
-      --chdir "$out/share/pitchnet" \
-      --set GDK_BACKEND x11 \
-      --prefix LD_LIBRARY_PATH : "$out/share/pitchnet/lib"
-
     runHook postInstall
   '';
 
-  # autoPatchelfHook перезаписал rpath → возвращаем путь к бандлу onnxruntime
+  # autoPatchelfHook перезаписал rpath → добавляем путь к бандлу onnxruntime
   postFixup = ''
-    for f in \
-      "$out/share/pitchnet/PitchNet" \
+    patchelf --add-rpath "$out/share/pitchnet/lib" \
       "$out/lib/vst3/PitchNet.vst3/Contents/x86_64-linux/PitchNet.so"
-    do
-      patchelf --add-rpath "$out/share/pitchnet/lib" "$f"
-    done
   '';
 
   meta = with lib; {
-    description = "PitchNet – neural pitch correction plugin (VST3 + standalone)";
+    description = "PitchNet – neural pitch correction plugin (VST3 only)";
     homepage = "https://github.com/SessionLoops/PitchNet";
     license = licenses.unfree;
     platforms = [ "x86_64-linux" ];
     sourceProvenance = [ sourceTypes.binaryNativeCode ];
-    mainProgram = "PitchNet";
   };
 }
