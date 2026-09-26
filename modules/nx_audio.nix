@@ -87,9 +87,6 @@ in
     "L+ ${myLib.home}/.config/REAPER/UserPlugins/reaper_sws-x86_64.so - ${myLib.userName} ${myLib.userName} - ${pkgs-unstable.reaper-sws-extension}/UserPlugins/reaper_sws-x86_64.so"  # .so файлы REAPER
     "L+ ${myLib.home}/.config/REAPER/UserPlugins/reaper_reapack-x86_64.so - ${myLib.userName} ${myLib.userName} - ${pkgs-unstable.reaper-reapack-extension}/UserPlugins/reaper_reapack-x86_64.so"  # .so файлы REAPER
     "L+ /usr/bin/zenity - - - - ${pkgs.zenity}/bin/zenity" # нужно для работы вывода меню выбора пресетов внутри плагина
-    # Numa Player — жёстко ищет данные в /usr/lib/Numa Player (проверено strace)
-    "d /usr/lib 0755 root root -"
-    "L+ /usr/lib/Numa Player - - - - /run/current-system/sw/lib/Numa Player"
 
     # ---------- Симлинки для CLAP-плагинов ----------
     "L+ \"${myLib.home}/.clap/DragonflyEarlyReflections.clap\" - ${myLib.userName} ${myLib.userName} - /run/current-system/sw/lib/clap/DragonflyEarlyReflections.clap"

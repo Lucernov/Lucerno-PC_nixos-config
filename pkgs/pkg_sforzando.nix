@@ -104,15 +104,36 @@ stdenv.mkDerivation {
     cp -r extracted/usr/share/icons $out/share/ || true
     cp -r extracted/usr/share/doc $out/share/ || true
 
-    # Исправляем .desktop
+    # Приводим .desktop к стандартам KDE
     if [ -f $out/share/applications/plogue-sforzando.desktop ]; then
-      sed -i 's|Exec=/opt/Plogue/sforzando/sforzando|Exec=sforzando|g' $out/share/applications/plogue-sforzando.desktop
+      # Exec — путь /opt/Plogue/... → sforzando (резолвится через PATH)
+      sed -i 's|Exec=/opt/Plogue/sforzando/sforzando|Exec=sforzando|g' \
+        $out/share/applications/plogue-sforzando.desktop
+
+      # Categories — иначе KDE кладёт в «Прочее»
+      if grep -q '^Categories=' $out/share/applications/plogue-sforzando.desktop; then
+        sed -i 's|^Categories=.*|Categories=AudioVideo;Audio;Music;|' \
+          $out/share/applications/plogue-sforzando.desktop
+      else
+        echo 'Categories=AudioVideo;Audio;Music;' >> \
+          $out/share/applications/plogue-sforzando.desktop
+      fi
+
+      # Icon — на всякий случай на имя без пути
+      if grep -q '^Icon=' $out/share/applications/plogue-sforzando.desktop; then
+        sed -i 's|^Icon=.*|Icon=plogue-sforzando|' \
+          $out/share/applications/plogue-sforzando.desktop
+      else
+        echo 'Icon=plogue-sforzando' >> \
+          $out/share/applications/plogue-sforzando.desktop
+      fi
     fi
 
-    # Создаём симлинк для иконки в pixmaps
+    # Симлинк для иконки в pixmaps (ищем любой формат — png/svg)
     mkdir -p $out/share/pixmaps
-    if [ -f $out/share/icons/hicolor/256x256/apps/plogue-sforzando.png ]; then
-      ln -s $out/share/icons/hicolor/256x256/apps/plogue-sforzando.png $out/share/pixmaps/plogue-sforzando.png
+    ICON=$(find $out/share/icons -type f -name 'plogue-sforzando.*' 2>/dev/null | head -1)
+    if [ -n "$ICON" ]; then
+      ln -sf "$ICON" $out/share/pixmaps/plogue-sforzando.png
     fi
 
     runHook postInstall

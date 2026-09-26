@@ -2,8 +2,15 @@
 #
 # Music Pattern Generator — визуальный MIDI-секвенсор на NW.js.
 # Распространяется как .deb (Architecture: all).
-# Распаковываем через dpkg-deb, патчим ELF-бинарники autoPatchelfHook
-# и создаём обёртку mpg с правильным LD_LIBRARY_PATH.
+#
+# Особенности:
+#   - Распаковываем через dpkg-deb, патчим ELF-бинарники autoPatchelfHook.
+#   - Обёртка mpg запускает NW.js с правильным LD_LIBRARY_PATH и chdir.
+#   - libudev.so.0 — симлинк, потому что NW.js/Chromium ищет именно эту
+#     устаревшую версию, а в systemd её давно нет.
+#   - Иконка кладётся и в hicolor/512x512/apps/ (для KDE), и в pixmaps/
+#     (fallback для старых DE).
+#   - Categories=AudioVideo;Audio;Music; — иначе KDE кладёт в «Служебные».
 
 { lib
 , stdenv
@@ -140,18 +147,33 @@ stdenv.mkDerivation {
       cp opt/music-pattern-generator/music-pattern-generator.desktop $out/share/applications/
     fi
 
-    # Иконка в pixmaps
-    mkdir -p $out/share/pixmaps
+    # Иконка — в hicolor (KDE ищет в первую очередь там) + дубль в pixmaps (fallback)
     if [ -f opt/music-pattern-generator/img/icon.png ]; then
-      cp opt/music-pattern-generator/img/icon.png $out/share/pixmaps/music-pattern-generator.png
+      mkdir -p $out/share/icons/hicolor/512x512/apps
+      cp opt/music-pattern-generator/img/icon.png \
+        $out/share/icons/hicolor/512x512/apps/music-pattern-generator.png
+
+      mkdir -p $out/share/pixmaps
+      cp opt/music-pattern-generator/img/icon.png \
+        $out/share/pixmaps/music-pattern-generator.png
     fi
 
-    # Исправляем .desktop: путь /opt/... → mpg (резолвится через PATH)
+    # Исправляем .desktop: путь /opt/... → mpg, иконка, категория
     if [ -f $out/share/applications/music-pattern-generator.desktop ]; then
       sed -i \
         -e 's|^Exec=.*|Exec=mpg %U|' \
         -e 's|^Icon=.*|Icon=music-pattern-generator|' \
         $out/share/applications/music-pattern-generator.desktop
+
+      # Categories — для KDE «Мультимедиа → Аудио и музыка».
+      # Fallback на случай, если апстрим уберёт строку из .desktop.
+      if grep -q '^Categories=' $out/share/applications/music-pattern-generator.desktop; then
+        sed -i 's|^Categories=.*|Categories=AudioVideo;Audio;Music;|' \
+          $out/share/applications/music-pattern-generator.desktop
+      else
+        echo 'Categories=AudioVideo;Audio;Music;' >> \
+          $out/share/applications/music-pattern-generator.desktop
+      fi
     fi
 
     # Обёртка для запуска NW.js
