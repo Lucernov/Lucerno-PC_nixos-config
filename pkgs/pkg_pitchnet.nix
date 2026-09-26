@@ -74,6 +74,7 @@ stdenv.mkDerivation {
     mkdir -p $out/bin
     makeWrapper $out/share/pitchnet/PitchNet $out/bin/PitchNet \
       --chdir "$out/share/pitchnet" \
+      --set GDK_BACKEND x11 \
       --prefix LD_LIBRARY_PATH : "$out/share/pitchnet/lib"
 
     runHook postInstall
