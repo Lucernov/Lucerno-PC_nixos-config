@@ -14,14 +14,21 @@ in
 
 {
   environment.sessionVariables = {
-    CLAP_PATH = "/run/current-system/sw/lib/clap:${myLib.home}/.clap";                                  # Устанавливаем переменную окружения для пользовательской папки CLAP
-    LV2_PATH = "/run/current-system/sw/lib/lv2:${myLib.home}/.lv2";                                     # Устанавливаем переменную окружения для пользовательской папки LV2
-    VST_PATH = "/run/current-system/sw/lib/vst:${myLib.home}/.vst";                                     # Устанавливаем переменную окружения для пользовательской папки VST
-    VST3_PATH = "/run/current-system/sw/lib/vst3:${myLib.home}/.vst3";                                  # Устанавливаем переменную окружения для пользовательской папки VST3
+    CLAP_PATH   = "/run/current-system/sw/lib/clap:${myLib.home}/.clap";                                # Устанавливаем переменную окружения для пользовательской папки CLAP
+    LV2_PATH    = "/run/current-system/sw/lib/lv2:${myLib.home}/.lv2";                                  # Устанавливаем переменную окружения для пользовательской папки LV2
+    VST_PATH    = "/run/current-system/sw/lib/vst:${myLib.home}/.vst";                                  # Устанавливаем переменную окружения для пользовательской папки VST
+    VST3_PATH   = "/run/current-system/sw/lib/vst3:${myLib.home}/.vst3";                                # Устанавливаем переменную окружения для пользовательской папки VST3
+    LXVST_PATH  = "/run/current-system/sw/lib/lxvst:${myLib.home}/.lxvst";                              # Устанавливаем переменную окружения для пользовательской папки LXVST (Linux VST — устаревший формат)
+    LADSPA_PATH = "/run/current-system/sw/lib/ladspa:${myLib.home}/.ladspa";                            # Устанавливаем переменную окружения для пользовательской папки LADSPA (простой формат эффектов)
+    DSSI_PATH   = "/run/current-system/sw/lib/dssi:${myLib.home}/.dssi";                                # Устанавливаем переменную окружения для пользовательской папки DSSI (инструменты на базе LADSPA)
   };
 
   services = {
     pulseaudio.enable = false;                                                                          # Отключаем старый звуковой сервер PulseAudio (полностью заменяем на PipeWire)
+    rtirq = {
+      enable = true;                                                                                    # Включаем rtirq — при старте повышает RT-приоритет IRQ-потоков для указанных звуковых драйверов
+      highList = "snd_hrtimer snd_usb_audio";                                                           # Драйверы, чьи IRQ получат высокий приоритет: snd_hrtimer (высокоточный таймер ALSA) и snd_usb_audio (MOTU M4)
+    };
     pipewire = {                                                                                        # Основные настройки PipeWire
       enable = true;                                                                                    # Включаем PipeWire как основной звуковой сервер
       alsa.enable = true;                                                                               # Поддержка ALSA (эмуляция для старых приложений)
@@ -48,6 +55,7 @@ in
     };
   };
 
+
   # ---------- Настройка приоритетов реального времени для PipeWire и WirePlumber ----------
   security = {
     rtkit.enable = true;                                                                                # Включаем rtkit (Realtime Kit) — демон, дающий процессам приоритет реального времени. Необходим для низких задержек в аудио.
@@ -58,6 +66,8 @@ in
       { domain = "@audio"; item = "memlock"; type = "hard"; value = "unlimited"; }                      # жёсткий лимит блокировки памяти
       { domain = "@audio"; item = "nice"; type = "soft"; value = "-11"; }                               # разрешаем nice -11
       { domain = "@audio"; item = "nice"; type = "hard"; value = "-11"; }                               # жёсткий лимит nice
+      { domain = "@audio"; item = "nofile"; type = "soft"; value = "99999"; }                           # мягкий лимит открытых файловых дескрипторов (для проектов с сотнями сэмплов и плагинов)
+      { domain = "@audio"; item = "nofile"; type = "hard"; value = "99999"; }                           # жёсткий лимит открытых файловых дескрипторов
     ];
   };
 
@@ -74,6 +84,9 @@ in
     "d ${myLib.home}/.lv2 0755 ${myLib.userName} ${myLib.userName} -"
     "d ${myLib.home}/.vst 0755 ${myLib.userName} ${myLib.userName} -"
     "d ${myLib.home}/.vst3 0755 ${myLib.userName} ${myLib.userName} -"
+    "d ${myLib.home}/.lxvst 0755 ${myLib.userName} ${myLib.userName} -"
+    "d ${myLib.home}/.ladspa 0755 ${myLib.userName} ${myLib.userName} -"
+    "d ${myLib.home}/.dssi 0755 ${myLib.userName} ${myLib.userName} -"
     "L+ ${myLib.home}/.local/bin/wine64 - ${myLib.userName} ${myLib.userName} - ${pkgs.wineWow64Packages.staging}/bin/wine"  # wine64
     "L+ ${myLib.home}/.config/REAPER/UserPlugins/reaper_sws-x86_64.so - ${myLib.userName} ${myLib.userName} - ${pkgs-unstable.reaper-sws-extension}/UserPlugins/reaper_sws-x86_64.so"  # .so файлы REAPER
     "L+ ${myLib.home}/.config/REAPER/UserPlugins/reaper_reapack-x86_64.so - ${myLib.userName} ${myLib.userName} - ${pkgs-unstable.reaper-reapack-extension}/UserPlugins/reaper_reapack-x86_64.so"  # .so файлы REAPER
@@ -202,7 +215,7 @@ in
     "L+ ${myLib.home}/.config/Plogue - ${myLib.userName} ${myLib.userName} - ${myLib.home}/${configDir}/dotfiles/config/plugins/config_Plogue"
     "L+ ${myLib.home}/.local/share/geonkick - ${myLib.userName} ${myLib.userName} - ${myLib.home}/${configDir}/dotfiles/config/plugins/local_share_geonkick"
     "L+ \"${myLib.home}/.local/share/The Usual Suspects\" - ${myLib.userName} ${myLib.userName} - ${myLib.home}/${configDir}/dotfiles/config/plugins/local_share_The Usual Suspects"
-    "L+ ${home}/.local/share/vital - ${myLib.userName} ${myLib.userName} - /mnt/sys_archiv/samples/vital"
+    "L+ ${myLib.home}/.local/share/vital - ${myLib.userName} ${myLib.userName} - /mnt/sys_archiv/samples/vital"
     "L+ ${home}/drum_sklad - ${myLib.userName} ${myLib.userName} - /mnt/sys_archiv/samples/drum_sklad"
   ];
 }

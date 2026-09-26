@@ -105,6 +105,8 @@
     file                                                          # Определение типа файла (ELF, PNG, tar, ...)
     libimobiledevice                                              # Библиотека и набор утилит для связи с устройствами Apple (iPhone, iPad) по USB
     ifuse                                                         # Утилита для монтирования файловой системы iPhone/iPad как обычной папки в Linux (через FUSE)
+    rtcqs                                                         # Real-Time Config Quick Scan – диагностика системы для аудио
+    cpupower                                                      # Утилита для управления частотой CPU (используется для смены governor)
 
     # ========== КОНСОЛЬНЫЕ УТИЛИТЫ ==========
     kitty                                                         # Эмулятор терминала с поддержкой GPU и лигатур
@@ -150,11 +152,13 @@
   # (discord.override { withOpenASAR = true; })                   # Голосовой/текстовый чат
     (vesktop.override { withSystemVencord = false; })             # Голосовой/текстовый чат (альтернатиивный discord клиент в котором открываются видео ролики)
     telegram-desktop                                              # Мессенджер Telegram
+    zapzap                                                        # Вотсап клииент
     my-packages.teamspeak                                         # Голосовой чат Тимспик
 
     # ГРАФИКА
     upscaler                                                      # Увеличение разрешения изображений
     switcheroo                                                    # приложение для конвертации изображений
+    curtail                                                       # Уменьшает размер изображений
     optipng                                                       # Оптимизатор PNG файлов
     pinta                                                         # Простой растровый редактор
     krita                                                         # Кастомный пакет Krita (цифровая живопись) берется из NIXOS 25.11

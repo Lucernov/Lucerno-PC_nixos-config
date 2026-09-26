@@ -56,6 +56,17 @@
     sudo = {
       enable = true;                                                                                        # Включаем sudo
       wheelNeedsPassword = false;                                                                           # Для членов группы wheel не требовать пароль
+      extraRules = [                                                                                        # Дополнительные правила sudo
+        {
+          users = [ myLib.userName ];                                                                       # Правило применяется к пользователю lucerno
+          commands = [
+            {
+              command = "${pkgs.cpupower}/bin/cpupower frequency-set -g *";                                 # Разрешаем менять CPU governor (performance / schedutil / powersave)
+              options = [ "NOPASSWD" ];                                                                     # Без запроса пароля
+            }
+          ];
+        }
+      ];
     };
   };
 
