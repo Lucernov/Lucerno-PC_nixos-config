@@ -1,8 +1,6 @@
 { pkgs, pkgs-unstable, myLib, ... }:
 
 let
-  inherit (myLib) home;
-  configDir = myLib.configDirName;
   commonRealtime = {
     CPUSchedulingPolicy = "fifo";                                                                       # SCHED_FIFO — планировщик RT
     CPUSchedulingPriority = 85;                                                                         # RT-приоритет, выровнена иерархия RT-приоритетов (85 control / 88 data / 89 limit)
@@ -204,20 +202,20 @@ in
 
     # ---------- Симлинки конфигов плагинов ----------
     "d ${myLib.home}/.config/REAPER/UserPlugins 0755 ${myLib.userName} ${myLib.userName} -"
-    "L+ ${home}/.config/REAPER - ${myLib.userName} ${myLib.userName} - ${home}/${configDir}/dotfiles/config/REAPER"
-    "L+ ${home}/.config/yabridgectl - ${myLib.userName} ${myLib.userName} - ${home}/${configDir}/dotfiles/config/yabridgectl"
-    "L+ ${home}/.config/DecentSampler - ${myLib.userName} ${myLib.userName} - /mnt/sys_archiv/samples/DecentSampler"
-    "L+ \"${myLib.home}/.config/Amp Locker\" - ${myLib.userName} ${myLib.userName} - ${myLib.home}/${configDir}/dotfiles/config/plugins/config_Amp Locker"
-    "L+ \"${myLib.home}/.config/Audio Assault\" - ${myLib.userName} ${myLib.userName} - ${myLib.home}/${configDir}/dotfiles/config/plugins/config_Audio Assault"
-    "L+ ${myLib.home}/.config/geonkick - ${myLib.userName} ${myLib.userName} - ${myLib.home}/${configDir}/dotfiles/config/plugins/config_geonkick"
-    "L+ ${myLib.home}/.config/lsp-plugins - ${myLib.userName} ${myLib.userName} - ${myLib.home}/${configDir}/dotfiles/config/plugins/config_lsp-plugins"
-    "L+ ${myLib.home}/.config/3VStudio - ${myLib.userName} ${myLib.userName} - ${myLib.home}/${configDir}/dotfiles/config/plugins/config_3VStudio"
-    "L+ \"${myLib.home}/.config/My Company\" - ${myLib.userName} ${myLib.userName} - ${myLib.home}/${configDir}/dotfiles/config/plugins/config_My Company"
-    "L+ ${myLib.home}/.config/MANDA_AUDIO - ${myLib.userName} ${myLib.userName} - ${myLib.home}/${configDir}/dotfiles/config/plugins/config_MANDA_AUDIO"
-    "L+ ${myLib.home}/.config/Plogue - ${myLib.userName} ${myLib.userName} - ${myLib.home}/${configDir}/dotfiles/config/plugins/config_Plogue"
-    "L+ ${myLib.home}/.local/share/geonkick - ${myLib.userName} ${myLib.userName} - ${myLib.home}/${configDir}/dotfiles/config/plugins/local_share_geonkick"
-    "L+ \"${myLib.home}/.local/share/The Usual Suspects\" - ${myLib.userName} ${myLib.userName} - ${myLib.home}/${configDir}/dotfiles/config/plugins/local_share_The Usual Suspects"
+    "L+ ${myLib.home}/.config/REAPER - ${myLib.userName} ${myLib.userName} - ${myLib.home}/${myLib.configDirName}/dotfiles/config/REAPER"
+    "L+ ${myLib.home}/.config/yabridgectl - ${myLib.userName} ${myLib.userName} - ${myLib.home}/${myLib.configDirName}/dotfiles/config/yabridgectl"
+    "L+ ${myLib.home}/.config/DecentSampler - ${myLib.userName} ${myLib.userName} - /mnt/sys_archiv/samples/DecentSampler"
+    "L+ \"${myLib.home}/.config/Amp Locker\" - ${myLib.userName} ${myLib.userName} - ${myLib.home}/${myLib.configDirName}/dotfiles/config/plugins/config_Amp Locker"
+    "L+ \"${myLib.home}/.config/Audio Assault\" - ${myLib.userName} ${myLib.userName} - ${myLib.home}/${myLib.configDirName}/dotfiles/config/plugins/config_Audio Assault"
+    "L+ ${myLib.home}/.config/geonkick - ${myLib.userName} ${myLib.userName} - ${myLib.home}/${myLib.configDirName}/dotfiles/config/plugins/config_geonkick"
+    "L+ ${myLib.home}/.config/lsp-plugins - ${myLib.userName} ${myLib.userName} - ${myLib.home}/${myLib.configDirName}/dotfiles/config/plugins/config_lsp-plugins"
+    "L+ ${myLib.home}/.config/3VStudio - ${myLib.userName} ${myLib.userName} - ${myLib.home}/${myLib.configDirName}/dotfiles/config/plugins/config_3VStudio"
+    "L+ \"${myLib.home}/.config/My Company\" - ${myLib.userName} ${myLib.userName} - ${myLib.home}/${myLib.configDirName}/dotfiles/config/plugins/config_My Company"
+    "L+ ${myLib.home}/.config/MANDA_AUDIO - ${myLib.userName} ${myLib.userName} - ${myLib.home}/${myLib.configDirName}/dotfiles/config/plugins/config_MANDA_AUDIO"
+    "L+ ${myLib.home}/.config/Plogue - ${myLib.userName} ${myLib.userName} - ${myLib.home}/${myLib.configDirName}/dotfiles/config/plugins/config_Plogue"
+    "L+ ${myLib.home}/.local/share/geonkick - ${myLib.userName} ${myLib.userName} - ${myLib.home}/${myLib.configDirName}/dotfiles/config/plugins/local_share_geonkick"
+    "L+ \"${myLib.home}/.local/share/The Usual Suspects\" - ${myLib.userName} ${myLib.userName} - ${myLib.home}/${myLib.configDirName}/dotfiles/config/plugins/local_share_The Usual Suspects"
     "L+ ${myLib.home}/.local/share/vital - ${myLib.userName} ${myLib.userName} - /mnt/sys_archiv/samples/vital"
-    "L+ ${home}/drum_sklad - ${myLib.userName} ${myLib.userName} - /mnt/sys_archiv/samples/drum_sklad"
+    "L+ ${myLib.home}/drum_sklad - ${myLib.userName} ${myLib.userName} - /mnt/sys_archiv/samples/drum_sklad"
   ];
 }
