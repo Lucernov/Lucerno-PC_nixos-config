@@ -3,7 +3,6 @@
 , fetchurl
 , unzip
 , autoPatchelfHook
-, makeWrapper
 , alsa-lib
 , freetype
 , curl
@@ -22,7 +21,7 @@ stdenv.mkDerivation {
     inherit url hash;
   };
 
-  nativeBuildInputs = [ unzip autoPatchelfHook makeWrapper ];
+  nativeBuildInputs = [ unzip autoPatchelfHook ];
 
   buildInputs = [
     alsa-lib

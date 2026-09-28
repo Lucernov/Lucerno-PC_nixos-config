@@ -87,9 +87,9 @@ stdenv.mkDerivation {
     # ВАЖНО: путь к бинарнику в makeWrapper должен быть абсолютным ($out/...),
     # иначе обёртка запомнит относительный путь и сломается при запуске
     # из любого другого cwd.
-    mkdir -p $out/libexec/numa-player
-    cp "usr/bin/Numa Player" "$out/libexec/numa-player/Numa Player"
-    chmod +x "$out/libexec/numa-player/Numa Player"
+    # install -Dm755 — гарантирует права 0755 независимо от того,
+    # что лежит в .deb (страховка от будущих изменений апстрима).
+    install -Dm755 "usr/bin/Numa Player" "$out/libexec/numa-player/Numa Player"
 
     mkdir -p $out/bin
     makeWrapper "$out/libexec/numa-player/Numa Player" $out/bin/numa-player \

@@ -4,12 +4,17 @@
 #   - PitchNet распространяется как Makeself-архив (.run), не tar/zip.
 #     Распаковываем через `sh $src --noexec --target .` — распаковка без
 #     запуска install.sh (который требует root и ставит в /opt).
-#   - libonnxruntime.so.1 и libonnxruntime_providers_shared.so — бандл
-#     в payload/opt/Session Loops/PitchNet/lib/. Их нет в buildInputs,
-#     поэтому добавлены в autoPatchelfIgnoreMissingDeps.
-#   - postFixup добавляет $out/share/pitchnet/lib в rpath VST3, иначе
-#     autoPatchelfHook прописывает только системные пути, и onnxruntime
-#     не находится.
+#   - libonnxruntime.so.1 и libonnxruntime_providers_shared.so лежат в
+#     payload/opt/Session Loops/PitchNet/lib/ — разработчик поставляет
+#     их как бандл внутри .run, а не как системную зависимость.
+#     Мы копируем эту папку в $out/share/pitchnet/lib/, поэтому
+#     autoPatchelfHook (рекурсивно обходит $out) находит их сам и
+#     прописывает путь в rpath VST3. В логе сборки это видно:
+#       libonnxruntime.so.1 -> found: .../share/pitchnet/lib
+#   - autoPatchelfIgnoreMissingDeps — страховка: если по какой-то причине
+#     autoPatchelfHook не найдёт onnxruntime в $out (например, апстрим
+#     изменит структуру .run), сборка не упадёт, а пропустит эти deps.
+#     На практике он их находит, поэтому эта опция не срабатывает.
 #   - Standalone НЕ устанавливается: падает при старте с SEGV в
 #     juce::Component::centreWithSize (баг JUCE на Linux). VST3 в REAPER
 #     работает нормально.
@@ -18,7 +23,6 @@
 , stdenv
 , fetchurl
 , autoPatchelfHook
-, patchelf
 , alsa-lib
 , freetype
 , fontconfig
@@ -37,7 +41,7 @@ stdenv.mkDerivation {
     inherit url hash;
   };
 
-  nativeBuildInputs = [ autoPatchelfHook patchelf ];
+  nativeBuildInputs = [ autoPatchelfHook ];
 
   buildInputs = [
     alsa-lib
@@ -46,6 +50,8 @@ stdenv.mkDerivation {
     stdenv.cc.cc.lib
   ];
 
+  # Страховка: если autoPatchelfHook не найдёт onnxruntime в $out,
+  # сборка не упадёт. См. комментарий в шапке файла.
   autoPatchelfIgnoreMissingDeps = [
     "libonnxruntime.so.1"
     "libonnxruntime_providers_shared.so"
@@ -60,7 +66,7 @@ stdenv.mkDerivation {
   installPhase = ''
     runHook preInstall
 
-    # Только ресурсы, которые нужны VST3-плагину.
+    # Ресурсы, нужные VST3-плагину: модели, libonnxruntime, шрифты, локали.
     # Standalone-бинарник PitchNet НЕ устанавливается:
     # он падает при старте из-за бага JUCE (centreWithSize в initialise()).
     # Сам VST3 в REAPER работает нормально.
@@ -77,12 +83,6 @@ stdenv.mkDerivation {
     chmod -R u+w $out/lib/vst3/PitchNet.vst3
 
     runHook postInstall
-  '';
-
-  # autoPatchelfHook перезаписал rpath → добавляем путь к бандлу onnxruntime
-  postFixup = ''
-    patchelf --add-rpath "$out/share/pitchnet/lib" \
-      "$out/lib/vst3/PitchNet.vst3/Contents/x86_64-linux/PitchNet.so"
   '';
 
   meta = with lib; {
