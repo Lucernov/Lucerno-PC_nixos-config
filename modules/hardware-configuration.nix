@@ -169,7 +169,7 @@ in
       modesetting.enable = true;                                            # Обязательно для Wayland
       nvidiaSettings = true;                                                # Устанавливает утилиту nvidia-settings
       powerManagement.enable = false;                                       # Отключаем управление питанием (на десктопе не нужно)
-      package = config.boot.kernelPackages.nvidiaPackages.stable;           # Стабильный nvidia драйвер (НЕ работает с ядром 7.2)
+      package = config.boot.kernelPackages.nvidiaPackages.latest;           # Стабильный nvidia драйвер (НЕ работает с ядром 7.2)
 #       package = config.boot.kernelPackages.nvidiaPackages.mkDriver {        # !!! НОВЫЙ ДРАЙВЕР 595.99.02 (работает с ядром 7.2)
 #         version = "595.99.02";
 #         sha256_64bit = "sha256-6HR3lYv3YwcFSTJL1a1slI66btIQ5EAFs+/4SUD24ew=";
