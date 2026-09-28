@@ -172,10 +172,10 @@ in
 #      package = config.boot.kernelPackages.nvidiaPackages.latest;           # Стабильный nvidia драйвер (НЕ работает с ядром 7.2)
       package = config.boot.kernelPackages.nvidiaPackages.mkDriver {
         version = "615.71.09";
-        sha256_64bit = "sha256-...";  # нужно будет найти актуальные хеши
-        openSha256 = "sha256-...";
-        settingsSha256 = "sha256-...";
-        persistencedSha256 = "sha256-...";
+        sha256_64bit = "sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=";  # нужно будет найти актуальные хеши
+        openSha256 = "sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=";
+        settingsSha256 = "sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=";
+        persistencedSha256 = "sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=";
       };
 #       package = config.boot.kernelPackages.nvidiaPackages.mkDriver {        # !!! НОВЫЙ ДРАЙВЕР 595.99.02 (работает с ядром 7.2)
 #         version = "595.99.02";
