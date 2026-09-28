@@ -1,5 +1,5 @@
 # modules/packages.nix
-{ pkgs, pkgs-unstable, myLib, blender-cuda, floe, ... }:
+{ pkgs, pkgs-unstable, myLib, blender-cuda, ... }:
 
 {
   # ========== Включение системных модулей для программ ==========
@@ -105,6 +105,7 @@
     file                                                          # Определение типа файла (ELF, PNG, tar, ...)
     libimobiledevice                                              # Библиотека и набор утилит для связи с устройствами Apple (iPhone, iPad) по USB
     ifuse                                                         # Утилита для монтирования файловой системы iPhone/iPad как обычной папки в Linux (через FUSE)
+    vulkan-hdr-layer-kwin6                                        # Vulkan HDR Layer — посредник между HDR-игрой и драйвером NVIDIA (решает проблему "HDR не обнаружен")
     linuxPackages_zen.cpupower                                    # Утилита для управления частотой CPU (используется для смены governor)
   # rtcqs                                                         # Real-Time Config Quick Scan – диагностика системы для аудио (пока нет в NIXOS)
 
@@ -227,7 +228,6 @@
     decent-sampler                                                # Сэмплер для библиотек DecentSampler (формат .dspreset, .dslibrary)
     my-packages.sforzando                                         # Семплер форматов SFZ v1 \ v2 и  ARIA
     my-packages.numa-player                                       # Виртуальный инструмент Studiologic Numa Player (VST3 + standalone)
-  # floe.packages.${pkgs.stdenv.hostPlatform.system}.floe         # Floe – сэмплер-синтезатор (CLAP/VST3) с 3 слоями, гранулярным синтезом и Lua-скриптингоми (флейк пока сломан)
     my-packages.orchestools                                       # Набор оркестровых VST3-инструментов (Brass, Perc, Strings, Winds)
     my-packages.ot-piano-s                                        # Пианино OT P1ANO S (VST2)
     ripplerx                                                      # Физически моделируемый синтезатор (модальный синтез) с двойными резонаторами, аналог AAS Chromaphone и Ableton Collision
