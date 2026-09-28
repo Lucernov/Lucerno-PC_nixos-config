@@ -58,16 +58,20 @@
         config.allowUnfree = true;                                                                         # !!! TEMP !!!
       };                                                                                                   # !!! TEMP !!!
 
-      pkgsWithOverlay = import nixpkgs {                                                                   # Создаём экземпляр nixpkgs с оверлеем (кастомные пакеты)
+      allOverlays = [                                                                                      # Все оверлеи здесь и переданы один раз в `nixpkgs.pkgs = pkgsWithOverlay`. Порядок применения снизу вверх
+        (import ./pkgs/default.nix { pkgs-unstable = pkgsUnstable; })                                      # 1. Оверлей с моими пакетами (my-packages), ничего не переопределяет
+        nur.overlays.default                                                                               # 2. Все пакеты из NUR доступны как pkgs.nur.repos.<user>.<pkg>, ничего не переопределяет
+        comfyui-nix.overlays.default                                                                       # 3. Оверлей ComfyUI (comfy-ui-cuda), ничего не переопределяет
+        (final: prev: {                                                                                    # 4. Фиксированные версии krita и minion ПЕРЕОПРЕДЕЛЯЕТ существующие пакеты, поэтому идёт последним
+          krita = nixpkgs-krita-25-11.legacyPackages.${final.stdenv.hostPlatform.system}.krita;            #    Krita из фиксированного nixpkgs (новая версия не работает с ComfyUI)
+          minion = pkgsMinion.minion;                                                                      #    Minion из фиксированного nixpkgs (в основном канале сломан)
+        })
+      ];
+
+      pkgsWithOverlay = import nixpkgs {                                                                   # Создаём экземпляр nixpkgs со всеми оверлеями
         localSystem = "x86_64-linux";                                                                      # Здесь также используем localSystem
-        config = {
-          allowUnfree = true;                                                                              # Разрешает установку пакетов с несвободными лицензиями
-        };
-        overlays = [
-          (import ./pkgs/default.nix { pkgs-unstable = pkgsUnstable; })                                    # Подключаем оверлей с моими пакетами (my-packages)
-          nur.overlays.default                                                                             # Теперь все пакеты из NUR доступны как pkgs.nur.repos.<пользователь>.<пакет>
-          comfyui-nix.overlays.default                                                                     # Оверлей ComfyUI для добавления comfy-ui-cuda
-        ];
+        config = { allowUnfree = true; };                                                                  # Разрешает установку пакетов с несвободными лицензиями
+        overlays = allOverlays;                                                                            # Единый список оверлеев (см. выше)
       };
 
       myLib = import ./mylib.nix;                                                                          # Импорт моего файла библиотеки с общими переменными
@@ -79,24 +83,15 @@
           inherit myLib;                                                                                   # Мои общие переменные
           inherit inputs;                                                                                  # Все входы (flake-зависимости)
           inherit blender-cuda;                                                                            # Flake с Blender+CUDA для передачи в пакеты
-          inherit nixpkgs-krita-25-11;                                                                     # Фиксированный nixpkgs для Krita
+          inherit nixpkgs-krita-25-11;                                                                     # Фиксированный nixpkgs для Krita (на случай, если модулям нужен доступ к нему напрямую)
           inherit floe;                                                                                    # сэмплер-синтезатор (CLAP/VST3) с 3 слоями, гранулярным синтезом и Lua-скриптингом
           pkgs-unstable = pkgsUnstable;                                                                    # Нестабильные пакеты для использования в модулях
           import-tree = inputs.import-tree;                                                                # Утилита для рекурсивного импорта
-          pkgs-minion = pkgsMinion;                                                                        # !!! TEMP !!!
         };
 
         modules = [                                                                                        # Список модулей, из которых собирается система
           inputs.stylix.nixosModules.stylix                                                                # Модуль стилизации (stylix)
-          ({ config, pkgs, lib, nixpkgs-krita-25-11, pkgs-minion, ... }: {                                 # Переопределяем krita из фиксированного набора пакетов
-            nixpkgs.overlays = [
-              (final: prev: {
-              krita = nixpkgs-krita-25-11.legacyPackages.${final.stdenv.hostPlatform.system}.krita;        # Берём krita из фиксированной версии
-              minion = pkgs-minion.minion;                                                                 # Берём minion из фиксированной версии
-              })
-            ];
-          })
-          { nixpkgs.pkgs = pkgsWithOverlay; }                                                              # Переопределяем pkgs для всей системы (с оверлеем)
+          { nixpkgs.pkgs = pkgsWithOverlay; }                                                              # Переопределяем pkgs для всей системы
           (inputs.import-tree ./modules)                                                                   # Основной модуль config nixos. Рекурсивно импортируем все модули из папки modules/nixos
         ];
       };

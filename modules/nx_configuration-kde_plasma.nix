@@ -8,7 +8,7 @@
       defaultSession = "plasma";                                    # Указывает, какая сессия рабочего стола будет запускаться по умолчанию. Значение "plasma" соответствует KDE Plasma (может быть "plasma" или "plasmawayland")
       autoLogin = {                                                 # Автологин в сессию
         enable = true;
-        user = "lucerno";
+        user = myLib.userName;
       };
     };
     desktopManager.plasma6.enable = true;                           # Подключает все необходимые системные службы, компоненты и настройки, чтобы KDE Plasma 6 могла работать в качестве основной графической среды
