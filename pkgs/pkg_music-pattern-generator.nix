@@ -165,8 +165,8 @@ stdenv.mkDerivation {
         -e 's|^Icon=.*|Icon=music-pattern-generator|' \
         $out/share/applications/music-pattern-generator.desktop
 
-      # Categories — для KDE «Мультимедиа → Аудио и музыка».
-      # Fallback на случай, если апстрим уберёт строку из .desktop.
+      # Categories — для KDE «Мультимедиа → Аудио и музыка»
+      # Fallback на случай, если апстрим уберёт строку из .desktop
       if grep -q '^Categories=' $out/share/applications/music-pattern-generator.desktop; then
         sed -i 's|^Categories=.*|Categories=AudioVideo;Audio;Music;|' \
           $out/share/applications/music-pattern-generator.desktop
