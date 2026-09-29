@@ -4,7 +4,7 @@
 # Лицензия проприетарная (unfree), но сам плагин бесплатный.
 #
 # Особенности:
-#   - В .deb лежат данные (.numalib/.numares, ~380 МБ), но мы их НЕ копируем.
+#   - В .deb лежат данные (.numalib/.numares, ~380 МБ), но их НЕ нужно копировать.
 #     Плагин сам скачивает нужные библиотеки в ~/.config/Studiologic/Numa Player/
 #     при первом использовании. Проверено: работает без данных из .deb.
 #     В store остаются только бинарники (VST3 + standalone).
@@ -15,6 +15,12 @@
 #     ($out/libexec/numa-player/Numa Player), иначе обёртка запоминает
 #     относительный путь и ломается при запуске из другого cwd.
 #   - Categories=AudioVideo;... в .desktop — иначе KDE кладёт в «Прочее».
+#   - WAYLAND_DISPLAY принудительно убирается из окружения обёрткой:
+#     standalone-бинарник собран на JUCE, а JUCE + Wayland + NVIDIA (open modules)
+#     = не создаёт окно (процесс висит без ошибок, но окно не появляется).
+#     Через XWayland (X11) всё работает. Поэтому --unset WAYLAND_DISPLAY,
+#     а не --set QT_QPA_PLATFORM=xcb (Numa — НЕ Qt-приложение, эта переменная
+#     ему безразлична; JUCE смотрит именно на WAYLAND_DISPLAY).
 
 { lib
 , stdenv
@@ -79,27 +85,28 @@ stdenv.mkDerivation {
     mkdir -p $out/lib/vst3
     cp -r "usr/lib/vst3/Numa Player.vst3" $out/lib/vst3/
 
-    # Данные (.numalib/.numares) НЕ копируем — 380 МБ балласта.
+    # Данные (.numalib/.numares) НЕ копируем — 380 МБ балласта
     # Плагин сам скачивает нужные библиотеки в ~/.config/Studiologic/Numa Player/Libraries/
-    # при первом использовании. Проверено: работает без этих данных.
+    # при первом использовании. Проверено: работает без этих данных
 
-    # Standalone — сначала копируем в $out/libexec, затем оборачиваем.
+    # Standalone — сначала копируем в $out/libexec, затем оборачиваем
     # ВАЖНО: путь к бинарнику в makeWrapper должен быть абсолютным ($out/...),
     # иначе обёртка запомнит относительный путь и сломается при запуске
-    # из любого другого cwd.
+    # из любого другого cwd
     # install -Dm755 — гарантирует права 0755 независимо от того,
-    # что лежит в .deb (страховка от будущих изменений апстрима).
+    # что лежит в .deb (страховка от будущих изменений апстрима)
     install -Dm755 "usr/bin/Numa Player" "$out/libexec/numa-player/Numa Player"
 
     mkdir -p $out/bin
     makeWrapper "$out/libexec/numa-player/Numa Player" $out/bin/numa-player \
+      --unset WAYLAND_DISPLAY \
       --prefix LD_LIBRARY_PATH : "${lib.makeLibraryPath [
         alsa-lib freetype fontconfig curl
         libX11 libXcursor libXext libXinerama libXrandr
         stdenv.cc.cc.lib
       ]}"
 
-    # .desktop — копируем под именем без пробела (KDE не любит пробелы)
+    # .desktop — копируем под именем без пробела
     mkdir -p $out/share/applications
     cp "usr/share/applications/Numa Player.desktop" \
        "$out/share/applications/numa-player.desktop"
@@ -122,7 +129,7 @@ stdenv.mkDerivation {
     # Иконка
     mkdir -p $out/share/icons/hicolor/256x256/apps
     cp "usr/share/icons/hicolor/256x256/apps/NumaPlayer.png" \
-       $out/share/icons/hicolor/256x256/apps/
+       "$out/share/icons/hicolor/256x256/apps/"
 
     runHook postInstall
   '';
