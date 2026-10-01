@@ -262,18 +262,7 @@
     # МУЗЫКА
       # --- DAW и среда ---
     reaper-sws-extension                                          # Расширение SWS для REAPER (дополнительные команды и автоматизация)
-    #reaper-reapack-extension                                      # Менеджер скриптов ReaPack для REAPER (установка пользовательских скриптов)
-(reaper-reapack-extension.overrideAttrs (old: {
-  preConfigure = (old.preConfigure or "") + ''
-    echo "=== REAPACK PATCH: patching C++20 lambdas ==="
-    find src \( -name '*.cpp' -o -name '*.hpp' -o -name '*.h' \) \
-      ! -name 'api_*' \
-      -exec sed -i 's/\[=\]/[=, this]/g' {} +
-    echo "=== REAPACK PATCH: remaining [=] occurrences: ==="
-    grep -rn '\[=\]' src/ 2>/dev/null | head -5 || echo "  none"
-  '';
-}))
-
+    reaper-reapack-extension                                      # Менеджер скриптов ReaPack для REAPER (установка пользовательских скриптов)
       # --- Гитарные процессоры и усилители ---
     ratatouille-lv2                                               # плагин для загрузки и микширования нейросетевых моделей гитарных усилителей (аналог Neural Amp Model)
       # --- Эффекты (обработка звука) ---
