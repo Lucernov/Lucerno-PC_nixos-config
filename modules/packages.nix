@@ -265,11 +265,11 @@
     #reaper-reapack-extension                                      # Менеджер скриптов ReaPack для REAPER (установка пользовательских скриптов)
     (reaper-reapack-extension.overrideAttrs (old: {
       postPatch = (old.postPatch or "") + ''
-        # C++20 требует явного this в лямбдах. Патчим только те файлы,
-        # где лямбды находятся в методах класса. Файлы api_* пропускаем:
-        # там лямбды внутри статических функций, и this не существует.
-        find src \( -name '*.cpp' -o -name '*.h' \) ! -name 'api_*' -exec \
-          sed -i 's/\[=\]/[=, this]/g' {} +
+        # C++20 требует явного this в лямбдах. Патчим .cpp, .h и .hpp
+        # (кроме api_*: там лямбды в статических функциях, this не существует).
+        find src \( -name '*.cpp' -o -name '*.h' -o -name '*.hpp' \) \
+          ! -name 'api_*' \
+          -exec sed -i 's/\[=\]/[=, this]/g' {} +
       '';
     }))
 
