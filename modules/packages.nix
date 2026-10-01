@@ -262,7 +262,10 @@
     # МУЗЫКА
       # --- DAW и среда ---
     reaper-sws-extension                                          # Расширение SWS для REAPER (дополнительные команды и автоматизация)
-    reaper-reapack-extension                                      # Менеджер скриптов ReaPack для REAPER (установка пользовательских скриптов)
+    (reaper-reapack-extension.overrideAttrs (old: {
+      NIX_CFLAGS_COMPILE = (old.NIX_CFLAGS_COMPILE or "") + " -Wno-error=deprecated";
+    }))
+    #reaper-reapack-extension                                      # Менеджер скриптов ReaPack для REAPER (установка пользовательских скриптов)
       # --- Гитарные процессоры и усилители ---
     ratatouille-lv2                                               # плагин для загрузки и микширования нейросетевых моделей гитарных усилителей (аналог Neural Amp Model)
       # --- Эффекты (обработка звука) ---
