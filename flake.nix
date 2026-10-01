@@ -69,6 +69,12 @@
         overlays = allOverlays;                                                                            # Единый список оверлеев (см. выше)
       };
 
+      reaperReapackFixed = pkgsWithOverlay.reaper-reapack-extension.override {
+        stdenv = pkgsWithOverlay.withCFlags [
+          "-Wno-error=deprecated"
+        ] pkgsWithOverlay.stdenv;
+      };
+
       myLib = import ./mylib.nix;                                                                          # Импорт моего файла библиотеки с общими переменными
     in
     {
@@ -81,6 +87,7 @@
           inherit nixpkgs-krita-25-11;                                                                     # Фиксированный nixpkgs для Krita (на случай, если модулям нужен доступ к нему напрямую)
           pkgs-unstable = pkgsUnstable;                                                                    # Нестабильные пакеты для использования в модулях
           import-tree = inputs.import-tree;                                                                # Утилита для рекурсивного импорта
+          reaperReapackFixed = reaperReapackFixed;
         };
 
         modules = [                                                                                        # Список модулей, из которых собирается система
