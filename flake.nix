@@ -47,18 +47,29 @@
           allowUnfree = true;
         };
         overlays = [
-    (final: prev: {
-      # GCC 16 + C++20: implicit 'this' capture в лямбдах [=] — патчим один раз здесь,
-      # чтобы работало ВЕЗДЕ: и в packages.nix, и в nx_audio.nix.
-      reaper-reapack-extension = prev.reaper-reapack-extension.overrideAttrs (old: {
-        preConfigure = (old.preConfigure or "") + ''
-          find src \( -name '*.cpp' -o -name '*.hpp' -o -name '*.h' \) \
-            ! -name 'api_*' \
-            -exec sed -i 's/\[=\]/[=, this]/g' {} +
-        '';
-      });
-    })
-  ];
+          (final: prev: {
+            # ---------- ПАТЧ REAPACK (уже есть) ----------
+            reaper-reapack-extension = prev.reaper-reapack-extension.overrideAttrs (old: {
+              preConfigure = (old.preConfigure or "") + ''
+                find src \( -name '*.cpp' -o -name '*.hpp' -o -name '*.h' \) \
+                  ! -name 'api_*' \
+                  -exec sed -i 's/\[=\]/[=, this]/g' {} +
+              '';
+            });
+
+            # ---------- ПАТЧ SWS (GCC 16 / C++20) ----------
+            reaper-sws-extension = prev.reaper-sws-extension.overrideAttrs (old: {
+              preConfigure = (old.preConfigure or "") + ''
+                # Убираем удалённый конструктор копирования — из-за него
+                # ContextAction перестаёт быть литеральным типом, и constexpr-массив
+                # g_actions[] не компилируется в C++20 (GCC 16).
+                # Это ровно тот фикс, что в upstream-коммите 1eac4cb.
+                sed -i '/ContextAction(const ContextAction &) = delete;/d' \
+                  Breeder/BR_ContextualToolbars.h
+              '';
+            });
+          })
+        ];
       };
 
       pkgsMinion = import nixpkgs-minion-25-11 {                                                           # !!! TEMP !!!
