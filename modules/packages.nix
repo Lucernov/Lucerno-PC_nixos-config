@@ -264,9 +264,10 @@
     reaper-sws-extension                                          # Расширение SWS для REAPER (дополнительные команды и автоматизация)
     #reaper-reapack-extension                                      # Менеджер скриптов ReaPack для REAPER (установка пользовательских скриптов)
     (reaper-reapack-extension.overrideAttrs (old: {
-      cmakeFlags = (old.cmakeFlags or []) ++ [
-        "-DCMAKE_CXX_FLAGS=-Wno-error=deprecated"
-      ];
+      postPatch = (old.postPatch or "") + ''
+        # Убираем -Werror и все его варианты из CMakeLists.txt ДО конфигурации CMake
+        find . -name 'CMakeLists.txt' -exec sed -i -E 's/-Werror(=[^ ]*)?//g' {} \;
+      '';
     }))
 
       # --- Гитарные процессоры и усилители ---
