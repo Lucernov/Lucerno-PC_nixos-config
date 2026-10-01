@@ -46,45 +46,6 @@
         config = {
           allowUnfree = true;
         };
-        overlays = [
-          (final: prev: {
-            # ---------- ПАТЧ REAPACK (уже есть) ----------
-            reaper-reapack-extension = prev.reaper-reapack-extension.overrideAttrs (old: {
-              preConfigure = (old.preConfigure or "") + ''
-                find src \( -name '*.cpp' -o -name '*.hpp' -o -name '*.h' \) \
-                  ! -name 'api_*' \
-                  -exec sed -i 's/\[=\]/[=, this]/g' {} +
-              '';
-            });
-
-            # ---------- ПАТЧ SWS (GCC 16 / C++20) ----------
-reaper-sws-extension = prev.reaper-sws-extension.overrideAttrs (old: {
-  preConfigure = (old.preConfigure or "") + ''
-    echo "=== SWS PATCH: preConfigure running ==="
-    echo "--- pwd: $(pwd) ---"
-    ls -la Breeder/BR_ContextualToolbars.h || echo "HEADER NOT FOUND"
-
-    echo "--- Before: lines with ContextAction( ---"
-    grep -n 'ContextAction(const' Breeder/BR_ContextualToolbars.h || echo "NO MATCH"
-
-    # Гибкий паттерн: удалить всю строку, содержащую 'ContextAction(const ContextAction'
-    sed -i '/ContextAction(const ContextAction/d' Breeder/BR_ContextualToolbars.h
-
-    echo "--- After: lines with ContextAction( ---"
-    grep -n 'ContextAction(const' Breeder/BR_ContextualToolbars.h || echo "OK: line removed"
-
-    # Дополнительная страховка: заменить constexpr на const в .cpp —
-    # это убирает требование literal type у массива g_actions[]
-    sed -i 's/constexpr ContextAction g_actions/const ContextAction g_actions/' \
-      Breeder/BR_ContextualToolbars.cpp
-    echo "--- g_actions after cpp patch: ---"
-    grep -n 'ContextAction g_actions' Breeder/BR_ContextualToolbars.cpp || echo "no match"
-
-    echo "=== SWS PATCH: done ==="
-  '';
-});
-          })
-        ];
       };
 
       pkgsMinion = import nixpkgs-minion-25-11 {                                                           # !!! TEMP !!!
