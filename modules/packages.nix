@@ -263,15 +263,15 @@
       # --- DAW и среда ---
     reaper-sws-extension                                          # Расширение SWS для REAPER (дополнительные команды и автоматизация)
     #reaper-reapack-extension                                      # Менеджер скриптов ReaPack для REAPER (установка пользовательских скриптов)
-    (reaper-reapack-extension.overrideAttrs (old: {
-      postPatch = (old.postPatch or "") + ''
-        # C++20 требует явного this в лямбдах. Патчим .cpp, .h и .hpp
-        # (кроме api_*: там лямбды в статических функциях, this не существует).
-        find src \( -name '*.cpp' -o -name '*.h' -o -name '*.hpp' \) \
-          ! -name 'api_*' \
-          -exec sed -i 's/\[=\]/[=, this]/g' {} +
-      '';
-    }))
+(reaper-reapack-extension.overrideAttrs (old: {
+  postPatch = (old.postPatch or "") + ''
+    # C++20 требует явного this в лямбдах. Патчим .cpp, .h и .hpp
+    # (кроме api_*: там лямбды в статических функциях, this не существует).
+    find src \( -name '*.cpp' -o -name '*.h' -o -name '*.hpp' \) \
+      ! -name 'api_*' \
+      -exec sed -i 's/\[=\]/[=, this]/g' {} +
+  '';
+}))
 
       # --- Гитарные процессоры и усилители ---
     ratatouille-lv2                                               # плагин для загрузки и микширования нейросетевых моделей гитарных усилителей (аналог Neural Amp Model)
