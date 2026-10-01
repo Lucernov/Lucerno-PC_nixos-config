@@ -265,8 +265,9 @@
     #reaper-reapack-extension                                      # Менеджер скриптов ReaPack для REAPER (установка пользовательских скриптов)
     (reaper-reapack-extension.overrideAttrs (old: {
       postPatch = (old.postPatch or "") + ''
-        # Убираем -Werror и все его варианты из CMakeLists.txt ДО конфигурации CMake
-        find . -name 'CMakeLists.txt' -exec sed -i -E 's/-Werror(=[^ ]*)?//g' {} \;
+        # C++20 требует явного this в лямбдах. Патчим исходники ReaPack.
+        find src \( -name '*.cpp' -o -name '*.h' \) -exec \
+          sed -i 's/\[=\]/[=, this]/g' {} +
       '';
     }))
 
