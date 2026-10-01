@@ -215,6 +215,7 @@
     # МУЗЫКА
       # --- DAW и среда ---
     my-packages.reaper                                            # REAPER – цифровая звуковая рабочая станция (DAW) БЕРЕТСЯ ИЗ НЕСТАБИЛЬНОГО КАНАЛА через оверлей!!!
+    reaper-reapack-extension                                      # Менеджер скриптов ReaPack для REAPER (установка пользовательских скриптов)
     wineWow64Packages.staging                                     # Wine с поддержкой 64 и 32 бит (staging‑патчи для аудио)
     yabridge                                                      # Мост для запуска Windows VST-плагинов в Linux (через Wine)
     yabridgectl                                                   # Утилита для управления yabridge (сканирование, синхронизация)
@@ -262,10 +263,7 @@
     # МУЗЫКА
       # --- DAW и среда ---
     reaper-sws-extension                                          # Расширение SWS для REAPER (дополнительные команды и автоматизация)
-    (reaper-reapack-extension.overrideAttrs (old: {               # Фикс сборки с GCC 16+ (C++20: implicit 'this' capture)
-      NIX_CFLAGS_COMPILE = (old.NIX_CFLAGS_COMPILE or "") + " -Wno-error=deprecated";
-    }))
-    #reaper-reapack-extension                                      # Менеджер скриптов ReaPack для REAPER (установка пользовательских скриптов)
+
       # --- Гитарные процессоры и усилители ---
     ratatouille-lv2                                               # плагин для загрузки и микширования нейросетевых моделей гитарных усилителей (аналог Neural Amp Model)
       # --- Эффекты (обработка звука) ---
