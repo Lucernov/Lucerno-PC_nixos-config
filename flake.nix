@@ -46,6 +46,19 @@
         config = {
           allowUnfree = true;
         };
+        overlays = [
+    (final: prev: {
+      # GCC 16 + C++20: implicit 'this' capture в лямбдах [=] — патчим один раз здесь,
+      # чтобы работало ВЕЗДЕ: и в packages.nix, и в nx_audio.nix.
+      reaper-reapack-extension = prev.reaper-reapack-extension.overrideAttrs (old: {
+        preConfigure = (old.preConfigure or "") + ''
+          find src \( -name '*.cpp' -o -name '*.hpp' -o -name '*.h' \) \
+            ! -name 'api_*' \
+            -exec sed -i 's/\[=\]/[=, this]/g' {} +
+        '';
+      });
+    })
+  ];
       };
 
       pkgsMinion = import nixpkgs-minion-25-11 {                                                           # !!! TEMP !!!
