@@ -262,7 +262,7 @@
     # МУЗЫКА
       # --- DAW и среда ---
     reaper-sws-extension                                          # Расширение SWS для REAPER (дополнительные команды и автоматизация)
-    (reaper-reapack-extension.overrideAttrs (old: {
+    (reaper-reapack-extension.overrideAttrs (old: {               # Фикс сборки с GCC 16+ (C++20: implicit 'this' capture)
       NIX_CFLAGS_COMPILE = (old.NIX_CFLAGS_COMPILE or "") + " -Wno-error=deprecated";
     }))
     #reaper-reapack-extension                                      # Менеджер скриптов ReaPack для REAPER (установка пользовательских скриптов)
