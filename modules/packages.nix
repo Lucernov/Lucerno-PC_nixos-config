@@ -1,5 +1,5 @@
 # modules/packages.nix
-{ pkgs, pkgs-unstable, myLib, blender-cuda, reaperReapackFixed, ... }:
+{ pkgs, pkgs-unstable, myLib, blender-cuda, ... }:
 
 {
   # ========== Включение системных модулей для программ ==========
@@ -263,7 +263,11 @@
       # --- DAW и среда ---
     reaper-sws-extension                                          # Расширение SWS для REAPER (дополнительные команды и автоматизация)
     #reaper-reapack-extension                                      # Менеджер скриптов ReaPack для REAPER (установка пользовательских скриптов)
-    reaperReapackFixed
+    (reaper-reapack-extension.overrideAttrs (old: {
+      cmakeFlags = (old.cmakeFlags or []) ++ [
+        "-DCMAKE_CXX_FLAGS=-Wno-error=deprecated"
+      ];
+    }))
 
       # --- Гитарные процессоры и усилители ---
     ratatouille-lv2                                               # плагин для загрузки и микширования нейросетевых моделей гитарных усилителей (аналог Neural Amp Model)
