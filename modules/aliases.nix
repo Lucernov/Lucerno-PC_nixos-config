@@ -35,6 +35,14 @@
       # Проверка flake целиком (линтер + сборка всех outputs)
       check-flake = "cd ${myLib.home}/${myLib.configDirName} && nix flake check --no-build";
 
+      # ========== Автообновление плагинов ==========
+      # под finalAttrs + flake output.
+      update-plugins = "cd ${myLib.home}/${myLib.configDirName} && \
+        for pkg in je8086 ostirus; do \
+          nix-update \"$pkg\" --flake || true; \
+        done && \
+        git diff --stat pkgs/";
+
       # ========== Приложения ==========
       parabolic = "org.nickvision.tubeconverter";                # запустить Parabolic (загрузчик видео/аудио с YouTube)
 

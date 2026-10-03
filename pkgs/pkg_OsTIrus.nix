@@ -20,19 +20,15 @@
 , libxcb
 , xcbutil
 , xcbutilcursor
-, versions
 }:
 
-let
-  inherit (versions.ostirus) version url hash;
-in
-
-stdenv.mkDerivation {
+stdenv.mkDerivation (finalAttrs: {
   pname = "ostirus";
-  inherit version;
+  version = "2.2.25";
 
   src = fetchurl {
-    inherit url hash;
+    url = "https://github.com/dsp56300/gearmulator/releases/download/${finalAttrs.version}/TheUsualSuspects-OsTIrus-CLAP-${finalAttrs.version}-Linux_x86_64.zip";
+    hash = "sha256-2idnSMHn4Yyw3aZfvrlVjYQQvH6/0qUsd8AzNMMwL4M=";
   };
 
   nativeBuildInputs = [ unzip autoPatchelfHook ];
@@ -77,4 +73,4 @@ stdenv.mkDerivation {
     platforms = [ "x86_64-linux" ];
     sourceProvenance = [ sourceTypes.binaryNativeCode ];
   };
-}
+})
