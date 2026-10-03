@@ -36,6 +36,16 @@
       # ========== Замена софта ==========
       cat = "bat --paging=never";                                # bat с подсветкой, но БЕЗ pager (чтобы вести себя как cat)
 
+      # ========== Список всех музыкальных плагинов ==========
+      plugins = "for fmt in clap lv2 vst vst3; do \
+        echo \"\"; \
+        echo \"=== .$fmt ===\"; \
+        echo \"--- system ---\"; \
+        ls /run/current-system/sw/lib/$fmt/ 2>/dev/null || echo \"  (нет)\"; \
+        echo \"--- wine (yabridge) ---\"; \
+        ls ~/.$fmt/ 2>/dev/null || echo \"  (нет)\"; \
+      done";
+
       # ========== Эффекты ==========
       neo- = "neo --defaultbg";                                  # матричный дождь на фоне терминала
 
