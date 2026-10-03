@@ -24,6 +24,7 @@
       # ========== Управление конфигурацией Nix ==========
       sync   = "cd ${myLib.home}/${myLib.configDirName} && git add -A && (git commit -m \"$(date '+%Y-%m-%d %H:%M:%S')\" || true) && git push"; # синхронизировать конфиг с Git
       update = "cd ${myLib.home}/${myLib.configDirName} && git add -A && (git commit -m \"pre-rebuild\" || true) && git push && nh os switch";  # пересобрать NixOS без обновления входов
+      local-up = "cd ${myLib.home}/${myLib.configDirName} && sudo nixos-rebuild switch --flake .#Lucerno-PC --offline 2>&1 | tee /tmp/rebuild.log | tail -60";  # пересобрать NixOS без обращений в интернет
       upgrade = "cd ${myLib.home}/${myLib.configDirName} && git add -A && (git commit -m \"pre-upgrade: $(date '+%Y-%m-%d %H:%M:%S')\" || true) && git push && (nh os switch --update && git add flake.lock && (git commit -m \"upgrade: $(date '+%Y-%m-%d %H:%M:%S')\" || true) && git push) || (echo '⚠️  Сборка упала! Откатываю flake.lock...' && git checkout HEAD -- flake.lock && nh os switch)";  # пересобрать NixOS с обновлением flake.lock
       clean = "nh clean all --keep 2 && nh os switch";  # очистить старые поколения и переключиться
 
