@@ -39,29 +39,41 @@
       # ========== Список всех музыкальных плагинов ==========
       plugins = ''
         for fmt in clap lv2 vst vst3; do
-          sys_dir="/run/current-system/sw/lib/$fmt"
-          user_dir="$HOME/.$fmt"
-          yab_dir="$HOME/.$fmt/yabridge"
-
           echo ""
           echo "=== .$fmt ==="
 
           echo "--- system ---"
-          if [ -d "$sys_dir" ] && [ -n "$(ls -A "$sys_dir" 2>/dev/null)" ]; then
-            ls "$sys_dir"
-          else
-            echo "  (пусто)"
-          fi
+          result=$(ls "/run/current-system/sw/lib/$fmt" 2>/dev/null)
+          [ -n "$result" ] && echo "$result" || echo "  (пусто)"
 
           echo "--- wine (yabridge) ---"
-          if [ -d "$yab_dir" ] && [ -n "$(ls -A "$yab_dir" 2>/dev/null)" ]; then
-            ls "$yab_dir"
-          elif [ -d "$user_dir" ] && [ -n "$(ls -A "$user_dir" 2>/dev/null)" ]; then
-            ls "$user_dir"
-          else
-            echo "  (пусто)"
-          fi
+          result=$(find "$HOME/.$fmt/yabridge" -maxdepth 3 \
+            \( -type d -name "*.vst3" -o -type f -name "*.so" -o -type f -name "*.clap" -o -type f -name "*.lv2" \) \
+            -printf '  %f\n' 2>/dev/null | sort -u)
+          [ -n "$result" ] && echo "$result" || echo "  (пусто)"
         done
+      '';
+
+      # ========== NVIDIA диагностика ==========
+      nvcheck = ''
+        echo "━━━ NVIDIA Driver ━━━"
+        nvidia-smi --query-gpu=driver_version,name,temperature.gpu,utilization.gpu,memory.used,memory.total \
+          --format=csv,noheader 2>/dev/null || echo "  nvidia-smi не отвечает!"
+
+        echo ""
+        echo "━━━ Segfaults in driver (7d) ━━━"
+        result=$(journalctl --since "7 days ago" 2>/dev/null | grep -iE 'segfault.*(nvidia|libnvidia)' | tail -10)
+        [ -n "$result" ] && echo "$result" || echo "  ✅ нет"
+
+        echo ""
+        echo "━━━ Xid / NVRM errors (7d) ━━━"
+        result=$(journalctl -k --since "7 days ago" 2>/dev/null | grep -iE 'Xid|NVRM: GPU|NVRM: Xid' | tail -10)
+        [ -n "$result" ] && echo "$result" || echo "  ✅ нет"
+
+        echo ""
+        echo "━━━ Kernel messages from NVIDIA (1h) ━━━"
+        result=$(journalctl -k --since "1 hour ago" 2>/dev/null | grep -iE 'NVRM|nvidia' | grep -viE 'loading|module license|uses symbols' | tail -10)
+        [ -n "$result" ] && echo "$result" || echo "  ✅ нет"
       '';
 
       # ========== Эффекты ==========
