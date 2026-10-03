@@ -76,7 +76,7 @@
         echo "━━━ Kernel warnings from NVIDIA (24h) ━━━"
         result=$(journalctl -k --since "24 hours ago" 2>/dev/null \
           | grep -iE 'NVRM|nvidia' \
-          | grep -viE 'loading|module license|uses symbols|Kernel command line|vgaarb|Initialized nvidia-drm|frame buffer device|nvlink|HDA NVidia|input:' \
+          | grep -viE 'loading|module license|uses symbols|Command line|vgaarb|Initialized nvidia-drm|frame buffer device|nvlink|HDA NVidia|input:' \
           | tail -10)
         [ -n "$result" ] && echo "$result" || echo "  ✅ нет"
       '';
