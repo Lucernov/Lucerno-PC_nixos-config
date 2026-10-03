@@ -37,14 +37,32 @@
       cat = "bat --paging=never";                                # bat с подсветкой, но БЕЗ pager (чтобы вести себя как cat)
 
       # ========== Список всех музыкальных плагинов ==========
-      plugins = "for fmt in clap lv2 vst vst3; do \
-        echo \"\"; \
-        echo \"=== .$fmt ===\"; \
-        echo \"--- system ---\"; \
-        ls /run/current-system/sw/lib/$fmt/ 2>/dev/null || echo \"  (нет)\"; \
-        echo \"--- wine (yabridge) ---\"; \
-        ls ~/.$fmt/ 2>/dev/null || echo \"  (нет)\"; \
-      done";
+      plugins = ''
+        for fmt in clap lv2 vst vst3; do
+          sys_dir="/run/current-system/sw/lib/$fmt"
+          user_dir="$HOME/.$fmt"
+          yab_dir="$HOME/.$fmt/yabridge"
+
+          echo ""
+          echo "=== .$fmt ==="
+
+          echo "--- system ---"
+          if [ -d "$sys_dir" ] && [ -n "$(ls -A "$sys_dir" 2>/dev/null)" ]; then
+            ls "$sys_dir"
+          else
+            echo "  (пусто)"
+          fi
+
+          echo "--- wine (yabridge) ---"
+          if [ -d "$yab_dir" ] && [ -n "$(ls -A "$yab_dir" 2>/dev/null)" ]; then
+            ls "$yab_dir"
+          elif [ -d "$user_dir" ] && [ -n "$(ls -A "$user_dir" 2>/dev/null)" ]; then
+            ls "$user_dir"
+          else
+            echo "  (пусто)"
+          fi
+        done
+      '';
 
       # ========== Эффекты ==========
       neo- = "neo --defaultbg";                                  # матричный дождь на фоне терминала
