@@ -37,6 +37,7 @@
 
       # ========== Автообновление плагинов ==========
       update-plugins = "cd ${myLib.home}/${myLib.configDirName} && \
+        export GITHUB_TOKEN=$(grep -oE 'ghp_[A-Za-z0-9]+' secrets/github-token | head -1) && \
         for pkg in je8086 ostirus drumlabooh drumlabooh-multi pitchnet; do \
           echo \"━━━ $pkg ━━━\"; \
           nix-update \"$pkg\" --flake || echo \"  ⚠️ $pkg: пропущен\"; \
