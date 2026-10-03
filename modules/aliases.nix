@@ -62,17 +62,22 @@
 
         echo ""
         echo "━━━ Segfaults in driver (7d) ━━━"
-        result=$(journalctl --since "7 days ago" 2>/dev/null | grep -iE 'segfault.*(nvidia|libnvidia)' | tail -10)
+        result=$(journalctl --since "7 days ago" 2>/dev/null \
+          | grep -iE 'segfault.*(nvidia|libnvidia)' | tail -10)
         [ -n "$result" ] && echo "$result" || echo "  ✅ нет"
 
         echo ""
-        echo "━━━ Xid / NVRM errors (7d) ━━━"
-        result=$(journalctl -k --since "7 days ago" 2>/dev/null | grep -iE 'Xid|NVRM: GPU|NVRM: Xid' | tail -10)
+        echo "━━━ NVRM Xid errors (7d) ━━━"
+        result=$(journalctl -k --since "7 days ago" 2>/dev/null \
+          | grep -iE 'NVRM: Xid|NVRM: GPU has fallen' | tail -10)
         [ -n "$result" ] && echo "$result" || echo "  ✅ нет"
 
         echo ""
-        echo "━━━ Kernel messages from NVIDIA (1h) ━━━"
-        result=$(journalctl -k --since "1 hour ago" 2>/dev/null | grep -iE 'NVRM|nvidia' | grep -viE 'loading|module license|uses symbols' | tail -10)
+        echo "━━━ Kernel warnings from NVIDIA (24h) ━━━"
+        result=$(journalctl -k --since "24 hours ago" 2>/dev/null \
+          | grep -iE 'NVRM|nvidia' \
+          | grep -viE 'loading|module license|uses symbols|Kernel command line|vgaarb|Initialized nvidia-drm|frame buffer device|nvlink|HDA NVidia|input:' \
+          | tail -10)
         [ -n "$result" ] && echo "$result" || echo "  ✅ нет"
       '';
 
