@@ -26,19 +26,17 @@
 , alsa-lib
 , freetype
 , fontconfig
-, versions
 }:
 
-let
-  inherit (versions.pitchnet) version url hash;
-in
-
-stdenv.mkDerivation {
+stdenv.mkDerivation (finalAttrs: {
   pname = "pitchnet";
-  inherit version;
+  version = "0.7.0";
 
   src = fetchurl {
-    inherit url hash;
+    # Обрати внимание: в URL стоит "v${version}" — GitHub-тег начинается с v,
+    # а версия в файле — без него. nix-update понимает это автоматически.
+    url = "https://github.com/SessionLoops/PitchNet/releases/download/v${finalAttrs.version}/PitchNet-Linux-x86_64.run";
+    hash = "sha256-q6tee1tCElyEt1pFz9Dlsg06HbG483weHXfzxeWQcr4=";
   };
 
   nativeBuildInputs = [ autoPatchelfHook ];
@@ -92,4 +90,4 @@ stdenv.mkDerivation {
     platforms = [ "x86_64-linux" ];
     sourceProvenance = [ sourceTypes.binaryNativeCode ];
   };
-}
+})

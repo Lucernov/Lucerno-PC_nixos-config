@@ -16,14 +16,6 @@
     hash      = "sha256-YPf3ZCVPP4qgVPdj0t5odSQLK1KhnwzrPuJIHF90tL0=";
   };
 
-#   drumlabooh  = {                                                       # обновляется иногда
-#     version   = "12.2.0";                                               # https://github.com/psemiletov/drumlabooh/releases
-#     url       = "https://github.com/psemiletov/drumlabooh/releases/download/12.2.0/drumlabooh.lv2.zip";
-#     urlMulti  = "https://github.com/psemiletov/drumlabooh/releases/download/12.2.0/drumlabooh-multi.lv2.zip";
-#     hash      = "sha256-IQ0XzIwJqGg+6FynmJBllyBIzWD3dgFfllOTEx0cMDM=";  # одноканальный
-#     hashMulti = "sha256-qdZJvXsUlEmmlTwUwO/C47OXM+gwRlu2cNRFGrJDi1A=";  # мультиканальный
-#   };
-
   lostSamplers = {                                                      # SuperflyDSP Lost Samplers – эмуляция шумов сэмплеров
     version    = "1.1.5";
     url        = "https://superflydsp.com/wp-content/uploads/2023/04/LostSamplers_1.1.5_Linux.zip";
@@ -68,11 +60,11 @@
     version  = "1.0";
   };
 
-  pitchnet  = {
-    version = "0.6.1";                                                  # https://github.com/SessionLoops/PitchNet/releases
-    url     = "https://github.com/SessionLoops/PitchNet/releases/download/v0.6.1/PitchNet-Linux-x86_64.run";
-    hash    = "sha256-3nXBa/tmfM/KSQ9YBJ/Tcmr5+Pk47BRprZDWYTz2ujA=";
-  };
+#   pitchnet  = {
+#     version = "0.6.1";                                                  # https://github.com/SessionLoops/PitchNet/releases
+#     url     = "https://github.com/SessionLoops/PitchNet/releases/download/v0.6.1/PitchNet-Linux-x86_64.run";
+#     hash    = "sha256-3nXBa/tmfM/KSQ9YBJ/Tcmr5+Pk47BRprZDWYTz2ujA=";
+#   };
 
   sforzando = {                                                         # обновляется иногда
     version = "1.982";                                                  # https://www.plogue.com/downloads.html
