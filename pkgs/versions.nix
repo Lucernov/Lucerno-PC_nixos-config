@@ -24,11 +24,11 @@
     hashMulti = "sha256-qdZJvXsUlEmmlTwUwO/C47OXM+gwRlu2cNRFGrJDi1A=";  # мультиканальный
   };
 
-  je8086    = {                                                         # обновляется активно
-    version = "2.2.16";                                                 # https://theusualsuspects.io/builds/downloads?product=JE8086&format=All&os=Linux_x86_64
-    url     = "https://github.com/dsp56300/gearmulator/releases/download/2.2.16/TheUsualSuspects-JE8086-CLAP-2.2.16-Linux_x86_64.zip";
-    hash    = "sha256-KoBRwHO2YJLl/bpAtzB/TPKYn2abiZ+hDaCjVqI+LFU=";
-  };
+#   je8086    = {                                                         # обновляется активно
+#     version = "2.2.16";                                                 # https://theusualsuspects.io/builds/downloads?product=JE8086&format=All&os=Linux_x86_64
+#     url     = "https://github.com/dsp56300/gearmulator/releases/download/2.2.16/TheUsualSuspects-JE8086-CLAP-2.2.16-Linux_x86_64.zip";
+#     hash    = "sha256-KoBRwHO2YJLl/bpAtzB/TPKYn2abiZ+hDaCjVqI+LFU=";
+#   };
 
   lostSamplers = {                                                      # SuperflyDSP Lost Samplers – эмуляция шумов сэмплеров
     version    = "1.1.5";

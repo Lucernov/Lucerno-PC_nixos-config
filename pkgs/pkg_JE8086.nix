@@ -20,19 +20,15 @@
 , libxcb
 , xcbutil
 , xcbutilcursor
-, versions
 }:
 
-let
-  inherit (versions.je8086) version url hash;
-in
-
-stdenv.mkDerivation {
+stdenv.mkDerivation (finalAttrs: {
   pname = "je8086";
-  inherit version;
+  version = "2.2.25";
 
   src = fetchurl {
-    inherit url hash;
+    url = "https://github.com/dsp56300/gearmulator/releases/download/${finalAttrs.version}/TheUsualSuspects-JE8086-CLAP-${finalAttrs.version}-Linux_x86_64.zip";
+    hash = "sha256-2KLozTg66MKXuQ4+0zVHPQ6wpdXvkyl8LVf2GBCAHzA=";
   };
 
   nativeBuildInputs = [ unzip autoPatchelfHook ];
@@ -62,11 +58,8 @@ stdenv.mkDerivation {
 
   installPhase = ''
     runHook preInstall
-
-    # Устанавливаем CLAP-плагин
     mkdir -p $out/lib/clap
     cp usr/local/lib/clap/JE8086.clap $out/lib/clap/
-
     runHook postInstall
   '';
 
@@ -78,4 +71,4 @@ stdenv.mkDerivation {
     sourceProvenance = [ sourceTypes.binaryNativeCode ];
     maintainers = [ ];
   };
-}
+})
