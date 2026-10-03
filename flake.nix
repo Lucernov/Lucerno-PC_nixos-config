@@ -46,6 +46,22 @@
         config = {
           allowUnfree = true;
         };
+        overlays = [
+          (final: prev: {
+            # ---------- ПАТЧ REAPACK (GCC 16.2 / C++20) ----------
+            # В GCC 16 предупреждение "implicit capture of 'this' via '[=]'"
+            # стало ошибкой из-за -Werror в проекте. Заменяем [=] на [=, this]
+            # в исходниках. Файлы api_* исключаем: там лямбды в статических
+            # функциях, 'this' не существует, и [=, this] не скомпилируется.
+            reaper-reapack-extension = prev.reaper-reapack-extension.overrideAttrs (old: {
+              preConfigure = (old.preConfigure or "") + ''
+                find src \( -name '*.cpp' -o -name '*.hpp' -o -name '*.h' \) \
+                  ! -name 'api_*' \
+                  -exec sed -i 's/\[=\]/[=, this]/g' {} +
+              '';
+            });
+          })
+        ];
       };
 
       pkgsMinion = import nixpkgs-minion-25-11 {                                                           # !!! TEMP !!!
