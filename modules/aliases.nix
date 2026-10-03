@@ -28,6 +28,13 @@
       upgrade = "cd ${myLib.home}/${myLib.configDirName} && git add -A && (git commit -m \"pre-upgrade: $(date '+%Y-%m-%d %H:%M:%S')\" || true) && git push && (nh os switch --update && git add flake.lock && (git commit -m \"upgrade: $(date '+%Y-%m-%d %H:%M:%S')\" || true) && git push) || (echo '⚠️  Сборка упала! Откатываю flake.lock...' && git checkout HEAD -- flake.lock && nh os switch)";  # пересобрать NixOS с обновлением flake.lock
       clean = "nh clean all --keep 2 && nh os switch";  # очистить старые поколения и переключиться
 
+      # ========== Проверка конфига без сборки ==========
+      checknix = "cd ${myLib.home}/${myLib.configDirName} && time nix eval .#nixosConfigurations.Lucerno-PC.config.system.build.toplevel";
+      # Полный dry-run (вычисляет + показывает, что будет собрано, но НЕ применяет)
+      check-dry = "cd ${myLib.home}/${myLib.configDirName} && nixos-rebuild dry-build --flake .#Lucerno-PC --option substitute false";
+      # Проверка flake целиком (линтер + сборка всех outputs)
+      check-flake = "cd ${myLib.home}/${myLib.configDirName} && nix flake check --no-build";
+
       # ========== Приложения ==========
       parabolic = "org.nickvision.tubeconverter";                # запустить Parabolic (загрузчик видео/аудио с YouTube)
 
@@ -84,9 +91,5 @@
 
       # ========== Эффекты ==========
       neo- = "neo --defaultbg";                                  # матричный дождь на фоне терминала
-
-      # ========== Discord ==========
-      discord-fix   = "find ~/.config/discord -type d -name modules -exec rm -rf {} \\; 2>/dev/null; rm -rf ~/.config/discord/Cache ~/.config/discord/Code\\ Cache ~/.config/discord/GPUCache ~/.config/discord/Service\\ Worker ~/.cache/discord; discord";  # очистка кеша Discord без потери токена
-      discord-clean = "rm -rf ~/.config/discord ~/.cache/discord && discord"; # полная очистка кеша Discord перед запуском
     };
 }
