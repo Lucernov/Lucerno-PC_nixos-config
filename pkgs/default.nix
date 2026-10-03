@@ -22,7 +22,7 @@ final: prev: {
     amp-locker = pkgs.callPackage ./pkg_Amp-Locker.nix { inherit versions; };
     drum-locker = pkgs.callPackage ./pkg_Drum-Locker.nix { inherit versions; };
     drumlabooh = pkgs.callPackage ./pkg_drumlabooh.nix { inherit versions; };
-    je8086 = pkgs.callPackage ./pkg_JE8086.nix { };                                                                               # Автообновление
+    je8086 = pkgs.callPackage ./pkg_JE8086.nix { };                                                                               # Автообновление через nix-update
     lostSamplers = (pkgs.callPackage ./pkg_SuperflyDSP.nix { inherit versions; }).lostSamplers;
     lostTapes    = (pkgs.callPackage ./pkg_SuperflyDSP.nix { inherit versions; }).lostTapes;
     lostVinyls   = (pkgs.callPackage ./pkg_SuperflyDSP.nix { inherit versions; }).lostVinyls;
@@ -30,7 +30,7 @@ final: prev: {
     music-pattern-generator = pkgs.callPackage ./pkg_music-pattern-generator.nix { inherit versions; };
     numa-player = pkgs.callPackage ./pkg_numa-player.nix { inherit versions; };
     orchestools = pkgs.callPackage ./pkg_orchestools.nix { inherit versions; };
-    ostirus = pkgs.callPackage ./pkg_OsTIrus.nix { inherit versions; };
+    ostirus = pkgs.callPackage ./pkg_OsTIrus.nix { };                                                                             # Автообновление через nix-update
     ot-piano-s = pkgs.callPackage ./pkg_ot-piano-s.nix { inherit versions; };
     pitchnet = pkgs.callPackage ./pkg_pitchnet.nix { inherit versions; };
     sforzando = pkgs.callPackage ./pkg_sforzando.nix { inherit versions; };

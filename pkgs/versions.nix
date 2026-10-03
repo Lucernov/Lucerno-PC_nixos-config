@@ -70,12 +70,6 @@
     version   = "1.0";
   };
 
-  ostirus   = {                                                         # обновляется активно
-    version = "2.2.16";                                                 # https://theusualsuspects.io/builds/downloads?product=OsTIrus&format=All&os=Linux_x86_64
-    url     = "https://github.com/dsp56300/gearmulator/releases/download/2.2.16/TheUsualSuspects-OsTIrus-CLAP-2.2.16-Linux_x86_64.zip";
-    hash    = "sha256-+3g9yEOb2Psjj/K9ZIY6GXYeIwIsRCtIEOrcUZ980eY=";
-  };
-
   ot-piano-s = {                                                        # не обновляется (локальный репозиторий)
     version  = "1.0";
   };
