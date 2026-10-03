@@ -16,18 +16,12 @@
     hash      = "sha256-YPf3ZCVPP4qgVPdj0t5odSQLK1KhnwzrPuJIHF90tL0=";
   };
 
-  drumlabooh  = {                                                       # обновляется иногда
-    version   = "12.2.0";                                               # https://github.com/psemiletov/drumlabooh/releases
-    url       = "https://github.com/psemiletov/drumlabooh/releases/download/12.2.0/drumlabooh.lv2.zip";
-    urlMulti  = "https://github.com/psemiletov/drumlabooh/releases/download/12.2.0/drumlabooh-multi.lv2.zip";
-    hash      = "sha256-IQ0XzIwJqGg+6FynmJBllyBIzWD3dgFfllOTEx0cMDM=";  # одноканальный
-    hashMulti = "sha256-qdZJvXsUlEmmlTwUwO/C47OXM+gwRlu2cNRFGrJDi1A=";  # мультиканальный
-  };
-
-#   je8086    = {                                                         # обновляется активно
-#     version = "2.2.16";                                                 # https://theusualsuspects.io/builds/downloads?product=JE8086&format=All&os=Linux_x86_64
-#     url     = "https://github.com/dsp56300/gearmulator/releases/download/2.2.16/TheUsualSuspects-JE8086-CLAP-2.2.16-Linux_x86_64.zip";
-#     hash    = "sha256-KoBRwHO2YJLl/bpAtzB/TPKYn2abiZ+hDaCjVqI+LFU=";
+#   drumlabooh  = {                                                       # обновляется иногда
+#     version   = "12.2.0";                                               # https://github.com/psemiletov/drumlabooh/releases
+#     url       = "https://github.com/psemiletov/drumlabooh/releases/download/12.2.0/drumlabooh.lv2.zip";
+#     urlMulti  = "https://github.com/psemiletov/drumlabooh/releases/download/12.2.0/drumlabooh-multi.lv2.zip";
+#     hash      = "sha256-IQ0XzIwJqGg+6FynmJBllyBIzWD3dgFfllOTEx0cMDM=";  # одноканальный
+#     hashMulti = "sha256-qdZJvXsUlEmmlTwUwO/C47OXM+gwRlu2cNRFGrJDi1A=";  # мультиканальный
 #   };
 
   lostSamplers = {                                                      # SuperflyDSP Lost Samplers – эмуляция шумов сэмплеров

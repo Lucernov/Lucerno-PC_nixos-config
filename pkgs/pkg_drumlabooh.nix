@@ -5,21 +5,16 @@
 , autoPatchelfHook
 , fontconfig
 , freetype
-, versions
 }:
 
-let
-  inherit (versions.drumlabooh) version url urlMulti hash hashMulti;
-in
-
-stdenv.mkDerivation {
+stdenv.mkDerivation (finalAttrs: {
   pname = "drumlabooh";
-  inherit version;
+  version = "12.2.0";
 
-  srcs = [
-    (fetchurl { url = url;      inherit hash; })
-    (fetchurl { url = urlMulti; hash = hashMulti; })
-  ];
+  src = fetchurl {
+    url = "https://github.com/psemiletov/drumlabooh/releases/download/${finalAttrs.version}/drumlabooh.lv2.zip";
+    hash = "sha256-IQ0XzIwJqGg+6FynmJBllyBIzWD3dgFfllOTEx0cMDM=";
+  };
 
   nativeBuildInputs = [ unzip autoPatchelfHook ];
 
@@ -33,9 +28,7 @@ stdenv.mkDerivation {
 
   unpackPhase = ''
     runHook preUnpack
-    for src in $srcs; do
-      unzip $src
-    done
+    unzip $src
     runHook postUnpack
   '';
 
@@ -43,14 +36,13 @@ stdenv.mkDerivation {
     runHook preInstall
     mkdir -p $out/lib/lv2
     cp -r drumlabooh.lv2 $out/lib/lv2/
-    cp -r drumlabooh-multi.lv2 $out/lib/lv2/
     runHook postInstall
   '';
 
   meta = with lib; {
-    description = "Drum sampler LV2 plugin with multiple drum kits";
+    description = "Drumlabooh – drum sampler LV2 plugin (single-channel)";
     homepage = "https://github.com/psemiletov/drumlabooh";
     license = licenses.gpl3Plus;
     platforms = [ "x86_64-linux" ];
   };
-}
+})

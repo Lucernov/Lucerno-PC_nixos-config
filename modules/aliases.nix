@@ -38,10 +38,16 @@
       # ========== Автообновление плагинов ==========
       # под finalAttrs + flake output.
       update-plugins = "cd ${myLib.home}/${myLib.configDirName} && \
-        for pkg in je8086 ostirus; do \
-          nix-update \"$pkg\" --flake || true; \
+        for pkg in je8086 ostirus drumlabooh drumlabooh-multi; do \
+          echo \"━━━ $pkg ━━━\"; \
+          nix-update \"$pkg\" --flake || echo \"  ⚠️ $pkg: пропущен\"; \
         done && \
+        echo '' && \
         git diff --stat pkgs/";
+      # обновит оба пакета (скачает, посчитает хеши, поправит файлы) - update-plugins
+      # посмотреть, что поменялось (опционально) - git diff pkgs/
+      # собрать и применить - local-up
+      # закоммитить - sync
 
       # ========== Приложения ==========
       parabolic = "org.nickvision.tubeconverter";                # запустить Parabolic (загрузчик видео/аудио с YouTube)
@@ -101,3 +107,5 @@
       neo- = "neo --defaultbg";                                  # матричный дождь на фоне терминала
     };
 }
+
+
