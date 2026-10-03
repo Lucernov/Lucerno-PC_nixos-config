@@ -49,7 +49,7 @@
         overlays = [
           (final: prev: {
             # ---------- ПАТЧ REAPACK (GCC 16.2 / C++20) ----------
-            # В GCC 16 предупреждение "implicit capture of 'this' via '[=]'"
+            # В GCC 16.2 предупреждение "implicit capture of 'this' via '[=]'"
             # стало ошибкой из-за -Werror в проекте. Заменяем [=] на [=, this]
             # в исходниках. Файлы api_* исключаем: там лямбды в статических
             # функциях, 'this' не существует, и [=, this] не скомпилируется.
@@ -61,21 +61,22 @@
               '';
             });
 
-                # ---------- ПАТЧ SWS (GCC 16.2 / C++20) ----------
-                # GCC 16.2 отказывается считать ContextAction literal type, поэтому
-                # constexpr-массив g_actions[] не инициализируется через brace-init-list.
-                # Добавляем в структуру constexpr-конструктор — он делает ContextAction
-                # literal type (инициализация становится вызовом конструктора, а не
-                # aggregate init).
-                reaper-sws-extension = prev.reaper-sws-extension.overrideAttrs (old: {
-                  preConfigure = (old.preConfigure or "") + ''
-                    echo "=== SWS PATCH: inserting constexpr constructor ==="
-                    sed -i 's|bool isBuiltin() const { return type == Builtin; }|constexpr ContextAction(int i, Type t, int o, int c) : iniKey(i), type(t), openCommand(o), toggleCommand(c) {} bool isBuiltin() const { return type == Builtin; }|' \
-                      Breeder/BR_ContextualToolbars.cpp
-                    echo "=== SWS PATCH: verify ==="
-                    grep -n 'constexpr ContextAction(int' Breeder/BR_ContextualToolbars.cpp || echo "PATCH FAILED - pattern not found!"
-                  '';
-                });
+            # ---------- ПАТЧ SWS (GCC 16.2 / C++20) ----------
+            # GCC 16.2 отказывается считать ContextAction literal type, поэтому
+            # constexpr-массив g_actions[] не инициализируется через brace-init-list.
+            # Добавляем в структуру constexpr-конструктор — он делает ContextAction
+            # literal type (инициализация становится вызовом конструктора, а не
+            # aggregate init).
+            # Создал issue - https://github.com/reaper-oss/sws/issues/2046
+            reaper-sws-extension = prev.reaper-sws-extension.overrideAttrs (old: {
+              preConfigure = (old.preConfigure or "") + ''
+                echo "=== SWS PATCH: inserting constexpr constructor ==="
+                sed -i 's|bool isBuiltin() const { return type == Builtin; }|constexpr ContextAction(int i, Type t, int o, int c) : iniKey(i), type(t), openCommand(o), toggleCommand(c) {} bool isBuiltin() const { return type == Builtin; }|' \
+                  Breeder/BR_ContextualToolbars.cpp
+                echo "=== SWS PATCH: verify ==="
+                grep -n 'constexpr ContextAction(int' Breeder/BR_ContextualToolbars.cpp || echo "PATCH FAILED - pattern not found!"
+              '';
+            });
           })
         ];
       };

@@ -8,19 +8,14 @@ let
 
   # Скрипты ComfyUI (остаются как есть)
   startScript = pkgs.writeShellScript "start-comfyui" ''
-    #!/usr/bin/env bash
     systemctl --user start comfyui
-    echo "ComfyUI server started"
   '';
 
   stopScript = pkgs.writeShellScript "stop-comfyui" ''
-    #!/usr/bin/env bash
     systemctl --user stop comfyui
-    echo "ComfyUI server stopped"
   '';
 
   statusScript = pkgs.writeShellScript "status-comfyui" ''
-    #!/usr/bin/env bash
     kitty --title "ComfyUI Status" bash -c "systemctl --user status comfyui; echo 'Press any key to close...'; read -n 1"
   '';
 
