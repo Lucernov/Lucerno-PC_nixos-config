@@ -36,12 +36,13 @@
       check-flake = "cd ${myLib.home}/${myLib.configDirName} && nix flake check --no-build";
 
       # ========== Автообновление плагинов ==========
-      # под finalAttrs + flake output.
       update-plugins = "cd ${myLib.home}/${myLib.configDirName} && \
         for pkg in je8086 ostirus drumlabooh drumlabooh-multi pitchnet; do \
           echo \"━━━ $pkg ━━━\"; \
           nix-update \"$pkg\" --flake || echo \"  ⚠️ $pkg: пропущен\"; \
         done && \
+        echo '━━━ tape-echo-2 ━━━' && \
+        (nix-update tape-echo-2 --flake --version-regex 'tape-echo-2-v(.*)' || echo '  ⚠️ tape-echo-2: пропущен') && \
         echo '' && \
         git diff --stat pkgs/";
       # обновит оба пакета (скачает, посчитает хеши, поправит файлы) - update-plugins

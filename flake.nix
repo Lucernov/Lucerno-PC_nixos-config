@@ -130,11 +130,12 @@
       # pkg_*.nix (не через versions.nix) — иначе nix-update не найдёт их.
       # Остальные пакеты my-packages не трогаем: они не поддерживают автообновление.
       packages.x86_64-linux = {
-        je8086 = pkgsWithOverlay.my-packages.je8086;
-        ostirus = pkgsWithOverlay.my-packages.ostirus;
         drumlabooh = pkgsWithOverlay.my-packages.drumlabooh;
         drumlabooh-multi = pkgsWithOverlay.my-packages.drumlabooh-multi;
+        je8086 = pkgsWithOverlay.my-packages.je8086;
+        ostirus = pkgsWithOverlay.my-packages.ostirus;
         pitchnet = pkgsWithOverlay.my-packages.pitchnet;
+        tape-echo-2 = pkgsWithOverlay.my-packages.tape-echo-2;
       };
     };
 }

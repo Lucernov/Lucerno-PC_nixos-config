@@ -6,19 +6,17 @@
 , libX11
 , libXext
 , libGL
-, versions
 }:
 
-let
-  inherit (versions.tape-echo-2) version url hash;
-in
-
-stdenv.mkDerivation {
+stdenv.mkDerivation (finalAttrs: {
   pname = "tape-echo-2";
-  inherit version;
+  version = "1.0.7";
 
   src = fetchurl {
-    inherit url hash;
+    # Тег на GitHub: tape-echo-2-v1.0.7 (префикс + версия)
+    # nix-update сам подставит новую версию в ${finalAttrs.version}
+    url = "https://github.com/dusk-audio/dusk-audio-plugins/releases/download/tape-echo-2-v${finalAttrs.version}/tape-echo-2-linux.zip";
+    hash = "sha256-8KJ/qGzGKhGRGpKvrdu3Mbs+8A4gPGIovTKrfDCpL0g=";
   };
 
   nativeBuildInputs = [ unzip autoPatchelfHook ];
@@ -63,4 +61,4 @@ stdenv.mkDerivation {
     platforms = [ "x86_64-linux" ];
     sourceProvenance = [ sourceTypes.binaryNativeCode ];
   };
-}
+})
