@@ -40,7 +40,7 @@
     hash       = "sha256-lb8RuIdLgDC2y9KSF6hlWXWKlt4jI8tndWk/WVanpGo=";
   };
 
-  music-pattern-generator = {                                           # обновляется редко
+  music-pattern-generator = {                                           # обновляется редко и не подходит для автообновления
     version = "2.2.0";                                                  # https://github.com/hisschemoller/music-pattern-generator/releases
     url     = "https://github.com/hisschemoller/music-pattern-generator/releases/download/v2.2.0/mpg_2_2_installer_lin.deb";
     hash    = "sha256-L83MCo1TqSbt+4MwRXWCVgegpuYEYNLrjrJnzPMwLwE=";
@@ -60,12 +60,6 @@
     version  = "1.0";
   };
 
-#   pitchnet  = {
-#     version = "0.6.1";                                                  # https://github.com/SessionLoops/PitchNet/releases
-#     url     = "https://github.com/SessionLoops/PitchNet/releases/download/v0.6.1/PitchNet-Linux-x86_64.run";
-#     hash    = "sha256-3nXBa/tmfM/KSQ9YBJ/Tcmr5+Pk47BRprZDWYTz2ujA=";
-#   };
-
   sforzando = {                                                         # обновляется иногда
     version = "1.982";                                                  # https://www.plogue.com/downloads.html
     url     = "https://sforzando.s3.us-east-1.amazonaws.com/LINUX_plogue-sforzando_1.982_x86_64.zip";
@@ -82,12 +76,6 @@
     version     = "2";                                                  # https://tal-software.com/products/tal-vocoder
     url         = "https://tal-software.com/downloads/plugins/TAL-Vocoder-2_64_linux.zip";
     hash        = "sha256-vOSpQqN8DEK4f5vISeQnZBpxhW3AaW1+/0ImajeoPsY=";
-  };
-
-  tape-echo-2 = {                                                       # Dusk Audio, GPL-3, обновляется активно
-    version   = "1.0.7";                                                # https://github.com/dusk-audio/dusk-audio-plugins/releases
-    url       = "https://github.com/dusk-audio/dusk-audio-plugins/releases/download/tape-echo-2-v1.0.7/tape-echo-2-linux.zip";
-    hash      = "sha256-8KJ/qGzGKhGRGpKvrdu3Mbs+8A4gPGIovTKrfDCpL0g=";
   };
 
 }
