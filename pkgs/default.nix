@@ -22,7 +22,7 @@ final: prev: {
     amp-locker = pkgs.callPackage ./pkg_Amp-Locker.nix { inherit versions; };
     drum-locker = pkgs.callPackage ./pkg_Drum-Locker.nix { inherit versions; };
     drumlabooh = pkgs.callPackage ./pkg_drumlabooh.nix { inherit versions; };
-    je8086 = pkgs.callPackage ./pkg_JE8086.nix { inherit versions; };
+    je8086 = pkgs.callPackage ./pkg_JE8086.nix { };                                                                               # Автообновление
     lostSamplers = (pkgs.callPackage ./pkg_SuperflyDSP.nix { inherit versions; }).lostSamplers;
     lostTapes    = (pkgs.callPackage ./pkg_SuperflyDSP.nix { inherit versions; }).lostTapes;
     lostVinyls   = (pkgs.callPackage ./pkg_SuperflyDSP.nix { inherit versions; }).lostVinyls;

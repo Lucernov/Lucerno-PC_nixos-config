@@ -122,5 +122,15 @@
           (inputs.import-tree ./modules)                                                                   # Основной модуль config nixos. Рекурсивно импортируем все модули из папки modules/nixos
         ];
       };
+
+      # ========== Пакеты для nix-update и nix build ==========
+      # Экспортируем пакеты как flake outputs, чтобы их можно было обновлять
+      # через `nix run github:Mic92/nix-update -- <имя> --flake`.
+      # Добавляем только те пакеты, у которых version/hash заданы прямо в
+      # pkg_*.nix (не через versions.nix) — иначе nix-update не найдёт их.
+      # Остальные пакеты my-packages не трогаем: они не поддерживают автообновление.
+      packages.x86_64-linux = {
+        je8086 = pkgsWithOverlay.my-packages.je8086;                                                       # Автообновление через nix-update
+      };
     };
 }
