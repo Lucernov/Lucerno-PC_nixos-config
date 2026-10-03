@@ -21,7 +21,8 @@ final: prev: {
     air-g-plugins = pkgs.callPackage ./pkg_air-g-plugins.nix { inherit versions; };
     amp-locker = pkgs.callPackage ./pkg_Amp-Locker.nix { inherit versions; };
     drum-locker = pkgs.callPackage ./pkg_Drum-Locker.nix { inherit versions; };
-    drumlabooh = pkgs.callPackage ./pkg_drumlabooh.nix { inherit versions; };
+    drumlabooh = pkgs.callPackage ./pkg_drumlabooh.nix { };                                                                       # Автообновление через nix-update
+    drumlabooh-multi = pkgs.callPackage ./pkg_drumlabooh-multi.nix { };                                                           # Автообновление через nix-update
     je8086 = pkgs.callPackage ./pkg_JE8086.nix { };                                                                               # Автообновление через nix-update
     lostSamplers = (pkgs.callPackage ./pkg_SuperflyDSP.nix { inherit versions; }).lostSamplers;
     lostTapes    = (pkgs.callPackage ./pkg_SuperflyDSP.nix { inherit versions; }).lostTapes;

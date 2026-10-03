@@ -132,6 +132,8 @@
       packages.x86_64-linux = {
         je8086 = pkgsWithOverlay.my-packages.je8086;                                                       # Автообновление через nix-update
         ostirus = pkgsWithOverlay.my-packages.ostirus;                                                     # Автообновление через nix-update
+        drumlabooh = pkgsWithOverlay.my-packages.drumlabooh;
+        drumlabooh-multi = pkgsWithOverlay.my-packages.drumlabooh-multi;
       };
     };
 }
