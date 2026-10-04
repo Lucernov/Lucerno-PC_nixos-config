@@ -16,14 +16,18 @@
 # Использование в параметрах запуска Steam:
 #   SteamDeck=1 PROTON_ENABLE_NVAPI=1 KWIN_XWAYLAND_FORCE_SCANOUT=1 \
 #     /run/current-system/sw/bin/game-wrapper %command%
+
 { writeShellScriptBin
 , gamemode
 , pkgsi686Linux
 }:
 
 writeShellScriptBin "game-wrapper" ''
-  #!/bin/sh
   # 32-битная libgamemodeauto.so.0 (для 32-битных игр под Proton).
-  export LD_PRELOAD="${pkgsi686Linux.gamemode.lib}/lib/libgamemodeauto.so.0:$LD_PRELOAD"
+  # libgamemodeauto.so.0 сама делает dlopen("libgamemode.so") — поэтому
+  # каталог с ней нужно добавить ещё и в LD_LIBRARY_PATH, а не только в LD_PRELOAD.
+  GAMEMODE_LIB_DIR="${pkgsi686Linux.gamemode.lib}/lib"
+  export LD_LIBRARY_PATH="$GAMEMODE_LIB_DIR:$LD_LIBRARY_PATH"
+  export LD_PRELOAD="$GAMEMODE_LIB_DIR/libgamemodeauto.so.0:$LD_PRELOAD"
   exec ${gamemode}/bin/gamemoderun "$@"
 ''
