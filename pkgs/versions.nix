@@ -1,9 +1,5 @@
 # pkgs/versions.nix шаблон sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=
 {
-  air-g-plugins = {                                                     # не обновляется (локальный репозиторий)
-    version     = "1.0";
-  };
-
   amp-locker = {                                                        # обновляется иногда
     version  = "1.5.6";                                                 # https://audioassault.mx/downloadAudioAssault
     url      = "https://audioassaultdownloads.s3.amazonaws.com/AmpLocker/AmpLocker109/AmpLockerLinux.zip";
@@ -34,30 +30,22 @@
     hash     = "sha256-QT3WIh2wBiD6xnKINWvsV/jn7rA1GN/jj/B1OqFBwzs=";
   };
 
-  mtpdk        = {
-    version    = "2.1.5.1";
+  mtpdk        = {                                                      # обновляется иногда
+    version    = "2.1.5.1";                                             # https://www.powerdrumkit.com/linux.php
     url        = "https://resources.manda-audio.com/DOWNLOADS/products/mtpdk2_free/2.1.5/MTPDK-2.1.5.1-VST3-64bit-Linux-FULL.zip";
     hash       = "sha256-lb8RuIdLgDC2y9KSF6hlWXWKlt4jI8tndWk/WVanpGo=";
   };
 
-  music-pattern-generator = {                                           # обновляется редко и не подходит для автообновления
+  music-pattern-generator = {                                           # обновляется редко и github не подходит для автообновления
     version = "2.2.0";                                                  # https://github.com/hisschemoller/music-pattern-generator/releases
     url     = "https://github.com/hisschemoller/music-pattern-generator/releases/download/v2.2.0/mpg_2_2_installer_lin.deb";
     hash    = "sha256-L83MCo1TqSbt+4MwRXWCVgegpuYEYNLrjrJnzPMwLwE=";
   };
 
-  numa-player = {
+  numa-player = {                                                       # обновляется иногда
     version = "2.2.2";                                                  # https://www.studiologic-music.com/products/numaplayer/
     url     = "https://www.studiologic-music.com/api/get-files/NumaPlayer_2.2.2.deb";
     hash    = "sha256-+3PvtSDyjhStYux+1Qd1azRpnAwRbRibAxK7kWLVM8o=";
-  };
-
-  orchestools = {                                                       # не обновляется (локальный репозиторий)
-    version   = "1.0";
-  };
-
-  ot-piano-s = {                                                        # не обновляется (локальный репозиторий)
-    version  = "1.0";
   };
 
   sforzando = {                                                         # обновляется иногда
@@ -66,16 +54,30 @@
     hash    = "sha256-7ms1T9N1/50M4wgZaD9E07cSof5P9Tx35E3wNtqCqQA=";
   };
 
-  shortcircuit-xt = {                                                   # обновляется активно
+  shortcircuit-xt = {                                                   # обновляется активно и github Nightly не подходит для автообновления
     version       = "2026-09-14-8cda0ce";                               # https://github.com/surge-synthesizer/shortcircuit-xt/releases/
     url           = "https://github.com/surge-synthesizer/shortcircuit-xt/releases/download/Nightly/shortcircuit-xt-linux-2026-09-14-8cda0ce.zip";
     hash          = "sha256-wOCqKyDl/AjpZGsTUOWjFlkXMVZoiEavJpFHv/N6ksw=";
   };
 
-  tal-vocoder-2 = {                                                     # TAL-Vocoder-2 (VST3 + CLAP)
+  tal-vocoder-2 = {                                                     # обновляется редко
     version     = "2";                                                  # https://tal-software.com/products/tal-vocoder
     url         = "https://tal-software.com/downloads/plugins/TAL-Vocoder-2_64_linux.zip";
     hash        = "sha256-vOSpQqN8DEK4f5vISeQnZBpxhW3AaW1+/0ImajeoPsY=";
+  };
+#------------------------------------------------------------------------------------------------------
+#------------------------------------------------------------------------------------------------------
+#------------------------------------------------------------------------------------------------------
+  air-g-plugins = {                                                     # не обновляется (локальный репозиторий)
+    version     = "1.0";
+  };
+
+  orchestools = {                                                       # не обновляется (локальный репозиторий)
+    version   = "1.0";
+  };
+
+  ot-piano-s = {                                                        # не обновляется (локальный репозиторий)
+    version  = "1.0";
   };
 
 }
