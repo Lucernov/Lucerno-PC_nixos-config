@@ -94,9 +94,9 @@
     deadnix                                                       # Поиск мёртвого (неиспользуемого) кода в Nix
     openh264                                                      # Кодек H.264 от Cisco с открытым исходным кодом. Используется для аппаратного кодирования
     ffmpeg-full                                                   # Полная версия FFmpeg (кодирование/декодирование аудио/видео)
-    gst-libav                                                     # GStreamer-плагин libav (обёртка FFmpeg для GStreamer — помогает Firefox декодировать видео через GStreamer)
-    gst-plugins-good                                              # Базовый набор GStreamer-плагинов (в т.ч. видеокодеки, аудио, контейнеры)
-    gst-plugins-bad                                               # Расширенный набор GStreamer-плагинов (менее стабильные, но нужные кодеки: H.265, VP9 и др.)
+    gst_all_1.gst-libav                                           # GStreamer-плагин libav (обёртка FFmpeg для GStreamer — помогает Firefox декодировать видео через GStreamer)
+    gst_all_1.gst-plugins-good                                    # Базовый набор GStreamer-плагинов (в т.ч. видеокодеки, аудио, контейнеры)
+    gst_all_1.gst-plugins-bad                                     # Расширенный набор GStreamer-плагинов (менее стабильные, но нужные кодеки: H.265, VP9 и др.)
     yt-dlp                                                        # Утилита для загрузки видео/аудио с YouTube и сотен других сайтов (форк youtube-dl) нужен для cliamp
     libva-utils                                                   # Утилиты для VA-API (аппаратное ускорение видео)
     wayland-utils                                                 # Набор утилит для диагностики Wayland (например, wayland-info)
