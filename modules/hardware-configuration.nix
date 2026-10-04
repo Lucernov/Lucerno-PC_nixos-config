@@ -77,13 +77,7 @@ in
       device = "/dev/disk/by-uuid/${gamesUUID}";
       fsType = "ext4";
       options = [ "rw" "noatime"];
-    };
-    # Bind mount для Steam (чтобы не засорять /home)
-    "/home/lucerno/.local/share/Steam/steamapps" = {
-      device = "/mnt/games/SteamLibrary/steamapps";
-      fsType = "none";
-      options = [ "bind" "rw" "noatime" ];
-      depends = [ "/mnt/games" ];
+      neededForBoot = true;
     };
 
     # HDD для музыки (sdc1, btrfs с подтомом @music)
