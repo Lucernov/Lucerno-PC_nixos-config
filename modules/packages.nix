@@ -58,6 +58,7 @@
         "extensions.pocket.enabled" = false;                      # Отключаем Pocket
         # --- Аппаратное декодирование видео через Vulkan Video
         "media.av1.enabled" = true;                               # Включает поддержку AV1 (RTX 3070 / Ampere умеет аппаратно декодировать AV1)
+        "media.ffmpeg.vaapi.enabled" = false;                     # Отключает VA-API в Firefox (Vulkan Video продолжает работать)
         "media.hardware-video-decoding-vulkan.enabled" = true;    # Включает аппаратное декодирование через Vulkan Video (нативный путь для NVIDIA, без VA-API)
         "media.hardware-video-decoding-vulkan.direct-export.enabled" = true;  # Разрешает direct-export DMA-BUF через Vulkan (нужно для zero-copy передачи кадров с GPU)
         "media.hardware-video-decoding.force-enabled" = true;     # Принудительно включает аппаратное декодирование (даже если Firefox сомневается)
