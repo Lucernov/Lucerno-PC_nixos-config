@@ -187,6 +187,7 @@
     hyphenDicts.ru_RU                                             # Словарь для автоматической расстановки переносов (русский язык)
 
     # ИГРЫ
+    my-packages.teso-wrapper                                      # Обёртка для запуска 32-битных игр (TESO) с GameMode
     minion                                                        # Менеджер аддонов для TESO
     (bottles.override { removeWarningPopup = true; })             # Запуск Windows-приложений через Wine (без всплывающих предупреждений)
     goverlay                                                      # Оверлей для мониторинга системы и FPS (MangoHud, vkBasalt)
