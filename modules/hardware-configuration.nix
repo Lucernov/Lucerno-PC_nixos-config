@@ -163,6 +163,7 @@ in
       enable = true;                                                        # Включаем поддержку аппаратного ускорения графики
       enable32Bit = true;                                                   # Поддержка 32‑битных приложений
       extraPackages = with pkgs; [ nvidia-vaapi-driver ];                   # VA‑API драйвер для NVIDIA
+      extraPackages32 = with pkgs; [ nvidia-vaapi-driver ];                 # 32Bit VA‑API драйвер для NVIDIA (для игры Steep)
     };
     nvidia = {
       open = true;                                                          # Используем открытые модули
