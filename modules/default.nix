@@ -84,13 +84,15 @@
       NIXOS_OZONE_WL = "1";                                                                                 # Включает поддержку Ozone Wayland для Chromium/Electron (флаг NIXOS_OZONE_WL)
       WLR_NO_HARDWARE_CURSORS = "1";                                                                        # Отключает аппаратные курсоры в wlroots (помогает избежать проблем с мерцанием курсора на NVIDIA)
       EGL_PLATFORM = "wayland";                                                                             # Указывает EGL использовать Wayland (необходимо для некоторых приложений)
-      #VK_ICD_FILENAMES = "/run/opengl-driver/share/vulkan/icd.d/nvidia_icd.json";                           # Указывает Vulkan Loader использовать драйвер NVIDIA вместо Mesa (например, для игр через Proton)
       VK_LAYER_DISABLE = "steam_fossilize";                                                                 # Отключает слой Steam Fossilize, который иногда вызывает вылеты или тормоза в играх
       PROTON_USE_NTSYNC = "1";                                                                              # Включает улучшенную синхронизацию NTSync (вместо устаревших esync/fsync) для лучшей производительности в Proton
       PROTON_NO_ESYNC = "1";                                                                                # Отключает старую синхронизацию esync (Eventfd), так как используется NTSync
       PROTON_NO_FSYNC = "1";                                                                                # Отключает старую синхронизацию fsync (Futex), так как используется NTSync
       LIBVA_DRIVER_NAME = "nvidia";                                                                         # Указывает FFmpeg и браузерам использовать аппаратное кодирование/декодирование через NVIDIA (VA-API)
       TESSDATA_PREFIX = "/run/current-system/sw/share/tessdata";                                            # Путь к языковым данным Tesseract для OCR в Spectacle
+      XMODIFIERS = "@im=none";                                                                              # Говорит Xlib не пытаться открыть XIM (убирает "XOpenIM() failed" в логе Steam)
+      NVD_BACKEND = "direct";                                                                               # Указывает VA-API использовать "прямой" бэкенд, что необходимо для работы с открытыми модулями NVIDIA.
+      MOZ_DISABLE_RDD_SANDBOX = "1";                                                                        # Отключает песочницу RDD-процесса Firefox, что требуется для работы VA-API с NVIDIA.
     };
   };
 
