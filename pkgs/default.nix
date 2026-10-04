@@ -15,6 +15,7 @@ final: prev: {
       teamspeak6-client = pkgs.teamspeak6-client;
       coreutils = pkgs.coreutils;
     };
+    teso-wrapper = pkgs.callPackage ./pkg_teso-wrapper.nix { };
     qmmp = pkgs.callPackage ./pkg_qmmp.nix { };
 
     # ====== ДЕРИВАЦИИ ======

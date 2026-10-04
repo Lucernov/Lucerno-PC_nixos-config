@@ -80,7 +80,7 @@
       ELECTRON_OZONE_PLATFORM_HINT = "auto";                                                                # Для приложений на Electron (VS Code, Discord, Telegram и др.) Заставляет их использовать Wayland вместо XWayland
       QT_QPA_PLATFORM = "wayland";                                                                          # Задаёт бэкенд Qt для работы через Wayland (вместо X11)
       GDK_BACKEND = "wayland";                                                                              # Указывает GTK-приложениям использовать Wayland
-      SDL_VIDEODRIVER = "wayland,x11";                                                                      # Разрешает SDL использовать Wayland с fallback на X11 (иначе Steam/игры падают с "Unable to initialize Vulkan")
+      SDL_VIDEODRIVER = "wayland,x11";                                                                      # Разрешает SDL использовать Wayland с fallback на X11 (иначе в Steam игра Steep падает с "Unable to initialize Vulkan")
       NIXOS_OZONE_WL = "1";                                                                                 # Включает поддержку Ozone Wayland для Chromium/Electron (флаг NIXOS_OZONE_WL)
       WLR_NO_HARDWARE_CURSORS = "1";                                                                        # Отключает аппаратные курсоры в wlroots (помогает избежать проблем с мерцанием курсора на NVIDIA)
       EGL_PLATFORM = "wayland";                                                                             # Указывает EGL использовать Wayland (необходимо для некоторых приложений)
