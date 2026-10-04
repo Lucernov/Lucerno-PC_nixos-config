@@ -60,6 +60,9 @@
         "gfx.webrender.compositor" = true;                        # Включает композитор WebRender
         "media.hardware-video-decoding.force-enabled" = true;     # Принудительно включает VA-API
         "media.rdd-ffmpeg.enabled" = true;                        # Разрешить использование FFmpeg в RDD-процессе (необходимо для работы VA-API)
+        "media.av1.enabled" = true;                               # Включает поддержку AV1
+        "gfx.x11-egl.force-enabled" = true;                       # Включает принудительное использование EGL для X11
+        "widget.dmabuf.force-enabled" = true;                     # Принудительно включает использование DMA-BUF, что необходимо для эффективной передачи видеоданных между GPU и приложением
       };
       policies = {                                                # Корпоративные политики (имеют приоритет над preferences)
         DisableTelemetry = true;                                  # Отключает телеметрию
@@ -96,6 +99,7 @@
     uv                                                            # Менеджер Python-проектов (альтернатива pip + virtualenv)
     gsettings-desktop-schemas                                     # Схемы настроек для GSettings (используются GTK-приложениями)
     base16-schemes                                                # Набор цветовых схем Base16 (для терминалов, редакторов)
+    adwaita-icon-theme                                            # Иконки GNOME (нужны Telegram, RetroArch, некоторым GTK-приложениям — убирает предупреждения в логах)
     gearlever                                                     # Менеджер обновлений для AppImages приложений
     mission-center                                                # Графический монитор системы (альтернатива btop)
     strace                                                        # перехватывает и записывает все системные вызовы (поиск ошибок запуска программ)
