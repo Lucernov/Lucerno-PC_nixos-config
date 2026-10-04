@@ -30,9 +30,11 @@
 }:
 
 writeShellScriptBin "game-wrapper64" ''
-  #!/bin/sh
   # 64-битная libgamemodeauto.so.0 (для 64-битных игр под Proton).
-  # gamemode.lib — 64-битная сборка gamemode из nixpkgs.
-  export LD_PRELOAD="${gamemode.lib}/lib/libgamemodeauto.so.0:$LD_PRELOAD"
+  # libgamemodeauto.so.0 сама делает dlopen("libgamemode.so") — поэтому
+  # каталог с ней нужно добавить ещё и в LD_LIBRARY_PATH, а не только в LD_PRELOAD.
+  GAMEMODE_LIB_DIR="${gamemode.lib}/lib"
+  export LD_LIBRARY_PATH="$GAMEMODE_LIB_DIR:$LD_LIBRARY_PATH"
+  export LD_PRELOAD="$GAMEMODE_LIB_DIR/libgamemodeauto.so.0:$LD_PRELOAD"
   exec ${gamemode}/bin/gamemoderun "$@"
 ''
