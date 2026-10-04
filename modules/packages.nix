@@ -56,16 +56,8 @@
         "browser.urlbar.suggest.searches" = false;                # Не отправлять поисковые запросы в адресной строке
         "dom.security.https_only_mode" = true;                    # Принудительное использование HTTPS для всех сайтов
         "extensions.pocket.enabled" = false;                      # Отключаем Pocket
-        # --- Аппаратное декодирование видео через Vulkan Video
         "media.av1.enabled" = true;                               # Включает поддержку AV1 (RTX 3070 / Ampere умеет аппаратно декодировать AV1)
-        "media.ffmpeg.vaapi.enabled" = false;                     # Отключает VA-API в Firefox (Vulkan Video продолжает работать)
-        "media.hardware-video-decoding-vulkan.enabled" = true;    # Включает аппаратное декодирование через Vulkan Video (нативный путь для NVIDIA, без VA-API)
-        "media.hardware-video-decoding-vulkan.direct-export.enabled" = true;  # Разрешает direct-export DMA-BUF через Vulkan (нужно для zero-copy передачи кадров с GPU)
         "media.hardware-video-decoding.force-enabled" = true;     # Принудительно включает аппаратное декодирование (даже если Firefox сомневается)
-        "media.ffvpx.enabled" = false;                            # Отключает встроенный программный декодер FFVPX (VP8/VP9) — заставляет использовать аппаратный путь или системный FFmpeg
-        # --- Опции для X11 ---
-        "gfx.x11-egl.force-enabled" = true;                       # Включает принудительное использование EGL для X11
-        "widget.dmabuf.force-enabled" = true;                     # Принудительно включает использование DMA-BUF, что необходимо для эффективной передачи видеоданных между GPU и приложением
       };
       policies = {                                                # Корпоративные политики (имеют приоритет над preferences)
         DisableTelemetry = true;                                  # Отключает телеметрию
@@ -95,9 +87,6 @@
     deadnix                                                       # Поиск мёртвого (неиспользуемого) кода в Nix
     openh264                                                      # Кодек H.264 от Cisco с открытым исходным кодом. Используется для аппаратного кодирования
     ffmpeg-full                                                   # Полная версия FFmpeg (кодирование/декодирование аудио/видео)
-    gst_all_1.gst-libav                                           # GStreamer-плагин libav (обёртка FFmpeg для GStreamer — помогает Firefox декодировать видео через GStreamer)
-    gst_all_1.gst-plugins-good                                    # Базовый набор GStreamer-плагинов (в т.ч. видеокодеки, аудио, контейнеры)
-    gst_all_1.gst-plugins-bad                                     # Расширенный набор GStreamer-плагинов (менее стабильные, но нужные кодеки: H.265, VP9 и др.)
     yt-dlp                                                        # Утилита для загрузки видео/аудио с YouTube и сотен других сайтов (форк youtube-dl) нужен для cliamp
     libva-utils                                                   # Утилиты для VA-API (аппаратное ускорение видео)
     wayland-utils                                                 # Набор утилит для диагностики Wayland (например, wayland-info)
