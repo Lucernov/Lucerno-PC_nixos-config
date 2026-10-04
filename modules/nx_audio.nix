@@ -28,6 +28,7 @@ in
       alsa.enable = true;                                                                               # Поддержка ALSA (эмуляция для старых приложений)
       alsa.support32Bit = true;                                                                         # Поддержка 32-битных ALSA-клиентов (для игр и старого софта)
       jack.enable = true;                                                                               # JACK-совместимость (PipeWire как JACK-сервер)
+      pulse.enable = true;                                                                              # Включает pipewire-pulse — эмуляцию сервера PulseAudio поверх PipeWire
       wireplumber.enable = true;                                                                        # WirePlumber — менеджер сессий для PipeWire (более современный, чем старый media-session)
       extraConfig = {
         pipewire."99-low-latency" = {
