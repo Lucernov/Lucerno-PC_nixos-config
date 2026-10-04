@@ -88,11 +88,8 @@
       PROTON_USE_NTSYNC = "1";                                                                              # Включает улучшенную синхронизацию NTSync (вместо устаревших esync/fsync) для лучшей производительности в Proton
       PROTON_NO_ESYNC = "1";                                                                                # Отключает старую синхронизацию esync (Eventfd), так как используется NTSync
       PROTON_NO_FSYNC = "1";                                                                                # Отключает старую синхронизацию fsync (Futex), так как используется NTSync
-      LIBVA_DRIVER_NAME = "nvidia";                                                                         # Указывает FFmpeg и браузерам использовать аппаратное кодирование/декодирование через NVIDIA (VA-API)
       TESSDATA_PREFIX = "/run/current-system/sw/share/tessdata";                                            # Путь к языковым данным Tesseract для OCR в Spectacle
       XMODIFIERS = "@im=none";                                                                              # Говорит Xlib не пытаться открыть XIM (убирает "XOpenIM() failed" в логе Steam)
-      NVD_BACKEND = "direct";                                                                               # Указывает VA-API использовать "прямой" бэкенд, что необходимо для работы с открытыми модулями NVIDIA.
-      MOZ_DISABLE_RDD_SANDBOX = "1";                                                                        # Отключает песочницу RDD-процесса Firefox, что требуется для работы VA-API с NVIDIA.
     };
   };
 

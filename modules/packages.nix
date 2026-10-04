@@ -58,8 +58,7 @@
         "extensions.pocket.enabled" = false;                      # Отключаем Pocket
         "gfx.webrender.all" = true;                               # Включает WebRender для всей отрисовки
         "gfx.webrender.compositor" = true;                        # Включает композитор WebRender
-        "media.hardware-video-decoding.force-enabled" = true;     # Принудительно включает VA-API
-        "media.rdd-ffmpeg.enabled" = true;                        # Разрешить использование FFmpeg в RDD-процессе (необходимо для работы VA-API)
+        "media.vulkan-video.enabled" = true;                      # Нативное аппаратное декодирование через Vulkan Video
         "media.av1.enabled" = true;                               # Включает поддержку AV1
         "gfx.x11-egl.force-enabled" = true;                       # Включает принудительное использование EGL для X11
         "widget.dmabuf.force-enabled" = true;                     # Принудительно включает использование DMA-BUF, что необходимо для эффективной передачи видеоданных между GPU и приложением
