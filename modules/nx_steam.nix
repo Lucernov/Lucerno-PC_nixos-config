@@ -8,6 +8,10 @@ in
 {
   # ========== Правила tmpfiles для Steam ==========
   systemd.tmpfiles.rules = [
+    # Симлинк для папки steamapps (замена bind-mount).
+    # Родительская папка ~/.local/share/Steam должна существовать — её создаёт Steam при первом запуске.
+    # Так как /mnt/games теперь neededForBoot, диск уже смонтирован к моменту выполнения tmpfiles.
+    "L+ ${home}/.local/share/Steam/steamapps - ${myLib.userName} ${myLib.userName} - /mnt/games/SteamLibrary/steamapps"
     # ---------- Симлинки для Steam и игр ----------
     "L+ ${home}/.local/share/Steam/userdata - ${myLib.userName} ${myLib.userName} - ${home}/${configDir}/dotfiles/config/Steam/userdata"
     #"L+ ${home}/.local/share/Steam/steamapps - ${myLib.userName} ${myLib.userName} - /mnt/games/SteamLibrary/steamapps"
