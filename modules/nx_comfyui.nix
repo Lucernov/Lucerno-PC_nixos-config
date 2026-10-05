@@ -66,7 +66,7 @@ let
       Exec=${statusScript}
       Icon=applications-development
       Categories=Development;
-      Terminal=true   # запускаем в терминале, чтобы видеть статус
+      Terminal=true
       StartupNotify=false
     '';
   };
