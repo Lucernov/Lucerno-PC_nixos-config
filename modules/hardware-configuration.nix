@@ -4,7 +4,7 @@ let
   # UUID дисков
   bootUUID = "59A7-C7F6";                                     # EFI раздел
   sysUUID = "1964f286-7b1d-40df-8201-5824671e9631";           # корень системы + библиотека NIX + home
-  sysBackupUUID = "67a25908-e1e2-4e53-a04b-909418c0eff8";     # второй раздел системного диска @nixos-config (${myLib.configDirName}), @ai, @sys-archiv
+  sysBackupUUID = "67a25908-e1e2-4e53-a04b-909418c0eff8";     # второй раздел системного диска @ai, @sys-archiv, swap
 
   gamesUUID = "897f0999-d31e-45d1-b186-6822c7d17477";         # игры
   musicUUID = "3615f1b6-bb2e-4254-b795-f08e9a542523";         # музыка
