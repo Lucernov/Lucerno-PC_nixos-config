@@ -72,6 +72,13 @@ in
     wireplumber.serviceConfig = commonRealtime;
   };
 
+  systemd.user.tmpfiles.rules = [
+    "L+ ${myLib.home}/.config/REAPER - ${myLib.userName} ${myLib.userName} - ${myLib.home}/${myLib.configDirName}/dotfiles/config/REAPER"
+    "d ${myLib.home}/.config/REAPER/UserPlugins 0755 ${myLib.userName} ${myLib.userName} -"
+    "L+ ${myLib.home}/.config/REAPER/UserPlugins/reaper_sws-x86_64.so - ${myLib.userName} ${myLib.userName} - ${pkgs-unstable.reaper-sws-extension}/UserPlugins/reaper_sws-x86_64.so"  # .so файлы REAPER
+    "L+ ${myLib.home}/.config/REAPER/UserPlugins/reaper_reapack-x86_64.so - ${myLib.userName} ${myLib.userName} - ${pkgs-unstable.reaper-reapack-extension}/UserPlugins/reaper_reapack-x86_64.so"  # .so файлы REAPER
+  ];
+
   systemd.tmpfiles.rules = [                                                                            # Правила tmpfiles
     # ========== Правила tmpfiles для аудио и REAPER ==========
     "d ${myLib.home}/.clap 0755 ${myLib.userName} ${myLib.userName} -"
@@ -82,10 +89,6 @@ in
     "d ${myLib.home}/.ladspa 0755 ${myLib.userName} ${myLib.userName} -"
     "d ${myLib.home}/.dssi 0755 ${myLib.userName} ${myLib.userName} -"
     "L+ ${myLib.home}/.local/bin/wine64 - ${myLib.userName} ${myLib.userName} - ${pkgs.wineWow64Packages.staging}/bin/wine"  # wine64
-    "L+ ${myLib.home}/.config/REAPER - ${myLib.userName} ${myLib.userName} - ${myLib.home}/${myLib.configDirName}/dotfiles/config/REAPER"
-    "d ${myLib.home}/.config/REAPER/UserPlugins 0755 ${myLib.userName} ${myLib.userName} -"
-    "L+ ${myLib.home}/.config/REAPER/UserPlugins/reaper_sws-x86_64.so - ${myLib.userName} ${myLib.userName} - ${pkgs-unstable.reaper-sws-extension}/UserPlugins/reaper_sws-x86_64.so"  # .so файлы REAPER
-    "L+ ${myLib.home}/.config/REAPER/UserPlugins/reaper_reapack-x86_64.so - ${myLib.userName} ${myLib.userName} - ${pkgs-unstable.reaper-reapack-extension}/UserPlugins/reaper_reapack-x86_64.so"  # .so файлы REAPER
     "L+ /usr/bin/zenity - - - - ${pkgs.zenity}/bin/zenity" # нужно для работы вывода меню выбора пресетов внутри плагина
 
     # Создаём структуру каталогов для данных Amp Locker и Drum Locker
