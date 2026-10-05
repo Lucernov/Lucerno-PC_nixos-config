@@ -44,11 +44,11 @@ in
 
     # ========== ДОПОЛНИТЕЛЬНЫЕ ДИСКИ ==========
     # SSD раздел бэкапа с несколькими подтомами
-    "/home/lucerno/${myLib.configDirName}" = {
-      device = "/dev/disk/by-uuid/${sysBackupUUID}";
-      fsType = "btrfs";
-      options = [ "subvol=@${myLib.configDirName}" "compress=zstd" "noatime" "space_cache=v2" "ssd" "discard=async" ];
-    };
+#     "/home/lucerno/${myLib.configDirName}" = {
+#       device = "/dev/disk/by-uuid/${sysBackupUUID}";
+#       fsType = "btrfs";
+#       options = [ "subvol=@${myLib.configDirName}" "compress=zstd" "noatime" "space_cache=v2" "ssd" "discard=async" ];
+#     };
 
     "/mnt/sys_archiv" = {
       device = "/dev/disk/by-uuid/${sysBackupUUID}";
