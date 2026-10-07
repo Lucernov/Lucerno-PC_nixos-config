@@ -36,9 +36,9 @@
       check-flake = "cd ${myLib.home}/${myLib.configDirName} && nix flake check --no-build";
 
       # ========== Автообновление плагинов ==========
-      update-plugins = "cd ${myLib.home}/${myLib.configDirName} && \
+      pkgupdate = "cd ${myLib.home}/${myLib.configDirName} && \
         export GITHUB_TOKEN=$(grep -oE 'ghp_[A-Za-z0-9]+' secrets/github-token | head -1) && \
-        for pkg in je8086 ostirus drumlabooh drumlabooh-multi pitchnet; do \
+        for pkg in je8086 ostirus drumlabooh drumlabooh-multi pitchnet noita-save-manager; do \
           echo \"━━━ $pkg ━━━\"; \
           nix-update \"$pkg\" --flake || echo \"  ⚠️ $pkg: пропущен\"; \
         done && \
