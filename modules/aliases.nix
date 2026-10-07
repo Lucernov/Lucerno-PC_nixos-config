@@ -42,8 +42,6 @@
           echo \"━━━ $pkg ━━━\"; \
           nix-update \"$pkg\" --flake || echo \"  ⚠️ $pkg: пропущен\"; \
         done && \
-        echo '━━━ noita-save-manager ━━━' && \
-        (nix-update noita-save-manager --flake --use-update-script || echo '  ⚠️ noita-save-manager: пропущен') && \
         echo '━━━ tape-echo-2 ━━━' && \
         (nix-update tape-echo-2 --flake --version-regex 'tape-echo-2-v(.*)' || echo '  ⚠️ tape-echo-2: пропущен') && \
         echo '' && \
