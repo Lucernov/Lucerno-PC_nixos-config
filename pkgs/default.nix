@@ -38,5 +38,11 @@ final: prev: {
     shortcircuit-xt = pkgs.callPackage ./pkg_shortcircuit-xt.nix { inherit versions; };
     tal-vocoder-2 = pkgs.callPackage ./pkg_tal-vocoder-2.nix { inherit versions; };
     tape-echo-2 = pkgs.callPackage ./pkg_tape-echo-2.nix { };                                                                     # Автообновление через nix-update
+
+    # Noita save manager
+    pysimplegui = pkgs.python3.pkgs.callPackage ./pkg_pysimplegui.nix { };
+    noita-save-manager = pkgs.callPackage ./pkg_noita-save-manager.nix {
+      inherit (pkgs.my-packages) pysimplegui;
+    };
   };
 }
