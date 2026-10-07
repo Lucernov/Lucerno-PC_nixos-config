@@ -46,7 +46,7 @@
         (nix-update tape-echo-2 --flake --version-regex 'tape-echo-2-v(.*)' || echo '  ⚠️ tape-echo-2: пропущен') && \
         echo '' && \
         git diff --stat pkgs/";
-      # обновит оба пакета (скачает, посчитает хеши, поправит файлы) - update-plugins
+      # обновит все пакеты выше (скачает, посчитает хеши, поправит файлы) - pkgupdate
       # посмотреть, что поменялось (опционально) - git diff pkgs/
       # собрать и применить - local-up
       # закоммитить - sync
