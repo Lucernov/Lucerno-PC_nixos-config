@@ -11,6 +11,13 @@
 #     под Proton на корректный (~/.steam/steam/.../Nolla_Games_Noita).
 #   - Обёртка запускает программу из ~/.local/share/noita_save_manager —
 #     чтобы бэкапы сохранялись в предсказуемое место, а не в cwd.
+#   - АВТООБНОВЛЕНИЕ НЕ ПОДКЛЮЧЕНО сознательно:
+#       • апстрим не менялся с 2021 года (последний коммит 6f7f27b);
+#       • unstableGitUpdater не работает в flake-контексте — он пытается
+#         импортировать ./default.nix (nixpkgs-путь), а у нас flake.nix.
+#     Если апстрим оживёт — обновлять вручную:
+#       nix-prefetch-github mcgillij noita_save_manager --rev <новый-коммит>
+#     и править rev/hash/version в этом файле.
 
 { lib
 , python3
@@ -18,7 +25,6 @@
 , makeDesktopItem
 , makeWrapper
 , copyDesktopItems
-, unstableGitUpdater
 , pysimplegui
 }:
 
@@ -71,10 +77,6 @@ python3.pkgs.buildPythonApplication rec {
   '';
 
   pythonImportsCheck = [ "noita_save_manager" ];
-
-  passthru.updateScript = unstableGitUpdater {
-    branch = "master";
-  };
 
   meta = with lib; {
     description = "Noita Savegame manager";
