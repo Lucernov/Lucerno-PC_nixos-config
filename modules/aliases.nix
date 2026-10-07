@@ -53,6 +53,7 @@
 
       # ========== Приложения ==========
       parabolic = "org.nickvision.tubeconverter";                # запустить Parabolic (загрузчик видео/аудио с YouTube)
+      noitaclean = "ls -t ~/.local/share/noita_save_manager/noita_backup_*.zip | tail -n +11 | xargs -r rm -v";  # оставить 10 свежих бэкапов Noita, остальные удалить
 
       # ========== Софт ==========
       bt = "btop";                                               # использовать btop
