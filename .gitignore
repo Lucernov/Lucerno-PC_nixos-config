@@ -33,3 +33,5 @@
 !/dotfiles/config/yabridgectl/*
 !/dotfiles/repo/
 !/dotfiles/repo/**/*
+!/dotfiles/sys-icons/
+!/dotfiles/sys-icons/**/*
