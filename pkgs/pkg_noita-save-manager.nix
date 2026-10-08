@@ -47,7 +47,7 @@ python3.pkgs.buildPythonApplication rec {
     exec = "noita_save_manager";
     comment = "Noita Savegame manager";
     desktopName = "Noita Save Manager";
-    categories = [ "Game" "Utility" ];
+    categories = [ "Game" ];
     icon = "icon-noita-save-manager";
   };
 
