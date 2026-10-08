@@ -1,2 +1,4 @@
 dotfiles/repo/* filter=lfs diff=lfs merge=lfs -text
 dotfiles/wallpapers/* filter=lfs diff=lfs merge=lfs -text
+dotfiles/sys-icons/*.png filter=lfs diff=lfs merge=lfs -text
+dotfiles/sys-icons/*.svg filter=lfs diff=lfs merge=lfs -text
