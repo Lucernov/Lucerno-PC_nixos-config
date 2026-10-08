@@ -149,14 +149,7 @@
       };
 
       # ========== Пакеты для nix-update и nix build ==========
-      # Экспортируем пакеты как flake outputs, чтобы их можно было обновлять
-      # через `nix run github:Mic92/nix-update -- <имя> --flake`.
-      # Добавляем только те пакеты, у которых version/hash заданы прямо в
-      # pkg_*.nix (не через versions.nix) — иначе nix-update не найдёт их.
-      # Остальные пакеты my-packages не трогаем: они не поддерживают автообновление.
-      #
-      # ⚠️ При добавлении нового пакета с автообновлением — не забудьте
-      # добавить его и сюда, иначе `nix-update --flake <имя>` его не увидит.
+      # Экспорт как flake outputs, чтобы можно было обновлять
       packages.x86_64-linux = {
         drumlabooh = pkgsWithOverlay.my-packages.drumlabooh;
         drumlabooh-multi = pkgsWithOverlay.my-packages.drumlabooh-multi;
