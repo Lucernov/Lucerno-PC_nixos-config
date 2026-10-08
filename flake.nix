@@ -101,6 +101,7 @@
                 echo "=== SWS PATCH: applied successfully ==="
               '';
             });
+
           })
         ];
       };
