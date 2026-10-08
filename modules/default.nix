@@ -1,7 +1,7 @@
 { pkgs, myLib, ... }:
 
 {
-  system.stateVersion = myLib.channelVersion;                                                               # Версия состояния системы (соответствует каналу NixOS)
+  system.stateVersion = myLib.stateVersion;                                                                 # Версия формата состояния системы. НЕ привязана к channelVersion!
 
   # ========== Настройки времени и локали ==========
   time = { timeZone = "Europe/Moscow"; };                                                                   # Часовой пояс (Europe/Moscow)
