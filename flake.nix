@@ -53,11 +53,22 @@
             # стало ошибкой из-за -Werror в проекте. Заменяем [=] на [=, this]
             # в исходниках. Файлы api_* исключаем: там лямбды в статических
             # функциях, 'this' не существует, и [=, this] не скомпилируется.
+            #
+            # Патч «fail-safe»: если '[=]' больше не встречается в src/ —
+            # значит апстрим починили, и мы хотим УЗНАТЬ об этом через
+            # падение сборки, а не молча собирать с устаревшим патчем.
             reaper-reapack-extension = prev.reaper-reapack-extension.overrideAttrs (old: {
               preConfigure = (old.preConfigure or "") + ''
-                find src \( -name '*.cpp' -o -name '*.hpp' -o -name '*.h' \) \
-                  ! -name 'api_*' \
-                  -exec sed -i 's/\[=\]/[=, this]/g' {} +
+                files=$(find src \( -name '*.cpp' -o -name '*.hpp' -o -name '*.h' \) \
+                          ! -name 'api_*' -exec grep -l '\[=\]' {} +)
+                if [ -z "$files" ]; then
+                  echo "ERROR: reapack patch — '[=]' не найден в src/"
+                  echo "Скорее всего, апстрим исправил проблему. Удалите этот патч."
+                  exit 1
+                fi
+                echo "$files" | while IFS= read -r f; do
+                  sed -i 's/\[=\]/[=, this]/g' "$f"
+                done
               '';
             });
 
@@ -68,13 +79,26 @@
             # literal type (инициализация становится вызовом конструктора, а не
             # aggregate init).
             # Создал issue - https://github.com/reaper-oss/sws/issues/2046
+            #
+            # Патч «fail-safe»: проверяем паттерн до замены и результат после.
+            # Если апстрим починили (или переписали файл) — сборка упадёт с
+            # явной ошибкой, и мы это заметим.
             reaper-sws-extension = prev.reaper-sws-extension.overrideAttrs (old: {
               preConfigure = (old.preConfigure or "") + ''
                 echo "=== SWS PATCH: inserting constexpr constructor ==="
+                if ! grep -q 'bool isBuiltin() const { return type == Builtin; }' \
+                     Breeder/BR_ContextualToolbars.cpp; then
+                  echo "ERROR: SWS patch — паттерн не найден"
+                  echo "Смотрите https://github.com/reaper-oss/sws/issues/2046"
+                  exit 1
+                fi
                 sed -i 's|bool isBuiltin() const { return type == Builtin; }|constexpr ContextAction(int i, Type t, int o, int c) : iniKey(i), type(t), openCommand(o), toggleCommand(c) {} bool isBuiltin() const { return type == Builtin; }|' \
                   Breeder/BR_ContextualToolbars.cpp
-                echo "=== SWS PATCH: verify ==="
-                grep -n 'constexpr ContextAction(int' Breeder/BR_ContextualToolbars.cpp || echo "PATCH FAILED - pattern not found!"
+                if ! grep -q 'constexpr ContextAction(int' Breeder/BR_ContextualToolbars.cpp; then
+                  echo "ERROR: SWS patch — замена не сработала"
+                  exit 1
+                fi
+                echo "=== SWS PATCH: applied successfully ==="
               '';
             });
           })
@@ -129,6 +153,9 @@
       # Добавляем только те пакеты, у которых version/hash заданы прямо в
       # pkg_*.nix (не через versions.nix) — иначе nix-update не найдёт их.
       # Остальные пакеты my-packages не трогаем: они не поддерживают автообновление.
+      #
+      # ⚠️ При добавлении нового пакета с автообновлением — не забудьте
+      # добавить его и сюда, иначе `nix-update --flake <имя>` его не увидит.
       packages.x86_64-linux = {
         drumlabooh = pkgsWithOverlay.my-packages.drumlabooh;
         drumlabooh-multi = pkgsWithOverlay.my-packages.drumlabooh-multi;
