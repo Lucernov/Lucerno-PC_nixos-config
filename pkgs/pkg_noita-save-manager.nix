@@ -48,6 +48,7 @@ python3.pkgs.buildPythonApplication rec {
     comment = "Noita Savegame manager";
     desktopName = "Noita Save Manager";
     categories = [ "Game" "Utility" ];
+    icon = "icon-noita-save-manager";
   };
 
   nativeBuildInputs = [
@@ -74,6 +75,9 @@ python3.pkgs.buildPythonApplication rec {
       --run 'DIR="''${XDG_DATA_HOME:-$HOME/.local/share}"
              mkdir -p "$DIR/noita_save_manager"
              cd "$DIR/noita_save_manager"'
+
+    install -Dm644 ${../dotfiles/sys-icons/icon-noita-save-manager.png} \
+      $out/share/icons/hicolor/256x256/apps/icon-noita-save-manager.png
   '';
 
   pythonImportsCheck = [ "noita_save_manager" ];
