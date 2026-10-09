@@ -57,7 +57,33 @@ while IFS= read -r file; do
     add_section "$rel_path" "$file"
 done < <(find modules -type f -name "*.nix" | sort)
 
+# --- Секреты (secrets/) ---
+echo "# --- Секреты (secrets/) ---" >> "$OUTPUT_FILE"
+echo "" >> "$OUTPUT_FILE"
+
+# secrets.nix — карта секретов (публичные ключи, не секрет)
+if [[ -f "secrets/secrets.nix" ]]; then
+    add_section "secrets/secrets.nix" "secrets/secrets.nix"
+fi
+
+# .age-файлы — зашифрованные, просто перечисляем их наличие
+echo "### Список зашифрованных секретов (.age):" >> "$OUTPUT_FILE"
+echo "" >> "$OUTPUT_FILE"
+find secrets -maxdepth 1 -type f -name "*.age" 2>/dev/null | sort | while read -r f; do
+    echo "- $f ($(stat -c%s "$f") байт)" >> "$OUTPUT_FILE"
+done
+echo "" >> "$OUTPUT_FILE"
+echo "" >> "$OUTPUT_FILE"
+
 # Удаляем лишние пустые строки в конце файла
 sed -i '/^$/N;/^\n$/D' "$OUTPUT_FILE"
 
-echo "Готово! Файл создан: $OUTPUT_FILE"
+# Финальная проверка: не попали ли в промпт plaintext-секреты
+if grep -qiE 'AGE-SECRET-KEY-1|ghp_[A-Za-z0-9]{20}|BEGIN OPENSSH PRIVATE KEY' "$OUTPUT_FILE"; then
+    echo "❌ ОШИБКА: В промпте найден plaintext-секрет!"
+    echo "Не отдавайте его никому. Файл: $OUTPUT_FILE"
+    exit 1
+fi
+
+# Успешное завершение
+echo "✅ Готово! Файл создан: $OUTPUT_FILE"

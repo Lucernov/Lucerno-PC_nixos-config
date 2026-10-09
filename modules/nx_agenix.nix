@@ -6,6 +6,28 @@
 #
 # Использование в других модулях:
 #   config.age.secrets."имя".path   →   /run/agenix/имя
+#
+# age — симметричное шифрование паролем
+# Зашифровать файл паролем
+# age -p исходный_файл > файл.age
+#
+# Пример — зашифровать keys.txt:
+# age -p ~/.config/agenix/keys.txt > ~/agenix-keys-backup.age
+#
+# Спросит: Enter passphrase: — ввести пароль (символы не отображаются).
+# Повторить: Confirm passphrase: — тот же пароль.
+# Создаст agenix-keys-backup.age — зашифрованный.
+#
+# Расшифровать файл
+# age -d файл.age > исходный_файл
+#
+# Пример:
+# age -d ~/agenix-keys-backup.age > /tmp/restored-keys.txt
+# # Спросит пароль → введёте → восстановит файл
+#
+# Посмотреть содержимое без создания файла:
+# age -d ~/agenix-keys-backup.age | head -3
+
 { myLib, ... }:
 
 {
