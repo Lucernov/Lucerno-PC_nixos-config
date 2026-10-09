@@ -18,6 +18,7 @@ final: prev: {
     qmmp = pkgs.callPackage ./pkg_qmmp.nix { };
 
     # ====== ДЕРИВАЦИИ ======
+    # Плагины для музыки
     air-g-plugins = pkgs.callPackage ./pkg_air-g-plugins.nix { inherit versions; };
     amp-locker = pkgs.callPackage ./pkg_Amp-Locker.nix { inherit versions; };
     drum-locker = pkgs.callPackage ./pkg_Drum-Locker.nix { inherit versions; };
@@ -44,5 +45,8 @@ final: prev: {
     noita-save-manager = pkgs.callPackage ./pkg_noita-save-manager.nix {
       inherit (pkgs.my-packages) pysimplegui;
     };
+    # Плагины для Krita
+    krita-ai-diffusion = pkgs.callPackage ./pkg_krita-ai-diffusion.nix { };
+    krita-vision-tools = pkgs.callPackage ./pkg_krita-vision-tools.nix { };
   };
 }
