@@ -163,6 +163,7 @@
         ostirus = pkgsWithOverlay.my-packages.ostirus;
         pitchnet = pkgsWithOverlay.my-packages.pitchnet;
         tape-echo-2 = pkgsWithOverlay.my-packages.tape-echo-2;
+        krita-ai-diffusion = pkgsWithOverlay.my-packages.krita-ai-diffusion;
       };
     };
 }
