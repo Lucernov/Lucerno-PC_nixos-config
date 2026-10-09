@@ -3,7 +3,6 @@
 
 let
   inherit (myLib) home;
-  configDir = myLib.configDirName;
 in
 
 {
@@ -20,7 +19,11 @@ in
     "d /mnt/www-OneDrive 0755 ${myLib.userName} ${myLib.userName} -"
     "d ${home}/.config/rclone 0755 ${myLib.userName} ${myLib.userName} -"
     "L+ ${home}/.config/rclone/rclone.conf - ${myLib.userName} ${myLib.userName} - ${config.age.secrets."rclone-conf".path}"
-    "L+ ${home}/.config/rclone/exclude.txt - ${myLib.userName} ${myLib.userName} - ${home}/${configDir}/secrets/rclone/exclude.txt"
+    "L+ ${home}/.config/rclone/exclude.txt - ${myLib.userName} ${myLib.userName} - ${pkgs.writeText "rclone-exclude.txt" ''
+      *.gdoc
+      *.gsheet
+      *.gslides
+    ''}"
 
     # --- KIO настройки для ускорения корзины ---
     "L+ ${home}/.config/kiorc - ${myLib.userName} ${myLib.userName} - ${pkgs.writeText "kiorc" ''
