@@ -107,6 +107,7 @@
     vulkan-hdr-layer-kwin6                                        # Vulkan HDR Layer — посредник между HDR-игрой и драйвером NVIDIA (решает проблему "HDR не обнаружен")
     linuxPackages_zen.cpupower                                    # Утилита для управления частотой CPU (используется для смены governor)
     nix-update                                                    # Автообновление дериваций через GitHub/GitLab API
+    fbset                                                         # Настройка разрешения framebuffer для TTY (используется в nx_tty.nix)
   # rtcqs                                                         # Real-Time Config Quick Scan – диагностика системы для аудио (пока нет в NIXOS)
 
     # ========== КОНСОЛЬНЫЕ УТИЛИТЫ ==========
