@@ -1,5 +1,5 @@
 # Модуль для автоматического монтирования облачных дисков (Google Drive, OneDrive) через rclone
-{ pkgs, myLib, ... }:
+{ config, pkgs, myLib, ... }:
 
 let
   inherit (myLib) home;
@@ -18,7 +18,9 @@ in
   systemd.tmpfiles.rules = [
     "d /mnt/www-GoogleDrive 0755 ${myLib.userName} ${myLib.userName} -"
     "d /mnt/www-OneDrive 0755 ${myLib.userName} ${myLib.userName} -"
-    "L+ ${home}/.config/rclone - ${myLib.userName} ${myLib.userName} - ${home}/${configDir}/secrets/rclone"
+    "d ${home}/.config/rclone 0755 ${myLib.userName} ${myLib.userName} -"
+    "L+ ${home}/.config/rclone/rclone.conf - ${myLib.userName} ${myLib.userName} - ${config.age.secrets."rclone-conf".path}"
+    "L+ ${home}/.config/rclone/exclude.txt - ${myLib.userName} ${myLib.userName} - ${home}/${configDir}/secrets/rclone/exclude.txt"
 
     # --- KIO настройки для ускорения корзины ---
     "L+ ${home}/.config/kiorc - ${myLib.userName} ${myLib.userName} - ${pkgs.writeText "kiorc" ''
@@ -116,3 +118,32 @@ in
 #                    --allow-non-empty \                                           # Разрешить монтирование в непустую папку
 #                    --transfers=1 \                                               # Один параллельный поток передачи (для стабильности)
 #                    --checkers=1'';                                               # Один поток проверки (для стабильности)
+
+
+# lucerno@Lucerno-PC:~$ rclone config reconnect gdrive:
+# Already have a token - refresh?
+# y) Yes (default)
+# n) No
+# y/n> y
+#
+# Use web browser to automatically authenticate rclone with remote?
+#  * Say Y if the machine running rclone has a web browser you can use
+#  * Say N if running rclone on a (remote) machine without web browser access
+# If not sure try Y. If Y failed, try N.
+#
+# y) Yes (default)
+# n) No
+# y/n> y
+#
+# 2026/05/26 06:06:00 NOTICE: Make sure your Redirect URL is set to "http://127.0.0.1:53682/" in your custom config.
+# 2026/05/26 06:06:00 NOTICE: If your browser doesn't open automatically go to the following link: http://127.0.0.1:53682/auth?state=7kynjk3W5FZgDSaLUVm7AA
+# 2026/05/26 06:06:00 NOTICE: Log in and authorize rclone for access
+# 2026/05/26 06:06:00 NOTICE: Waiting for code...
+# 2026/05/26 06:06:17 NOTICE: Got code
+# Configure this as a Shared Drive (Team Drive)?
+#
+# y) Yes
+# n) No (default)
+# y/n> n
+#
+# lucerno@Lucerno-PC:~$
