@@ -21,8 +21,11 @@ in
       [core]
         excludesfile = ~/.gitignore
         hooksPath = ~/.git/hooks
-      [credential]
-        helper = store
+      # credential.helper намеренно НЕ указан.
+      # ~/.git-credentials — симлинк на /run/agenix/git-credentials (read-only,
+      # управляется agenix). Git не может в него записывать → при попытке
+      # обновления выдаёт "unable to get credential storage lock".
+      # Так как актуальные credentials уже в файле, git их просто читает.
 
       # Настройки для Git LFS
       [filter "lfs"]
