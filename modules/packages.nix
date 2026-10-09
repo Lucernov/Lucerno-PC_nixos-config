@@ -108,6 +108,8 @@
     linuxPackages_zen.cpupower                                    # Утилита для управления частотой CPU (используется для смены governor)
     nix-update                                                    # Автообновление дериваций через GitHub/GitLab API
     fbset                                                         # Настройка разрешения framebuffer для TTY (используется в nx_tty.nix)
+    agenix                                                        # CLI для шифрования секретов (используется с модулем agenix)
+    age                                                           # Утилита шифрования (нужна для генерации age-ключей)
   # rtcqs                                                         # Real-Time Config Quick Scan – диагностика системы для аудио (пока нет в NIXOS)
 
     # ========== КОНСОЛЬНЫЕ УТИЛИТЫ ==========
