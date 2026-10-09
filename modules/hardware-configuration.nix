@@ -216,10 +216,8 @@ in
       "nvidia_drm.modeset=1"                                                # Включить режимный сет DRM NVIDIA (нужен для Wayland)
       "nvidia_drm.fbdev=1"                                                  # Включает фреймбуфер через DRM (для консоли и раннего вывода)
       "initcall_blacklist=simpledrm_platform_driver_init"                   # Запрещает загрузку simpledrm (убирает конфликт с simpledrm для работы TTY)
-    # "video=DP-1:2560x1440@180"                                            # принудительно устанавливает разрешение консоли
     # "fbcon=map:1"                                                         # Привязывает фреймбуфер консоли к первому видеовыходу (обычно основному монитору)
       "fbcon=font:TER16x32"                                                 # Устанавливает шрифт консоли: TER16x32 (высокое разрешение, 16x32 пикселя)
-      "vt.global_cursor_default=0"                                          # Отключает мигающий курсор в виртуальных консолях (tty)
       "transparent_hugepage=madvise"                                        # Использовать прозрачные огромные страницы только по запросу madvise
       "rcupdate.rcu_cpu_stall_timeout=60"                                   # Таймаут ожидания RCU (60 сек) – диагностика зависаний
       "usbcore.autosuspend=-1"                                              # Отключить автоматическую приостановку USB-устройств
