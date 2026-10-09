@@ -108,6 +108,10 @@
 
       # ========== Эффекты ==========
       neo- = "neo --defaultbg";                                  # матричный дождь на фоне терминала
+
+
+      cinema-on  = "kscreen-doctor output.HDMI-A-1.enable output.HDMI-A-1.mode.1 output.HDMI-A-1.position.2560,360";
+      cinema-off = "kscreen-doctor output.HDMI-A-1.disable output.DP-1.priority.1";
     };
 }
 
