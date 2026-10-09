@@ -1,4 +1,4 @@
-{ pkgs, myLib, ... }:
+{ config, pkgs, myLib, ... }:
 
 {
   system.stateVersion = myLib.stateVersion;                                                                 # Версия формата состояния системы. НЕ привязана к channelVersion!
@@ -31,7 +31,7 @@
     };
     users.${myLib.userName} = {                                                                             # Основные настройки учётной записи
       isNormalUser = true;                                                                                  # Обычный пользователь (не системный)
-      hashedPasswordFile = "${myLib.home}/${myLib.configDirName}/secrets/${myLib.userName}-password.hash";  # Файл с хешем пароля
+      hashedPasswordFile = config.age.secrets."lucerno-password.hash".path;                                 # Файл с хешем пароля (расшифровывается agenix)
       group = myLib.userName;                                                                               # Группа, к которой принадлежит пользователь
       extraGroups = [
         "wheel"                                                                                             # Доступ к командам sudo (администрирование системы)

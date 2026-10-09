@@ -1,4 +1,4 @@
-{ pkgs, myLib, ... }:
+{ config, pkgs, myLib, ... }:
 
 let
   inherit (myLib) home;
@@ -82,7 +82,8 @@ in
     "L+ ${home}/.config/cliamp/radio_favorites.toml - ${myLib.userName} ${myLib.userName} - ${home}/${configDir}/dotfiles/config/cliamp/radio_favorites.toml"
 
     # ---------- Симлинки для приложений и данных ----------
-    "L+ ${home}/.config/AmneziaVPN.ORG - ${myLib.userName} ${myLib.userName} - ${home}/${configDir}/secrets/AmneziaVPN.ORG"
+    "d ${home}/.config/AmneziaVPN.ORG 0755 ${myLib.userName} ${myLib.userName} -"
+    "L+ ${home}/.config/AmneziaVPN.ORG/AmneziaVPN.conf - ${myLib.userName} ${myLib.userName} - ${config.age.secrets."amneziavpn-conf".path}"
     "L+ ${home}/.local/bin/socialstreamninja - ${myLib.userName} ${myLib.userName} - /mnt/sys_archiv/pkgs/AppImages/socialstreamninja.AppImage" # v0.4.28
 
     # ---------- Автозапуск ----------
