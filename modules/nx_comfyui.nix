@@ -1,16 +1,23 @@
 # systemctl --user daemon-reload - перезагрузка сервисов
 # systemctl --user restart comfyui - перезагрузка comfyui
 # systemctl --user status comfyui - вывод статуса comfyui
-#
-# ВНИМАНИЕ: custom_nodes/NStor-ComfyUI-Translation и ComfyUI-Manager
-# установлены вручную через UI ComfyUI-Manager. Не декларативны —
-# при переустановке системы нужно ставить заново:
-#   - NStor-ComfyUI-Translation: https://github.com/NStor/ComfyUI-Translation
-#   - ComfyUI-Manager: стандартный installation из ComfyUI
 { pkgs, myLib, ... }:
 
 let
   inherit (myLib) home;
+
+  # Локализация ComfyUI от Nestorchik.
+  # Обновление: посмотреть новый коммит на
+  #   https://github.com/Nestorchik/NStor-ComfyUI-Translation/commits/main
+  # Получить rev+hash:
+  #   nix run nixpkgs#nix-prefetch-github -- Nestorchik NStor-ComfyUI-Translation --rev main
+  # Заменить rev и hash ниже.
+  nstor-translation = pkgs.fetchFromGitHub {
+    owner = "Nestorchik";
+    repo = "NStor-ComfyUI-Translation";
+    rev = "49e1c2b813b3e658a4c5a80f0df259840822336d";
+    hash = "sha256-X/40bb90SYmJqxGwJ8bGd9Zq8Ylzf2fDtHHcTXHQ1DQ=";
+  };
 
   # Скрипты ComfyUI (остаются как есть)
   startScript = pkgs.writeShellScript "start-comfyui" ''
@@ -182,7 +189,10 @@ in
     "L+ ${home}/.config/comfy-ui/models/vae/flux2-vae.safetensors - ${myLib.userName} ${myLib.userName} - /mnt/ai/ComfyUI_Krita-ai-diffusion/models/vae/flux2-vae.safetensors" # Krita-ai-diffusion
 
     # ============================== ComfyUI ==============================
-    # ---------- ComfyUI ----------
+    # ---------- custom_nodes (плагины ComfyUI) ----------
+    "L+ ${home}/.config/comfy-ui/custom_nodes/NStor-ComfyUI-Translation - ${myLib.userName} ${myLib.userName} - ${nstor-translation}" # NStor-ComfyUI-Translation (локализация интерфейса)
+
+    # ---------- Модели для ComfyUI ----------
     "L+ ${home}/.config/comfy-ui/models/text_encoders/qwen_3_4b_fp4_flux2.safetensors - ${myLib.userName} ${myLib.userName} - /mnt/ai/ComfyUI_models/default/text_encoders/qwen_3_4b_fp4_flux2.safetensors" # default (Text encoder для Flux-2-Klein)
     "L+ ${home}/.config/comfy-ui/models/checkpoints/yue2_3b_int8_convrot.safetensors - ${myLib.userName} ${myLib.userName} - /mnt/ai/ComfyUI_models/yue2/yue2_3b_int8_convrot.safetensors" # Yue (Yue2) music model
     "L+ ${home}/.config/comfy-ui/models/audio_encoders/sheetsage2_bf16.safetensors - ${myLib.userName} ${myLib.userName} - /mnt/ai/ComfyUI_models/yue2/sheetsage2_bf16.safetensors" # Yue (Yue2) audio encoder
