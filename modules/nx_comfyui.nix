@@ -1,6 +1,12 @@
 # systemctl --user daemon-reload - перезагрузка сервисов
 # systemctl --user restart comfyui - перезагрузка comfyui
 # systemctl --user status comfyui - вывод статуса comfyui
+#
+# ВНИМАНИЕ: custom_nodes/NStor-ComfyUI-Translation и ComfyUI-Manager
+# установлены вручную через UI ComfyUI-Manager. Не декларативны —
+# при переустановке системы нужно ставить заново:
+#   - NStor-ComfyUI-Translation: https://github.com/NStor/ComfyUI-Translation
+#   - ComfyUI-Manager: стандартный installation из ComfyUI
 { pkgs, myLib, ... }:
 
 let
@@ -84,7 +90,7 @@ in
     serviceConfig = {
       Type = "simple";                                                                  # Тип сервиса (простой процесс, не разветвляется)
       WorkingDirectory = "${home}/.config/comfy-ui";                                    # Рабочая директория (где лежат модели и workflows)
-      ExecStart = "${pkgs.comfy-ui-cuda}/bin/comfy-ui --listen 127.0.0.1 --port 8188";  # Команда запуска - только локальный доступ
+      ExecStart = "${pkgs.comfy-ui-cuda}/bin/comfy-ui --listen 127.0.0.1 --port 8188 --enable-manager"; # Команда запуска - только локальный доступ
       Restart = "on-failure";                                                           # Перезапускать сервис, если он упал с ошибкой
       RestartSec = 5;                                                                   # Задержка перед перезапуском (5 секунд)
       DevicePolicy = "closed";                                                          # Разрешать только явно перечисленные устройства (безопасность)
@@ -117,18 +123,19 @@ in
     };
   };
 
-    # ========== Правила tmpfiles для папок монтирования ==========
+  # ========== Правила tmpfiles для папок монтирования ==========
   systemd.tmpfiles.rules = [
-    # ---------- Симлинки скриптов ComfyUI в /mnt/ai/ ----------
+    # ---------- Скрипты ComfyUI в /mnt/ai/ ----------
     "L+ /mnt/ai/start-comfyui.sh - ${myLib.userName} ${myLib.userName} - ${startScript}"
     "L+ /mnt/ai/stop-comfyui.sh - ${myLib.userName} ${myLib.userName} - ${stopScript}"
     "L+ /mnt/ai/status-comfyui.sh - ${myLib.userName} ${myLib.userName} - ${statusScript}"
-    # Симлинки для .desktop файлов
+
+    # ---------- .desktop-файлы для меню KDE ----------
     "L+ ${home}/.local/share/applications/comfyui-start.desktop - ${myLib.userName} ${myLib.userName} - ${startDesktop}/share/applications/comfyui-start.desktop"
     "L+ ${home}/.local/share/applications/comfyui-stop.desktop - ${myLib.userName} ${myLib.userName} - ${stopDesktop}/share/applications/comfyui-stop.desktop"
     "L+ ${home}/.local/share/applications/comfyui-status.desktop - ${myLib.userName} ${myLib.userName} - ${statusDesktop}/share/applications/comfyui-status.desktop"
 
-    # линки ComfyUI
+    # ---------- Директории ComfyUI в ~/.config/comfy-ui/ ----------
     "d ${home}/.config/comfy-ui/custom_nodes 0755 ${myLib.userName} ${myLib.userName} -"
     "d ${home}/.config/comfy-ui/models/diffusion_models 0755 ${myLib.userName} ${myLib.userName} -"
     "d ${home}/.config/comfy-ui/models/inpaint 0755 ${myLib.userName} ${myLib.userName} -"
@@ -136,21 +143,36 @@ in
     "d ${home}/.config/comfy-ui/models/text_encoders 0755 ${myLib.userName} ${myLib.userName} -"
     "d ${home}/.config/comfy-ui/models/upscale_models 0755 ${myLib.userName} ${myLib.userName} -"
     "d ${home}/.config/comfy-ui/models/vae 0755 ${myLib.userName} ${myLib.userName} -"
+    "d ${home}/.config/comfy-ui/models/checkpoints 0755 ${myLib.userName} ${myLib.userName} -"
+    "d ${home}/.config/comfy-ui/models/audio_encoders 0755 ${myLib.userName} ${myLib.userName} -"
 
-    # ---------- Симлинки ComfyUI (в /mnt/ai) ----------
+    # ---------- Директории на /mnt/ai (цели симлинков) ----------
+    "d /mnt/ai/ComfyUI_output 0755 ${myLib.userName} ${myLib.userName} -"
+    "d /mnt/ai/ComfyUI_models/default/text_encoders 0755 ${myLib.userName} ${myLib.userName} -"
+    "d /mnt/ai/ComfyUI_models/yue2 0755 ${myLib.userName} ${myLib.userName} -"
+
+    # ---------- input-output ----------
+    "L+ /mnt/ai/ComfyUI_input - ${myLib.userName} ${myLib.userName} - ${home}/.config/comfy-ui/input"
+    "L+ ${home}/.config/comfy-ui/output - ${myLib.userName} ${myLib.userName} - /mnt/ai/ComfyUI_output"
+
+    # ============================== Krita ==============================
+    "d /mnt/ai/ComfyUI_Krita-ai-diffusion 0755 ${myLib.userName} ${myLib.userName} -"
+    "d /mnt/ai/ComfyUI_Krita-Vision-Tools 0755 ${myLib.userName} ${myLib.userName} -"
+
+    # ---------- custom_nodes (плагины ComfyUI) ----------
     "L+ ${home}/.config/comfy-ui/custom_nodes/comfyui_controlnet_aux - ${myLib.userName} ${myLib.userName} - /mnt/ai/ComfyUI_Krita-ai-diffusion/comfyui_controlnet_aux" # Krita-ai-diffusion
     "L+ ${home}/.config/comfy-ui/custom_nodes/comfyui-inpaint-nodes - ${myLib.userName} ${myLib.userName} - /mnt/ai/ComfyUI_Krita-ai-diffusion/comfyui-inpaint-nodes" # Krita-ai-diffusion
     "L+ ${home}/.config/comfy-ui/custom_nodes/ComfyUI_IPAdapter_plus - ${myLib.userName} ${myLib.userName} - /mnt/ai/ComfyUI_Krita-ai-diffusion/ComfyUI_IPAdapter_plus" # Krita-ai-diffusion
     "L+ ${home}/.config/comfy-ui/custom_nodes/comfyui-tooling-nodes - ${myLib.userName} ${myLib.userName} - /mnt/ai/ComfyUI_Krita-ai-diffusion/comfyui-tooling-nodes" # Krita-ai-diffusion
 
-    # Модели
+    # ---------- Модели для Krita-ai-diffusion ----------
     "L+ ${home}/.config/comfy-ui/models/diffusion_models/flux-2-klein-4b-fp8.safetensors - ${myLib.userName} ${myLib.userName} - /mnt/ai/ComfyUI_Krita-ai-diffusion/models/diffusion_models/flux-2-klein-4b-fp8.safetensors" # Krita-ai-diffusion
     "L+ ${home}/.config/comfy-ui/models/diffusion_models/flux-2-klein-4b-Q6_K.gguf - ${myLib.userName} ${myLib.userName} - /mnt/ai/ComfyUI_Krita-ai-diffusion/models/diffusion_models/flux-2-klein-4b-Q6_K.gguf" # Krita-ai-diffusion
     "L+ ${home}/.config/comfy-ui/models/inpaint/MAT_Places512_G_fp16.safetensors - ${myLib.userName} ${myLib.userName} - /mnt/ai/ComfyUI_Krita-ai-diffusion/models/inpaint/MAT_Places512_G_fp16.safetensors" # Krita-ai-diffusion
     "L+ ${home}/.config/comfy-ui/models/loras/LyNiaZ53Tudg0J6sT8Xbx_pytorch_lora_weights_comfy_converted.safetensors - ${myLib.userName} ${myLib.userName} - /mnt/ai/ComfyUI_Krita-ai-diffusion/models/loras/LyNiaZ53Tudg0J6sT8Xbx_pytorch_lora_weights_comfy_converted.safetensors" # Krita-ai-diffusion
     "L+ ${home}/.config/comfy-ui/models/text_encoders/Qwen3-4B-Q4_K_M.gguf - ${myLib.userName} ${myLib.userName} - /mnt/ai/ComfyUI_Krita-ai-diffusion/models/text_encoders/Qwen3-4B-Q4_K_M.gguf" # Krita-ai-diffusion
 
-    # Upscale модели
+    # ---------- Upscale модели ----------
     "L+ ${home}/.config/comfy-ui/models/upscale_models/4x_NMKD-Superscale-SP_178000_G.pth - ${myLib.userName} ${myLib.userName} - /mnt/ai/ComfyUI_Krita-ai-diffusion/models/upscale_models/4x_NMKD-Superscale-SP_178000_G.pth" # Krita-ai-diffusion
     "L+ ${home}/.config/comfy-ui/models/upscale_models/HAT_SRx4_ImageNet-pretrain.pth - ${myLib.userName} ${myLib.userName} - /mnt/ai/ComfyUI_Krita-ai-diffusion/models/upscale_models/HAT_SRx4_ImageNet-pretrain.pth" # Krita-ai-diffusion
     "L+ ${home}/.config/comfy-ui/models/upscale_models/OmniSR_X2_DIV2K.safetensors - ${myLib.userName} ${myLib.userName} - /mnt/ai/ComfyUI_Krita-ai-diffusion/models/upscale_models/OmniSR_X2_DIV2K.safetensors" # Krita-ai-diffusion
@@ -158,5 +180,11 @@ in
     "L+ ${home}/.config/comfy-ui/models/upscale_models/OmniSR_X4_DIV2K.safetensors - ${myLib.userName} ${myLib.userName} - /mnt/ai/ComfyUI_Krita-ai-diffusion/models/upscale_models/OmniSR_X4_DIV2K.safetensors" # Krita-ai-diffusion
     "L+ ${home}/.config/comfy-ui/models/upscale_models/Real_HAT_GAN_sharper.pth - ${myLib.userName} ${myLib.userName} - /mnt/ai/ComfyUI_Krita-ai-diffusion/models/upscale_models/Real_HAT_GAN_sharper.pth" # Krita-ai-diffusion
     "L+ ${home}/.config/comfy-ui/models/vae/flux2-vae.safetensors - ${myLib.userName} ${myLib.userName} - /mnt/ai/ComfyUI_Krita-ai-diffusion/models/vae/flux2-vae.safetensors" # Krita-ai-diffusion
+
+    # ============================== ComfyUI ==============================
+    # ---------- ComfyUI ----------
+    "L+ ${home}/.config/comfy-ui/models/text_encoders/qwen_3_4b_fp4_flux2.safetensors - ${myLib.userName} ${myLib.userName} - /mnt/ai/ComfyUI_models/default/text_encoders/qwen_3_4b_fp4_flux2.safetensors" # default (Text encoder для Flux-2-Klein)
+    "L+ ${home}/.config/comfy-ui/models/checkpoints/yue2_3b_int8_convrot.safetensors - ${myLib.userName} ${myLib.userName} - /mnt/ai/ComfyUI_models/yue2/yue2_3b_int8_convrot.safetensors" # Yue (Yue2) music model
+    "L+ ${home}/.config/comfy-ui/models/audio_encoders/sheetsage2_bf16.safetensors - ${myLib.userName} ${myLib.userName} - /mnt/ai/ComfyUI_models/yue2/sheetsage2_bf16.safetensors" # Yue (Yue2) audio encoder
   ];
 }
