@@ -82,15 +82,12 @@ in
   # wantedBy = [ "multi-user.target" ];                                                 # Автоматически запускать при загрузке системы
 
     serviceConfig = {
-    # User = myLib.userName;                                                            # Запускать от имени пользователя lucerno (не от root)
-    # Group = myLib.userName;                                                           # Группа пользователя
       Type = "simple";                                                                  # Тип сервиса (простой процесс, не разветвляется)
-      WorkingDirectory = "/mnt/ai/ComfyUI";                                             # Рабочая директория (где лежат модели и workflows)
+      WorkingDirectory = "${home}/.config/comfy-ui";                                    # Рабочая директория (где лежат модели и workflows)
       ExecStart = "${pkgs.comfy-ui-cuda}/bin/comfy-ui --listen 127.0.0.1 --port 8188";  # Команда запуска - только локальный доступ
       Restart = "on-failure";                                                           # Перезапускать сервис, если он упал с ошибкой
       RestartSec = 5;                                                                   # Задержка перед перезапуском (5 секунд)
       DevicePolicy = "closed";                                                          # Разрешать только явно перечисленные устройства (безопасность)
-    # AmbientCapabilities = [ "CAP_SYS_ADMIN" ];                                        # Дать процессу возможность монтировать (нужно для FUSE)
 
       # ---------- Явное разрешение доступа к устройствам ----------
       DeviceAllow = [
@@ -132,35 +129,35 @@ in
     "L+ ${home}/.local/share/applications/comfyui-status.desktop - ${myLib.userName} ${myLib.userName} - ${statusDesktop}/share/applications/comfyui-status.desktop"
 
     # линки ComfyUI
-    "d /mnt/ai/ComfyUI/custom_nodes 0755 ${myLib.userName} ${myLib.userName} -"
-    "d /mnt/ai/ComfyUI/models/diffusion_models 0755 ${myLib.userName} ${myLib.userName} -"
-    "d /mnt/ai/ComfyUI/models/inpaint 0755 ${myLib.userName} ${myLib.userName} -"
-    "d /mnt/ai/ComfyUI/models/loras 0755 ${myLib.userName} ${myLib.userName} -"
-    "d /mnt/ai/ComfyUI/models/text_encoders 0755 ${myLib.userName} ${myLib.userName} -"
-    "d /mnt/ai/ComfyUI/models/upscale_models 0755 ${myLib.userName} ${myLib.userName} -"
-    "d /mnt/ai/ComfyUI/models/vae 0755 ${myLib.userName} ${myLib.userName} -"
+    "d ${home}/.config/comfy-ui/custom_nodes 0755 ${myLib.userName} ${myLib.userName} -"
+    "d ${home}/.config/comfy-ui/models/diffusion_models 0755 ${myLib.userName} ${myLib.userName} -"
+    "d ${home}/.config/comfy-ui/models/inpaint 0755 ${myLib.userName} ${myLib.userName} -"
+    "d ${home}/.config/comfy-ui/models/loras 0755 ${myLib.userName} ${myLib.userName} -"
+    "d ${home}/.config/comfy-ui/models/text_encoders 0755 ${myLib.userName} ${myLib.userName} -"
+    "d ${home}/.config/comfy-ui/models/upscale_models 0755 ${myLib.userName} ${myLib.userName} -"
+    "d ${home}/.config/comfy-ui/models/vae 0755 ${myLib.userName} ${myLib.userName} -"
 
     # ---------- Симлинки ComfyUI (в /mnt/ai) ----------
-    "L+ ${home}/.config/comfy-ui - ${myLib.userName} ${myLib.userName} - /mnt/ai/ComfyUI"
-    "L+ /mnt/ai/ComfyUI/custom_nodes/comfyui_controlnet_aux - ${myLib.userName} ${myLib.userName} - /mnt/ai/ComfyUI_krita-ai-diffusion/comfyui_controlnet_aux"
-    "L+ /mnt/ai/ComfyUI/custom_nodes/comfyui-inpaint-nodes - ${myLib.userName} ${myLib.userName} - /mnt/ai/ComfyUI_krita-ai-diffusion/comfyui-inpaint-nodes"
-    "L+ /mnt/ai/ComfyUI/custom_nodes/ComfyUI_IPAdapter_plus - ${myLib.userName} ${myLib.userName} - /mnt/ai/ComfyUI_krita-ai-diffusion/ComfyUI_IPAdapter_plus"
-    "L+ /mnt/ai/ComfyUI/custom_nodes/comfyui-tooling-nodes - ${myLib.userName} ${myLib.userName} - /mnt/ai/ComfyUI_krita-ai-diffusion/comfyui-tooling-nodes"
+    "L+ ${home}/.config/comfy-ui/custom_nodes/comfyui_controlnet_aux - ${myLib.userName} ${myLib.userName} - /mnt/ai/ComfyUI_Krita-ai-diffusion/comfyui_controlnet_aux" # Krita-ai-diffusion
+    "L+ ${home}/.config/comfy-ui/custom_nodes/comfyui-inpaint-nodes - ${myLib.userName} ${myLib.userName} - /mnt/ai/ComfyUI_Krita-ai-diffusion/comfyui-inpaint-nodes" # Krita-ai-diffusion
+    "L+ ${home}/.config/comfy-ui/custom_nodes/ComfyUI_IPAdapter_plus - ${myLib.userName} ${myLib.userName} - /mnt/ai/ComfyUI_Krita-ai-diffusion/ComfyUI_IPAdapter_plus" # Krita-ai-diffusion
+    "L+ ${home}/.config/comfy-ui/custom_nodes/comfyui-tooling-nodes - ${myLib.userName} ${myLib.userName} - /mnt/ai/ComfyUI_Krita-ai-diffusion/comfyui-tooling-nodes" # Krita-ai-diffusion
 
     # Модели
-    "L+ /mnt/ai/ComfyUI/models/diffusion_models/flux-2-klein-4b-fp8.safetensors - ${myLib.userName} ${myLib.userName} - /mnt/ai/ComfyUI_krita-ai-diffusion/models/diffusion_models/flux-2-klein-4b-fp8.safetensors"
-    "L+ /mnt/ai/ComfyUI/models/diffusion_models/flux-2-klein-4b-Q6_K.gguf - ${myLib.userName} ${myLib.userName} - /mnt/ai/ComfyUI_krita-ai-diffusion/models/diffusion_models/flux-2-klein-4b-Q6_K.gguf"
-    "L+ /mnt/ai/ComfyUI/models/inpaint/MAT_Places512_G_fp16.safetensors - ${myLib.userName} ${myLib.userName} - /mnt/ai/ComfyUI_krita-ai-diffusion/models/inpaint/MAT_Places512_G_fp16.safetensors"
-    "L+ /mnt/ai/ComfyUI/models/loras/LyNiaZ53Tudg0J6sT8Xbx_pytorch_lora_weights_comfy_converted.safetensors - ${myLib.userName} ${myLib.userName} - /mnt/ai/ComfyUI_krita-ai-diffusion/models/loras/LyNiaZ53Tudg0J6sT8Xbx_pytorch_lora_weights_comfy_converted.safetensors"
-    "L+ /mnt/ai/ComfyUI/models/text_encoders/Qwen3-4B-Q4_K_M.gguf - ${myLib.userName} ${myLib.userName} - /mnt/ai/ComfyUI_krita-ai-diffusion/models/text_encoders/Qwen3-4B-Q4_K_M.gguf"
+    "L+ ${home}/.config/comfy-ui/models/diffusion_models/flux-2-klein-4b-fp8.safetensors - ${myLib.userName} ${myLib.userName} - /mnt/ai/ComfyUI_Krita-ai-diffusion/models/diffusion_models/flux-2-klein-4b-fp8.safetensors" # Krita-ai-diffusion
+    "L+ ${home}/.config/comfy-ui/models/diffusion_models/flux-2-klein-4b-Q6_K.gguf - ${myLib.userName} ${myLib.userName} - /mnt/ai/ComfyUI_Krita-ai-diffusion/models/diffusion_models/flux-2-klein-4b-Q6_K.gguf" # Krita-ai-diffusion
+    "L+ ${home}/.config/comfy-ui/models/inpaint/MAT_Places512_G_fp16.safetensors - ${myLib.userName} ${myLib.userName} - /mnt/ai/ComfyUI_Krita-ai-diffusion/models/inpaint/MAT_Places512_G_fp16.safetensors" # Krita-ai-diffusion
+    "L+ ${home}/.config/comfy-ui/models/loras/LyNiaZ53Tudg0J6sT8Xbx_pytorch_lora_weights_comfy_converted.safetensors - ${myLib.userName} ${myLib.userName} - /mnt/ai/ComfyUI_Krita-ai-diffusion/models/loras/LyNiaZ53Tudg0J6sT8Xbx_pytorch_lora_weights_comfy_converted.safetensors" # Krita-ai-diffusion
+    "L+ ${home}/.config/comfy-ui/models/text_encoders/Qwen3-4B-Q4_K_M.gguf - ${myLib.userName} ${myLib.userName} - /mnt/ai/ComfyUI_Krita-ai-diffusion/models/text_encoders/Qwen3-4B-Q4_K_M.gguf" # Krita-ai-diffusion
+    "L+ ${home}/.local/share/krita/pykrita/vision_tools/models/birefnet/BiRefNet-F16.gguf - ${myLib.userName} ${myLib.userName} - /mnt/ai/ComfyUI_Krita-Vision-Tools/BiRefNet-F16.gguf" # Krita-Vision-Tools
 
     # Upscale модели
-    "L+ /mnt/ai/ComfyUI/models/upscale_models/4x_NMKD-Superscale-SP_178000_G.pth - ${myLib.userName} ${myLib.userName} - /mnt/ai/ComfyUI_krita-ai-diffusion/models/upscale_models/4x_NMKD-Superscale-SP_178000_G.pth"
-    "L+ /mnt/ai/ComfyUI/models/upscale_models/HAT_SRx4_ImageNet-pretrain.pth - ${myLib.userName} ${myLib.userName} - /mnt/ai/ComfyUI_krita-ai-diffusion/models/upscale_models/HAT_SRx4_ImageNet-pretrain.pth"
-    "L+ /mnt/ai/ComfyUI/models/upscale_models/OmniSR_X2_DIV2K.safetensors - ${myLib.userName} ${myLib.userName} - /mnt/ai/ComfyUI_krita-ai-diffusion/models/upscale_models/OmniSR_X2_DIV2K.safetensors"
-    "L+ /mnt/ai/ComfyUI/models/upscale_models/OmniSR_X3_DIV2K.safetensors - ${myLib.userName} ${myLib.userName} - /mnt/ai/ComfyUI_krita-ai-diffusion/models/upscale_models/OmniSR_X3_DIV2K.safetensors"
-    "L+ /mnt/ai/ComfyUI/models/upscale_models/OmniSR_X4_DIV2K.safetensors - ${myLib.userName} ${myLib.userName} - /mnt/ai/ComfyUI_krita-ai-diffusion/models/upscale_models/OmniSR_X4_DIV2K.safetensors"
-    "L+ /mnt/ai/ComfyUI/models/upscale_models/Real_HAT_GAN_sharper.pth - ${myLib.userName} ${myLib.userName} - /mnt/ai/ComfyUI_krita-ai-diffusion/models/upscale_models/Real_HAT_GAN_sharper.pth"
-    "L+ /mnt/ai/ComfyUI/models/vae/flux2-vae.safetensors - ${myLib.userName} ${myLib.userName} - /mnt/ai/ComfyUI_krita-ai-diffusion/models/vae/flux2-vae.safetensors"
+    "L+ ${home}/.config/comfy-ui/models/upscale_models/4x_NMKD-Superscale-SP_178000_G.pth - ${myLib.userName} ${myLib.userName} - /mnt/ai/ComfyUI_Krita-ai-diffusion/models/upscale_models/4x_NMKD-Superscale-SP_178000_G.pth" # Krita-ai-diffusion
+    "L+ ${home}/.config/comfy-ui/models/upscale_models/HAT_SRx4_ImageNet-pretrain.pth - ${myLib.userName} ${myLib.userName} - /mnt/ai/ComfyUI_Krita-ai-diffusion/models/upscale_models/HAT_SRx4_ImageNet-pretrain.pth" # Krita-ai-diffusion
+    "L+ ${home}/.config/comfy-ui/models/upscale_models/OmniSR_X2_DIV2K.safetensors - ${myLib.userName} ${myLib.userName} - /mnt/ai/ComfyUI_Krita-ai-diffusion/models/upscale_models/OmniSR_X2_DIV2K.safetensors" # Krita-ai-diffusion
+    "L+ ${home}/.config/comfy-ui/models/upscale_models/OmniSR_X3_DIV2K.safetensors - ${myLib.userName} ${myLib.userName} - /mnt/ai/ComfyUI_Krita-ai-diffusion/models/upscale_models/OmniSR_X3_DIV2K.safetensors" # Krita-ai-diffusion
+    "L+ ${home}/.config/comfy-ui/models/upscale_models/OmniSR_X4_DIV2K.safetensors - ${myLib.userName} ${myLib.userName} - /mnt/ai/ComfyUI_Krita-ai-diffusion/models/upscale_models/OmniSR_X4_DIV2K.safetensors" # Krita-ai-diffusion
+    "L+ ${home}/.config/comfy-ui/models/upscale_models/Real_HAT_GAN_sharper.pth - ${myLib.userName} ${myLib.userName} - /mnt/ai/ComfyUI_Krita-ai-diffusion/models/upscale_models/Real_HAT_GAN_sharper.pth" # Krita-ai-diffusion
+    "L+ ${home}/.config/comfy-ui/models/vae/flux2-vae.safetensors - ${myLib.userName} ${myLib.userName} - /mnt/ai/ComfyUI_Krita-ai-diffusion/models/vae/flux2-vae.safetensors" # Krita-ai-diffusion
   ];
 }
