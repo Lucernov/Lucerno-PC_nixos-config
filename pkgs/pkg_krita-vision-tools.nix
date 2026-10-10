@@ -71,6 +71,18 @@ stdenv.mkDerivation (finalAttrs: {
     mkdir -p $out/share/krita/pykrita
     cp -r vision_tools       $out/share/krita/pykrita/
     cp vision_tools.desktop  $out/share/krita/pykrita/
+
+    # Подкладываем BiRefNet-F16.gguf (420 МБ, лежит на /mnt/ai) внутрь
+    # папки моделей плагина — чтобы он был виден в диалоге Background
+    # Removal рядом с bundled BiRefNet-lite.
+    #
+    # ВАЖНО: target — абсолютный путь вне /nix/store. Если /mnt/ai не
+    # смонтирован, симлинк будет висячим (как и любой /mnt/ai-референс).
+    # Это осознанный компромисс ради простоты: не надо реконструировать
+    # всю структуру vision_tools через tmpfiles.
+    ln -sf /mnt/ai/ComfyUI_Krita-Vision-Tools/BiRefNet-F16.gguf \
+      $out/share/krita/pykrita/vision_tools/models/birefnet/BiRefNet-F16.gguf
+
     runHook postInstall
   '';
 
