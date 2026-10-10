@@ -1,8 +1,4 @@
 #!/usr/bin/env bash
-
-# Скрипт для генерации файла с содержимым конфигурации NixOS
-# Путь: /home/lucerno/nixos-config/generate-prompt.sh
-
 set -euo pipefail
 
 # Переходим в директорию скрипта
