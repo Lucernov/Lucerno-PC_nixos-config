@@ -100,7 +100,7 @@ in
         "/dev/nvidia-uvm"                                                               # Unified Virtual Memory (нужен для CUDA)
         "/dev/nvidia-uvm-tools"                                                         # Инструменты UVM
         "/dev/nvidia-modeset"                                                           # Режимный сет (для Wayland)
-        "/dev/dri/*"                                                                    # Доступ к DRI (графика)
+        "char-drm"                                                                      # Доступ к DRM устройствам, systemd разворачивает в правила для card0, renderD128 и др.
       ];
 
       # ---------- Переменные окружения для CUDA и доступа к драйверу NVIDIA ----------

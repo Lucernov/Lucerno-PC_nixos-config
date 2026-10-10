@@ -1,4 +1,4 @@
-# pkgs/reaper.nix
+# pkgs/pkg_reaper.nix
 { symlinkJoin, reaper, cpupower }:
 
 symlinkJoin {
@@ -25,7 +25,7 @@ symlinkJoin {
     # Правило NOPASSWD для этой команды задано в modules/default.nix (security.sudo.extraRules)
     sudo ${cpupower}/bin/cpupower frequency-set -g performance > /dev/null 2>&1
 
-    # Запустить REAPER игнорируя первое ядро (на него выведены все систеемные прерывания) и игнорировать энергосберегающие ядра
+    # Запускаем REAPER на ядрах 2-11: пропускаем CPU 0-1 (там системные прерывания, см. kernelParams irqaffinity=0)
     taskset -c 2-11 $out/bin/.reaper-unwrapped "\$@"
 
     # После завершения REAPER возвращаем governor в powersave (системный default NixOS)

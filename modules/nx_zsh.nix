@@ -7,7 +7,7 @@ let
   # Получаем алиасы из модуля aliases.nix (они определены как programs.zsh.shellAliases)
   aliases = config.programs.zsh.shellAliases or {};
   # Превращаем атрибуты в строки alias
-  aliasLines = lib.mapAttrsToList (name: value: "alias ${name}='${builtins.replaceStrings ["'"] ["'\\''"] value}'") aliases;
+  aliasLines = lib.mapAttrsToList (name: value: "alias ${name}=${lib.escapeShellArg value}") aliases;
   aliasString = builtins.concatStringsSep "\n" aliasLines;
 
   # Генерируем .zshrc без системного файла
