@@ -149,7 +149,6 @@ in
     "L+ ${home}/.config/comfy-ui/models/inpaint/MAT_Places512_G_fp16.safetensors - ${myLib.userName} ${myLib.userName} - /mnt/ai/ComfyUI_Krita-ai-diffusion/models/inpaint/MAT_Places512_G_fp16.safetensors" # Krita-ai-diffusion
     "L+ ${home}/.config/comfy-ui/models/loras/LyNiaZ53Tudg0J6sT8Xbx_pytorch_lora_weights_comfy_converted.safetensors - ${myLib.userName} ${myLib.userName} - /mnt/ai/ComfyUI_Krita-ai-diffusion/models/loras/LyNiaZ53Tudg0J6sT8Xbx_pytorch_lora_weights_comfy_converted.safetensors" # Krita-ai-diffusion
     "L+ ${home}/.config/comfy-ui/models/text_encoders/Qwen3-4B-Q4_K_M.gguf - ${myLib.userName} ${myLib.userName} - /mnt/ai/ComfyUI_Krita-ai-diffusion/models/text_encoders/Qwen3-4B-Q4_K_M.gguf" # Krita-ai-diffusion
-    "L+ ${home}/.local/share/krita/pykrita/vision_tools/models/birefnet/BiRefNet-F16.gguf - ${myLib.userName} ${myLib.userName} - /mnt/ai/ComfyUI_Krita-Vision-Tools/BiRefNet-F16.gguf" # Krita-Vision-Tools
 
     # Upscale модели
     "L+ ${home}/.config/comfy-ui/models/upscale_models/4x_NMKD-Superscale-SP_178000_G.pth - ${myLib.userName} ${myLib.userName} - /mnt/ai/ComfyUI_Krita-ai-diffusion/models/upscale_models/4x_NMKD-Superscale-SP_178000_G.pth" # Krita-ai-diffusion
