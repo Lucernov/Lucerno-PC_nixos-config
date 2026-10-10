@@ -5,15 +5,15 @@
 #   - krita-vision-tools (v2.1.0)  — выделение объектов и удаление фона
 #
 # Оба прибиты к последним версиям, совместимым с Krita 5.2 / Qt5.
-# Обновлять только вместе с переходом на Krita 6.
+# Обновлять только вместе с переходом на Krita 6
 #
 # Пользовательские данные (ai_diffusion/, logs, presets, styles) остаются
-# в $HOME и не трогаются. Код обоих плагинов идёт из /nix/store.
+# в $HOME и не трогаются. Код обоих плагинов идёт из /nix/store
 #
-# ПРИМЕЧАНИЕ про vision_tools: релизный архив содержит только
-# BiRefNet-lite-F16.gguf (84 МБ). Пользовательская BiRefNet-F16.gguf (420 МБ,
-# на /mnt/ai/BiRefNet/) в деривацию не входит — если понадобится, плагин
-# позволяет указать путь к ней через кнопку "Folder" в GUI.
+# ПРИМЕЧАНИЕ про vision_tools: помимо bundled BiRefNet-lite (84 МБ),
+# в пакет добавлен симлинк на BiRefNet-F16.gguf (420 МБ) с /mnt/ai —
+# см. installPhase в pkgs/pkg_krita-vision-tools.nix. Плагин видит
+# обе модели в диалоге Background Removal
 
 { pkgs, myLib, ... }:
 
