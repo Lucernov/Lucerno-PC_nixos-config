@@ -33,7 +33,6 @@
 
     comfyui-nix = {                                                                                        # Flake для ComfyUI
       url = "github:utensils/comfyui-nix";
-      inputs.nixpkgs.follows = "nixpkgs";                                                                  # Зависимости используют основной nixpkgs
     };
 
     import-tree.url = "github:vic/import-tree";                                                            # Утилита для рекурсивного импорта файлов
