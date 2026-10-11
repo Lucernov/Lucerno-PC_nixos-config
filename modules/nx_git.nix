@@ -21,11 +21,11 @@ in
       [core]
         excludesfile = ~/.gitignore
         hooksPath = ~/.git/hooks
-[credential]
-  # Для GET вызываем встроенный store (он парсит URL-формат).
-  # Для store/erase — молча выходим, чтобы git не пытался
-  # писать в read-only файл /run/agenix/git-credentials.
-  helper = "!f() { if [ \"$1\" = get ]; then git credential-store --file=/run/agenix/git-credentials get; fi; exit 0; }; f"
+      [credential]
+        # Для GET вызываем встроенный store (он парсит URL-формат).
+        # Для store/erase — молча выходим, чтобы git не пытался
+        # писать в read-only файл /run/agenix/git-credentials.
+        helper = "!f() { if [ \"$1\" = get ]; then git credential-store --file=/run/agenix/git-credentials get; fi; exit 0; }; f"
 
       # Настройки для Git LFS
       [filter "lfs"]
