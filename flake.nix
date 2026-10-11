@@ -153,7 +153,11 @@
   # Теперь comfy-ui-cuda — buildEnv, ссылающийся на prev.comfy-ui.
   # Заменяем paths на наш final.comfy-ui (патченный).
   comfy-ui-cuda = prev.comfy-ui-cuda.overrideAttrs (old: {
-    paths = [ final.comfy-ui ];
+    paths = map (p:
+      if (p.pname or p.name or "") == "comfy-ui"
+      then final.comfy-ui
+      else p
+    ) (old.paths or []);
   });
 })
         (final: prev: {                                                                                    # 4. Фиксированные версии krita и minion ПЕРЕОПРЕДЕЛЯЕТ существующие пакеты, поэтому идёт последним
