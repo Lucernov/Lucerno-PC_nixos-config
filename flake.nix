@@ -125,41 +125,6 @@
         (import ./pkgs/default.nix { pkgs-unstable = pkgsUnstable; })                                      # 1. Оверлей с моими пакетами (my-packages), ничего не переопределяет
         nur.overlays.default                                                                               # 2. Все пакеты из NUR доступны как pkgs.nur.repos.<user>.<pkg>, ничего не переопределяет
         comfyui-nix.overlays.default                                                                       # 3. Оверлей ComfyUI (comfy-ui-cuda), ничего не переопределяет
-(final: prev: {
-  # Патчим реальный comfy-ui (bash-скрипт с LD_LIBRARY_PATH)
-  comfy-ui = prev.comfy-ui.overrideAttrs (old: {
-    postFixup = (old.postFixup or "") + ''
-      echo "=== STRIPPING multi-GPU refs from comfy-ui ==="
-      set +e
-      files=$(grep -rIl 'libnvshmem\|comfyui-template-inputs' "$out" 2>/dev/null)
-      grep_rc=$?
-      set -e
-      [ "$grep_rc" -ne 0 ] && echo "  (grep вернул $grep_rc)"
-      if [ -z "$files" ]; then
-        echo "  (nothing to strip)"
-      else
-        echo "$files" | while read -r f; do
-          sed -i \
-            -e 's|/nix/store/[a-z0-9]\{32\}-cuda13\.2-libnvshmem-[^:"]*|/var/empty|g' \
-            -e 's|/nix/store/[a-z0-9]\{32\}-comfyui-template-inputs[^:"]*|/var/empty|g' \
-            "$f" \
-            && echo "  stripped: $f" || echo "  FAILED: $f"
-        done
-      fi
-      echo "=== done ==="
-    '';
-  });
-
-  # Теперь comfy-ui-cuda — buildEnv, ссылающийся на prev.comfy-ui.
-  # Заменяем paths на наш final.comfy-ui (патченный).
-  comfy-ui-cuda = prev.comfy-ui-cuda.overrideAttrs (old: {
-    paths = map (p:
-      if (p.pname or p.name or "") == "comfy-ui"
-      then final.comfy-ui
-      else p
-    ) (old.paths or []);
-  });
-})
         (final: prev: {                                                                                    # 4. Фиксированные версии krita и minion ПЕРЕОПРЕДЕЛЯЕТ существующие пакеты, поэтому идёт последним
           krita  = pkgsPinned25_11.krita;                                                                  #    Krita из фиксированного nixpkgs (новая версия пока не работает с ComfyUI)
           minion = pkgsPinned25_11.minion;                                                                 #    Minion из фиксированного nixpkgs (в основном канале сломан)
