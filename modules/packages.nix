@@ -14,7 +14,12 @@
     vim.enable = true;                                            # Устанавливает Vim (текстовый редактор)
     nano.enable = true;                                           # Устанавливает Nano (простой текстовый редактор)
     htop.enable = true;                                           # Устанавливает htop (монитор процессов)
-    amnezia-vpn.enable = true;                                    # Включает сервис AmneziaVPN (VPN-клиент)
+  # amnezia-vpn.enable = true;                                    # Включает сервис AmneziaVPN (VPN-клиент)
+    amnezia-vpn = {                                               # Включает сервис AmneziaVPN (VPN-клиент)
+      enable = true;
+      package = pkgs-unstable.amnezia-vpn;                        # из нестабильного канала
+    };
+
     virt-manager.enable = true;                                   # Включает Virtual Machine Manager (графический интерфейс для управления QEMU/KVM через libvirt)
     appimage = {
       enable = true;                                              # Включает поддержку запуска AppImage-файлов
