@@ -11,8 +11,6 @@ symlinkJoin {
     cat > $out/bin/reaper <<EOF
 #!/bin/sh
     export GDK_BACKEND=x11
-    unset WAYLAND_DISPLAY
-    unset XDG_SESSION_TYPE
     export WINEPREFIX="/mnt/music/MUSIC-WINE/yabridge"
 
     # Ловим сигналы завершения и восстанавливаем governor

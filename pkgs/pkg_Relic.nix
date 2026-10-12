@@ -1,6 +1,6 @@
 # pkgs/pkg_Relic.nix
 #
-# Relic Free Audio Plugin Suite — набор из 13 бесплатных CLAP-плагинов
+# Relic Free Audio Plugin Suite — набор из 12 бесплатных CLAP-плагинов
 # (эмуляции классических компрессоров, эквалайзеров и предусилителей).
 #
 # Особенности:
