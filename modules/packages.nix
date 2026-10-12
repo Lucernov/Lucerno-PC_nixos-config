@@ -15,7 +15,7 @@
     nano.enable = true;                                           # Устанавливает Nano (простой текстовый редактор)
     htop.enable = true;                                           # Устанавливает htop (монитор процессов)
   # amnezia-vpn.enable = true;                                    # Включает сервис AmneziaVPN (VPN-клиент)
-    amnezia-vpn = {                                               # Включает сервис AmneziaVPN (VPN-клиент)
+    amnezia-vpn = {                                               # Включает сервис AmneziaVPN (VPN-клиент) 5.0.3.0
       enable = true;
       package = pkgs-unstable.amnezia-vpn;                        # из нестабильного канала
     };

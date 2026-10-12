@@ -88,7 +88,7 @@ in
     "L+ ${myLib.home}/.local/bin/wine64 - ${myLib.userName} ${myLib.userName} - ${pkgs.wineWow64Packages.staging}/bin/wine"  # wine64
     "L+ /usr/bin/zenity - - - - ${pkgs.zenity}/bin/zenity" # нужно для работы вывода меню выбора пресетов внутри плагина
 
-    # Создаём структуру каталогов для данных Amp Locker и Drum Locker
+    # ---------- Структура каталогов для данных Amp Locker и Drum Locker ----------
     "d \"${myLib.home}/Audio Assault\" 0755 ${myLib.userName} ${myLib.userName} -"
     "d \"${myLib.home}/Audio Assault/PluginData\" 0755 ${myLib.userName} ${myLib.userName} -"
     "d \"${myLib.home}/Audio Assault/PluginData/Audio Assault\" 0755 ${myLib.userName} ${myLib.userName} -"
@@ -111,6 +111,37 @@ in
     "L+ ${myLib.home}/.local/share/vital - ${myLib.userName} ${myLib.userName} - /mnt/sys_archiv/samples/vital"
     "L+ ${myLib.home}/drum_sklad - ${myLib.userName} ${myLib.userName} - /mnt/sys_archiv/samples/drum_sklad"
   ];
+
+  system.activationScripts.geonkick-presets = {
+    supportsDryActivation = true;
+    text = ''
+      # Родительскую директорию создаём один раз, НЕ перезаписываем права,
+      # если она уже существует (пользователь мог поменять mode).
+      [ -d /usr/local/share/geonkick ] || install -d -m 0755 /usr/local/share/geonkick
+
+      # presets/ — владелец lucerno, чтобы можно было писать свои пресеты.
+      # Создаём только если её ещё нет (иначе перезапишем chown при каждом rebuild).
+      if [ ! -d /usr/local/share/geonkick/presets ]; then
+        install -d -m 0755 -o ${myLib.userName} -g ${myLib.userName} \
+          /usr/local/share/geonkick/presets
+      fi
+
+      # Заводим симлинки на каждый заводской кит.
+      for src in /run/current-system/sw/share/geonkick/presets/*/; do
+        [ -d "$src" ] || continue
+        name=$(basename "$src")
+        link="/usr/local/share/geonkick/presets/$name"
+
+        # Если путь занят НЕ симлинком — пользователь создал свой кит, уважаем его.
+        if [ -e "$link" ] && [ ! -L "$link" ]; then
+          continue
+        fi
+
+        ln -sfn "$src" "$link"
+      done
+    '';
+  };
+
 }
 
 # Системные пути для плагинов
