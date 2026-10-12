@@ -35,6 +35,7 @@ final: prev: {
     ostirus = pkgs.callPackage ./pkg_OsTIrus.nix { };                                                                             # Автообновление через nix-update
     ot-piano-s = pkgs.callPackage ./pkg_ot-piano-s.nix { inherit versions; };
     pitchnet = pkgs.callPackage ./pkg_pitchnet.nix { };                                                                           # Автообновление через nix-update
+    relic-clap = pkgs.callPackage ./pkg_Relic.nix { };
     sforzando = pkgs.callPackage ./pkg_sforzando.nix { inherit versions; };
     shortcircuit-xt = pkgs.callPackage ./pkg_shortcircuit-xt.nix { inherit versions; };
     tal-vocoder-2 = pkgs.callPackage ./pkg_tal-vocoder-2.nix { inherit versions; };
