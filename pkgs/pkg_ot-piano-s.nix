@@ -1,5 +1,6 @@
 { lib
 , stdenv
+, xz
 , autoPatchelfHook
 , alsa-lib
 , freetype
@@ -17,9 +18,9 @@ stdenv.mkDerivation {
   pname = "ot-piano-s";
   inherit version;
 
-  src = ../dotfiles/repo/OT_P1ANO_S.so;
+  src = ../dotfiles/repo/OT_P1ANO_S.so.xz;
 
-  nativeBuildInputs = [ autoPatchelfHook ];
+  nativeBuildInputs = [ xz autoPatchelfHook ];
 
   buildInputs = [
     alsa-lib
@@ -33,8 +34,10 @@ stdenv.mkDerivation {
   dontUnpack = true;
 
   installPhase = ''
+    runHook preInstall
     mkdir -p $out/lib/vst
-    cp $src $out/lib/vst/OT_P1ANO_S.so
+    xz -d -c $src > $out/lib/vst/OT_P1ANO_S.so
+    runHook postInstall
   '';
 
   meta = with lib; {
