@@ -107,7 +107,7 @@ in
     "L+ ${myLib.home}/.config/MANDA_AUDIO - ${myLib.userName} ${myLib.userName} - ${myLib.home}/${myLib.configDirName}/dotfiles/config/plugins/config_MANDA_AUDIO"
     "L+ ${myLib.home}/.config/Plogue - ${myLib.userName} ${myLib.userName} - ${myLib.home}/${myLib.configDirName}/dotfiles/config/plugins/config_Plogue"
     "L+ ${myLib.home}/.local/share/geonkick - ${myLib.userName} ${myLib.userName} - ${myLib.home}/${myLib.configDirName}/dotfiles/config/plugins/local_share_geonkick"
-    "L+ ${myLib.home}/.local/share/geonkick/presets - ${myLib.userName} ${myLib.userName} - /run/current-system/sw/share/geonkick/presets"
+    "L+ ${myLib.home}/${myLib.configDirName}/dotfiles/config/plugins/local_share_geonkick/presets - ${myLib.userName} ${myLib.userName} - /run/current-system/sw/share/geonkick/presets"
     "L+ \"${myLib.home}/.local/share/The Usual Suspects\" - ${myLib.userName} ${myLib.userName} - ${myLib.home}/${myLib.configDirName}/dotfiles/config/plugins/local_share_The Usual Suspects"
     "L+ ${myLib.home}/.local/share/vital - ${myLib.userName} ${myLib.userName} - /mnt/sys_archiv/samples/vital"
     "L+ ${myLib.home}/drum_sklad - ${myLib.userName} ${myLib.userName} - /mnt/sys_archiv/samples/drum_sklad"
