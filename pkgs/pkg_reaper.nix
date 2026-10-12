@@ -9,8 +9,15 @@ symlinkJoin {
     mv $out/bin/reaper $out/bin/.reaper-unwrapped
     # Создаём новый скрипт-обёртку
     cat > $out/bin/reaper <<EOF
-    #!/bin/sh
+#!/bin/sh
     export GDK_BACKEND=x11
+
+    # Фиксируем масштаб UI. libSwell (UI-библиотека REAPER) читает GDK_SCALE
+    # и GDK_DPI_SCALE, а не ui_scale из reaper.ini. Без явного экспорта
+    # KDE может навязать своё значение через .desktop-launcher.
+    export GDK_SCALE=1.45
+    export GDK_DPI_SCALE=1
+
     export WINEPREFIX="/mnt/music/MUSIC-WINE/yabridge"
 
     # Ловим сигналы завершения и восстанавливаем governor
@@ -30,7 +37,7 @@ symlinkJoin {
 
     # После завершения REAPER возвращаем governor в powersave (системный default NixOS)
     sudo ${cpupower}/bin/cpupower frequency-set -g powersave > /dev/null 2>&1
-    EOF
+EOF
     chmod +x $out/bin/reaper
   '';
 }
