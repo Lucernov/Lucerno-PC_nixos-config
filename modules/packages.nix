@@ -237,13 +237,13 @@
     yabridge                                                      # Мост для запуска Windows VST-плагинов в Linux (через Wine)
     yabridgectl                                                   # Утилита для управления yabridge (сканирование, синхронизация)
     winetricks                                                    # Вспомогательный скрипт для настройки Wine (установка DLL, зависимостей)
-    coppwr                                                        # Графическая утилита для управления PipeWire (альтернатива pw-top)
+    coppwr                                                        # Графическая утилита для управления PipeWire
       # --- Синтезаторы и Сэмплеры ---
     vital                                                         # Синтезатор FM (VST-плагин)
     my-packages.ostirus                                           # Эмуляция синтезатора Access Virus TI (CLAP)
     my-packages.je8086                                            # Эмуляция синтезатора Roland JP-8000 (CLAP)
     surge-xt                                                      # Синтезатор Surge XT
-    my-packages.shortcircuit-xt                                   # Мощный открытый семплер (CLAP) от Surge Synth Team
+    my-packages.shortcircuit-xt                                   # Семплер (CLAP) от Surge Synth Team
     decent-sampler                                                # Сэмплер для библиотек DecentSampler (формат .dspreset, .dslibrary)
     my-packages.sforzando                                         # Семплер форматов SFZ v1 \ v2 и  ARIA
     my-packages.numa-player                                       # Виртуальный инструмент Studiologic Numa Player (VST3 + standalone)
@@ -251,15 +251,15 @@
     my-packages.ot-piano-s                                        # Пианино OT P1ANO S (VST2)
     ripplerx                                                      # Физически моделируемый синтезатор (модальный синтез) с двойными резонаторами, аналог AAS Chromaphone и Ableton Collision
       # --- Синтезаторы и Сэмплеры ударных ---
-    my-packages.mtpdk                                             # Лёгкий плагин ударной установки MT-PowerDrumKit 2
+    my-packages.mtpdk                                             # Лёгкий плагин ударной установки MT-PowerDrumKit 2 есть много пресетов партий
     my-packages.drumlabooh                                        # LV2-сэмплер ударных с несколькими наборами (drumlabooh)
     my-packages.drum-locker                                       # Плагин ударной установки Drum Locker
-    drumgizmo                                                     # Многоканальный сэмплер барабанов (реалистичные ударные)
+    drumgizmo                                                     # Многоканальный сэмплер барабанов (сырые барабашки)
     drumkv1                                                       # Old-school сэмплер ударных (LV2) в стиле старых драм-машин со стерео-эффектами
-    geonkick                                                      # Синтезатор барабанов для создания ударных партий
+    geonkick                                                      # Синтезатор барабанов
       # --- Гитарные процессоры и усилители ---
     my-packages.amp-locker                                        # Плагин, эмулирующий стек гитарного тракта Amp-Locker
-    fretboard                                                     # Гитаровый гриф (примеры построения аккордов)
+    fretboard                                                     # Гитарный гриф (примеры построения аккордов)
     lingot                                                        # Гитарный тюнер
       # --- Секвенсоры и генераторы ---
     stochas                                                       # Мощный вероятностный секвенсор (VST3/CLAP)

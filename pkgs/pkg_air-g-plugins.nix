@@ -7,6 +7,7 @@
 , libXext
 , libxcb
 , libGL
+, zstd
 , versions
 }:
 
@@ -18,9 +19,9 @@ stdenv.mkDerivation {
   pname = "air-g-plugins";
   inherit version;
 
-  src = ../dotfiles/repo/Air-G-Plugins-Collection.tar.xz;
+  src = ../dotfiles/repo/Air-G-Plugins-Collection.tar.zst;
 
-  nativeBuildInputs = [ autoPatchelfHook ];
+  nativeBuildInputs = [ autoPatchelfHook zstd ];
 
   buildInputs = [
     alsa-lib
@@ -32,13 +33,11 @@ stdenv.mkDerivation {
     stdenv.cc.cc.lib
   ];
 
-  unpackPhase = ''
-    tar -xf $src
-  '';
-
   installPhase = ''
+    runHook preInstall
     mkdir -p $out/lib/vst3
-    cp -r ./Air-G\ Plugins\ Collection\ -\ LINUX\ NO\ INSTALLER/*.vst3 $out/lib/vst3/
+    cp -r ./*.vst3 $out/lib/vst3/
+    runHook postInstall
   '';
 
   meta = with lib; {
