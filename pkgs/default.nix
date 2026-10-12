@@ -49,5 +49,8 @@ final: prev: {
     # Плагины для Krita
     krita-ai-diffusion = pkgs.callPackage ./pkg_krita-ai-diffusion.nix { };
     krita-vision-tools = pkgs.callPackage ./pkg_krita-vision-tools.nix { };
+
+    # Временный патч для Minion
+    minion = pkgs.callPackage ./pkg_minion.nix { };
   };
 }

@@ -127,7 +127,8 @@
         comfyui-nix.overlays.default                                                                       # 3. Оверлей ComfyUI (comfy-ui-cuda), ничего не переопределяет
         (final: prev: {                                                                                    # 4. Фиксированные версии krita и minion ПЕРЕОПРЕДЕЛЯЕТ существующие пакеты, поэтому идёт последним
           krita  = pkgsPinned25_11.krita;                                                                  #    Krita из фиксированного nixpkgs (новая версия пока не работает с ComfyUI)
-          minion = pkgsPinned25_11.minion;                                                                 #    Minion из фиксированного nixpkgs (в основном канале сломан)
+          minion = final.my-packages.minion;
+#           minion = pkgsPinned25_11.minion;                                                                 #    Minion из фиксированного nixpkgs (в основном канале сломан)
         })
       ];
 
