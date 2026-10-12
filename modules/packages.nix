@@ -266,6 +266,7 @@
     my-packages.music-pattern-generator                           # Music Pattern Generator – визуальный MIDI-секвенсор (NW.js)
       # --- Эффекты (обработка звука) ---
     lsp-plugins                                                   # Набор VST/LV2-плагинов для обработки звука (LSP)
+    my-packages.relic-clap                                        # Relic Free Audio Plugin Suite (компрессоры и прочее для сведения и мастеринга)
     my-packages.air-g-plugins                                     # Коллекция VST3-плагинов на основе Airwindows для микширования и мастеринга + педали еще туда засунул
     dragonfly-reverb                                              # Реверберация Dragonfly (VST/LV2)
     my-packages.tape-echo-2                                       # Эмуляция Roland Space Echo (VST3 + CLAP + LV2)
