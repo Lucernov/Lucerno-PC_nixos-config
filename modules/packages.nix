@@ -265,7 +265,8 @@
     stochas                                                       # Мощный вероятностный секвенсор (VST3/CLAP)
     my-packages.music-pattern-generator                           # Music Pattern Generator – визуальный MIDI-секвенсор (NW.js)
       # --- Эффекты (обработка звука) ---
-    lsp-plugins                                                   # Набор VST/LV2-плагинов для обработки звука (LSP)
+    lsp-plugins                                                   # Набор LSP: EQ, компрессоры, лимитеры, meters
+    x42-plugins                                                   # Meters, EQ, компрессоры и другие LV2-плагины от Robin Gareus (Ardour dev)
     my-packages.relic-clap                                        # Relic Free Audio Plugin Suite (компрессоры и прочее для сведения и мастеринга)
     my-packages.air-g-plugins                                     # Коллекция VST3-плагинов на основе Airwindows для микширования и мастеринга + педали еще туда засунул
     dragonfly-reverb                                              # Реверберация Dragonfly (VST/LV2)
@@ -276,6 +277,7 @@
     my-packages.lostVinyls                                        # SuperflyDSP Lost Vinyls – эмуляция винилового проигрывателя (VST3)
     my-packages.pitchnet                                          # Нейросетевой корректор высоты тона (только VST3, standalone не собираю)
     my-packages.tal-vocoder-2                                     # TAL-Vocoder-2 — винтажный вокодер (VST3 + CLAP)
+    rnnoise-plugin                                                # Нейро шумодав для голоса Real-time
 
     ] ++ (with pkgs-unstable; [                                   # Пакеты из нестабильного канала (более свежие версии)
     # МУЗЫКА
@@ -285,6 +287,7 @@
       # --- Гитарные процессоры и усилители ---
     ratatouille-lv2                                               # плагин для загрузки и микширования нейросетевых моделей гитарных усилителей (аналог Neural Amp Model)
       # --- Эффекты (обработка звука) ---
+    noise-repellent                                               # Шумодав для пост обработки голоса (spectral subtraction, вносит задержку ~23 мс)
     zlequalizer                                                   # ZL Equalizer – 16-полосный динамический эквалайзер с поддержкой Mid/Side и режима Dynamic
     zlspectrumequalizer                                           # ZL Spectrum Analyzer – анализатор спектра в реальном времени с настраиваемым разрешением и режимом сравнения
     zlcompressor                                                  # ZL Compressor – компрессор с несколькими режимами (VCA/FET/OPT), sidechain и Mid/Side обработкой
