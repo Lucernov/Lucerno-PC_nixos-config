@@ -11,13 +11,8 @@ symlinkJoin {
     cat > $out/bin/reaper <<EOF
 #!/bin/sh
     export GDK_BACKEND=x11
-
-    # Фиксируем масштаб UI. libSwell (UI-библиотека REAPER) читает GDK_SCALE
-    # и GDK_DPI_SCALE, а не ui_scale из reaper.ini. Без явного экспорта
-    # KDE может навязать своё значение через .desktop-launcher.
-    export GDK_SCALE=2
-    export GDK_DPI_SCALE=0.725
-
+    unset GDK_SCALE
+    unset GDK_DPI_SCALE
     export WINEPREFIX="/mnt/music/MUSIC-WINE/yabridge"
 
     # Ловим сигналы завершения и восстанавливаем governor
