@@ -163,6 +163,7 @@
         je8086 = pkgsWithOverlay.my-packages.je8086;
         ostirus = pkgsWithOverlay.my-packages.ostirus;
         pitchnet = pkgsWithOverlay.my-packages.pitchnet;
+        satordist2 = pkgsWithOverlay.my-packages.satordist2;
         tape-echo-2 = pkgsWithOverlay.my-packages.tape-echo-2;
         krita-ai-diffusion = pkgsWithOverlay.my-packages.krita-ai-diffusion;
         krita-vision-tools = pkgsWithOverlay.my-packages.krita-vision-tools;

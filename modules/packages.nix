@@ -279,6 +279,7 @@
     my-packages.tal-vocoder-2                                     # TAL-Vocoder-2 — винтажный вокодер (VST3 + CLAP)
     rnnoise-plugin                                                # Нейро шумодав для голоса Real-time
     my-packages.mulhacen-clap                                     # Mulhacen — пятиполосный сустейнер от Node97 Audio с NAM + IR (CLAP) Альтернатива плагину Parallax
+    my-packages.satordist2                                        # SATORDIST2 — 4-полосный сатуратор (CLAP + VST3)
 
     ] ++ (with pkgs-unstable; [                                   # Пакеты из нестабильного канала (более свежие версии)
     # МУЗЫКА
