@@ -37,10 +37,8 @@
 
     import-tree.url = "github:vic/import-tree";                                                            # Утилита для рекурсивного импорта файлов
 
-    # Снапшот nixpkgs 25.11, нужен для krita:
-    #   - krita: нужна 5.2.15 (Qt5) — плагины ai_diffusion и vision_tools
-    #     не совместимы с Krita 6 (Qt6)
-    nixpkgs-pinned-25-11.url = "github:NixOS/nixpkgs/b77b3de8775677f84492abe84635f87b0e153f0f";
+
+    nixpkgs-pinned-25-11.url = "github:NixOS/nixpkgs/b77b3de8775677f84492abe84635f87b0e153f0f";            # Снапшот nixpkgs 25.11, нужен для krita (krita нужна 5.2.15 (Qt5) — плагины ai_diffusion и vision_tools не совместимы (Qt6))
 
  #   fufexan/nix-gaming nickm8/nix-gaming TophC7/play.nix
   };
