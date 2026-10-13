@@ -69,8 +69,8 @@ stdenv.mkDerivation {
   '';
 
   meta = with lib; {
-    description = "Mulhacen — 5-band sustainer from Node97 Audio (NAM + IR)";
-    homepage = "https://node97.com/#plugins";
+    description = "Mulhacen — 5-band sustainer from Node97 Audio (NAM + IR, CLAP)";
+    homepage = "https://node97.com/";
     license = licenses.unfree;
     platforms = [ "x86_64-linux" ];
     sourceProvenance = [ sourceTypes.binaryNativeCode ];
