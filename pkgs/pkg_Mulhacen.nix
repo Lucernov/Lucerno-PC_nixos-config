@@ -69,8 +69,8 @@ stdenv.mkDerivation {
   '';
 
   meta = with lib; {
-    description = "Mulhacen — free guitar amp sim with NAM + IR support (CLAP)";
-    homepage = "https://node97.audio/";
+    description = "Mulhacen — 5-band sustainer from Node97 Audio (NAM + IR)";
+    homepage = "https://node97.com/#plugins";
     license = licenses.unfree;
     platforms = [ "x86_64-linux" ];
     sourceProvenance = [ sourceTypes.binaryNativeCode ];
