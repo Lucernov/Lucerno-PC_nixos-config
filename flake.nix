@@ -37,11 +37,9 @@
 
     import-tree.url = "github:vic/import-tree";                                                            # Утилита для рекурсивного импорта файлов
 
-    # Снапшот nixpkgs 25.11, к которому прибиты krita и minion:
+    # Снапшот nixpkgs 25.11, нужен для krita:
     #   - krita: нужна 5.2.15 (Qt5) — плагины ai_diffusion и vision_tools
     #     не совместимы с Krita 6 (Qt6)
-    #   - minion: пакет в 26.05 сломан, ждём https://github.com/NixOS/nixpkgs/pull/539572
-    # Один и тот же rev намеренно: разъедемся, если krita разлочат раньше minion (или наоборот).
     nixpkgs-pinned-25-11.url = "github:NixOS/nixpkgs/b77b3de8775677f84492abe84635f87b0e153f0f";
 
  #   fufexan/nix-gaming nickm8/nix-gaming TophC7/play.nix
@@ -125,10 +123,9 @@
         (import ./pkgs/default.nix { pkgs-unstable = pkgsUnstable; })                                      # 1. Оверлей с моими пакетами (my-packages), ничего не переопределяет
         nur.overlays.default                                                                               # 2. Все пакеты из NUR доступны как pkgs.nur.repos.<user>.<pkg>, ничего не переопределяет
         comfyui-nix.overlays.default                                                                       # 3. Оверлей ComfyUI (comfy-ui-cuda), ничего не переопределяет
-        (final: prev: {                                                                                    # 4. Фиксированные версии krita и minion ПЕРЕОПРЕДЕЛЯЕТ существующие пакеты, поэтому идёт последним
+        (final: prev: {                                                                                    # 4. Финальные переопределения krita и minion. Идут последними, чтобы перебить всё выше
           krita  = pkgsPinned25_11.krita;                                                                  #    Krita из фиксированного nixpkgs (новая версия пока не работает с ComfyUI)
-          minion = final.my-packages.minion;
-#           minion = pkgsPinned25_11.minion;                                                                 #    Minion из фиксированного nixpkgs (в основном канале сломан)
+          minion = final.my-packages.minion;                                                               #    Minion из локального pkg_minion.nix с патчем PR#539572. В 26.05 сломан, поэтому не берём из nixpkgs напрямую
         })
       ];
 
@@ -147,7 +144,7 @@
           inherit myLib;                                                                                   # Мои общие переменные
           inherit inputs;                                                                                  # Все входы (flake-зависимости)
           inherit blender-cuda;                                                                            # Flake с Blender+CUDA для передачи в пакеты
-          inherit nixpkgs-pinned-25-11;                                                                    # Снапшот nixpkgs 25.11 — для krita (5.2.15 / Qt5) и minion (пакет сломан в 26.05, ждём nixpkgs#539572)
+          inherit nixpkgs-pinned-25-11;                                                                    # Снапшот nixpkgs 25.11 — только для krita (5.2.15 / Qt5)
           pkgs-unstable = pkgsUnstable;                                                                    # Нестабильные пакеты для использования в модулях
           import-tree = inputs.import-tree;                                                                # Утилита для рекурсивного импорта
         };
