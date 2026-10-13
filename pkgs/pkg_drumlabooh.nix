@@ -9,11 +9,11 @@
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "drumlabooh";
-  version = "12.2.0";
+  version = "13.0.0";
 
   src = fetchurl {
     url = "https://github.com/psemiletov/drumlabooh/releases/download/${finalAttrs.version}/drumlabooh.lv2.zip";
-    hash = "sha256-IQ0XzIwJqGg+6FynmJBllyBIzWD3dgFfllOTEx0cMDM=";
+    hash = "sha256-qHT6Wj9eYpbMTkcPzpqVnFL+qpCyUm+rYqecW40aqSQ=";
   };
 
   nativeBuildInputs = [ unzip autoPatchelfHook ];
