@@ -99,6 +99,11 @@ in
     "L+ \"${myLib.home}/Audio Assault/PluginData/Audio Assault/AmpLockerData\" - ${myLib.userName} ${myLib.userName} - /run/current-system/sw/share/amp-locker"
     "L+ \"${myLib.home}/Audio Assault/PluginData/Audio Assault/DrumLockerData\" - ${myLib.userName} ${myLib.userName} - /run/current-system/sw/share/drum-locker"
 
+    # ---------- Mulhacen: factory-ресурсы из деривации ----------
+    # Плагин ищет IRS-импульсы и .nam-модели в $XDG_DATA_HOME/Mulhacen/factory. Пробрасываем симлинк на $out/share/Mulhacen/factory из pkg_Mulhacen.nix.
+    "d ${myLib.home}/.local/share/Mulhacen 0755 ${myLib.userName} ${myLib.userName} -"
+    "L+ ${myLib.home}/.local/share/Mulhacen/factory - ${myLib.userName} ${myLib.userName} - ${pkgs.my-packages.mulhacen-clap}/share/Mulhacen/factory"
+
     # ---------- Симлинки конфигов плагинов ----------
     "L+ ${myLib.home}/.config/yabridgectl - ${myLib.userName} ${myLib.userName} - ${myLib.home}/${myLib.configDirName}/dotfiles/config/yabridgectl"
     "L+ ${myLib.home}/.config/DecentSampler - ${myLib.userName} ${myLib.userName} - /mnt/sys_archiv/samples/DecentSampler"

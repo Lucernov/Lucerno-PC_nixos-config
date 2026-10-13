@@ -278,6 +278,7 @@
     my-packages.pitchnet                                          # Нейросетевой корректор высоты тона (только VST3, standalone не собираю)
     my-packages.tal-vocoder-2                                     # TAL-Vocoder-2 — винтажный вокодер (VST3 + CLAP)
     rnnoise-plugin                                                # Нейро шумодав для голоса Real-time
+    my-packages.mulhacen-clap                                     # Mulhacen — пятиполосный сустейнер от Node97 Audio с NAM + IR (CLAP) Альтернатива плагину Parallax
 
     ] ++ (with pkgs-unstable; [                                   # Пакеты из нестабильного канала (более свежие версии)
     # МУЗЫКА
