@@ -120,5 +120,3 @@
       cinema-off = "kscreen-doctor output.HDMI-A-1.disable output.DP-1.priority.1";
     };
 }
-
-
