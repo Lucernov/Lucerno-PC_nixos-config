@@ -250,7 +250,7 @@
     my-packages.orchestools                                       # Набор оркестровых VST3-инструментов (Brass, Perc, Strings, Winds)
     my-packages.ot-piano-s                                        # Пианино OT P1ANO S (VST2)
     ripplerx                                                      # Физически моделируемый синтезатор (модальный синтез) с двойными резонаторами, аналог AAS Chromaphone и Ableton Collision
-    my-packages.triplecheese                                      # TripleCheese — комб-фильтровый синтезатор от U-HE (VST3 + CLAP)
+   # my-packages.triplecheese                                      # TripleCheese — комб-фильтровый синтезатор от U-HE (VST3 + CLAP)
       # --- Синтезаторы и Сэмплеры ударных ---
     my-packages.mtpdk                                             # Лёгкий плагин ударной установки MT-PowerDrumKit 2 есть много пресетов партий
     my-packages.drumlabooh                                        # LV2-сэмплер ударных с несколькими наборами (drumlabooh)

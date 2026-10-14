@@ -110,17 +110,6 @@ in
     "d ${myLib.home}/.local/share/Mulhacen 0755 ${myLib.userName} ${myLib.userName} -"
     "L+ ${myLib.home}/.local/share/Mulhacen/factory - ${myLib.userName} ${myLib.userName} - ${pkgs.my-packages.mulhacen-clap}/share/Mulhacen/factory"
 
-    # ---------- u-he TripleCheese: writeable-копии ресурсов и плагинов ----------
-    # u-he-плагины ПИШУТ в ~/.u-he/TripleCheese (настройки, последний пресет, позиция окна). Симлинк на read-only /nix/store вызывает abort()
-    # Поэтому копируем через "C+" — systemd-tmpfiles копирует содержимое и НЕ перезаписывает существующие файлы (пользовательские пресеты и настройки сохраняются между пересборками)
-    "d ${myLib.home}/.u-he 0755 ${myLib.userName} ${myLib.userName} -"
-    "C+ ${myLib.home}/.u-he/TripleCheese 0755 ${myLib.userName} ${myLib.userName} - ${pkgs.my-packages.triplecheese}/share/u-he/TripleCheese"
-    # Writeable-копии .so для VST3 и CLAP — на случай, если плагин пытается писать в свой же бинарник (известное поведение u-he на Linux)
-    "d ${myLib.home}/.vst3/TripleCheese.vst3/Contents/x86_64-linux 0755 ${myLib.userName} ${myLib.userName} -"
-    "C+ ${myLib.home}/.vst3/TripleCheese.vst3/Contents/x86_64-linux/TripleCheese.so 0644 ${myLib.userName} ${myLib.userName} - ${pkgs.my-packages.triplecheese}/lib/vst3/TripleCheese.vst3/Contents/x86_64-linux/TripleCheese.so"
-    "d ${myLib.home}/.clap 0755 ${myLib.userName} ${myLib.userName} -"
-    "C+ ${myLib.home}/.clap/TripleCheese.clap 0644 ${myLib.userName} ${myLib.userName} - ${pkgs.my-packages.triplecheese}/lib/vst3/TripleCheese.vst3/Contents/x86_64-linux/TripleCheese.so"
-
     # ---------- Симлинки конфигов плагинов ----------
     "L+ ${myLib.home}/.config/yabridgectl - ${myLib.userName} ${myLib.userName} - ${myLib.home}/${myLib.configDirName}/dotfiles/config/yabridgectl"
     "L+ ${myLib.home}/.config/DecentSampler - ${myLib.userName} ${myLib.userName} - /mnt/sys_archiv/samples/DecentSampler"
