@@ -115,7 +115,6 @@
     fbset                                                         # Настройка разрешения framebuffer для TTY (используется в nx_tty.nix)
     ragenix                                                       # CLI agenix (Rust-реализация, совместима с ryantm/agenix)
     age                                                           # Утилита шифрования (генерация age-ключей)
-    glibcLocales
   # rtcqs                                                         # Real-Time Config Quick Scan – диагностика системы для аудио (пока нет в NIXOS)
 
     # ========== КОНСОЛЬНЫЕ УТИЛИТЫ ==========
