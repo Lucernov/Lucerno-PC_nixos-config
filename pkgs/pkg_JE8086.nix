@@ -65,7 +65,7 @@ stdenv.mkDerivation (finalAttrs: {
 
   meta = with lib; {
     description = "JE8086 – Roland JP-8000 emulation (CLAP)";
-    homepage = "https://theusualsuspects.io/";
+    homepage = "https://theusualsuspects.io/downloads/je8086";
     license = licenses.unfree;
     platforms = [ "x86_64-linux" ];
     sourceProvenance = [ sourceTypes.binaryNativeCode ];

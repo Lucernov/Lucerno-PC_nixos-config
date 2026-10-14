@@ -56,8 +56,8 @@ stdenv.mkDerivation {
 
   meta = with lib; {
     description = "Orchestools VST3 plugins (Brass, Perc, Strings, Winds)";
-    homepage = "https://github.com/Lucernov/Lucerno-PC_nixos-config";
-    license = licenses.unfree;
+    homepage = "https://musictop69.wixsite.com/orchestools/orchestools-two";
+    license = licenses.gpl3Only;
     platforms = [ "x86_64-linux" ];
   };
 }

@@ -43,8 +43,8 @@ stdenv.mkDerivation (finalAttrs: {
 
   meta = with lib; {
     description = "Relic Free Audio Plugin Suite — 13 CLAP plugins";
-    homepage = "https://github.com/RelicFreeAudio/relic";
-    license = licenses.gpl3Only;
+    homepage = "https://riverfluxaudio.gumroad.com/l/Relic";
+    license = licenses.unfreeRedistributable;
     platforms = [ "x86_64-linux" ];
     sourceProvenance = [ sourceTypes.binaryNativeCode ];
   };

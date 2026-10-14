@@ -42,8 +42,8 @@ stdenv.mkDerivation {
 
   meta = with lib; {
     description = "Orchestools Piano S – VST2 plugin";
-    homepage = "https://github.com/Lucernov/Lucerno-PC_nixos-config";
-    license = licenses.unfree;
+    homepage = "https://musictop69.wixsite.com/orchestools";
+    license = licenses.gpl3Only;
     platforms = [ "x86_64-linux" ];
   };
 }

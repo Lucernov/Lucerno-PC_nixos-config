@@ -68,7 +68,7 @@ stdenv.mkDerivation (finalAttrs: {
 
   meta = with lib; {
     description = "OsTIrus – Access Virus TI emulation in CLAP format";
-    homepage = "https://github.com/dsp56300/gearmulator";
+    homepage = "https://theusualsuspects.io/downloads/ostirus";
     license = licenses.unfree;
     platforms = [ "x86_64-linux" ];
     sourceProvenance = [ sourceTypes.binaryNativeCode ];

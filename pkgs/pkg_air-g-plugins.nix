@@ -42,7 +42,7 @@ stdenv.mkDerivation {
 
   meta = with lib; {
     description = "Air-G Plugins Collection (VST3)";
-    homepage = "https://www.airmusictech.com/";
+    homepage = "https://ko-fi.com/airgaudio/shop/";
     license = licenses.unfree;
     platforms = [ "x86_64-linux" ];
   };

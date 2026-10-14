@@ -86,7 +86,7 @@ stdenv.mkDerivation (finalAttrs: {
   meta = with lib; {
     description = "PitchNet – neural pitch correction plugin (VST3 only)";
     homepage = "https://github.com/SessionLoops/PitchNet";
-    license = licenses.unfree;
+    license = licenses.agpl3Only;
     platforms = [ "x86_64-linux" ];
     sourceProvenance = [ sourceTypes.binaryNativeCode ];
   };
