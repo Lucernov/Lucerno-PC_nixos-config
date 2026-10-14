@@ -74,6 +74,7 @@
   environment = {
     sessionVariables = {
       FLAKE = "${myLib.home}/${myLib.configDirName}";                                                       # Путь к flake. Читается nh, nixos-rebuild, home-manager — позволяет запускать их без --flake из любого места
+      LOCALE_ARCHIVE = "${pkgs.glibcLocales}/lib/locale/locale-archive";
       __GLX_VENDOR_LIBRARY_NAME = "nvidia";                                                                 # Принудительно указывает Vulkan-драйвер NVIDIA для OpenGL/GLX приложений
       __GL_VRR_ALLOWED = "1";                                                                               # Разрешает Variable Refresh Rate (VRR / G-Sync / FreeSync). Включает адаптивную синхронизацию для совместимых мониторов
       GBM_BACKEND = "nvidia-drm";                                                                           # Указывает бэкенд Graphics Buffer Manager (GBM) от NVIDIA. Необходимо для корректной работы Wayland с проприетарным драйвером
