@@ -25,11 +25,11 @@
 #   • свой же TripleCheese.so     — при инициализации
 # В /nix/store эти файлы read-only → плагин падает с SIGABRT при загрузке.
 #
-# РЕШЕНИЕ: мы один раз разложили плагин по домашним папкам, выставили
-# chmod u+w, убедились, что он работает, и упаковали РЕЗУЛЬТАТ в архив.
-# Деривация просто распаковывает этот архив в $out. Раскладка по домашним
-# папкам делается скриптом из passthru.installScript, который вызывается
-# через activationScripts в modules/nx_audio.nix.
+# РЕШЕНИЕ: я один раз разложил плагин по домашним папкам, выставил chmod u+w
+# , убедился, что он работает, и упаковал РЕЗУЛЬТАТ в архив.
+# Деривация просто распаковывает этот архив в $out. Раскладка по домашним папкам
+# делается скриптом из passthru.installScript, который вызывается через
+# activationScripts в modules/nx_audio.nix.
 #
 # ─────────────────────────────────────────────────────────────────────────
 # ОБНОВЛЕНИЕ ПРИ НОВОЙ ВЕРСИИ TRIPLECHEESE
@@ -45,7 +45,7 @@
 #          ~/.vst3/TripleCheese.vst3/Contents/x86_64-linux/TripleCheese.so
 #       chmod -R u+w ~/.u-he/TripleCheese ~/.vst3/TripleCheese.vst3
 #  4. Проверить, что REAPER видит плагин и он открывается.
-#  5. Пересобрать наш архив:
+#  5. Пересобрать архив:
 #       rm -rf /tmp/tc-writable
 #       mkdir -p /tmp/tc-writable/{u-he,vst3}
 #       cp -r ~/.u-he/TripleCheese       /tmp/tc-writable/u-he/
