@@ -1,4 +1,4 @@
-# modules/packages.nix 11
+# modules/packages.nix
 { pkgs, pkgs-unstable, myLib, blender-cuda, ... }:
 
 {
