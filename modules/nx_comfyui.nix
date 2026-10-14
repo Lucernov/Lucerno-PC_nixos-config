@@ -23,16 +23,14 @@ let
   startScript = pkgs.writeShellScript "start-comfyui" ''
     systemctl --user start comfyui
   '';
-
   stopScript = pkgs.writeShellScript "stop-comfyui" ''
     systemctl --user stop comfyui
   '';
-
   statusScript = pkgs.writeShellScript "status-comfyui" ''
     kitty --title "ComfyUI Status" bash -c "systemctl --user status comfyui; echo 'Press any key to close...'; read -n 1"
   '';
 
-  # .desktop файлы
+  # ========== .desktop файлы ==========
   startDesktop = pkgs.writeTextFile {
     name = "comfyui-start.desktop";
     destination = "/share/applications/comfyui-start.desktop";

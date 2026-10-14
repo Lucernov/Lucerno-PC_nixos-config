@@ -64,7 +64,6 @@ in
     "L+ ${home}/.config/TeamSpeak - ${myLib.userName} ${myLib.userName} - ${home}/${configDir}/dotfiles/config/TeamSpeak"
     "L+ ${home}/.config/KDE - ${myLib.userName} ${myLib.userName} - ${home}/${configDir}/dotfiles/config/KDE/KDE"
 
-
     # ---------- Kdenlive ----------
     # Конфиги в ~/.config/
     "L+ ${home}/.config/kdenlive-layoutsrc - ${myLib.userName} ${myLib.userName} - ${home}/${configDir}/dotfiles/config/kdenlive/kdenlive-layoutsrc"
@@ -99,7 +98,7 @@ in
       Terminal=false
     ''}"
 
-    # ---------- .desktop файлы ----------
+    # ========== .desktop файлы ==========
 
     # --- Ярлык REAPER в меню KDE с кастомным запусском ---
     "L+ ${home}/.local/share/applications/reaper-x11.desktop - ${myLib.userName} ${myLib.userName} - ${pkgs.writeText "reaper-x11.desktop" ''

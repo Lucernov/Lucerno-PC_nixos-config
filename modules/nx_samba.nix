@@ -37,11 +37,13 @@
         };
       };
     };
+
     # ========== WSDD (Web Services Dynamic Discovery) – обнаружение SMB-сервера в сети Windows ==========
     samba-wsdd = {
       enable = true;                                          # Включаем службу WSDD
       openFirewall = true;                                    # Открываем порт 3702 (UDP)
     };
+
     # ========== Avahi (mDNS / Bonjour) – обнаружение сервера в сети macOS и Linux ==========
     avahi = {
       enable = true;                                          # Включаем сервис Avahi (Zeroconf)

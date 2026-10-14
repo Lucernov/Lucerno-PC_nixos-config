@@ -65,7 +65,7 @@
         mode  = "0400";
       };
 
-      # Конфиг AmneziaVPN (используется в links.nix или kde plasma)
+      # Конфиг AmneziaVPN (используется в links.nix и kde plasma)
       "amneziavpn-conf" = {
         file  = ../secrets/amneziavpn-conf.age;
         owner = myLib.userName;

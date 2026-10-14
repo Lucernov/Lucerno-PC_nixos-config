@@ -36,7 +36,7 @@ in
       ];
       extraConfig = {
         pipewire."99-low-latency" = {
-          # ========== Основные параметры контекста PipeWire ==========
+          # ---------- Основные параметры контекста PipeWire ----------
           "context.properties" = {
             "default.clock.allowed-rates" = [ 44100 48000 ];                                            # Разрешённые частоты дискретизации
             "default.clock.rate" = 48000;                                                               # Частота дискретизации по умолчанию (48 кГц)
@@ -44,7 +44,7 @@ in
             "default.clock.min-quantum" = 64;                                                           # Минимальный буфер, который может запросить приложение (REAPER через ALSA выставлен в 64) — ~1,3 мс при 48 кГц
             "default.clock.max-quantum" = 2048;                                                         # Максимальный буфер для тяжёлых приложений — ~42,7 мс, страховка от xrun
           };
-          # ========== Аргументы модуля реального времени ==========
+          # ---------- Аргументы модуля реального времени ----------
           "module.rt.args" = {                                                                          # Переопределить параметры уже загруженного libpipewire-module-rt
             "nice.level" = -11;                                                                         # Приоритет nice для не-RT частей (диапазон: -20..19, отрицательное = выше)
             "rt.prio" = 88;                                                                             # RT-приоритет аудио-потока (диапазон: 1..99, ограничен pam.loginLimits rtprio=89)
@@ -54,7 +54,7 @@ in
     };
   };
 
-  # ---------- Настройка приоритетов реального времени для PipeWire и WirePlumber ----------
+  # ========== Настройка приоритетов реального времени для PipeWire и WirePlumber ==========
   security = {
     rtkit.enable = true;                                                                                # Включить rtkit (Realtime Kit) — демон, дающий процессам приоритет реального времени. Необходим для низких задержек в аудио.
     pam.loginLimits = [                                                                                 # Лимиты для аудио-группы (чтобы приложения имели приоритет реального времени и блокировку памяти)
@@ -69,7 +69,7 @@ in
     ];
   };
 
-  # RT-приоритеты для PipeWire (см. commonRealtime в let-блоке)
+  # ========== RT-приоритеты для PipeWire (см. commonRealtime в let-блоке) ==========
   systemd.user.services = {
     pipewire.serviceConfig = commonRealtime;
     pipewire-pulse.serviceConfig = commonRealtime;
