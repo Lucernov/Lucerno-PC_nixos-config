@@ -82,6 +82,19 @@ in
     wireplumber.serviceConfig = commonRealtime;
   };
 
+  # u-he TripleCheese — writeable-раскладка в домашние папки
+  # Логика установки живёт в pkg_Triple-Cheese.nix (passthru.installScript)
+  # Модуль только дёргает скрипт с параметрами: src, home, user
+  system.activationScripts.triplecheese = {
+    supportsDryActivation = true;
+    text = ''
+      ${pkgs.my-packages.triplecheese.installScript} \
+        ${pkgs.my-packages.triplecheese} \
+        ${myLib.home} \
+        ${myLib.userName}
+    '';
+  };
+
   systemd.tmpfiles.rules = [                                                                            # Правила tmpfiles
     # ========== Правила tmpfiles для аудио и REAPER ==========
     "d ${myLib.home}/.clap 0755 ${myLib.userName} ${myLib.userName} -"
