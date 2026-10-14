@@ -52,8 +52,6 @@ in
             args = {
               "rt.prio" = 88;                                                                           # RT-приоритет для data thread (поток обработки аудио, напр. reaper/audio)
               "nice.level" = -11;                                                                       # nice для application thread (вспомогательный поток клиента)
-              "rt.time.soft" = "-1";                                                                    # Мягкий лимит CPU-времени на RT-поток в микросекундах. -1 = без мягкого лимита: ядро не шлёт SIGXCPU
-              "rt.time.hard" = "200000";                                                                # Жёсткий лимит CPU-времени на RT-поток (200 000 мкс = 200 мс) — значение по умолчанию ядра
             };
             flags = [ "ifexists" "nofail" ];                                                            # ifexists — не падать, если модуль не найден; nofail — не считать ошибкой, если модуль не загрузился
           }];
@@ -112,6 +110,11 @@ in
     "d ${myLib.home}/.local/share/Mulhacen 0755 ${myLib.userName} ${myLib.userName} -"
     "L+ ${myLib.home}/.local/share/Mulhacen/factory - ${myLib.userName} ${myLib.userName} - ${pkgs.my-packages.mulhacen-clap}/share/Mulhacen/factory"
 
+    # ---------- u-he TripleCheese: ресурсы из деривации ----------
+    # Плагин жёстко прописывает $HOME/.u-he/TripleCheese для Data/, Presets/, Tunefiles/. Патчить бесполезно — пробрасываем симлинк.
+    "d ${myLib.home}/.u-he 0755 ${myLib.userName} ${myLib.userName} -"
+    "L+ ${myLib.home}/.u-he/TripleCheese - ${myLib.userName} ${myLib.userName} - ${pkgs.my-packages.triplecheese}/share/u-he/TripleCheese"
+
     # ---------- Симлинки конфигов плагинов ----------
     "L+ ${myLib.home}/.config/yabridgectl - ${myLib.userName} ${myLib.userName} - ${myLib.home}/${myLib.configDirName}/dotfiles/config/yabridgectl"
     "L+ ${myLib.home}/.config/DecentSampler - ${myLib.userName} ${myLib.userName} - /mnt/sys_archiv/samples/DecentSampler"
@@ -137,3 +140,6 @@ in
 # LV2  - /run/current-system/sw/lib/lv2/
 # VST2 - /run/current-system/sw/lib/vst/
 # VST3 - /run/current-system/sw/lib/vst3/
+#
+# rt.time.soft и rt.time.hard не применяются в PipeWire 1.6.6 из-за несовместимости форматов NixOS JSON и SPA-JSON
+# Система использует значения по умолчанию (-1), что означает отсутствие лимитов на CPU-время для RT-потоков
