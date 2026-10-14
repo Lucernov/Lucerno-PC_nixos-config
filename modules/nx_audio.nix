@@ -3,7 +3,7 @@
 let
   commonRealtime = {
     CPUSchedulingPolicy = "fifo";                                                                       # SCHED_FIFO — планировщик RT
-    CPUSchedulingPriority = 85;                                                                         # RT-приоритет, выровнена иерархия RT-приоритетов (85 control / 88 data / 89 limit)
+    CPUSchedulingPriority = 85;                                                                         # RT-приоритет, иерархия RT-приоритетов 85 control / 88 data / 89 limit
     Nice = -11;                                                                                         # nice для не-RT частей
     LimitRTPRIO = 89;                                                                                   # жёсткий лимит RT (совпадает с pam.loginLimits)
     NoNewPrivileges = false;                                                                            # разрешить менять приоритеты
@@ -35,8 +35,8 @@ in
         noise-repellent                                                                                 # Нейро шумодав для голоса Real-time
       ];
       extraConfig = {
+        # ---------- Основные параметры контекста PipeWire ----------
         pipewire."99-low-latency" = {
-          # ---------- Основные параметры контекста PipeWire ----------
           "context.properties" = {
             "default.clock.allowed-rates" = [ 44100 48000 ];                                            # Разрешённые частоты дискретизации
             "default.clock.rate" = 48000;                                                               # Частота дискретизации по умолчанию (48 кГц)
@@ -44,11 +44,19 @@ in
             "default.clock.min-quantum" = 64;                                                           # Минимальный буфер, который может запросить приложение (REAPER через ALSA выставлен в 64) — ~1,3 мс при 48 кГц
             "default.clock.max-quantum" = 2048;                                                         # Максимальный буфер для тяжёлых приложений — ~42,7 мс, страховка от xrun
           };
-          # ---------- Аргументы модуля реального времени ----------
-          "module.rt.args" = {                                                                          # Переопределить параметры уже загруженного libpipewire-module-rt
-            "nice.level" = -11;                                                                         # Приоритет nice для не-RT частей (диапазон: -20..19, отрицательное = выше)
-            "rt.prio" = 88;                                                                             # RT-приоритет аудио-потока (диапазон: 1..99, ограничен pam.loginLimits rtprio=89)
-          };
+        };
+        # --- RT-приоритеты для клиентов (REAPER через ALSA) ---
+        client."99-reaper-rt" = {
+          "context.modules" = [{
+            name = "libpipewire-module-rt";                                                             # Модуль реального времени: выдаёт клиентам RT-приоритеты через rtkit/RLIMIT_RTPRIO
+            args = {
+              "rt.prio" = 88;                                                                           # RT-приоритет для data thread (поток обработки аудио, напр. reaper/audio)
+              "nice.level" = -11;                                                                       # nice для application thread (вспомогательный поток клиента)
+              "rt.time.soft" = -1;                                                                      # Мягкий лимит CPU-времени на RT-поток в микросекундах. -1 = без мягкого лимита: ядро не шлёт SIGXCPU
+              "rt.time.hard" = 200000;                                                                  # Жёсткий лимит CPU-времени на RT-поток (200 000 мкс = 200 мс) — значение по умолчанию ядра
+            };
+            flags = [ "ifexists" "nofail" ];                                                            # ifexists — не падать, если модуль не найден; nofail — не считать ошибкой, если модуль не загрузился
+          }];
         };
       };
     };
