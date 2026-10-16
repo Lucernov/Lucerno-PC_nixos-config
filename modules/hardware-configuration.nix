@@ -133,7 +133,10 @@ in
   swapDevices = [
     {
       device = "/swap/swapfile";
+      size = 24576;                                                         # Размер файла в МиБ
       priority = 10;
+      options = [ "discard=once" ];                                         # Освобождать блоки на SSD при активации swap
+      # ПРОВЕРКА: "sudo lsattr /swap/swapfile" Должно быть "---------------C------ /swap/swapfile"
     }
   ];
 
