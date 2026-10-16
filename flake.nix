@@ -46,7 +46,7 @@
         config = {
           allowUnfree = true;
         };
-        overlays = [
+#        overlays = [
 #           (final: prev: {
 #             # ---------- ПАТЧ REAPACK (GCC 16.2 / C++20) ----------
 #             # В GCC 16.2 предупреждение "implicit capture of 'this' via '[=]'"
@@ -103,7 +103,7 @@
 #             });
 #
 #           })
-        ];
+#        ];
       };
 
       pkgsPinned25_11 = import nixpkgs-pinned-25-11 {                                                      # !!! TEMP !!!
