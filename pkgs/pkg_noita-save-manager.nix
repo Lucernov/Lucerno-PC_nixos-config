@@ -68,7 +68,7 @@ python3.pkgs.buildPythonApplication rec {
   postInstall = ''
     SAVE_MANAGER="$(find "$out" -name save_manager.py)"
     substituteInPlace "$SAVE_MANAGER" \
-      --replace '"/home/j/gits/save_noita"' \
+      --replace-fail '"/home/j/gits/save_noita"' \
                 'os.path.expanduser("~") + "/.steam/steam/steamapps/compatdata/881100/pfx/drive_c/users/steamuser/AppData/LocalLow/Nolla_Games_Noita"'
 
     wrapProgram "$out/bin/noita_save_manager" \

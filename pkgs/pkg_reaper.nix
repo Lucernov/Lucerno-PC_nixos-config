@@ -2,29 +2,32 @@
 #
 # Обёртка для REAPER, которая:
 #   1. Переключает CPU governor в performance на время работы.
-#   2. Ограничивает процесс ядрами 2..N-1 (или 0 на слабых машинах).
+#   2. Ограничивает процесс ядрами 2-11 (только P-ядра i5-13400F).
 #   3. Возвращает governor в powersave после выхода.
 #
 # Используется writeShellApplication для автоматической проверки
-# скрипта через shellcheck и добавления runtime-зависимостей в PATH.
+# скрипта через shellcheck и добавления runtime-зависимостей в PATH
 #
-# ВАЖНО про sudo:
+# Про sudo:
 #   sudo НЕ добавлен в runtimeInputs — в /nix/store бинарник sudo лежит без
 #   setuid-бита, и вызов от не-root пользователя молча падает с
 #   "effective uid is not 0". Используем /run/wrappers/bin/sudo — setuid-
-#   враппер, создаваемый модулем security.sudo в NixOS.
+#   враппер, создаваемый модулем security.sudo в NixOS
 #
-# ВАЖНО про cpupower:
+# Про cpupower:
 #   Используем абсолютный путь ${cpupower}/bin/cpupower через Nix-интерполяцию,
 #   чтобы:
 #     • вызов совпал с правилом в security.sudo.extraRules
 #       (см. modules/default.nix) — важно при использовании sudo;
 #     • shellcheck не ругался на неquoted-переменные (SC2086);
-#     • бинарник не затенялся другим cpupower из PATH.
+#     • бинарник не затенялся другим cpupower из PATH
 #
-# ВАЖНО про ядра:
-#   irqaffinity=0 в hardware-configuration.nix прибивает все IRQ к CPU 0.
-#   Оставляем CPU 0 и 1 системе, REAPER получает ядра 2..N-1.
+# Про ядра (i5-13400F):
+#   6 P-ядер с HT (CPU 0-11) + 4 E-ядра (CPU 12-15) = 16 логических CPU
+#     • CPU 0     — IRQ (irqaffinity=0), системе
+#     • CPU 1     — второй поток первого P-ядра, системе
+#     • CPU 2-11  — P-ядра, отдаём REAPER
+#     • CPU 12-15 — E-ядра, системе
 
 { symlinkJoin
 , makeWrapper
@@ -63,17 +66,9 @@ let
       # для минимальной задержки аудио.
       /run/wrappers/bin/sudo ${cpupower}/bin/cpupower frequency-set -g performance >/dev/null 2>&1 || true
 
-      # Определяем доступные ядра. CPU 0 занят IRQ (irqaffinity=0),
-      # CPU 1 оставляем системе под фоновые процессы.
-      NPROC=$(nproc)
-      if [ "$NPROC" -gt 2 ]; then
-        CORES="2-$((NPROC - 1))"
-      else
-        CORES="0"
-      fi
-
-      # Запускаем REAPER на выбранных ядрах.
-      taskset -c "$CORES" "$SELF_DIR/.reaper-unwrapped" "$@"
+      # CPU 0-1 пропускаем (IRQ + системный поток P-ядра 0).
+      # CPU 12-15 (E-ядра) тоже не трогаем — для RT-аудио они не подходят.
+      taskset -c 2-11 "$SELF_DIR/.reaper-unwrapped" "$@"
 
       # Governor восстановится через trap EXIT (cleanup).
     '';

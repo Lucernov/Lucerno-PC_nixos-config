@@ -137,14 +137,11 @@
     in
     {
       nixosConfigurations.Lucerno-PC = nixpkgs.lib.nixosSystem {                                           # Системная конфигурация NixOS (для пересборки всей ОС)
-        system = "x86_64-linux";                                                                           # Архитектура системы. Для nixosSystem ВСЁ ЕЩЁ используется параметр `system` (требование API NixOS)
         specialArgs = {                                                                                    # Дополнительные аргументы, передаваемые во все модули
           inherit myLib;                                                                                   # Мои общие переменные
           inherit inputs;                                                                                  # Все входы (flake-зависимости)
           inherit blender-cuda;                                                                            # Flake с Blender+CUDA для передачи в пакеты
-          inherit nixpkgs-pinned-25-11;                                                                    # Снапшот nixpkgs 25.11 — только для krita (5.2.15 / Qt5)
           pkgs-unstable = pkgsUnstable;                                                                    # Нестабильные пакеты для использования в модулях
-          import-tree = inputs.import-tree;                                                                # Утилита для рекурсивного импорта
         };
 
         modules = [                                                                                        # Список модулей, из которых собирается система
