@@ -47,62 +47,62 @@
           allowUnfree = true;
         };
         overlays = [
-          (final: prev: {
-            # ---------- ПАТЧ REAPACK (GCC 16.2 / C++20) ----------
-            # В GCC 16.2 предупреждение "implicit capture of 'this' via '[=]'"
-            # стало ошибкой из-за -Werror в проекте. Заменяем [=] на [=, this]
-            # в исходниках. Файлы api_* исключаем: там лямбды в статических
-            # функциях, 'this' не существует, и [=, this] не скомпилируется.
-            #
-            # Патч «fail-safe»: если '[=]' больше не встречается в src/ —
-            # значит апстрим починили, и мы хотим УЗНАТЬ об этом через
-            # падение сборки, а не молча собирать с устаревшим патчем.
-            reaper-reapack-extension = prev.reaper-reapack-extension.overrideAttrs (old: {
-              preConfigure = (old.preConfigure or "") + ''
-                files=$(find src \( -name '*.cpp' -o -name '*.hpp' -o -name '*.h' \) \
-                          ! -name 'api_*' -exec grep -l '\[=\]' {} +)
-                if [ -z "$files" ]; then
-                  echo "ERROR: reapack patch — '[=]' не найден в src/"
-                  echo "Скорее всего, апстрим исправил проблему. Удалите этот патч."
-                  exit 1
-                fi
-                echo "$files" | while IFS= read -r f; do
-                  sed -i 's/\[=\]/[=, this]/g' "$f"
-                done
-              '';
-            });
-
-            # ---------- ПАТЧ SWS (GCC 16.2 / C++20) ----------
-            # GCC 16.2 отказывается считать ContextAction literal type, поэтому
-            # constexpr-массив g_actions[] не инициализируется через brace-init-list.
-            # Добавляем в структуру constexpr-конструктор — он делает ContextAction
-            # literal type (инициализация становится вызовом конструктора, а не
-            # aggregate init).
-            # Создал issue - https://github.com/reaper-oss/sws/issues/2046
-            #
-            # Патч «fail-safe»: проверяем паттерн до замены и результат после.
-            # Если апстрим починили (или переписали файл) — сборка упадёт с
-            # явной ошибкой, и мы это заметим.
-            reaper-sws-extension = prev.reaper-sws-extension.overrideAttrs (old: {
-              preConfigure = (old.preConfigure or "") + ''
-                echo "=== SWS PATCH: inserting constexpr constructor ==="
-                if ! grep -q 'bool isBuiltin() const { return type == Builtin; }' \
-                     Breeder/BR_ContextualToolbars.cpp; then
-                  echo "ERROR: SWS patch — паттерн не найден"
-                  echo "Смотрите https://github.com/reaper-oss/sws/issues/2046"
-                  exit 1
-                fi
-                sed -i 's|bool isBuiltin() const { return type == Builtin; }|constexpr ContextAction(int i, Type t, int o, int c) : iniKey(i), type(t), openCommand(o), toggleCommand(c) {} bool isBuiltin() const { return type == Builtin; }|' \
-                  Breeder/BR_ContextualToolbars.cpp
-                if ! grep -q 'constexpr ContextAction(int' Breeder/BR_ContextualToolbars.cpp; then
-                  echo "ERROR: SWS patch — замена не сработала"
-                  exit 1
-                fi
-                echo "=== SWS PATCH: applied successfully ==="
-              '';
-            });
-
-          })
+#           (final: prev: {
+#             # ---------- ПАТЧ REAPACK (GCC 16.2 / C++20) ----------
+#             # В GCC 16.2 предупреждение "implicit capture of 'this' via '[=]'"
+#             # стало ошибкой из-за -Werror в проекте. Заменяем [=] на [=, this]
+#             # в исходниках. Файлы api_* исключаем: там лямбды в статических
+#             # функциях, 'this' не существует, и [=, this] не скомпилируется.
+#             #
+#             # Патч «fail-safe»: если '[=]' больше не встречается в src/ —
+#             # значит апстрим починили, и мы хотим УЗНАТЬ об этом через
+#             # падение сборки, а не молча собирать с устаревшим патчем.
+#             reaper-reapack-extension = prev.reaper-reapack-extension.overrideAttrs (old: {
+#               preConfigure = (old.preConfigure or "") + ''
+#                 files=$(find src \( -name '*.cpp' -o -name '*.hpp' -o -name '*.h' \) \
+#                           ! -name 'api_*' -exec grep -l '\[=\]' {} +)
+#                 if [ -z "$files" ]; then
+#                   echo "ERROR: reapack patch — '[=]' не найден в src/"
+#                   echo "Скорее всего, апстрим исправил проблему. Удалите этот патч."
+#                   exit 1
+#                 fi
+#                 echo "$files" | while IFS= read -r f; do
+#                   sed -i 's/\[=\]/[=, this]/g' "$f"
+#                 done
+#               '';
+#             });
+#
+#             # ---------- ПАТЧ SWS (GCC 16.2 / C++20) ----------
+#             # GCC 16.2 отказывается считать ContextAction literal type, поэтому
+#             # constexpr-массив g_actions[] не инициализируется через brace-init-list.
+#             # Добавляем в структуру constexpr-конструктор — он делает ContextAction
+#             # literal type (инициализация становится вызовом конструктора, а не
+#             # aggregate init).
+#             # Создал issue - https://github.com/reaper-oss/sws/issues/2046
+#             #
+#             # Патч «fail-safe»: проверяем паттерн до замены и результат после.
+#             # Если апстрим починили (или переписали файл) — сборка упадёт с
+#             # явной ошибкой, и мы это заметим.
+#             reaper-sws-extension = prev.reaper-sws-extension.overrideAttrs (old: {
+#               preConfigure = (old.preConfigure or "") + ''
+#                 echo "=== SWS PATCH: inserting constexpr constructor ==="
+#                 if ! grep -q 'bool isBuiltin() const { return type == Builtin; }' \
+#                      Breeder/BR_ContextualToolbars.cpp; then
+#                   echo "ERROR: SWS patch — паттерн не найден"
+#                   echo "Смотрите https://github.com/reaper-oss/sws/issues/2046"
+#                   exit 1
+#                 fi
+#                 sed -i 's|bool isBuiltin() const { return type == Builtin; }|constexpr ContextAction(int i, Type t, int o, int c) : iniKey(i), type(t), openCommand(o), toggleCommand(c) {} bool isBuiltin() const { return type == Builtin; }|' \
+#                   Breeder/BR_ContextualToolbars.cpp
+#                 if ! grep -q 'constexpr ContextAction(int' Breeder/BR_ContextualToolbars.cpp; then
+#                   echo "ERROR: SWS patch — замена не сработала"
+#                   exit 1
+#                 fi
+#                 echo "=== SWS PATCH: applied successfully ==="
+#               '';
+#             });
+#
+#           })
         ];
       };
 
