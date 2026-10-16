@@ -21,11 +21,6 @@
       inputs.nixpkgs.follows = "nixpkgs";                                                                  # Зависимости используют основной nixpkgs
     };
 
-    apple-fonts = {                                                                                        # Шрифты Apple
-      url = "github:Lyndeno/apple-fonts.nix";
-      inputs.nixpkgs.follows = "nixpkgs";                                                                  # Зависимости используют основной nixpkgs
-    };
-
     blender-cuda = {                                                                                       # Бинарная сборка Blender с поддержкой cuda
       url = "github:adithyagenie/blender-cuda-nixos";
       inputs.nixpkgs.follows = "nixpkgs";                                                                  # Зависимости используют основной nixpkgs

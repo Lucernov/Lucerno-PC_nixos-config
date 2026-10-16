@@ -50,6 +50,9 @@ in
     tape-echo-2 = pkgs.callPackage ./pkg_tape-echo-2.nix { };                                                                     # Автообновление через nix-update
     triplecheese = pkgs.callPackage ./pkg_Triple-Cheese.nix { };
 
+    # ====== Шрифты ======
+    apple-fonts-lite = pkgs.callPackage ./pkg_apple-fonts.nix { };
+
     # ====== Noita save manager ======
     # pysimplegui определён в let-блоке выше (общая зависимость).
     inherit pysimplegui;
