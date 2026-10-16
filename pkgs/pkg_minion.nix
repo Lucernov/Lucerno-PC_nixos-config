@@ -26,8 +26,9 @@
 #
 # ВАЖНО про makeWrapper vs makeBinaryWrapper:
 #   makeBinaryWrapper не поддерживает --add-flags (issue #172320).
-#   Используем скриптовую реализацию makeWrapper, переопределяя
-#   wrapGAppsHook3 через .override { makeBinaryWrapper = makeWrapper; }.
+#   wrapGAppsHook3 — это результат wrapGAppsNoGuiHook.override { isGraphical = true; },
+#   и у него нет аргумента makeBinaryWrapper. Переопределяем
+#   wrapGAppsNoGuiHook, который принимает makeWrapper через callPackage.
 #
 # ВАЖНО про JFX_MODULES / JFX_NATIVE:
 #   openjfx21 с withWebKit=true предоставляет модули по отдельным путям
@@ -42,7 +43,7 @@
 , openjdk21
 , makeDesktopItem
 , copyDesktopItems
-, wrapGAppsHook3
+, wrapGAppsNoGuiHook
 , makeWrapper
 }:
 
@@ -56,11 +57,12 @@ let
     inherit openjfx_jdk;
   };
 
-  # Переопределяем wrapGAppsHook3, чтобы он использовал скриптовый
+  # Переопределяем wrapGAppsNoGuiHook, чтобы он использовал скриптовый
   # makeWrapper вместо makeBinaryWrapper. Это необходимо для работы
   # --add-flags (см. issue #172320).
-  wrapGAppsHook = wrapGAppsHook3.override {
-    makeBinaryWrapper = makeWrapper;
+  wrapGAppsHook = wrapGAppsNoGuiHook.override {
+    makeWrapper = makeWrapper;
+    isGraphical = true;
   };
 
   # Wrapper-класс для обхода "JavaFX runtime components are missing".
