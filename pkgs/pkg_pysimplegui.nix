@@ -6,8 +6,9 @@
 #   - Пакет УДАЛЁН из nixpkgs: сначала из-за смены лицензии на проприетарную
 #     в версии 5.x, затем из-за закрытия проекта в 2025 году.
 #   - С версии 6.x проект возрождён сообществом на GitHub под LGPL3.
-#   - Использует классический setup.py (не pyproject.toml), поэтому
-#     собирается стандартным setuptools. Никакого format = "other" не нужно.
+#   - Использует классический setup.py (не pyproject.toml). pyproject = true
+#     автоматически откатывается на setuptools как build-backend, что
+#     соответствует современным стандартам nixpkgs.
 #   - tkinter — единственная зависимость.
 #   - Используется в noita-save-manager (см. pkg_noita-save-manager.nix).
 #
@@ -26,7 +27,7 @@
 buildPythonPackage {
   pname = "pysimplegui";
   version = "6.3";
-  format = "setuptools";
+  pyproject = true;
 
   src = fetchFromGitHub {
     owner = "PySimpleGUI";
@@ -36,11 +37,7 @@ buildPythonPackage {
   };
 
   build-system = [ setuptools ];
-
   propagatedBuildInputs = [ tkinter ];
-
-  # pythonImportsCheck может упасть, если импорт тянет X11-дисплей.
-  # Пока оставляем, но если сборка упадёт — просто уберём эту строку.
   pythonImportsCheck = [ "PySimpleGUI" ];
 
   meta = with lib; {

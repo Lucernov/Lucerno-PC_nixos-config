@@ -83,7 +83,6 @@ symlinkJoin {
   name = "reaper-wrapped";
   paths = [ reaper ];
   nativeBuildInputs = [ makeWrapper ];
-  meta = reaper.meta // { mainProgram = "reaper"; };
   postBuild = ''
     mv $out/bin/reaper $out/bin/.reaper-unwrapped
     cp ${reaper-wrapper}/bin/reaper $out/bin/reaper

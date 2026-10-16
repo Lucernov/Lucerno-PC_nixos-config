@@ -25,7 +25,6 @@ symlinkJoin {
   nativeBuildInputs = [ makeWrapper ];
   postBuild = ''
     wrapProgram $out/bin/btop \
-      --set LD_LIBRARY_PATH /run/opengl-driver/lib
+      --prefix LD_LIBRARY_PATH /run/opengl-driver/lib
   '';
-  meta = btop.meta // { mainProgram = "btop"; };
 }

@@ -1,16 +1,22 @@
 # pkgs/default.nix
 { pkgs-unstable }:
 
+final: prev:
 let
   versions = import ./versions.nix;
-in
+  pkgs = final;
 
-final: prev: {
-  my-packages = let
-    pkgs = final;
-  in {
+  pysimplegui = pkgs.python3.pkgs.callPackage ./pkg_pysimplegui.nix { };                                                         # Убирает самосслку
+  superfly = pkgs.callPackage ./pkg_SuperflyDSP.nix { inherit versions; };                                                       # SuperflyDSP: один .nix-файл возвращает ТРИ плагина (lostSamplers, lostTapes, lostVinyls)
+in
+{
+  my-packages = {
+    # ====== Обёртки над пакетами nixpkgs ======
     btop = pkgs.callPackage ./pkg_btop.nix { };
-    reaper = pkgs.callPackage ./pkg_reaper.nix { inherit (pkgs-unstable) reaper; cpupower = pkgs.linuxPackages_zen.cpupower; };
+    reaper = pkgs.callPackage ./pkg_reaper.nix {
+      inherit (pkgs-unstable) reaper;
+      cpupower = pkgs.linuxPackages_zen.cpupower;
+    };
     teamspeak = pkgs.callPackage ./pkg_teamspeak.nix {
       teamspeak6-client = pkgs.teamspeak6-client;
       coreutils = pkgs.coreutils;
@@ -25,9 +31,9 @@ final: prev: {
     drumlabooh = pkgs.callPackage ./pkg_drumlabooh.nix { };                                                                       # Автообновление через nix-update
     drumlabooh-multi = pkgs.callPackage ./pkg_drumlabooh-multi.nix { };                                                           # Автообновление через nix-update
     je8086 = pkgs.callPackage ./pkg_JE8086.nix { };                                                                               # Автообновление через nix-update
-    lostSamplers = (pkgs.callPackage ./pkg_SuperflyDSP.nix { inherit versions; }).lostSamplers;
-    lostTapes    = (pkgs.callPackage ./pkg_SuperflyDSP.nix { inherit versions; }).lostTapes;
-    lostVinyls   = (pkgs.callPackage ./pkg_SuperflyDSP.nix { inherit versions; }).lostVinyls;
+    lostSamplers = superfly.lostSamplers;
+    lostTapes    = superfly.lostTapes;
+    lostVinyls   = superfly.lostVinyls;
     mtpdk = pkgs.callPackage ./pkg_MT-PowerDrumKit_2.nix { inherit versions; };
     mulhacen-clap = pkgs.callPackage ./pkg_Mulhacen.nix { };
     music-pattern-generator = pkgs.callPackage ./pkg_music-pattern-generator.nix { inherit versions; };
@@ -44,16 +50,18 @@ final: prev: {
     tape-echo-2 = pkgs.callPackage ./pkg_tape-echo-2.nix { };                                                                     # Автообновление через nix-update
     triplecheese = pkgs.callPackage ./pkg_Triple-Cheese.nix { };
 
-    # Noita save manager
-    pysimplegui = pkgs.python3.pkgs.callPackage ./pkg_pysimplegui.nix { };
+    # ====== Noita save manager ======
+    # pysimplegui определён в let-блоке выше (общая зависимость).
+    inherit pysimplegui;
     noita-save-manager = pkgs.callPackage ./pkg_noita-save-manager.nix {
-      inherit (pkgs.my-packages) pysimplegui;
+      inherit pysimplegui;
     };
-    # Плагины для Krita
+
+    # ====== Плагины для Krita ======
     krita-ai-diffusion = pkgs.callPackage ./pkg_krita-ai-diffusion.nix { };
     krita-vision-tools = pkgs.callPackage ./pkg_krita-vision-tools.nix { };
 
-    # Временный патч для Minion
+    # ====== Временный патч для Minion ======
     minion = pkgs.callPackage ./pkg_minion.nix { };
   };
 }
