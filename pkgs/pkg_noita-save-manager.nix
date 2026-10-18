@@ -6,7 +6,7 @@
 # Особенности:
 #   - Приложение на Python с GUI на PySimpleGUI (зависит также от psutil).
 #   - PySimpleGUI удалён из nixpkgs, поэтому передаётся как локальный пакет
-#     lucerno-packages.pysimplegui (см. pkg_pysimplegui.nix).
+#     my-packages.pysimplegui (см. pkg_pysimplegui.nix).
 #   - postInstall подменяет захардкоженный автором путь к сохранениям Noita
 #     под Proton на корректный (~/.steam/steam/.../Nolla_Games_Noita).
 #   - Обёртка запускает программу из ~/.local/share/noita_save_manager —
@@ -22,12 +22,20 @@
 { lib
 , python3
 , fetchFromGitHub
+, fetchurl
 , makeDesktopItem
 , makeWrapper
 , copyDesktopItems
 , pysimplegui
 }:
 
+let
+  # Иконка теперь берется удаленно из LFS
+  icon = fetchurl {
+    url = "https://media.githubusercontent.com/media/Lucernov/Lucerno-PC_nixos-config/main/dotfiles/sys-icons/icon-noita-save-manager.png";
+    hash = "sha256-jqpNQ0oeBKZmaJXukmfQJKZXR1V5NqiwmWSZcM7qMcQ=";
+  };
+in
 python3.pkgs.buildPythonApplication rec {
   pname = "noita-save-manager";
   version = "0.1.4-unstable-2021-08-10";
@@ -76,7 +84,7 @@ python3.pkgs.buildPythonApplication rec {
              mkdir -p "$DIR/noita_save_manager"
              cd "$DIR/noita_save_manager"'
 
-    install -Dm644 ${../dotfiles/sys-icons/icon-noita-save-manager.png} \
+    install -Dm644 ${icon} \
       $out/share/icons/hicolor/256x256/apps/icon-noita-save-manager.png
   '';
 

@@ -53,10 +53,12 @@
 #       cd /tmp/tc-writable
 #       tar -c u-he vst3 | xz -9e -T0 -c > \
 #         ~/nixos-config/dotfiles/repo/TripleCheese-writable.tar.xz
-#  6. Обновить version ниже, git add архив, пересобрать систему.
+#  6. Обновить version ниже, git add архив (уже через lfs),
+#     пересчитать хеш через `nix store prefetch-file` и обновить его в src ниже.
 
 { lib
 , stdenv
+, fetchurl
 , xz
 , writeShellScript
 }:
@@ -104,11 +106,15 @@ stdenv.mkDerivation (finalAttrs: {
   pname = "triplecheese";
   version = "1.3.0.12092";
 
-  # Локальный архив в dotfiles/repo/ (через git-lfs).
-  # Структура:
+  # Архив теперь берется напрямую с GitHub Media (через LFS-домен).
+  # Это позволяет собирать пакет даже тем, кто просто подключает наш флейк.
+  # Структура архива:
   #   u-he/TripleCheese/         → ~/.u-he/TripleCheese
   #   vst3/TripleCheese.vst3/    → ~/.vst3/TripleCheese.vst3
-  src = ../dotfiles/repo/TripleCheese-writable.tar.xz;
+  src = fetchurl {
+    url = "https://media.githubusercontent.com/media/Lucernov/Lucerno-PC_nixos-config/main/dotfiles/repo/TripleCheese-writable.tar.xz";
+    hash = "sha256-+QPk8XMkUeUqn7wBp9UMpwQleT2y4f206I7M0co4DQQ=";
+  };
 
   nativeBuildInputs = [ xz ];
 

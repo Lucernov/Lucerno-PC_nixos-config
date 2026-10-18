@@ -1,5 +1,6 @@
 { lib
 , stdenv
+, fetchurl
 , xz
 , autoPatchelfHook
 , alsa-lib
@@ -18,7 +19,11 @@ stdenv.mkDerivation {
   pname = "ot-piano-s";
   inherit version;
 
-  src = ../dotfiles/repo/OT_P1ANO_S.so.xz;
+  # Берем файл напрямую с GitHub Media (LFS-домен)
+  src = fetchurl {
+    url = "https://media.githubusercontent.com/media/Lucernov/Lucerno-PC_nixos-config/main/dotfiles/repo/OT_P1ANO_S.so.xz";
+    hash = "sha256-gm7hQYkKYzpSDnr5x0sRd0+i+yNFeNGYpyjj3hM96yw=";
+  };
 
   nativeBuildInputs = [ xz autoPatchelfHook ];
 

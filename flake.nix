@@ -91,17 +91,21 @@
       # ========== Пакеты для nix-update и nix build ==========
       # Экспорт как flake outputs, чтобы можно было обновлять
       packages.x86_64-linux = {
+        air-g-plugins = pkgsWithOverlay.lucerno-packages.air-g-plugins;
         drumlabooh = pkgsWithOverlay.lucerno-packages.drumlabooh;
         drumlabooh-multi = pkgsWithOverlay.lucerno-packages.drumlabooh-multi;
         je8086 = pkgsWithOverlay.lucerno-packages.je8086;
+        mulhacen-clap = pkgsWithOverlay.lucerno-packages.mulhacen-clap;
         music-pattern-generator = pkgsWithOverlay.lucerno-packages.music-pattern-generator;
+        orchestools = pkgsWithOverlay.lucerno-packages.orchestools;
         ostirus = pkgsWithOverlay.lucerno-packages.ostirus;
+        ot-piano-s = pkgsWithOverlay.lucerno-packages.ot-piano-s;
         pitchnet = pkgsWithOverlay.lucerno-packages.pitchnet;
+        relic-clap = pkgsWithOverlay.lucerno-packages.relic-clap;
         satordist2 = pkgsWithOverlay.lucerno-packages.satordist2;
         shortcircuit-xt = pkgsWithOverlay.lucerno-packages.shortcircuit-xt;
         tape-echo-2 = pkgsWithOverlay.lucerno-packages.tape-echo-2;
-        krita-ai-diffusion = pkgsWithOverlay.lucerno-packages.krita-ai-diffusion;
-        krita-vision-tools = pkgsWithOverlay.lucerno-packages.krita-vision-tools;
+        triplecheese = pkgsWithOverlay.lucerno-packages.triplecheese;
       };
     };
 }

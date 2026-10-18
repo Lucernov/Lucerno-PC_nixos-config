@@ -11,6 +11,7 @@
 
 { lib
 , stdenv
+, fetchurl
 , zstd
 }:
 
@@ -18,7 +19,11 @@ stdenv.mkDerivation {
   pname = "apple-fonts-lite";
   version = "1.0";
 
-  src = ../dotfiles/repo/apple-fonts.tar.zst;
+  # Берем архив напрямую с GitHub Media (LFS-домен)
+  src = fetchurl {
+    url = "https://media.githubusercontent.com/media/Lucernov/Lucerno-PC_nixos-config/main/dotfiles/repo/apple-fonts.tar.zst";
+    hash = "sha256-B8UMmIpsIH+TSCYhc1AVnqFY6YjwrIilwBZtiZujVL4=";
+  };
 
   nativeBuildInputs = [ zstd ];
 

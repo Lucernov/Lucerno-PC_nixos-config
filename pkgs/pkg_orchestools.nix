@@ -1,5 +1,6 @@
 { lib
 , stdenv
+, fetchurl
 , xz
 , autoPatchelfHook
 , alsa-lib
@@ -19,11 +20,24 @@ stdenv.mkDerivation {
   pname = "orchestools";
   inherit version;
 
+  # Берем все 4 архива с GitHub Media (LFS-домен)
   srcs = [
-    ../dotfiles/repo/ORCHESTOOLS-BRASS-1.0.1.tar.xz
-    ../dotfiles/repo/ORCHESTOOLS-PERC-1.0.1.tar.xz
-    ../dotfiles/repo/ORCHESTOOLS-STRINGS-1.0.2.tar.xz
-    ../dotfiles/repo/ORCHESTOOLS-WINDS-1.0.0.tar.xz
+    (fetchurl {
+      url = "https://media.githubusercontent.com/media/Lucernov/Lucerno-PC_nixos-config/main/dotfiles/repo/ORCHESTOOLS-BRASS-1.0.1.tar.xz";
+      hash = "sha256-8mbhpkr50nvIauLRok5J1ismLKUVtfBiZ0CTAFg/pxI=";
+    })
+    (fetchurl {
+      url = "https://media.githubusercontent.com/media/Lucernov/Lucerno-PC_nixos-config/main/dotfiles/repo/ORCHESTOOLS-PERC-1.0.1.tar.xz";
+      hash = "sha256-DULO+9KEawYPyxmIRy0foQJbe+O+Ghn4keqAhagpdAk=";
+    })
+    (fetchurl {
+      url = "https://media.githubusercontent.com/media/Lucernov/Lucerno-PC_nixos-config/main/dotfiles/repo/ORCHESTOOLS-STRINGS-1.0.2.tar.xz";
+      hash = "sha256-mOam9o7336YMrwbUoyZZAASZ8+QJZfxaDOP6q1jmZos=";
+    })
+    (fetchurl {
+      url = "https://media.githubusercontent.com/media/Lucernov/Lucerno-PC_nixos-config/main/dotfiles/repo/ORCHESTOOLS-WINDS-1.0.0.tar.xz";
+      hash = "sha256-tEnQvbvB/sysKMTuIPUVbOGp9X8X4LU/o9zoYUJK0rI=";
+    })
   ];
 
   nativeBuildInputs = [ xz autoPatchelfHook ];
