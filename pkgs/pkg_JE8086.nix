@@ -24,11 +24,11 @@
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "je8086";
-  version = "2.2.25";
+  version = "2.2.27";
 
   src = fetchurl {
     url = "https://github.com/dsp56300/gearmulator/releases/download/${finalAttrs.version}/TheUsualSuspects-JE8086-CLAP-${finalAttrs.version}-Linux_x86_64.zip";
-    hash = "sha256-2KLozTg66MKXuQ4+0zVHPQ6wpdXvkyl8LVf2GBCAHzA=";
+    hash = "sha256-rf+/tpNKpLmvLPULifq36uN67mb1yEJ1vkqn0fRGW50=";
   };
 
   nativeBuildInputs = [ unzip autoPatchelfHook ];

@@ -24,11 +24,11 @@
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "ostirus";
-  version = "2.2.25";
+  version = "2.2.27";
 
   src = fetchurl {
     url = "https://github.com/dsp56300/gearmulator/releases/download/${finalAttrs.version}/TheUsualSuspects-OsTIrus-CLAP-${finalAttrs.version}-Linux_x86_64.zip";
-    hash = "sha256-2idnSMHn4Yyw3aZfvrlVjYQQvH6/0qUsd8AzNMMwL4M=";
+    hash = "sha256-WJkyR0x5nZh6G+opePKPyImPzDQE6sx72kHb6+c0BKo=";
   };
 
   nativeBuildInputs = [ unzip autoPatchelfHook ];
