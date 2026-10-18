@@ -1,3 +1,4 @@
+# pkgs/pkg_shortcircuit-xt.nix
 { lib
 , stdenv
 , fetchurl
@@ -20,19 +21,15 @@
 , libxcb
 , xcbutil
 , xcbutilcursor
-, versions
 }:
 
-let
-  inherit (versions.shortcircuit-xt) version url hash;
-in
-
-stdenv.mkDerivation {
+stdenv.mkDerivation rec {
   pname = "shortcircuit-xt";
-  inherit version;
+  version = "2026-10-17-47b74ef";
 
   src = fetchurl {
-    inherit url hash;
+    url = "https://github.com/surge-synthesizer/shortcircuit-xt/releases/download/Nightly/shortcircuit-xt-linux-${version}.zip";
+    hash = "sha256-lmtM/3QRMwpfkFe1we1F0+8Uul9192YmDkoOf2UxCZU=";
   };
 
   nativeBuildInputs = [ unzip autoPatchelfHook ];

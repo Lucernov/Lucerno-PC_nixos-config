@@ -98,6 +98,7 @@
         ostirus = pkgsWithOverlay.lucerno-packages.ostirus;
         pitchnet = pkgsWithOverlay.lucerno-packages.pitchnet;
         satordist2 = pkgsWithOverlay.lucerno-packages.satordist2;
+        shortcircuit-xt = pkgsWithOverlay.lucerno-packages.shortcircuit-xt;
         tape-echo-2 = pkgsWithOverlay.lucerno-packages.tape-echo-2;
         krita-ai-diffusion = pkgsWithOverlay.lucerno-packages.krita-ai-diffusion;
         krita-vision-tools = pkgsWithOverlay.lucerno-packages.krita-vision-tools;

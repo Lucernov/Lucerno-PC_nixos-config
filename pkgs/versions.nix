@@ -54,11 +54,11 @@
     hash    = "sha256-7ms1T9N1/50M4wgZaD9E07cSof5P9Tx35E3wNtqCqQA=";
   };
 
-  shortcircuit-xt = {                                                   # обновляется активно и github Nightly не подходит для автообновления
-    version       = "2026-09-14-8cda0ce";                               # https://github.com/surge-synthesizer/shortcircuit-xt/releases/
-    url           = "https://github.com/surge-synthesizer/shortcircuit-xt/releases/download/Nightly/shortcircuit-xt-linux-2026-09-14-8cda0ce.zip";
-    hash          = "sha256-wOCqKyDl/AjpZGsTUOWjFlkXMVZoiEavJpFHv/N6ksw=";
-  };
+#   shortcircuit-xt = {                                                   # обновляется активно и github Nightly не подходит для автообновления
+#     version       = "2026-09-14-8cda0ce";                               # https://github.com/surge-synthesizer/shortcircuit-xt/releases/
+#     url           = "https://github.com/surge-synthesizer/shortcircuit-xt/releases/download/Nightly/shortcircuit-xt-linux-2026-09-14-8cda0ce.zip";
+#     hash          = "sha256-wOCqKyDl/AjpZGsTUOWjFlkXMVZoiEavJpFHv/N6ksw=";
+#   };
 
   tal-vocoder-2 = {                                                     # обновляется редко
     version     = "2";                                                  # https://tal-software.com/products/tal-vocoder

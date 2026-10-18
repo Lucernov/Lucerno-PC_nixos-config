@@ -45,7 +45,7 @@ in
     relic-clap = pkgs.callPackage ./pkg_Relic.nix { };
     satordist2 = pkgs.callPackage ./pkg_satordist2.nix { };
     sforzando = pkgs.callPackage ./pkg_sforzando.nix { inherit versions; };
-    shortcircuit-xt = pkgs.callPackage ./pkg_shortcircuit-xt.nix { inherit versions; };
+    shortcircuit-xt = pkgs.callPackage ./pkg_shortcircuit-xt.nix { };                                                             # Автообновление через nix-update
     tal-vocoder-2 = pkgs.callPackage ./pkg_tal-vocoder-2.nix { inherit versions; };
     tape-echo-2 = pkgs.callPackage ./pkg_tape-echo-2.nix { };                                                                     # Автообновление через nix-update
     triplecheese = pkgs.callPackage ./pkg_Triple-Cheese.nix { };

@@ -47,6 +47,10 @@
         (nix-update tape-echo-2 --flake --version-regex 'tape-echo-2-v(.*)' || echo '  ⚠️ tape-echo-2: пропущен') && \
         echo '━━━ music-pattern-generator ━━━' && \
         (nix-update music-pattern-generator --flake --version-regex 'v(.*)' || echo '  ⚠️ music-pattern-generator: пропущен') && \
+        echo '━━━ shortcircuit-xt ━━━' && \
+        (SC_URL=$(curl -s -H \"Authorization: Bearer $GITHUB_TOKEN\" https://api.github.com/repos/surge-synthesizer/shortcircuit-xt/releases/tags/Nightly | grep -oE 'https://[^\"]+shortcircuit-xt-linux-[0-9]{4}-[0-9]{2}-[0-9]{2}-[a-f0-9]{7}\\.zip' | head -1) && \
+         SC_VER=$(echo \"$SC_URL\" | sed -E 's/.*shortcircuit-xt-linux-(.*)\\.zip/\\1/') && \
+         nix-update shortcircuit-xt --flake --url \"$SC_URL\" --version \"$SC_VER\" || echo '  ⚠️ shortcircuit-xt: пропущен') && \
         echo '' && \
         git diff --stat pkgs/ && \
         echo '' && \
