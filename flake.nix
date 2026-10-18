@@ -94,6 +94,7 @@
         drumlabooh = pkgsWithOverlay.lucerno-packages.drumlabooh;
         drumlabooh-multi = pkgsWithOverlay.lucerno-packages.drumlabooh-multi;
         je8086 = pkgsWithOverlay.lucerno-packages.je8086;
+        music-pattern-generator = pkgsWithOverlay.lucerno-packages.music-pattern-generator;
         ostirus = pkgsWithOverlay.lucerno-packages.ostirus;
         pitchnet = pkgsWithOverlay.lucerno-packages.pitchnet;
         satordist2 = pkgsWithOverlay.lucerno-packages.satordist2;

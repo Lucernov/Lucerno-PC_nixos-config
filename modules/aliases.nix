@@ -45,6 +45,8 @@
         done && \
         echo '━━━ tape-echo-2 ━━━' && \
         (nix-update tape-echo-2 --flake --version-regex 'tape-echo-2-v(.*)' || echo '  ⚠️ tape-echo-2: пропущен') && \
+        echo '━━━ music-pattern-generator ━━━' && \
+        (nix-update music-pattern-generator --flake --version-regex 'v(.*)' || echo '  ⚠️ music-pattern-generator: пропущен') && \
         echo '' && \
         git diff --stat pkgs/ && \
         echo '' && \

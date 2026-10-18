@@ -36,7 +36,7 @@ in
     lostVinyls   = superfly.lostVinyls;
     mtpdk = pkgs.callPackage ./pkg_MT-PowerDrumKit_2.nix { inherit versions; };
     mulhacen-clap = pkgs.callPackage ./pkg_Mulhacen.nix { };
-    music-pattern-generator = pkgs.callPackage ./pkg_music-pattern-generator.nix { inherit versions; };
+    music-pattern-generator = pkgs.callPackage ./pkg_music-pattern-generator.nix { };                                             # Автообновление через nix-update
     numa-player = pkgs.callPackage ./pkg_numa-player.nix { inherit versions; };
     orchestools = pkgs.callPackage ./pkg_orchestools.nix { inherit versions; };
     ostirus = pkgs.callPackage ./pkg_OsTIrus.nix { };                                                                             # Автообновление через nix-update

@@ -60,19 +60,20 @@
 , libuuid
 , sqlite
 , udev
-, versions
 }:
 
-let
-  inherit (versions.music-pattern-generator) version url hash;
-in
-
-stdenv.mkDerivation {
+stdenv.mkDerivation rec {
   pname = "music-pattern-generator";
-  inherit version;
+  version = "2.2.0";
 
   src = fetchurl {
-    inherit url hash;
+    # Версия в URL и в имени файла отличается:
+    #   тег:        v2.2.0
+    #   имя файла:  mpg_2_2_installer_lin.deb
+    # Для nix-update это не проблема, так как он ищет версию по паттерну
+    # v${version}, а остальное вычисляется через builtins.replaceStrings.
+    url = "https://github.com/hisschemoller/music-pattern-generator/releases/download/v${version}/mpg_${builtins.replaceStrings ["."] ["_"] (lib.removeSuffix ".0" version)}_installer_lin.deb";
+    hash = "sha256-L83MCo1TqSbt+4MwRXWCVgegpuYEYNLrjrJnzPMwLwE=";
   };
 
   nativeBuildInputs = [ dpkg autoPatchelfHook makeWrapper ];

@@ -36,11 +36,11 @@
     hash       = "sha256-lb8RuIdLgDC2y9KSF6hlWXWKlt4jI8tndWk/WVanpGo=";
   };
 
-  music-pattern-generator = {                                           # обновляется редко и github не подходит для автообновления
-    version = "2.2.0";                                                  # https://github.com/hisschemoller/music-pattern-generator/releases
-    url     = "https://github.com/hisschemoller/music-pattern-generator/releases/download/v2.2.0/mpg_2_2_installer_lin.deb";
-    hash    = "sha256-L83MCo1TqSbt+4MwRXWCVgegpuYEYNLrjrJnzPMwLwE=";
-  };
+#   music-pattern-generator = {                                           # обновляется редко и github не подходит для автообновления
+#     version = "2.2.0";                                                  # https://github.com/hisschemoller/music-pattern-generator/releases
+#     url     = "https://github.com/hisschemoller/music-pattern-generator/releases/download/v2.2.0/mpg_2_2_installer_lin.deb";
+#     hash    = "sha256-L83MCo1TqSbt+4MwRXWCVgegpuYEYNLrjrJnzPMwLwE=";
+#   };
 
   numa-player = {                                                       # обновляется иногда
     version = "2.2.2";                                                  # https://www.studiologic-music.com/products/numaplayer/
