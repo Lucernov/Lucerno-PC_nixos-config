@@ -10,7 +10,7 @@ let
   superfly = pkgs.callPackage ./pkg_SuperflyDSP.nix { inherit versions; };                                                       # SuperflyDSP: один .nix-файл возвращает ТРИ плагина (lostSamplers, lostTapes, lostVinyls)
 in
 {
-  my-packages = {
+  lucerno-packages = {
     # ====== Обёртки над пакетами nixpkgs ======
     btop = pkgs.callPackage ./pkg_btop.nix { };
     reaper = pkgs.callPackage ./pkg_reaper.nix {

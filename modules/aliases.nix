@@ -20,6 +20,7 @@
 
       # ========== Мониторинг ==========
       mon = "kitty @ launch --location=vsplit -- pw-top; sleep 0.2; kitty @ launch --location=hsplit -- nvtop"; # открыть pw-top и nvtop в сплитах Kitty
+      cpu-gov = "cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor"; # Режим работы процессора
 
       # ========== Управление конфигурацией Nix ==========
       sync   = "cd ${myLib.home}/${myLib.configDirName} && git add -A && (git commit -m \"$(date '+%Y-%m-%d %H:%M:%S')\" || true) && git push"; # синхронизировать конфиг с Git

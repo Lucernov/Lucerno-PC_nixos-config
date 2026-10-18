@@ -6,7 +6,7 @@
 # Особенности:
 #   - Приложение на Python с GUI на PySimpleGUI (зависит также от psutil).
 #   - PySimpleGUI удалён из nixpkgs, поэтому передаётся как локальный пакет
-#     my-packages.pysimplegui (см. pkg_pysimplegui.nix).
+#     lucerno-packages.pysimplegui (см. pkg_pysimplegui.nix).
 #   - postInstall подменяет захардкоженный автором путь к сохранениям Noita
 #     под Proton на корректный (~/.steam/steam/.../Nolla_Games_Noita).
 #   - Обёртка запускает программу из ~/.local/share/noita_save_manager —

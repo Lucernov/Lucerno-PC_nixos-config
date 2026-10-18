@@ -54,12 +54,12 @@
       };                                                                                                   # !!! TEMP !!!
 
       allOverlays = [                                                                                      # Все оверлеи здесь и переданы один раз в `nixpkgs.pkgs = pkgsWithOverlay`. Порядок применения снизу вверх
-        (import ./pkgs/default.nix { pkgs-unstable = pkgsUnstable; })                                      # 1. Оверлей с моими пакетами (my-packages), ничего не переопределяет
+        (import ./pkgs/default.nix { pkgs-unstable = pkgsUnstable; })                                      # 1. Оверлей с моими пакетами (lucerno-packages), ничего не переопределяет
         nur.overlays.default                                                                               # 2. Все пакеты из NUR доступны как pkgs.nur.repos.<user>.<pkg>, ничего не переопределяет
         comfyui-nix.overlays.default                                                                       # 3. Оверлей ComfyUI (comfy-ui-cuda), ничего не переопределяет
         (final: prev: {                                                                                    # 4. Финальные переопределения krita и minion. Идут последними, чтобы перебить всё выше
           krita  = pkgsPinned25_11.krita;                                                                  #    Krita из фиксированного nixpkgs (новая версия пока не работает с ComfyUI)
-          minion = final.my-packages.minion;                                                               #    Minion из локального pkg_minion.nix с патчем PR#539572. В 26.05 сломан, поэтому не берём из nixpkgs напрямую
+          minion = final.lucerno-packages.minion;                                                          #    Minion из локального pkg_minion.nix с патчем PR#539572. В 26.05 сломан, поэтому не берём из nixpkgs напрямую
         })
       ];
 
@@ -91,16 +91,15 @@
       # ========== Пакеты для nix-update и nix build ==========
       # Экспорт как flake outputs, чтобы можно было обновлять
       packages.x86_64-linux = {
-        drumlabooh = pkgsWithOverlay.my-packages.drumlabooh;
-        drumlabooh-multi = pkgsWithOverlay.my-packages.drumlabooh-multi;
-        je8086 = pkgsWithOverlay.my-packages.je8086;
-        ostirus = pkgsWithOverlay.my-packages.ostirus;
-        pitchnet = pkgsWithOverlay.my-packages.pitchnet;
-        satordist2 = pkgsWithOverlay.my-packages.satordist2;
-        tape-echo-2 = pkgsWithOverlay.my-packages.tape-echo-2;
-        triplecheese = pkgsWithOverlay.my-packages.triplecheese;
-        krita-ai-diffusion = pkgsWithOverlay.my-packages.krita-ai-diffusion;
-        krita-vision-tools = pkgsWithOverlay.my-packages.krita-vision-tools;
+        drumlabooh = pkgsWithOverlay.lucerno-packages.drumlabooh;
+        drumlabooh-multi = pkgsWithOverlay.lucerno-packages.drumlabooh-multi;
+        je8086 = pkgsWithOverlay.lucerno-packages.je8086;
+        ostirus = pkgsWithOverlay.lucerno-packages.ostirus;
+        pitchnet = pkgsWithOverlay.lucerno-packages.pitchnet;
+        satordist2 = pkgsWithOverlay.lucerno-packages.satordist2;
+        tape-echo-2 = pkgsWithOverlay.lucerno-packages.tape-echo-2;
+        krita-ai-diffusion = pkgsWithOverlay.lucerno-packages.krita-ai-diffusion;
+        krita-vision-tools = pkgsWithOverlay.lucerno-packages.krita-vision-tools;
       };
     };
 }

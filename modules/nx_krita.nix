@@ -18,8 +18,8 @@
 { pkgs, myLib, ... }:
 
 let
-  pluginAI = pkgs.my-packages.krita-ai-diffusion;
-  pluginVT = pkgs.my-packages.krita-vision-tools;
+  pluginAI = pkgs.lucerno-packages.krita-ai-diffusion;
+  pluginVT = pkgs.lucerno-packages.krita-vision-tools;
 in
 {
   systemd.tmpfiles.rules = [

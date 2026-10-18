@@ -119,7 +119,7 @@
 
     # ========== КОНСОЛЬНЫЕ УТИЛИТЫ ==========
     bat                                                           # Улучшенный cat с подсветкой синтаксиса и интеграцией с Git
-    my-packages.btop                                              # Монитор ресурсов с графиками
+    lucerno-packages.btop                                         # Монитор ресурсов с графиками
     cava                                                          # Консольный аудиовизуализатор (спектроанализатор для музыки)
     cliamp                                                        # Консольный музыкальный плеер с поддержкой YouTube, Spotify, подкастов и радио
     duf                                                           # Просмотр использования дискового пространства (удобная альтернатива df)
@@ -165,7 +165,7 @@
     (vesktop.override { withSystemVencord = false; })             # Голосовой/текстовый чат (альтернатиивный discord клиент в котором открываются видео ролики)
     telegram-desktop                                              # Мессенджер Telegram
     zapzap                                                        # Вотсап клииент
-    my-packages.teamspeak                                         # Голосовой чат Тимспик
+    lucerno-packages.teamspeak                                    # Голосовой чат Тимспик
 
     # ГРАФИКА
     upscaler                                                      # Увеличение разрешения изображений
@@ -185,7 +185,7 @@
     printrun                                                      # Соединение с 3D принтером и отправка на печать по usb
 
     # МУЛЬТИМЕДИА
-    my-packages.qmmp                                              # Аудиоплеер
+    lucerno-packages.qmmp                                         # Аудиоплеер
     vlc                                                           # Универсальный видеоплеер
     mpv                                                           # Видеоплеер (корректно открывает AV1)
     droidcam                                                      # вебкамера через iphone
@@ -201,7 +201,7 @@
 
     # ИГРЫ
     minion                                                        # Менеджер аддонов для TESO
-    my-packages.noita-save-manager                                # Менеджер сохранений для Noita
+    lucerno-packages.noita-save-manager                           # Менеджер сохранений для Noita
     (bottles.override { removeWarningPopup = true; })             # Запуск Windows-приложений через Wine (без всплывающих предупреждений)
     goverlay                                                      # Оверлей для мониторинга системы и FPS (MangoHud, vkBasalt)
     mangohud                                                      # Оверлей для отображения FPS и мониторинга системы в играх
@@ -232,7 +232,7 @@
 
     # МУЗЫКА
       # --- DAW и среда ---
-    my-packages.reaper                                            # REAPER – цифровая звуковая рабочая станция (DAW) БЕРЕТСЯ ИЗ НЕСТАБИЛЬНОГО КАНАЛА через оверлей!!!
+    lucerno-packages.reaper                                       # REAPER – цифровая звуковая рабочая станция (DAW) БЕРЕТСЯ ИЗ НЕСТАБИЛЬНОГО КАНАЛА через оверлей!!!
     wineWow64Packages.staging                                     # Wine с поддержкой 64 и 32 бит (staging‑патчи для аудио)
     yabridge                                                      # Мост для запуска Windows VST-плагинов в Linux (через Wine)
     yabridgectl                                                   # Утилита для управления yabridge (сканирование, синхронизация)
@@ -240,47 +240,47 @@
     coppwr                                                        # Графическая утилита для управления PipeWire
       # --- Синтезаторы и Сэмплеры ---
     vital                                                         # Синтезатор FM (VST-плагин)
-    my-packages.ostirus                                           # Эмуляция синтезатора Access Virus TI (CLAP)
-    my-packages.je8086                                            # Эмуляция синтезатора Roland JP-8000 (CLAP)
+    lucerno-packages.ostirus                                      # Эмуляция синтезатора Access Virus TI (CLAP)
+    lucerno-packages.je8086                                       # Эмуляция синтезатора Roland JP-8000 (CLAP)
     surge-xt                                                      # Синтезатор Surge XT
-    my-packages.shortcircuit-xt                                   # Семплер (CLAP) от Surge Synth Team
+    lucerno-packages.shortcircuit-xt                              # Семплер (CLAP) от Surge Synth Team
     decent-sampler                                                # Сэмплер для библиотек DecentSampler (формат .dspreset, .dslibrary)
-    my-packages.sforzando                                         # Семплер форматов SFZ v1 \ v2 и  ARIA
-    my-packages.numa-player                                       # Виртуальный инструмент Studiologic Numa Player (VST3 + standalone)
-    my-packages.orchestools                                       # Набор оркестровых VST3-инструментов (Brass, Perc, Strings, Winds)
-    my-packages.ot-piano-s                                        # Пианино OT P1ANO S (VST2)
+    lucerno-packages.sforzando                                    # Семплер форматов SFZ v1 \ v2 и  ARIA
+    lucerno-packages.numa-player                                  # Виртуальный инструмент Studiologic Numa Player (VST3 + standalone)
+    lucerno-packages.orchestools                                  # Набор оркестровых VST3-инструментов (Brass, Perc, Strings, Winds)
+    lucerno-packages.ot-piano-s                                   # Пианино OT P1ANO S (VST2)
     ripplerx                                                      # Физически моделируемый синтезатор (модальный синтез) с двойными резонаторами, аналог AAS Chromaphone и Ableton Collision
   # Triple Cheese - !!! УСТАНОВЛЕНО !!!                           # Плагины U-he пишут в свой .so при работе. Тут устанавливать нельзя. Подробности установкии pkgs/pkg_Triple-Cheese.nix
       # --- Синтезаторы и Сэмплеры ударных ---
-    my-packages.mtpdk                                             # Лёгкий плагин ударной установки MT-PowerDrumKit 2 есть много пресетов партий
-    my-packages.drumlabooh                                        # LV2-сэмплер ударных с несколькими наборами (drumlabooh)
-    my-packages.drum-locker                                       # Плагин ударной установки Drum Locker
+    lucerno-packages.mtpdk                                        # Лёгкий плагин ударной установки MT-PowerDrumKit 2 есть много пресетов партий
+    lucerno-packages.drumlabooh                                   # LV2-сэмплер ударных с несколькими наборами (drumlabooh)
+    lucerno-packages.drum-locker                                  # Плагин ударной установки Drum Locker
     drumgizmo                                                     # Многоканальный сэмплер барабанов (сырые барабашки)
     drumkv1                                                       # Old-school сэмплер ударных (LV2) в стиле старых драм-машин со стерео-эффектами
     geonkick                                                      # Синтезатор барабанов
       # --- Гитарные процессоры и усилители ---
-    my-packages.amp-locker                                        # Плагин, эмулирующий стек гитарного тракта Amp-Locker
+    lucerno-packages.amp-locker                                   # Плагин, эмулирующий стек гитарного тракта Amp-Locker
     fretboard                                                     # Гитарный гриф (примеры построения аккордов)
     lingot                                                        # Гитарный тюнер
       # --- Секвенсоры и генераторы ---
     stochas                                                       # Мощный вероятностный секвенсор (VST3/CLAP)
-    my-packages.music-pattern-generator                           # Music Pattern Generator – визуальный MIDI-секвенсор (NW.js)
+    lucerno-packages.music-pattern-generator                      # Music Pattern Generator – визуальный MIDI-секвенсор (NW.js)
       # --- Эффекты (обработка звука) ---
     lsp-plugins                                                   # Набор LSP: EQ, компрессоры, лимитеры, meters
     x42-plugins                                                   # Meters, EQ, компрессоры и другие LV2-плагины от Robin Gareus (Ardour dev)
-    my-packages.relic-clap                                        # Relic Free Audio Plugin Suite (компрессоры и прочее для сведения и мастеринга)
-    my-packages.air-g-plugins                                     # Коллекция VST3-плагинов на основе Airwindows для микширования и мастеринга + педали еще туда засунул
+    lucerno-packages.relic-clap                                   # Relic Free Audio Plugin Suite (компрессоры и прочее для сведения и мастеринга)
+    lucerno-packages.air-g-plugins                                # Коллекция VST3-плагинов на основе Airwindows для микширования и мастеринга + педали еще туда засунул
     dragonfly-reverb                                              # Реверберация Dragonfly (VST/LV2)
-    my-packages.tape-echo-2                                       # Эмуляция Roland Space Echo (VST3 + CLAP + LV2)
+    lucerno-packages.tape-echo-2                                  # Эмуляция Roland Space Echo (VST3 + CLAP + LV2)
     fire                                                          # Fire – многополосный плагин дисторшна с открытым исходным кодом от Wings Music (VST3)
-    my-packages.lostSamplers                                      # SuperflyDSP Lost Samplers – эмуляция шумов сэмплеров (VST3)
-    my-packages.lostTapes                                         # SuperflyDSP Lost Tapes – эмуляция магнитофона (VST3)
-    my-packages.lostVinyls                                        # SuperflyDSP Lost Vinyls – эмуляция винилового проигрывателя (VST3)
-    my-packages.pitchnet                                          # Нейросетевой корректор высоты тона (только VST3, standalone не собираю)
-    my-packages.tal-vocoder-2                                     # TAL-Vocoder-2 — винтажный вокодер (VST3 + CLAP)
+    lucerno-packages.lostSamplers                                 # SuperflyDSP Lost Samplers – эмуляция шумов сэмплеров (VST3)
+    lucerno-packages.lostTapes                                    # SuperflyDSP Lost Tapes – эмуляция магнитофона (VST3)
+    lucerno-packages.lostVinyls                                   # SuperflyDSP Lost Vinyls – эмуляция винилового проигрывателя (VST3)
+    lucerno-packages.pitchnet                                     # Нейросетевой корректор высоты тона (только VST3, standalone не собираю)
+    lucerno-packages.tal-vocoder-2                                # TAL-Vocoder-2 — винтажный вокодер (VST3 + CLAP)
     rnnoise-plugin                                                # Нейро шумодав для голоса Real-time
-    my-packages.mulhacen-clap                                     # Mulhacen — пятиполосный сустейнер от Node97 Audio с NAM + IR (CLAP) Альтернатива плагину Parallax
-    my-packages.satordist2                                        # SATORDIST2 — 4-полосный сатуратор (CLAP + VST3)
+    lucerno-packages.mulhacen-clap                                # Mulhacen — пятиполосный сустейнер от Node97 Audio с NAM + IR (CLAP) Альтернатива плагину Parallax
+    lucerno-packages.satordist2                                   # SATORDIST2 — 4-полосный сатуратор (CLAP + VST3)
 
     ] ++ (with pkgs-unstable; [                                   # Пакеты из нестабильного канала (более свежие версии)
     # МУЗЫКА
