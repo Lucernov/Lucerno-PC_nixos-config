@@ -125,7 +125,6 @@ nix run 'github:Lucernov/Lucerno-PC_nixos-config#music-pattern-generator'
 | **VST3** | `/run/current-system/sw/lib/vst3` | `~/.vst3` |
 | **VST2** | `/run/current-system/sw/lib/vst` | `~/.vst` |
 | **LV2** | `/run/current-system/sw/lib/lv2` | `~/.lv2` |
-| **LADSPA** | `/run/current-system/sw/lib/ladspa` | `~/.ladspa` |
 
 
 ---
