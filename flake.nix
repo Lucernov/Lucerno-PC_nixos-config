@@ -95,7 +95,7 @@
         drumlabooh = pkgsWithOverlay.lucerno-packages.drumlabooh;
         drumlabooh-multi = pkgsWithOverlay.lucerno-packages.drumlabooh-multi;
         je8086 = pkgsWithOverlay.lucerno-packages.je8086;
-        mulhacen-clap = pkgsWithOverlay.lucerno-packages.mulhacen-clap;
+      # mulhacen-clap = pkgsWithOverlay.lucerno-packages.mulhacen-clap;
         music-pattern-generator = pkgsWithOverlay.lucerno-packages.music-pattern-generator;
         orchestools = pkgsWithOverlay.lucerno-packages.orchestools;
         ostirus = pkgsWithOverlay.lucerno-packages.ostirus;
@@ -105,7 +105,6 @@
         satordist2 = pkgsWithOverlay.lucerno-packages.satordist2;
         shortcircuit-xt = pkgsWithOverlay.lucerno-packages.shortcircuit-xt;
         tape-echo-2 = pkgsWithOverlay.lucerno-packages.tape-echo-2;
-        triplecheese = pkgsWithOverlay.lucerno-packages.triplecheese;
       };
     };
 }
