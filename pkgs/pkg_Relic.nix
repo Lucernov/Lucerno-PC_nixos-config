@@ -1,14 +1,15 @@
 # pkgs/pkg_Relic.nix
 #
-# Relic Free Audio Plugin Suite — набор из 12 бесплатных CLAP-плагинов
+# Relic Free Audio Plugin Suite — набор из 13 бесплатных CLAP-плагинов
 # (эмуляции классических компрессоров, эквалайзеров и предусилителей).
 #
 # Особенности:
 #   - Только CLAP-формат (VST3 отброшен как дубликат — те же плагины).
 #   - Зависимости минимальны: fontconfig, freetype, libstdc++.
 #     Всё остальное (gtk, X11, glib) статически вкомпилировано в .clap.
-#   - Архив изначально .zip (275 МБ), пересобран в tar.zst (92 МБ),
-#     хранится в dotfiles/repo/ через Git LFS.
+#   - Архив изначально .zip (~500 МБ), пересобран в tar.zst (~122 МБ)
+#     с максимальным сжатием (zstd --ultra -22), хранится в dotfiles/repo/
+#     через Git LFS.
 
 { lib
 , stdenv
@@ -21,13 +22,13 @@
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "relic-clap";
-  version = "0.3.1";
+  version = "0.4.1";
 
   # Архив берется напрямую с GitHub Media (LFS-домен).
   # Это позволяет собирать пакет без локального git lfs pull.
   src = fetchurl {
-    url = "https://media.githubusercontent.com/media/Lucernov/Lucerno-PC_nixos-config/main/dotfiles/repo/Relic-Linux-CLAP-0.3.1.tar.zst";
-    hash = "sha256-ALgRtXvKcGzsRr/ZVS/FTonixHwcDIDf5IJjngnkPBM=";
+    url = "https://media.githubusercontent.com/media/Lucernov/Lucerno-PC_nixos-config/main/dotfiles/repo/Relic-Linux-CLAP-0.4.1.tar.zst";
+    hash = "sha256-XUG7SyQiviKruRHGDiGM6+w9/VXhOBBwfYFrEQw90eQ=";
   };
 
   nativeBuildInputs = [ autoPatchelfHook zstd ];
