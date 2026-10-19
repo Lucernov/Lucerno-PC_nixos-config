@@ -24,6 +24,7 @@
 , libsigcxx
 , libxcb-util
 , versions
+, zenity  # Утилита для графических диалогов (GTK). Требуется Sforzando для выбора папки Aria Engine при первом запуске
 }:
 
 let
@@ -94,7 +95,7 @@ stdenv.mkDerivation {
     makeWrapper $out/share/plogue-sforzando/sforzando/sforzando $out/bin/sforzando \
       --set QT_QPA_PLATFORM xcb \
       --set GDK_BACKEND x11 \
-      --suffix PATH : /run/current-system/sw/bin \
+      --prefix PATH : ${lib.makeBinPath [ zenity ]} \
       --run 'export DBUS_SESSION_BUS_ADDRESS="unix:path=$XDG_RUNTIME_DIR/bus"' \
       --chdir $out/share/plogue-sforzando/sforzando
 

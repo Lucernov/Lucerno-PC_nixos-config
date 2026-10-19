@@ -48,7 +48,7 @@
     je8086            # Эмуляция Roland JP-8000 (CLAP) !!! ДЛЯ РАБОТЫ ТРЕБУЕТСЯ ОРИГИНАЛЬНЫЙ BIOS !!! ЕГО ВАМ НАДО НАЙТИ САМОСТОЯТЕЛЬНО !!! Т.е. имеется в виду, что надо получить биос из своего железного синтезатора, разумеется
     shortcircuit-xt   # Сэмплер (CLAP)
     sforzando         # SFZ-сэмплер (VST3 + CLAP)
-    numa-player       # Studiologic Numa Player (VST3 + standalone) Коммерческий плагин. Бесплатный, но для работы требуется регистрация на https://www.studiologic-music.com/products/numaplayer/
+    numa-player       # Studiologic Numa Player (VST3 + standalone) Коммерческий плагин. Бесплатный, но для работы с библиотекой требуется регистрация на https://www.studiologic-music.com/products/numaplayer/
     tal-vocoder-2     # Вокодер (VST3 + CLAP)
     drumlabooh        # LV2-сэмплер ударных                   https://github.com/psemiletov/drumlabooh
     drumlabooh-multi  # LV2-сэмплер ударных многоканальный    https://github.com/psemiletov/drumlabooh
