@@ -5,7 +5,7 @@
 ## ✨ Особенности конфигурации
 
 *   **ОС**: NixOS (ветка 26.05), ядро `linuxPackages_zen`
-*   **Рабочий стол**: KDE Plasma 6 (Wayland), Stylix для темизации
+*   **Рабочий стол**: KDE Plasma 6 (Wayland)
 *   **Аудио-стек**: PipeWire, REAPER
 *   **Железо**: Оптимизировано под Intel i5-13400F (отключены E-ядра для аудио-потоков) и NVIDIA RTX 3070
 
@@ -14,8 +14,6 @@
 ## 📦 Использование музыкальных пакетов (Flake)
 
 Репозиторий экспортирует готовый оверлей и набор пакетов `lucerno-packages`
-
-### Вариант 1: Через оверлей (Рекомендуемый)
 
 Добавьте репозиторий в `inputs` вашего `flake.nix`:
 
@@ -34,7 +32,7 @@
 }
 ```
 
-Затем примените оверлей и используйте доступные пакеты:
+### Вариант 1: Через оверлей
 
 ```nix
 { pkgs, inputs, ... }:
@@ -51,8 +49,8 @@
     shortcircuit-xt   # Сэмплер (CLAP)
     drumlabooh        # LV2-сэмплер ударных                   https://github.com/psemiletov/drumlabooh
     drumlabooh-multi  # LV2-сэмплер ударных многоканальный    https://github.com/psemiletov/drumlabooh
-    orchestools       # Набор оркестровых инструментов (VST3) https://musictop69.wixsite.com/orchestools/orchestools-two (семплы скачивать тут)
-    ot-piano-s        # Пианино (VST2)                        https://musictop69.wixsite.com/orchestools (семплы скачивать тут)
+    orchestools       # Набор оркестровых инструментов (VST3) https://musictop69.wixsite.com/orchestools/orchestools-two (сэмплы скачивать тут)
+    ot-piano-s        # Пианино (VST2)                        https://musictop69.wixsite.com/orchestools (сэмплы скачивать тут)
     
     # 🎸 Гитарные процессоры и Эффекты
     satordist2        # 4-полосный сатуратор (CLAP + VST3)
