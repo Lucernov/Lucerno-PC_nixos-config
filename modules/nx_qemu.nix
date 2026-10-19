@@ -22,22 +22,22 @@ in
 
 {
   virtualisation = {
-    libvirtd.enable = true;                                       # Включает сервис libvirtd (демон для управления QEMU/KVM)
-    spiceUSBRedirection.enable = true;                            # Включает проброс USB-устройств через протокол SPICE (для виртуальных машин)
+    libvirtd.enable = true;                                       # Включить сервис libvirtd (демон для управления QEMU/KVM)
+    spiceUSBRedirection.enable = true;                            # Включить проброс USB-устройств через протокол SPICE (для виртуальных машин)
   };
 
   # Создаём XML-файл сети
   environment.etc."libvirt/qemu/networks/default.xml".text = networkXML;
 
-  # При активации системы определяем, запускаем и включаем автозапуск сети
+  # При активации система определяет, запускает и включает автозапуск сети
   system.activationScripts.libvirt-network = {
     supportsDryActivation = true;
     text = ''
-      # Определяем сеть (если её нет)
+      # Определить сеть (если её нет)
       ${pkgs.libvirt}/bin/virsh net-define /etc/libvirt/qemu/networks/default.xml 2>/dev/null || true
-      # Запускаем сеть (если не активна)
+      # Запустить сеть (если не активна)
       ${pkgs.libvirt}/bin/virsh net-start default 2>/dev/null || true
-      # Включаем автозапуск
+      # Включить автозапуск
       ${pkgs.libvirt}/bin/virsh net-autostart default 2>/dev/null || true
     '';
   };

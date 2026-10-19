@@ -12,7 +12,7 @@ _ :
 {
   # ========== Настройка Fail2ban ==========
   services.fail2ban = {
-    enable = true;                                                      # Включаем демон fail2ban
+    enable = true;                                                      # Включить демон fail2ban
     daemonSettings = {
       DEFAULT = {
         loglevel = "INFO";                                              # Уровень логирования
@@ -58,7 +58,7 @@ _ :
 
   # ========== Действие для nftables ==========
   # Кастомное действие: вместо стандартных ipset/iptables/mail
-  # добавляем/удаляем IP из nftables-набора addr-set-banned.
+  # добавить/удалить IP из nftables-набора addr-set-banned.
   environment.etc."fail2ban/action.d/nftables-set.conf" = {
     text = ''
       [Definition]

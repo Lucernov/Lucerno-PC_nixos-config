@@ -4,15 +4,15 @@
   # ========== Настройки дисплейного менеджера и рабочего стола ==========
   services = {
     displayManager = {                                              # Настройка дисплейного менеджера SDDM
-      plasma-login-manager.enable = true;                           # Включает Plasma Login Manager (экран входа в KDE Plasma)
-      defaultSession = "plasma";                                    # Указывает, какая сессия рабочего стола будет запускаться по умолчанию. Значение "plasma" соответствует KDE Plasma (может быть "plasma" или "plasmawayland")
+      plasma-login-manager.enable = true;                           # Включить Plasma Login Manager (экран входа в KDE Plasma)
+      defaultSession = "plasma";                                    # Указать, какая сессия рабочего стола будет запускаться по умолчанию. Значение "plasma" соответствует KDE Plasma (может быть "plasma" или "plasmawayland")
       autoLogin = {                                                 # Автологин в сессию
         enable = true;
         user = myLib.userName;
       };
     };
-    desktopManager.plasma6.enable = true;                           # Подключает все необходимые системные службы, компоненты и настройки, чтобы KDE Plasma 6 могла работать в качестве основной графической среды
-    xserver.enable = false;                                         # Запрещает запуск X11-сервера. Вся графика будет работать через Wayland (рекомендуется для Plasma 6 и NVIDIA с драйвером 545+)
+    desktopManager.plasma6.enable = true;                           # Подключить все необходимые системные службы, компоненты и настройки, чтобы KDE Plasma 6 могла работать в качестве основной графической среды
+    xserver.enable = false;                                         # Запретить запуск X11-сервера. Вся графика будет работать через Wayland (рекомендуется для Plasma 6 и NVIDIA с драйвером 545+)
   };
 
   environment = {

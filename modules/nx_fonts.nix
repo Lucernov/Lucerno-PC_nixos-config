@@ -7,6 +7,6 @@
     liberation_ttf                                                          # Свободная замена Arial, Times, Courier
     inter                                                                   # Современный интерфейсный шрифт
     nerd-fonts.jetbrains-mono                                               # Шрифт для кода с лигатурами и доп. иконками
-    lucerno-packages.apple-fonts-lite                                            # Шрифты Apple SF-Pro и New-York
+    lucerno-packages.apple-fonts-lite                                       # Шрифты Apple SF-Pro и New-York
   ];
 }

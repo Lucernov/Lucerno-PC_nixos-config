@@ -4,13 +4,13 @@
 let
   configDir = myLib.configDirName;
 
-  # Получаем алиасы из модуля aliases.nix (они определены как programs.zsh.shellAliases)
+  # Получить алиасы из модуля aliases.nix (они определены как programs.zsh.shellAliases)
   aliases = config.programs.zsh.shellAliases or {};
-  # Превращаем атрибуты в строки alias
+  # Превратить атрибуты в строки alias
   aliasLines = lib.mapAttrsToList (name: value: "alias ${name}=${lib.escapeShellArg value}") aliases;
   aliasString = builtins.concatStringsSep "\n" aliasLines;
 
-  # Генерируем .zshrc без системного файла
+  # Генерация .zshrc без системного файла
   zshrcContent = pkgs.writeText ".zshrc" ''
     # ====== PATH ======
     # В этом файле PATH НЕ задаётся. Источники PATH в системе:
@@ -88,7 +88,7 @@ let
     ${aliasString}
   '';
 
-  # Генерируем ~/.zshenv: отключает глобальные rc-файлы и добавляет ~/.local/bin в PATH.
+  # Генерация ~/.zshenv: отключает глобальные rc-файлы и добавляет ~/.local/bin в PATH.
   # Читается ВСЕМИ zsh-шеллами (login и non-login), поэтому покрывает TTY/SSH.
   zshenvContent = pkgs.writeText ".zshenv" ''
     setopt no_global_rcs

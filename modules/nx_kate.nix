@@ -47,11 +47,11 @@ let
   sessionTemplate = pkgs.writeText "anonymous.katesession" pluginsSection;
   sessionFile = "${myLib.home}/.local/share/kate/anonymous.katesession";
 
-  # Читаем флаг из myLib (по умолчанию false)
+  # Читать флаг из myLib (по умолчанию false)
   autoUpdate = myLib.all.autoUpdateSession or false;
 in
 {
-  # Если флаг включён — заменяем файл сессии при каждой активации
+  # Если флаг включён — заменять файл сессии при каждой активации
   system.activationScripts.kate-plugins = lib.mkIf autoUpdate {
     supportsDryActivation = true;
     text = ''

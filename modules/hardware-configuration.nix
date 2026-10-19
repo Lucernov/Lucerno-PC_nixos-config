@@ -126,11 +126,7 @@ in
   };
 
   # ========== SWAP УСТРОЙСТВА ==========
-  # Приоритет 10 — ниже, чем у zram (100). Значит:
-  #   1. Сначала ядро использует zram (быстро, сжатие в RAM)
-  #   2. Диск подключается ТОЛЬКО когда zram+RAM реально кончились
-  # Это защищает от OOM-killer при тяжёлых сборках (libnvshmem, torch и т.п.)
-  swapDevices = [
+  swapDevices = [                                                           # Защита от OOM-killer при тяжёлых сборках (libnvshmem, torch и т.п.)
     {
       device = "/swap/swapfile";
       size = 24576;                                                         # Размер файла в МиБ
@@ -144,21 +140,21 @@ in
 
   # ========== ЖЕЛЕЗО ==========
   hardware = {
-    cpu.intel.updateMicrocode = true;                                       # Включает загрузку актуального микрокода для процессоров Intel
-    enableRedistributableFirmware = true;                                   # Разрешает использование проприетарных прошивок
+    cpu.intel.updateMicrocode = true;                                       # Включить загрузку актуального микрокода для процессоров Intel
+    enableRedistributableFirmware = true;                                   # Разрешить использование проприетарных прошивок
     bluetooth = {
       enable = true;                                                        # Включить поддержку Bluetooth
       powerOnBoot = true;                                                   # Включить Bluetooth-адаптер при загрузке
     };
     graphics = {
-      enable = true;                                                        # Включаем поддержку аппаратного ускорения графики
+      enable = true;                                                        # Включить поддержку аппаратного ускорения графики
       enable32Bit = true;                                                   # Поддержка 32‑битных приложений
     };
     nvidia = {
-      open = true;                                                          # Используем открытые модули
+      open = true;                                                          # Использовать открытые модули
       modesetting.enable = true;                                            # Обязательно для Wayland
-      nvidiaSettings = true;                                                # Устанавливает утилиту nvidia-settings
-      powerManagement.enable = false;                                       # Отключаем управление питанием (на десктопе не нужно)
+      nvidiaSettings = true;                                                # Установить утилиту nvidia-settings
+      powerManagement.enable = false;                                       # Отключить управление питанием (на десктопе не нужно)
 #     package = config.boot.kernelPackages.nvidiaPackages.latest;           # Стабильный nvidia драйвер (НЕ работает с ядром 7.2)
       package = config.boot.kernelPackages.nvidiaPackages.mkDriver {        # ДРАЙВЕР 595.99.02 (работает с ядром 7.2)
         version = "595.99.02";
@@ -170,7 +166,7 @@ in
       };
     };
     ksm.enable = false;                                                     # Kernel Same‑page Merging – отключено (нужно только для виртуализации)
-    xone.enable = true;                                                     # Включает поддержку беспроводных геймпадов Xbox (через официальный драйвер xone)
+    xone.enable = true;                                                     # Включить поддержку беспроводных геймпадов Xbox (через официальный драйвер xone)
   };
 
   # ========== ЗАГРУЗКА И ЯДРО ==========
@@ -181,7 +177,7 @@ in
   # kernelPackages = inputs.nix-cachyos-kernel.legacyPackages.${pkgs.stdenv.hostPlatform.system}."linuxPackages-cachyos-bore-lto-x86_64-v3";  # Установка кастомного CachyOS ядра для intel i5 13400f процессора
 
     loader = {
-      systemd-boot.enable = true;                                           # Используем простой UEFI загрузчик systemd-boot
+      systemd-boot.enable = true;                                           # Использовать простой UEFI загрузчик systemd-boot
       efi.canTouchEfiVariables = true;                                      # Разрешить запись в EFI-переменные (нужно для добавления записей загрузки)
       systemd-boot.consoleMode = "auto";                                    # детализация вывода загрузчика
     };
@@ -197,7 +193,7 @@ in
     ];
 
     extraModprobeConfig = ''
-      # Отключаем авто-отключение питания Bluetooth-адаптера (чтобы не терял связь)
+      # Отключить авто-отключение питания Bluetooth-адаптера (чтобы не терял связь)
       options btusb enable_autosuspend=0
       # ---------- USB-аудио: тюнинг под MOTU M4 ----------
       # Оба параметра ГЛОБАЛЬНЫЕ для snd-usb-audio — влияют на все USB-интерфейсы
@@ -212,9 +208,9 @@ in
 
     kernelParams = [                                                        # Параметры, передаваемые ядру при загрузке (через командную строку)
       "nvidia_drm.modeset=1"                                                # Включить режимный сет DRM NVIDIA (нужен для Wayland)
-      "nvidia_drm.fbdev=1"                                                  # Включает фреймбуфер через DRM (для консоли и раннего вывода)
-      "initcall_blacklist=simpledrm_platform_driver_init"                   # Запрещает загрузку simpledrm (убирает конфликт с simpledrm для работы TTY)
-      "fbcon=font:TER16x32"                                                 # Устанавливает шрифт консоли: TER16x32 (высокое разрешение, 16x32 пикселя)
+      "nvidia_drm.fbdev=1"                                                  # Включить фреймбуфер через DRM (для консоли и раннего вывода)
+      "initcall_blacklist=simpledrm_platform_driver_init"                   # Запретить загрузку simpledrm (убирает конфликт с simpledrm для работы TTY)
+      "fbcon=font:TER16x32"                                                 # Установить шрифт консоли: TER16x32 (высокое разрешение, 16x32 пикселя)
       "transparent_hugepage=madvise"                                        # Использовать прозрачные огромные страницы только по запросу madvise
       "rcupdate.rcu_cpu_stall_timeout=60"                                   # Таймаут ожидания RCU (60 сек) – диагностика зависаний
       "usbcore.autosuspend=-1"                                              # Отключить автоматическую приостановку USB-устройств
@@ -241,19 +237,19 @@ in
       "vm.dirty_writeback_centisecs" = 500;                                 # Интервал сброса грязных данных (500 сотых секунды = 5 секунд)
       "vm.dirty_expire_centisecs" = 3000;                                   # Время жизни грязных данных (3000 сотых секунды = 30 секунд) – по истечении принудительный сброс
       "vm.max_map_count" = 1048576;                                         # Максимальное количество отображений памяти (memory maps) для процесса (полезно для игр и больших приложений)
-      "kernel.printk" = "3 3 3 3";                                          # Устанавливает уровни логирования для консоли, системного лога, сообщений по умолчанию и ограничений. Только сообщения уровня KERN_ERR и выше (ошибки)
-      "net.core.default_qdisc" = "fq";                                      # Устанавливает глобальный планировщик очередей для сетевых интерфейсов: fq (Fair Queue)
-      "net.ipv4.tcp_congestion_control" = "bbr";                            # Использует алгоритм управления перегрузкой TCP BBR (Bottleneck Bandwidth and RTT). Даёт значительный прирост скорости передачи данных
+      "kernel.printk" = "3 3 3 3";                                          # Установить уровни логирования для консоли, системного лога, сообщений по умолчанию и ограничений. Только сообщения уровня KERN_ERR и выше (ошибки)
+      "net.core.default_qdisc" = "fq";                                      # Установить глобальный планировщик очередей для сетевых интерфейсов: fq (Fair Queue)
+      "net.ipv4.tcp_congestion_control" = "bbr";                            # Использовать алгоритм управления перегрузкой TCP BBR (Bottleneck Bandwidth and RTT). Даёт значительный прирост скорости передачи данных
     };
 
     # ========== НАСТРОЙКИ INITRD (начальный загрузочный образ) ==========
     initrd = {
       systemd.enable = true;                                                # Использовать systemd в initrd вместо скриптов. Ускоряет загрузку, позволяет параллельно запускать службы
-      verbose = false;                                                      # Отключает подробный вывод сообщений initrd (делает загрузку более чистой и быстрой).
+      verbose = false;                                                      # Отключить подробный вывод сообщений initrd (делает загрузку более чистой и быстрой).
       supportedFilesystems = [ "exfat" ];                                   # Поддержка exFAT для внешних USB-дисков
       kernelModules = [                                                     # Модули, загружаемые на раннем этапе (initrd)
         "nvidia"                                                            # Основной драйвер NVIDIA
-        "nvidia_modeset"                                                    # Kernel Mode Setting. Задаёт разрешение, частоту обновления и формат вывода на уровне ядра, а не через пользовательские утилиты (необходимо для Wayland)
+        "nvidia_modeset"                                                    # Kernel Mode Setting. Задать разрешение, частоту обновления и формат вывода на уровне ядра, а не через пользовательские утилиты (необходимо для Wayland)
         "nvidia_uvm"                                                        # Unified Virtual Memory: единое адресное пространство CPU↔GPU. ОБЯЗАТЕЛЕН для CUDA, OpenCL и compute-задач
         "nvidia_drm"                                                        # Интеграция NVIDIA с DRM (Direct Rendering Manager)
       ];
@@ -268,14 +264,14 @@ in
       ];
     };
 
-    consoleLogLevel = 3;                                                    # Устанавливает минимальный уровень важности сообщений ядра, выводимых на консоль. Будут показаны только ошибки и критические сообщения (уровень KERN_ERR и выше).
-    tmp.cleanOnBoot = true;                                                 # Автоматически очищает каталог /tmp при каждой загрузке системы. Повышает безопасность (удаляет временные файлы, созданные другими пользователями)
+    consoleLogLevel = 3;                                                    # Установить минимальный уровень важности сообщений ядра, выводимых на консоль. Будут показаны только ошибки и критические сообщения (уровень KERN_ERR и выше).
+    tmp.cleanOnBoot = true;                                                 # Автоматически очищать каталог /tmp при каждой загрузке системы. Повышает безопасность (удаляет временные файлы, созданные другими пользователями)
   };
 
   # ========== СЕТЬ ==========
   networking = {
     hostName = "Lucerno-PC";                                                # Имя компьютера в сети
-    networkmanager.enable = true;                                           # Включает NetworkManager (управление сетями Wi‑Fi)
+    networkmanager.enable = true;                                           # Включить NetworkManager (управление сетями Wi‑Fi)
   };
 
   # ========== Services (общий блок) ==========
@@ -293,7 +289,7 @@ in
       # --- Устройства реального времени для аудио ---
       KERNEL=="rtc0", GROUP="audio"
       KERNEL=="hpet", GROUP="audio"
-      # Разрешает группе audio управлять C-states CPU (для отключения глубокого сна в DAW)
+      # Разрешить группе audio управлять C-states CPU (для отключения глубокого сна в DAW)
       DEVPATH=="/devices/virtual/misc/cpu_dma_latency", OWNER="root", GROUP="audio", MODE="0660"
 
       # ДОБАВИТЬ: Доступ к iPhone/iPad для группы idevice
@@ -303,12 +299,12 @@ in
     '';
 
     usbmuxd = {
-      enable = true;                                                        # Включаем демон для связи с iPhone по USB
-      package = pkgs.usbmuxd2;                                              # Используем альтернативную реализацию usbmuxd2 (лучше совместима с новыми версиями iOS, чем стандартный usbmuxd)
+      enable = true;                                                        # Включить демон для связи с iPhone по USB
+      package = pkgs.usbmuxd2;                                              # Использовать альтернативную реализацию usbmuxd2 (лучше совместима с новыми версиями iOS, чем стандартный usbmuxd)
     };
-    fwupd.enable = true;                                                    # Включает демон fwupd для автоматического обновления прошивок устройств (UEFI, USB, диски и др.)
+    fwupd.enable = true;                                                    # Включить демон fwupd для автоматического обновления прошивок устройств (UEFI, USB, диски и др.)
     xserver.videoDrivers = [ "nvidia" ];                                    # Использовать проприетарный драйвер NVIDIA (NVIDIA RTX 3070)
   };
 
-  nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";                      # Определяет архитектуру системы (x86_64). mkDefault позволяет переопределить извне, если потребуется
+  nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";                      # Архитектура системы (x86_64). mkDefault позволяет переопределить извне, если потребуется
 }

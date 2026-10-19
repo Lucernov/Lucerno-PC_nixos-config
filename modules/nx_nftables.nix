@@ -3,9 +3,9 @@ _:
 {
   # ========== Настройки файервола с nftables ==========
   networking = {
-    nftables.enable = true;                     # Включаем nftables
+    nftables.enable = true;                     # Включить nftables
     firewall = {                                # Основные настройки межсетевого экрана
-      enable = true;                            # Включаем файервол
+      enable = true;                            # Включить файервол
       allowedTCPPorts = [  ];                   # Входящие TCP-соединения отключены
       allowedUDPPorts = [                       # Входящие UDP-соединения
         10999                                   # DST main game

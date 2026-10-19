@@ -60,19 +60,19 @@
         "browser.search.region" = "RU";                           # Регион для поиска (Россия)
         "browser.urlbar.suggest.searches" = false;                # Не отправлять поисковые запросы в адресной строке
         "dom.security.https_only_mode" = true;                    # Принудительное использование HTTPS для всех сайтов
-        "extensions.pocket.enabled" = false;                      # Отключаем Pocket
-        "media.av1.enabled" = true;                               # Включает поддержку AV1 (RTX 3070 / Ampere умеет аппаратно декодировать AV1)
-        "media.hardware-video-decoding.force-enabled" = true;     # Принудительно включает аппаратное декодирование (даже если Firefox сомневается)
+        "extensions.pocket.enabled" = false;                      # Отключить Pocket
+        "media.av1.enabled" = true;                               # Включить поддержку AV1 (RTX 3070 / Ampere умеет аппаратно декодировать AV1)
+        "media.hardware-video-decoding.force-enabled" = true;     # Принудительно включить аппаратное декодирование (даже если Firefox сомневается)
       };
       policies = {                                                # Корпоративные политики (имеют приоритет над preferences)
-        DisableTelemetry = true;                                  # Отключает телеметрию
-        DisablePocket = true;                                     # Отключает Pocket полностью
-        EnableTrackingProtection = true;                          # Включает защиту от отслеживания
+        DisableTelemetry = true;                                  # Отключить телеметрию
+        DisablePocket = true;                                     # Отключить Pocket полностью
+        EnableTrackingProtection = true;                          # Включить защиту от отслеживания
       };
     };
     # KDE приложения
-    partition-manager.enable = true;                              # Включает модуль для KDE Partition Manager
-    kdeconnect.enable = true;                                     # Включает интеграцию с телефоном через KDE Connect
+    partition-manager.enable = true;                              # Включить модуль для KDE Partition Manager
+    kdeconnect.enable = true;                                     # Включить интеграцию с телефоном через KDE Connect
   };
 
   environment.systemPackages = with pkgs; [

@@ -23,21 +23,21 @@
   # ========== Пользователи и группы ==========
   users = {
     groups = {
-      ${myLib.userName} = {};                                                                               # Создаём группу lucerno (явно не задаём параметры)
+      ${myLib.userName} = {};                                                                               # Создать группу пользователя
       powercap = {};                                                                                        # Группа для доступа к энергопотреблению CPU (RAPL) нужна для отображения в btop
       fuse = {};                                                                                            # Группа для доступа к FUSE (монтирование в пользовательском пространстве), необходима для rclone
       nvidia = {};                                                                                          # Группа для доступа к устройствам NVIDIA (видеокарта, CUDA), необходима для работы с GPU и аппаратного ускорения
       idevice = {};                                                                                         # Группа для доступа к устройствам Apple (iPhone, iPad) через USB
     };
     users.${myLib.userName} = {                                                                             # Основные настройки учётной записи
-      isNormalUser = true;                                                                                  # Обычный пользователь (не системный)
+      isNormalUser = true;                                                                                  # Обычный пользователь
       hashedPasswordFile = config.age.secrets."lucerno-password.hash".path;                                 # Файл с хешем пароля (расшифровывается agenix)
       group = myLib.userName;                                                                               # Группа, к которой принадлежит пользователь
       extraGroups = [
         "wheel"                                                                                             # Доступ к командам sudo (администрирование системы)
         "networkmanager"                                                                                    # Управление сетями через NetworkManager (Wi‑Fi, VPN)
         "audio"                                                                                             # Для низкоуровневого доступа к звуку (ALSA, PipeWire, PulseAudio)
-        "rtkit"                                                                                             # Приоритет реального времени для аудио (Realtime Kit, низкие задержки)
+        "rtkit"                                                                                             # Приоритет реального времени для аудио (Realtime Kit)
         "video"                                                                                             # Доступ к видеоустройствам и аппаратному ускорению (VA‑API, VDPAU)
         "nvidia"                                                                                            # Доступ к драйверу NVIDIA (CUDA, OpenCL, аппаратное ускорение)
         "render"                                                                                            # Доступ к рендерингу через DRM (аппаратное ускорение графики)
@@ -54,14 +54,14 @@
   # ========== Безопасность (sudo) ==========
   security = {
     sudo = {
-      enable = true;                                                                                        # Включаем sudo
+      enable = true;                                                                                        # Включить sudo
       wheelNeedsPassword = false;                                                                           # Для членов группы wheel не требовать пароль
       extraRules = [                                                                                        # Дополнительные правила sudo
         {
-          users = [ myLib.userName ];                                                                       # Правило применяется к пользователю lucerno
+          users = [ myLib.userName ];                                                                       # Правило применяется к пользователю
           commands = [
             {
-              command = "${pkgs.linuxPackages_zen.cpupower}/bin/cpupower frequency-set -g *";               # Разрешаем менять CPU governor (performance / schedutil / powersave)
+              command = "${pkgs.linuxPackages_zen.cpupower}/bin/cpupower frequency-set -g *";               # Разрешить менять CPU governor (performance / schedutil / powersave)
               options = [ "NOPASSWD" ];                                                                     # Без запроса пароля
             }
           ];
@@ -74,21 +74,21 @@
   environment = {
     sessionVariables = {
       FLAKE = "${myLib.home}/${myLib.configDirName}";                                                       # Путь к flake. Читается nh, nixos-rebuild, home-manager — позволяет запускать их без --flake из любого места
-      __GLX_VENDOR_LIBRARY_NAME = "nvidia";                                                                 # Принудительно указывает Vulkan-драйвер NVIDIA для OpenGL/GLX приложений
-      __GL_VRR_ALLOWED = "1";                                                                               # Разрешает Variable Refresh Rate (VRR / G-Sync / FreeSync). Включает адаптивную синхронизацию для совместимых мониторов
-      GBM_BACKEND = "nvidia-drm";                                                                           # Указывает бэкенд Graphics Buffer Manager (GBM) от NVIDIA. Необходимо для корректной работы Wayland с проприетарным драйвером
-      ELECTRON_FORCE_WAYLAND = "1";                                                                         # Принудительно запускает Electron-приложения в нативном режиме Wayland вместо XWayland
+      __GLX_VENDOR_LIBRARY_NAME = "nvidia";                                                                 # Принудительно указывать Vulkan-драйвер NVIDIA для OpenGL/GLX приложений
+      __GL_VRR_ALLOWED = "1";                                                                               # Разрешить Variable Refresh Rate (VRR / G-Sync / FreeSync). Включает адаптивную синхронизацию для совместимых мониторов
+      GBM_BACKEND = "nvidia-drm";                                                                           # Указать бэкенд Graphics Buffer Manager (GBM) от NVIDIA. Необходимо для корректной работы Wayland с проприетарным драйвером
+      ELECTRON_FORCE_WAYLAND = "1";                                                                         # Принудительно запустить Electron-приложения в нативном режиме Wayland вместо XWayland
       ELECTRON_OZONE_PLATFORM_HINT = "auto";                                                                # Для приложений на Electron (VS Code, Discord, Telegram и др.) Заставляет их использовать Wayland вместо XWayland
-      QT_QPA_PLATFORM = "wayland";                                                                          # Задаёт бэкенд Qt для работы через Wayland (вместо X11)
-      GDK_BACKEND = "wayland";                                                                              # Указывает GTK-приложениям использовать Wayland
-      SDL_VIDEODRIVER = "wayland,x11";                                                                      # Разрешает SDL использовать Wayland с fallback на X11 (иначе в Steam игра Steep падает с "Unable to initialize Vulkan")
-      NIXOS_OZONE_WL = "1";                                                                                 # Включает поддержку Ozone Wayland для Chromium/Electron (флаг NIXOS_OZONE_WL)
-      WLR_NO_HARDWARE_CURSORS = "1";                                                                        # Отключает аппаратные курсоры в wlroots (помогает избежать проблем с мерцанием курсора на NVIDIA)
-      EGL_PLATFORM = "wayland";                                                                             # Указывает EGL использовать Wayland (необходимо для некоторых приложений)
-      VK_LAYER_DISABLE = "steam_fossilize";                                                                 # Отключает слой Steam Fossilize, который иногда вызывает вылеты или тормоза в играх
-      PROTON_USE_NTSYNC = "1";                                                                              # Включает улучшенную синхронизацию NTSync (вместо устаревших esync/fsync) для лучшей производительности в Proton
-      PROTON_NO_ESYNC = "1";                                                                                # Отключает старую синхронизацию esync (Eventfd), так как используется NTSync
-      PROTON_NO_FSYNC = "1";                                                                                # Отключает старую синхронизацию fsync (Futex), так как используется NTSync
+      QT_QPA_PLATFORM = "wayland";                                                                          # Задать бэкенд Qt для работы через Wayland (вместо X11)
+      GDK_BACKEND = "wayland";                                                                              # Указать GTK-приложениям использовать Wayland
+      SDL_VIDEODRIVER = "wayland,x11";                                                                      # Разрешить SDL использовать Wayland с fallback на X11 (иначе в Steam игра Steep падает с "Unable to initialize Vulkan")
+      NIXOS_OZONE_WL = "1";                                                                                 # Включить поддержку Ozone Wayland для Chromium/Electron (флаг NIXOS_OZONE_WL)
+      WLR_NO_HARDWARE_CURSORS = "1";                                                                        # Отключить аппаратные курсоры в wlroots (помогает избежать проблем с мерцанием курсора на NVIDIA)
+      EGL_PLATFORM = "wayland";                                                                             # Указать EGL использовать Wayland (необходимо для некоторых приложений)
+      VK_LAYER_DISABLE = "steam_fossilize";                                                                 # Отключить слой Steam Fossilize, который иногда вызывает вылеты или тормоза в играх
+      PROTON_NO_ESYNC = "1";                                                                                # Отключить старую синхронизацию esync (Eventfd), так как используется NTSync
+      PROTON_NO_FSYNC = "1";                                                                                # Отключить старую синхронизацию fsync (Futex), так как используется NTSync
+      PROTON_USE_NTSYNC = "1";                                                                              # Включить улучшенную синхронизацию NTSync (вместо устаревших esync/fsync) для лучшей производительности в Proton
       TESSDATA_PREFIX = "/run/current-system/sw/share/tessdata";                                            # Путь к языковым данным Tesseract для OCR в Spectacle
       XMODIFIERS = "@im=none";                                                                              # Говорит Xlib не пытаться открыть XIM (убирает "XOpenIM() failed" в логе Steam)
     };
@@ -113,7 +113,7 @@
   # ========== Базовые настройки Nix ==========
   nix = {
     settings = {
-      experimental-features = [ "nix-command" "flakes" ];                                                   # Включаем поддержку команд Nix и флейков (flake)
+      experimental-features = [ "nix-command" "flakes" ];                                                   # Включить поддержку команд Nix и флейков (flake)
       auto-optimise-store = true;                                                                           # Автоматически оптимизировать store (удалять дубликаты файлов)
       max-jobs = 1;                                                                                         # Максимальное количество параллельных сборок (задач Nix)
       keep-derivations = true;                                                                              # Сохранять деривации (промежуточные результаты сборки) – полезно для кэширования

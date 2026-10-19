@@ -8,8 +8,8 @@ in
 {
   # ========== Настройки FUSE для rclone ==========
   programs.fuse = {
-    enable = true;                                                                  # Включает поддержку FUSE в системе
-    userAllowOther = true;                                                          # Разрешает опцию allow_other для обычных пользователей
+    enable = true;                                                                  # Включить поддержку FUSE в системе
+    userAllowOther = true;                                                          # Разрешить опцию allow_other для обычных пользователей
     mountMax = 1000;                                                                # Максимальное количество FUSE-монтирований на пользователя
   };
 
@@ -42,11 +42,11 @@ in
     # ========== Сервис монтирования Google Drive ==========
     rclone-gdrive = {
       description = "RClone Mount for Google Drive";                                # Описание сервиса
-      after = [ "network-online.target" ];                                          # Запускать после того, как сеть полностью поднята (с доступом в интернет)
+      after = [ "network-online.target" ];                                          # Запустить после того, как сеть полностью поднята (с доступом в интернет)
       wants = [ "network-online.target" ];                                          # Желательно дождаться готовности сети
       wantedBy = [ "multi-user.target" ];                                           # Автоматически запускать при загрузке системы
       serviceConfig = {
-        User = myLib.userName;                                                      # Запускать от имени пользователя lucerno
+        User = myLib.userName;                                                      # Запустить от имени пользователя
         Group = myLib.userName;                                                     # Группа users (стандартная для обычных пользователей)
         Type = "simple";                                                            # Простой процесс (не разветвляется)
 
@@ -83,7 +83,7 @@ in
       wants = [ "network-online.target" ];                                          # Желательно дождаться сети
       wantedBy = [ "multi-user.target" ];                                           # Автозапуск при загрузке
       serviceConfig = {
-        User = myLib.userName;                                                      # Запускать от пользователя lucerno
+        User = myLib.userName;                                                      # Запускать от пользователя
         Group = myLib.userName;                                                     # Группа users
         Type = "simple";                                                            # Простой процесс
 
