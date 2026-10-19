@@ -91,20 +91,33 @@
       # ========== Пакеты для nix-update и nix build ==========
       # Экспорт как flake outputs, чтобы можно было обновлять
       packages.x86_64-linux = {
-        air-g-plugins = pkgsWithOverlay.lucerno-packages.air-g-plugins;
+        # Обновляемые через nix-update
         drumlabooh = pkgsWithOverlay.lucerno-packages.drumlabooh;
         drumlabooh-multi = pkgsWithOverlay.lucerno-packages.drumlabooh-multi;
         je8086 = pkgsWithOverlay.lucerno-packages.je8086;
-      # mulhacen-clap = pkgsWithOverlay.lucerno-packages.mulhacen-clap;
         music-pattern-generator = pkgsWithOverlay.lucerno-packages.music-pattern-generator;
-        orchestools = pkgsWithOverlay.lucerno-packages.orchestools;
         ostirus = pkgsWithOverlay.lucerno-packages.ostirus;
-        ot-piano-s = pkgsWithOverlay.lucerno-packages.ot-piano-s;
         pitchnet = pkgsWithOverlay.lucerno-packages.pitchnet;
-        relic-clap = pkgsWithOverlay.lucerno-packages.relic-clap;
         satordist2 = pkgsWithOverlay.lucerno-packages.satordist2;
         shortcircuit-xt = pkgsWithOverlay.lucerno-packages.shortcircuit-xt;
         tape-echo-2 = pkgsWithOverlay.lucerno-packages.tape-echo-2;
+
+        # LFS-пакеты (переведенные на media.githubusercontent.com)
+        air-g-plugins = pkgsWithOverlay.lucerno-packages.air-g-plugins;
+        orchestools = pkgsWithOverlay.lucerno-packages.orchestools;
+        ot-piano-s = pkgsWithOverlay.lucerno-packages.ot-piano-s;
+        relic-clap = pkgsWithOverlay.lucerno-packages.relic-clap;
+
+        # Самодостаточные пакеты (ручное обновление)
+        amp-locker = pkgsWithOverlay.lucerno-packages.amp-locker;
+        drum-locker = pkgsWithOverlay.lucerno-packages.drum-locker;
+        mtpdk = pkgsWithOverlay.lucerno-packages.mtpdk;
+        lostSamplers = pkgsWithOverlay.lucerno-packages.lostSamplers;
+        lostTapes = pkgsWithOverlay.lucerno-packages.lostTapes;
+        lostVinyls = pkgsWithOverlay.lucerno-packages.lostVinyls;
+        sforzando = pkgsWithOverlay.lucerno-packages.sforzando;
+        numa-player = pkgsWithOverlay.lucerno-packages.numa-player;
+        tal-vocoder-2 = pkgsWithOverlay.lucerno-packages.tal-vocoder-2;
       };
     };
 }

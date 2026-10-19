@@ -47,17 +47,26 @@
     ostirus           # Эмуляция Access Virus TI (CLAP) !!! ДЛЯ РАБОТЫ ТРЕБУЕТСЯ ОРИГИНАЛЬНЫЙ BIOS !!! ЕГО ВАМ НАДО НАЙТИ САМОСТОЯТЕЛЬНО !!! Т.е. имеется в виду, что надо получить биос из своего железного синтезатора, разумеется
     je8086            # Эмуляция Roland JP-8000 (CLAP) !!! ДЛЯ РАБОТЫ ТРЕБУЕТСЯ ОРИГИНАЛЬНЫЙ BIOS !!! ЕГО ВАМ НАДО НАЙТИ САМОСТОЯТЕЛЬНО !!! Т.е. имеется в виду, что надо получить биос из своего железного синтезатора, разумеется
     shortcircuit-xt   # Сэмплер (CLAP)
+    sforzando         # SFZ-сэмплер (VST3 + CLAP)
+    numa-player       # Studiologic Numa Player (VST3 + standalone) Коммерческий плагин. Бесплатный, но для работы требуется регистрация на https://www.studiologic-music.com/products/numaplayer/
+    tal-vocoder-2     # Вокодер (VST3 + CLAP)
     drumlabooh        # LV2-сэмплер ударных                   https://github.com/psemiletov/drumlabooh
     drumlabooh-multi  # LV2-сэмплер ударных многоканальный    https://github.com/psemiletov/drumlabooh
     orchestools       # Набор оркестровых инструментов (VST3) https://musictop69.wixsite.com/orchestools/orchestools-two (сэмплы скачивать тут)
     ot-piano-s        # Пианино (VST2)                        https://musictop69.wixsite.com/orchestools (сэмплы скачивать тут)
     
     # 🎸 Гитарные процессоры и Эффекты
+    amp-locker        # Гитарный стек (VST3 + LV2)
+    drum-locker       # Барабанная установка (VST3 + LV2)
+    mtpdk             # MT Power Drum Kit 2 (VST3)
     satordist2        # 4-полосный сатуратор (CLAP + VST3)
     tape-echo-2       # Эмуляция Roland Space Echo
     pitchnet          # Нейросетевой питч-корректор (VST3)
     air-g-plugins     # Коллекция педалей и эффектов (VST3)
     relic-clap        # Набор компрессоров и эквалайзеров (CLAP)
+    lostSamplers      # Эмуляция шумов сэмплеров (VST3)
+    lostTapes         # Эмуляция магнитофона (VST3)
+    lostVinyls        # Эмуляция винилового проигрывателя (VST3)
   ];
 }
 ```
@@ -75,17 +84,26 @@
     inputs.lucerno-audio.packages.${pkgs.stdenv.hostPlatform.system}.ostirus
     inputs.lucerno-audio.packages.${pkgs.stdenv.hostPlatform.system}.je8086
     inputs.lucerno-audio.packages.${pkgs.stdenv.hostPlatform.system}.shortcircuit-xt
+    inputs.lucerno-audio.packages.${pkgs.stdenv.hostPlatform.system}.sforzando
+    inputs.lucerno-audio.packages.${pkgs.stdenv.hostPlatform.system}.numa-player
+    inputs.lucerno-audio.packages.${pkgs.stdenv.hostPlatform.system}.tal-vocoder-2
     inputs.lucerno-audio.packages.${pkgs.stdenv.hostPlatform.system}.drumlabooh
     inputs.lucerno-audio.packages.${pkgs.stdenv.hostPlatform.system}.drumlabooh-multi
     inputs.lucerno-audio.packages.${pkgs.stdenv.hostPlatform.system}.orchestools
     inputs.lucerno-audio.packages.${pkgs.stdenv.hostPlatform.system}.ot-piano-s
     
     # 🎸 Гитарные и прочие Эффекты
+    inputs.lucerno-audio.packages.${pkgs.stdenv.hostPlatform.system}.amp-locker
+    inputs.lucerno-audio.packages.${pkgs.stdenv.hostPlatform.system}.drum-locker
+    inputs.lucerno-audio.packages.${pkgs.stdenv.hostPlatform.system}.mtpdk
     inputs.lucerno-audio.packages.${pkgs.stdenv.hostPlatform.system}.satordist2
     inputs.lucerno-audio.packages.${pkgs.stdenv.hostPlatform.system}.tape-echo-2
     inputs.lucerno-audio.packages.${pkgs.stdenv.hostPlatform.system}.pitchnet
     inputs.lucerno-audio.packages.${pkgs.stdenv.hostPlatform.system}.air-g-plugins
     inputs.lucerno-audio.packages.${pkgs.stdenv.hostPlatform.system}.relic-clap
+    inputs.lucerno-audio.packages.${pkgs.stdenv.hostPlatform.system}.lostSamplers
+    inputs.lucerno-audio.packages.${pkgs.stdenv.hostPlatform.system}.lostTapes
+    inputs.lucerno-audio.packages.${pkgs.stdenv.hostPlatform.system}.lostVinyls
   ];
 }
 ```
@@ -109,9 +127,11 @@ nix run 'github:Lucernov/Lucerno-PC_nixos-config#music-pattern-generator'
 | **LV2** | `/run/current-system/sw/lib/lv2` | `~/.lv2` |
 | **LADSPA** | `/run/current-system/sw/lib/ladspa` | `~/.ladspa` |
 
+
 ---
 
 ## 📝 Примечания
 
+*   **`amp-locker` и `drum-locker`**: Для отображения заводских пресетов требуется, чтобы папка с данными (`AmpLockerData` или `DrumLockerData`) была доступна в вашей домашней директории. Если пресеты не видны, создайте симлинк из `/run/current-system/sw/share/amp-locker` (или `drum-locker`) в вашу папку конфигурации плагина.
 *   **`mulhacen-clap`**: Временно исключен из публичных пакетов. Жду, пока автор исправит плагин (подробности на [node97.com](https://node97.com/#forum) в ветке "factory presets")
 *   **`Triple-Cheese`**: Не экспортируется из-за сложностей с установкой (плагин требует записи в свои же файлы в домашней директории). Реализация воспроизводимости на другой системе пока в разработке
