@@ -58,7 +58,7 @@
     sforzando         # SFZ-сэмплер (VST3 + CLAP)
     tal-vocoder-2     # Вокодер (VST3 + CLAP)
     
-    # 🎛️ Плагины Эффекты
+    # 🎛️ Плагины - эффекты
     air-g-plugins     # Коллекция педалей и эффектов (VST3)
     lostSamplers      # Эмуляция шумов сэмплеров (VST3)
     lostTapes         # Эмуляция магнитофона (VST3)
