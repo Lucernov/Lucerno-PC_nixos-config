@@ -95,7 +95,7 @@
     inputs.lucerno-audio.packages.${pkgs.stdenv.hostPlatform.system}.sforzando
     inputs.lucerno-audio.packages.${pkgs.stdenv.hostPlatform.system}.tal-vocoder-2
     
-    # 🎛️ Плагины Эффекты
+    # 🎛️ Плагины - эффекты
     inputs.lucerno-audio.packages.${pkgs.stdenv.hostPlatform.system}.air-g-plugins
     inputs.lucerno-audio.packages.${pkgs.stdenv.hostPlatform.system}.lostSamplers
     inputs.lucerno-audio.packages.${pkgs.stdenv.hostPlatform.system}.lostTapes
