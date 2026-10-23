@@ -9,7 +9,7 @@ in
   # ========== Шрифты для Steam ==========
   programs.steam.fontPackages = with pkgs; [
     noto-fonts
-    noto-fonts-cjk
+    noto-fonts-cjk-sans
     dejavu_fonts
     liberation_ttf
   ];
