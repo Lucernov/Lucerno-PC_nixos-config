@@ -129,6 +129,17 @@ nix run 'github:Lucernov/Lucerno-PC_nixos-config#music-pattern-generator'
 
 ---
 
+## 💬 Сообщество
+
+Вопросы, баг-репорты и обсуждение плагинов — в Discord-сервере:
+
+[![Discord](https://img.shields.io/badge/Discord-присоединиться-5865F2?logo=discord&logoColor=white)](https://discord.gg/QmEGUwusDW)
+
+👉 **https://discord.gg/QmEGUwusDW**
+
+
+---
+
 ## 📝 Примечания
 
 *   **`amp-locker` и `drum-locker`**: Для отображения заводских пресетов требуется, чтобы папка с данными (`AmpLockerData` или `DrumLockerData`) была доступна в вашей домашней директории. Если пресеты не видны, создайте симлинк из `/run/current-system/sw/share/amp-locker` (или `drum-locker`) в вашу папку конфигурации плагина.
