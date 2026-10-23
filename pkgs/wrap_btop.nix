@@ -1,4 +1,4 @@
-# pkgs/pkg_btop.nix
+# pkgs/wrap_btop.nix
 #
 # Обёртка для btop, добавляющая путь к библиотекам NVIDIA в LD_LIBRARY_PATH.
 #

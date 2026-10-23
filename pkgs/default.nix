@@ -12,16 +12,16 @@ in
 {
   lucerno-packages = {
     # ====== Обёртки над пакетами nixpkgs ======
-    btop = pkgs.callPackage ./pkg_btop.nix { };
-    reaper = pkgs.callPackage ./pkg_reaper.nix {
+    btop = pkgs.callPackage ./wrap_btop.nix { };
+    reaper = pkgs.callPackage ./wrap_reaper.nix {
       inherit (pkgs-unstable) reaper;
       cpupower = pkgs.linuxPackages_zen.cpupower;
     };
-    teamspeak = pkgs.callPackage ./pkg_teamspeak.nix {
+    teamspeak = pkgs.callPackage ./wrap_teamspeak.nix {
       teamspeak6-client = pkgs.teamspeak6-client;
       coreutils = pkgs.coreutils;
     };
-    qmmp = pkgs.callPackage ./pkg_qmmp.nix { };
+    qmmp = pkgs.callPackage ./wrap_qmmp.nix { };
 
     # ====== ДЕРИВАЦИИ ======
     # Плагины для музыки

@@ -1,4 +1,4 @@
-# pkgs/pkg_teamspeak.nix
+# pkgs/wrap_teamspeak.nix
 #
 # Замена hotkey_helper на /bin/true: в Wayland-сессии (KDE Plasma + NVIDIA)
 # оригинальный хелпер TS6 виснет при попытке зарегистрировать глобальные

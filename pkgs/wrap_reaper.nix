@@ -1,4 +1,4 @@
-# pkgs/pkg_reaper.nix
+# pkgs/wrap_reaper.nix
 #
 # Обёртка для REAPER, которая:
 #   1. Переключает CPU governor в performance на время работы.
