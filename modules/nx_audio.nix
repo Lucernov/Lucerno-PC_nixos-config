@@ -1,4 +1,4 @@
-{ pkgs, pkgs-unstable, myLib, ... }:
+{ pkgs, pkgs-unstable, lib, myLib, ... }:
 
 let
   commonRealtime = {
@@ -8,17 +8,22 @@ let
     LimitRTPRIO = 89;                                                                                   # жёсткий лимит RT (совпадает с pam.loginLimits)
     NoNewPrivileges = false;                                                                            # разрешить менять приоритеты
   };
+
+  # Собирает путь к плагинам: /run/current-system/sw/lib/<format>:$HOME/.<format>
+  pluginPath = format: lib.makeSearchPath format [
+    "/run/current-system/sw/lib"
+  ] + ":${myLib.home}/.${format}";
 in
 
 {
   environment.sessionVariables = {
-    CLAP_PATH   = "/run/current-system/sw/lib/clap:${myLib.home}/.clap";                                # Установить переменную окружения для пользовательской папки CLAP
-    LV2_PATH    = "/run/current-system/sw/lib/lv2:${myLib.home}/.lv2";                                  # Установить переменную окружения для пользовательской папки LV2
-    VST_PATH    = "/run/current-system/sw/lib/vst:${myLib.home}/.vst";                                  # Установить переменную окружения для пользовательской папки VST
-    VST3_PATH   = "/run/current-system/sw/lib/vst3:${myLib.home}/.vst3";                                # Установить переменную окружения для пользовательской папки VST3
-    LXVST_PATH  = "/run/current-system/sw/lib/lxvst:${myLib.home}/.lxvst";                              # Установить переменную окружения для пользовательской папки LXVST (Linux VST — устаревший формат)
-    LADSPA_PATH = "/run/current-system/sw/lib/ladspa:${myLib.home}/.ladspa";                            # Установить переменную окружения для пользовательской папки LADSPA (простой формат эффектов)
-    DSSI_PATH   = "/run/current-system/sw/lib/dssi:${myLib.home}/.dssi";                                # Установить переменную окружения для пользовательской папки DSSI (инструменты на базе LADSPA)
+    CLAP_PATH   = pluginPath "clap";    # Установить переменную окружения для пользовательской папки CLAP
+    LV2_PATH    = pluginPath "lv2";     # Установить переменную окружения для пользовательской папки LV2
+    VST_PATH    = pluginPath "vst";     # Установить переменную окружения для пользовательской папки VST
+    VST3_PATH   = pluginPath "vst3";    # Установить переменную окружения для пользовательской папки VST3
+    LXVST_PATH  = pluginPath "lxvst";   # Установить переменную окружения для пользовательской папки LXVST (Linux VST — устаревший формат)
+    LADSPA_PATH = pluginPath "ladspa";  # Установить переменную окружения для пользовательской папки LADSPA (простой формат эффектов)
+    DSSI_PATH   = pluginPath "dssi";    # Установить переменную окружения для пользовательской папки DSSI (инструменты на базе LADSPA)
   };
 
   services = {
