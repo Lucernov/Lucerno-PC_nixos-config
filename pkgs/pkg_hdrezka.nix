@@ -1,13 +1,15 @@
 { lib
-, python3Packages
+, stdenv
 , fetchurl
 , fetchPypi
+, python3Packages
 , fzf
 , mpv
-, bash
+, makeWrapper
 }:
 
 let
+  # 1. Библиотека-парсер
   hdrezkaapi = python3Packages.buildPythonPackage rec {
     pname = "hdrezkaapi";
     version = "11.2.3";
@@ -30,47 +32,47 @@ let
     };
   };
 
-  rezka-fzf =
-    let
-      pyDeps = [
-        python3Packages.aiohttp
-        python3Packages.pyyaml
-        hdrezkaapi
-      ];
-    in
-    python3Packages.buildPythonApplication {
-      pname = "rezka-fzf";
-      version = "git";
-      src = fetchurl {
-        url = "https://gist.githubusercontent.com/unazikx/844a2104703e1d9382ca91dfc08a5607/raw/135aadfeaff6d7e7e70c22e9780149b0260376be/gistfile1.txt";
-        sha256 = "sha256-df9oGzEKGWcU/cNBALAOf+LZ544dqraCoGBhXOIqC00=";
-      };
-      propagatedBuildInputs = pyDeps;
-      dontUnpack = true;
-      format = "other";
+  # 2. Создаем изолированное Python-окружение со всеми нужными библиотеками
+  pythonEnv = python3Packages.python.withPackages (ps: with ps; [
+    aiohttp
+    pyyaml
+    hdrezkaapi
+  ]);
 
-      installPhase = ''
-        mkdir -p $out/bin
-        install -Dm755 $src $out/bin/.rezka-fzf-unwrapped
+  # 3. Собираем сам клиент
+  rezka-fzf = stdenv.mkDerivation {
+    pname = "rezka-fzf";
+    version = "git";
 
-        cat > $out/bin/rezka-fzf <<EOF
-#!${bash}/bin/bash
-export PATH="${lib.makeBinPath [ fzf mpv ]}:\$PATH"
-export PYTHONPATH="${python3Packages.makePythonPath pyDeps}:\$PYTHONPATH"
-exec ${python3Packages.python.interpreter} $out/bin/.rezka-fzf-unwrapped "\$@"
-EOF
-        chmod +x $out/bin/rezka-fzf
-      '';
-
-      allowSubstitutes = false;
-      preferLocalBuild = true;
-
-      meta = {
-        description = "Terminal client for HDRezka using fzf and mpv";
-        license = lib.licenses.wtfpl;
-        mainProgram = "rezka-fzf";
-      };
+    src = fetchurl {
+      url = "https://gist.githubusercontent.com/unazikx/844a2104703e1d9382ca91dfc08a5607/raw/135aadfeaff6d7e7e70c22e9780149b0260376be/gistfile1.txt";
+      sha256 = "sha256-df9oGzEKGWcU/cNBALAOf+LZ544dqraCoGBhXOIqC00=";
     };
+
+    # makeWrapper нужен для создания финального скрипта-обертки
+    nativeBuildInputs = [ makeWrapper ];
+
+    # Отключаем распаковку, так как src - это просто текстовый файл
+    dontUnpack = true;
+
+    installPhase = ''
+      mkdir -p $out/bin
+      # Копируем оригинальный питон-скрипт
+      install -Dm755 $src $out/bin/rezka-fzf-unwrapped
+
+      # Создаем bash-обертку, которая запускает скрипт через наше pythonEnv
+      # и добавляет fzf и mpv в PATH
+      makeWrapper ${pythonEnv}/bin/python3 $out/bin/rezka-fzf \
+        --add-flags $out/bin/rezka-fzf-unwrapped \
+        --prefix PATH : ${lib.makeBinPath [ fzf mpv ]}
+    '';
+
+    meta = {
+      description = "Terminal client for HDRezka using fzf and mpv";
+      license = lib.licenses.wtfpl;
+      mainProgram = "rezka-fzf";
+    };
+  };
 in
 {
   inherit hdrezkaapi rezka-fzf;
