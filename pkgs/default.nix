@@ -64,6 +64,10 @@ in
     krita-ai-diffusion = pkgs.callPackage ./pkg_krita-ai-diffusion.nix { };
     krita-vision-tools = pkgs.callPackage ./pkg_krita-vision-tools.nix { };
 
+    # ====== HDrezka (API + Client) ======
+    # Возвращает набор: { hdrezkaapi, rezka-fzf, client, api, default }
+    hdrezka = pkgs.callPackage ./pkg_hdrezka.nix { };
+
     # ====== Временный патч для Minion ======
     minion = pkgs.callPackage ./pkg_minion.nix { };
   };
