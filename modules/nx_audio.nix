@@ -2,11 +2,11 @@
 
 let
   commonRealtime = {
-    CPUSchedulingPolicy = "fifo";                                                                       # SCHED_FIFO — планировщик RT
-    CPUSchedulingPriority = 85;                                                                         # RT-приоритет, иерархия RT-приоритетов 85 control / 88 data / 89 limit
-    Nice = -11;                                                                                         # nice для не-RT частей
-    LimitRTPRIO = 89;                                                                                   # жёсткий лимит RT (совпадает с pam.loginLimits)
-    NoNewPrivileges = false;                                                                            # разрешить менять приоритеты
+    CPUSchedulingPolicy = "fifo";                                                   # SCHED_FIFO — планировщик RT
+    CPUSchedulingPriority = 85;                                                     # RT-приоритет, иерархия RT-приоритетов 85 control / 88 data / 89 limit
+    Nice = -11;                                                                     # nice для не-RT частей
+    LimitRTPRIO = 89;                                                               # жёсткий лимит RT (совпадает с pam.loginLimits)
+    NoNewPrivileges = false;                                                        # разрешить менять приоритеты
   };
 
   # Собирает путь к плагинам: /run/current-system/sw/lib/<format>:$HOME/.<format>
@@ -27,38 +27,38 @@ in
   };
 
   services = {
-    pulseaudio.enable = false;                                                                          # Отключить старый звуковой сервер PulseAudio (полностью заменяем на PipeWire)
-    pipewire = {                                                                                        # Основные настройки PipeWire
-      enable = true;                                                                                    # Включить PipeWire как основной звуковой сервер
-      alsa.enable = true;                                                                               # Поддержка ALSA (эмуляция для старых приложений)
-      alsa.support32Bit = true;                                                                         # Поддержка 32-битных ALSA-клиентов (для игр и старого софта)
-      jack.enable = true;                                                                               # JACK-совместимость (PipeWire как JACK-сервер)
-      pulse.enable = true;                                                                              # Включить pipewire-pulse — эмуляцию сервера PulseAudio поверх PipeWire
-      wireplumber.enable = true;                                                                        # WirePlumber — менеджер сессий для PipeWire (более современный, чем старый media-session)
-      extraLv2Packages = with pkgs; [                                                                   # Позволяет PipeWire загружать LV2-плагины как filter-chain (обработка сигнала на уровне звукового сервера, а не в DAW).
-        lsp-plugins                                                                                     # Набор LSP: EQ, компрессоры, лимитеры, meters
-        noise-repellent                                                                                 # Нейро шумодав для голоса Real-time
+    pulseaudio.enable = false;                                                      # Отключить старый звуковой сервер PulseAudio (полностью заменяем на PipeWire)
+    pipewire = {                                                                    # Основные настройки PipeWire
+      enable = true;                                                                # Включить PipeWire как основной звуковой сервер
+      alsa.enable = true;                                                           # Поддержка ALSA (эмуляция для старых приложений)
+      alsa.support32Bit = true;                                                     # Поддержка 32-битных ALSA-клиентов (для игр и старого софта)
+      jack.enable = true;                                                           # JACK-совместимость (PipeWire как JACK-сервер)
+      pulse.enable = true;                                                          # Включить pipewire-pulse — эмуляцию сервера PulseAudio поверх PipeWire
+      wireplumber.enable = true;                                                    # WirePlumber — менеджер сессий для PipeWire (более современный, чем старый media-session)
+      extraLv2Packages = with pkgs; [                                               # Позволяет PipeWire загружать LV2-плагины как filter-chain (обработка сигнала на уровне звукового сервера, а не в DAW).
+        lsp-plugins                                                                 # Набор LSP: EQ, компрессоры, лимитеры, meters
+        noise-repellent                                                             # Нейро шумодав для голоса Real-time
       ];
       extraConfig = {
         # ---------- Основные параметры контекста PipeWire ----------
         pipewire."99-low-latency" = {
           "context.properties" = {
-            "default.clock.allowed-rates" = [ 44100 48000 ];                                            # Разрешённые частоты дискретизации
-            "default.clock.rate" = 48000;                                                               # Частота дискретизации по умолчанию (48 кГц)
-            "default.clock.quantum" = 512;                                                              # Буфер по умолчанию для приложений, которые не задают его сами (браузер, игры, плееры) — ~10,6 мс при 48 кГц
-            "default.clock.min-quantum" = 64;                                                           # Минимальный буфер, который может запросить приложение (REAPER через ALSA выставлен в 64) — ~1,3 мс при 48 кГц
-            "default.clock.max-quantum" = 2048;                                                         # Максимальный буфер для тяжёлых приложений — ~42,7 мс, страховка от xrun
+            "default.clock.allowed-rates" = [ 44100 48000 ];                        # Разрешённые частоты дискретизации
+            "default.clock.rate" = 48000;                                           # Частота дискретизации по умолчанию (48 кГц)
+            "default.clock.quantum" = 512;                                          # Буфер по умолчанию для приложений, которые не задают его сами (браузер, игры, плееры) — ~10,6 мс при 48 кГц
+            "default.clock.min-quantum" = 64;                                       # Минимальный буфер, который может запросить приложение (REAPER через ALSA выставлен в 64) — ~1,3 мс при 48 кГц
+            "default.clock.max-quantum" = 2048;                                     # Максимальный буфер для тяжёлых приложений — ~42,7 мс, страховка от xrun
           };
         };
         # --- RT-приоритеты для клиентов (REAPER через ALSA) ---
         client."99-reaper-rt" = {
           "context.modules" = [{
-            name = "libpipewire-module-rt";                                                             # Модуль реального времени: выдаёт клиентам RT-приоритеты через rtkit/RLIMIT_RTPRIO
+            name = "libpipewire-module-rt";                                         # Модуль реального времени: выдаёт клиентам RT-приоритеты через rtkit/RLIMIT_RTPRIO
             args = {
-              "rt.prio" = 88;                                                                           # RT-приоритет для data thread (поток обработки аудио, напр. reaper/audio)
-              "nice.level" = -11;                                                                       # nice для application thread (вспомогательный поток клиента)
+              "rt.prio" = 88;                                                       # RT-приоритет для data thread (поток обработки аудио, напр. reaper/audio)
+              "nice.level" = -11;                                                   # nice для application thread (вспомогательный поток клиента)
             };
-            flags = [ "ifexists" "nofail" ];                                                            # ifexists — не падать, если модуль не найден; nofail — не считать ошибкой, если модуль не загрузился
+            flags = [ "ifexists" "nofail" ];                                        # ifexists — не падать, если модуль не найден; nofail — не считать ошибкой, если модуль не загрузился
           }];
         };
       };
@@ -67,16 +67,16 @@ in
 
   # ========== Настройка приоритетов реального времени для PipeWire и WirePlumber ==========
   security = {
-    rtkit.enable = true;                                                                                # Включить rtkit (Realtime Kit) — демон, дающий процессам приоритет реального времени. Необходим для низких задержек в аудио.
-    pam.loginLimits = [                                                                                 # Лимиты для аудио-группы (чтобы приложения имели приоритет реального времени и блокировку памяти)
-      { domain = "@audio"; item = "rtprio"; type = "soft"; value = "89"; }                              # мягкий лимит RT-приоритета
-      { domain = "@audio"; item = "rtprio"; type = "hard"; value = "89"; }                              # жёсткий лимит RT-приоритета
-      { domain = "@audio"; item = "memlock"; type = "soft"; value = "unlimited"; }                      # мягкий лимит блокировки памяти
-      { domain = "@audio"; item = "memlock"; type = "hard"; value = "unlimited"; }                      # жёсткий лимит блокировки памяти
-      { domain = "@audio"; item = "nice"; type = "soft"; value = "-11"; }                               # разрешить nice -11
-      { domain = "@audio"; item = "nice"; type = "hard"; value = "-11"; }                               # жёсткий лимит nice
-      { domain = "@audio"; item = "nofile"; type = "soft"; value = "99999"; }                           # мягкий лимит открытых файловых дескрипторов (для проектов с сотнями сэмплов и плагинов)
-      { domain = "@audio"; item = "nofile"; type = "hard"; value = "99999"; }                           # жёсткий лимит открытых файловых дескрипторов
+    rtkit.enable = true;                                                            # Включить rtkit (Realtime Kit) — демон, дающий процессам приоритет реального времени. Необходим для низких задержек в аудио.
+    pam.loginLimits = [                                                             # Лимиты для аудио-группы (чтобы приложения имели приоритет реального времени и блокировку памяти)
+      { domain = "@audio"; item = "rtprio"; type = "soft"; value = "89"; }          # мягкий лимит RT-приоритета
+      { domain = "@audio"; item = "rtprio"; type = "hard"; value = "89"; }          # жёсткий лимит RT-приоритета
+      { domain = "@audio"; item = "memlock"; type = "soft"; value = "unlimited"; }  # мягкий лимит блокировки памяти
+      { domain = "@audio"; item = "memlock"; type = "hard"; value = "unlimited"; }  # жёсткий лимит блокировки памяти
+      { domain = "@audio"; item = "nice"; type = "soft"; value = "-11"; }           # разрешить nice -11
+      { domain = "@audio"; item = "nice"; type = "hard"; value = "-11"; }           # жёсткий лимит nice
+      { domain = "@audio"; item = "nofile"; type = "soft"; value = "99999"; }       # мягкий лимит открытых файловых дескрипторов (для проектов с сотнями сэмплов и плагинов)
+      { domain = "@audio"; item = "nofile"; type = "hard"; value = "99999"; }       # жёсткий лимит открытых файловых дескрипторов
     ];
   };
 
@@ -100,7 +100,7 @@ in
     '';
   };
 
-  systemd.tmpfiles.rules = [                                                                            # Правила tmpfiles
+  systemd.tmpfiles.rules = [                                                        # Правила tmpfiles
     # ========== Правила tmpfiles для аудио и REAPER ==========
     "d ${myLib.home}/.clap 0755 ${myLib.userName} ${myLib.userName} -"
     "d ${myLib.home}/.lv2 0755 ${myLib.userName} ${myLib.userName} -"
