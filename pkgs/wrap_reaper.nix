@@ -66,11 +66,11 @@ let
       # для минимальной задержки аудио.
       /run/wrappers/bin/sudo ${cpupower}/bin/cpupower frequency-set -g performance >/dev/null 2>&1 || true
 
-      # CPU 0-1 пропускаем (IRQ + системный поток P-ядра 0).
-      # CPU 12-15 (E-ядра) тоже не трогаем — для RT-аудио они не подходят.
+      # CPU 0-1 пропуск (IRQ + системный поток P-ядра 0)
+      # CPU 12-15 прпууск (E-ядра)
       taskset -c 2-11 "$SELF_DIR/.reaper-unwrapped" "$@"
 
-      # Governor восстановится через trap EXIT (cleanup).
+      # Governor восстановится через trap EXIT (cleanup)
     '';
   };
 in
