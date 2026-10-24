@@ -60,10 +60,14 @@ let
       dontUnpack = true;
       format = "other";
 
+      # Шаг 1: Просто копируем исходный скрипт
       installPhase = ''
         mkdir -p $out/bin
         install -Dm755 $src $out/bin/.rezka-fzf-unwrapped
+      '';
 
+      # Шаг 2: Создаем обертку ПОСЛЕ patchShebangs
+      postFixup = ''
         makeWrapper ${python3Packages.python.interpreter} $out/bin/rezka-fzf \
           --add-flags $out/bin/.rezka-fzf-unwrapped \
           --prefix PATH : ${lib.makeBinPath [ fzf mpv ]} \
