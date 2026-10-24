@@ -14,7 +14,7 @@
 #   - АВТООБНОВЛЕНИЕ НЕ ПОДКЛЮЧЕНО сознательно:
 #       • апстрим не менялся с 2021 года (последний коммит 6f7f27b);
 #       • unstableGitUpdater не работает в flake-контексте — он пытается
-#         импортировать ./default.nix (nixpkgs-путь), а у нас flake.nix.
+#         импортировать ./default.nix (nixpkgs-путь), а в системе flake.nix.
 #     Если апстрим оживёт — обновлять вручную:
 #       nix-prefetch-github mcgillij noita_save_manager --rev <новый-коммит>
 #     и править rev/hash/version в этом файле.

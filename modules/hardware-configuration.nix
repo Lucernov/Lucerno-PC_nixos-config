@@ -169,7 +169,7 @@ in
     xone.enable = true;                                                     # Включить поддержку беспроводных геймпадов Xbox (через официальный драйвер xone)
   };
 
-  # ========== ЗАГРУЗКА И ЯДРО ==========
+  # ========== ЯДРО И ЗАГРУЗКА ==========
   boot = {
   # kernelPackages = pkgs.linuxPackages;                                    # Базовое LTS ядро
   # kernelPackages = pkgs.linuxPackages_latest;                             # Базовое ядро последней стабильной версии
