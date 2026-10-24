@@ -4,11 +4,12 @@
 , fetchPypi
 , fzf
 , mpv
-, makeWrapper
+, makeWrapper # Оставляем, но не используем для обертки
+, bash        # Добавляем bash для создания ручной обертки
 }:
 
 let
-  # 1. Библиотека-парсер
+  # 1. Библиотека-парсер (как в оригинальном api.nix)
   hdrezkaapi = python3Packages.buildPythonPackage rec {
     pname = "hdrezkaapi";
     version = "11.2.3";
@@ -21,6 +22,7 @@ let
 
     build-system = [ python3Packages.setuptools ];
 
+    # В оригинале используется dependencies, в современных nixpkgs лучше propagatedBuildInputs
     propagatedBuildInputs = [
       python3Packages.requests
       python3Packages.beautifulsoup4
@@ -36,7 +38,7 @@ let
     };
   };
 
-  # 2. Консольный клиент
+  # 2. Консольный клиент (как в оригинальном client.nix, но с ручной оберткой)
   rezka-fzf =
     let
       pyDeps = [
@@ -54,24 +56,27 @@ let
         sha256 = "sha256-df9oGzEKGWcU/cNBALAOf+LZ544dqraCoGBhXOIqC00=";
       };
 
+      # Зависимости Python (будут добавлены в PYTHONPATH)
       propagatedBuildInputs = pyDeps;
+
+      # makeWrapper больше не нужен, но пусть будет (не мешает)
       nativeBuildInputs = [ makeWrapper ];
 
       dontUnpack = true;
       format = "other";
 
-      # Шаг 1: Просто копируем исходный скрипт
+      # Создаем обертку вручную через bash heredoc
       installPhase = ''
         mkdir -p $out/bin
         install -Dm755 $src $out/bin/.rezka-fzf-unwrapped
-      '';
 
-      # Шаг 2: Создаем обертку ПОСЛЕ patchShebangs
-      postFixup = ''
-        makeWrapper ${python3Packages.python.interpreter} $out/bin/rezka-fzf \
-          --add-flags $out/bin/.rezka-fzf-unwrapped \
-          --prefix PATH : ${lib.makeBinPath [ fzf mpv ]} \
-          --prefix PYTHONPATH : "$out/${python3Packages.python.sitePackages}:${python3Packages.makePythonPath pyDeps}"
+        cat > $out/bin/rezka-fzf <<EOF
+#!${bash}/bin/bash
+export PATH="${lib.makeBinPath [ fzf mpv ]}:\$PATH"
+export PYTHONPATH="${python3Packages.makePythonPath pyDeps}:\$PYTHONPATH"
+exec ${python3Packages.python.interpreter} $out/bin/.rezka-fzf-unwrapped "\$@"
+EOF
+        chmod +x $out/bin/rezka-fzf
       '';
 
       allowSubstitutes = false;
