@@ -36,7 +36,6 @@
 , cpupower
 , util-linux
 , coreutils
-, python3
 }:
 
 let
@@ -49,18 +48,6 @@ let
     text = ''
       export GDK_BACKEND=x11
       export WINEPREFIX="''${WINEPREFIX:-/mnt/music/MUSIC-WINE/yabridge}"
-
-      # ====================================================================
-      # ИНТЕГРАЦИЯ PYTHON ДЛЯ REASCRIPT
-      # 1. Даем REAPER'у найти динамическую библиотеку libpython3.x.so
-      export LD_LIBRARY_PATH="${python3}/lib''${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
-
-      # 2. Указываем встроенному Python, где искать стандартную библиотеку
-      export PYTHONHOME="${python3}"
-
-      # 3. Добавляем сам интерпретатор Python в PATH
-      export PATH="${python3}/bin:$PATH"
-      # ====================================================================
 
       SELF_DIR="$(cd "$(dirname "''${BASH_SOURCE[0]}")" && pwd)"
 
