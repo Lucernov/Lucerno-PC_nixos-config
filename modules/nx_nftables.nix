@@ -6,6 +6,7 @@ _:
     nftables.enable = true;                     # Включить nftables
     firewall = {                                # Основные настройки межсетевого экрана
       enable = true;                            # Включить файервол
+      trustedInterfaces = [ "amn0" ];
       allowedTCPPorts = [  ];                   # Входящие TCP-соединения отключены
       allowedUDPPorts = [                       # Входящие UDP-соединения
         10999                                   # DST main game
