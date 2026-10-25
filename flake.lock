@@ -20,6 +20,26 @@
         "type": "github"
       }
     },
+    "artcraft": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1792940663,
+        "narHash": "sha256-trtp+Xa3pUrejAZuNCDZv7Ux06/wg5COXbHft6f6enc=",
+        "owner": "devitek",
+        "repo": "artcraft-nixos",
+        "rev": "c900d10cc9c85c365f59bcf1ff42db1a79202490",
+        "type": "github"
+      },
+      "original": {
+        "owner": "devitek",
+        "repo": "artcraft-nixos",
+        "type": "github"
+      }
+    },
     "base16": {
       "inputs": {
         "fromYaml": "fromYaml"
@@ -91,9 +111,7 @@
     "blender-cuda": {
       "inputs": {
         "flake-parts": "flake-parts",
-        "nixpkgs": [
-          "nixpkgs"
-        ],
+        "nixpkgs": "nixpkgs",
         "systems": "systems",
         "unstable-pkgs": "unstable-pkgs"
       },
@@ -114,7 +132,7 @@
     "comfyui-nix": {
       "inputs": {
         "flake-parts": "flake-parts_2",
-        "nixpkgs": "nixpkgs"
+        "nixpkgs": "nixpkgs_2"
       },
       "locked": {
         "lastModified": 1790528779,
@@ -274,16 +292,16 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1788752844,
-        "narHash": "sha256-VaWGJ6+cIYN2erfSecbRV+4ljI185Ty2wUrXyvQbgOw=",
+        "lastModified": 1792898606,
+        "narHash": "sha256-Mg3rRjsbMqhSMxop5PYMXos8SwAjejrxSgVThTvP9eg=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "dc5d91f840324650bac8c379428c7037a416959a",
+        "rev": "1f607aa79b6356ed45d3cd3c8079c196e79efa2c",
         "type": "github"
       },
       "original": {
         "owner": "NixOS",
-        "ref": "nixos-unstable",
+        "ref": "nixos-26.05",
         "repo": "nixpkgs",
         "type": "github"
       }
@@ -352,6 +370,22 @@
     },
     "nixpkgs_2": {
       "locked": {
+        "lastModified": 1788752844,
+        "narHash": "sha256-VaWGJ6+cIYN2erfSecbRV+4ljI185Ty2wUrXyvQbgOw=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "dc5d91f840324650bac8c379428c7037a416959a",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixos-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "nixpkgs_3": {
+      "locked": {
         "lastModified": 1792030654,
         "narHash": "sha256-OaQwAtPMTjQiY2sT/2/62UbSPhzP/0aDnWzMm/NCiUw=",
         "owner": "NixOS",
@@ -415,10 +449,11 @@
     "root": {
       "inputs": {
         "agenix": "agenix",
+        "artcraft": "artcraft",
         "blender-cuda": "blender-cuda",
         "comfyui-nix": "comfyui-nix",
         "import-tree": "import-tree",
-        "nixpkgs": "nixpkgs_2",
+        "nixpkgs": "nixpkgs_3",
         "nixpkgs-pinned-25-11": "nixpkgs-pinned-25-11",
         "nixpkgs-unstable": "nixpkgs-unstable",
         "nur": "nur",

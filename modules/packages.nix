@@ -70,6 +70,17 @@
         EnableTrackingProtection = true;                          # Включить защиту от отслеживания
       };
     };
+    artcraft = {
+      enable = true;
+      apps = [
+      # "photocraft"                                              # Растровая графика — замена Adobe Photoshop
+        "vectorcraft"                                             # Векторная графика — замена Adobe Illustrator
+      # "filmcraft"                                               # Видеомонтаж — замена Adobe Premiere Pro
+      # "wordcraft"                                               # Текстовый редактор — замена Microsoft Word
+      # "gridcraft"                                               # Электронные таблицы — замена Microsoft Excel
+      # "cadcraft"                                                # 2D/3D CAD — замена AutoCAD
+      ];
+    };
     # KDE приложения
     partition-manager.enable = true;                              # Включить модуль для KDE Partition Manager
     kdeconnect.enable = true;                                     # Включить интеграцию с телефоном через KDE Connect
@@ -174,7 +185,7 @@
     optipng                                                       # Оптимизатор PNG файлов
     pinta                                                         # Простой растровый редактор
     krita                                                         # Кастомный пакет Krita (цифровая живопись) берется из NIXOS 25.11
-    inkscape                                                      # Векторная графика
+  # inkscape                                                      # Векторная графика
     constrict                                                     # Графическая утилита для сжатия видео до заданного размера (GTK-приложение, обёртка над FFmpeg)
 
     # 3D-моделирование
@@ -199,6 +210,7 @@
     hyphenDicts.ru_RU                                             # Словарь для автоматической расстановки переносов (русский язык)
     libreoffice-qt-still                                          # Офисный пакет LibreOffice (стабильная ветка) с интеграцией в KDE Plasma через Qt
     planify                                                       # Менеджер задач и проектов (GTK, синхронизация с Todoist, Nextcloud)
+
 
     # ИГРЫ
     minion                                                        # Менеджер аддонов для TESO

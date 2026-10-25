@@ -21,25 +21,21 @@
       inputs.nixpkgs.follows = "nixpkgs";                                                                  # Зависимости используют основной nixpkgs
     };
 
-    blender-cuda = {                                                                                       # Бинарная сборка Blender с поддержкой cuda
-      url = "github:adithyagenie/blender-cuda-nixos";
+    artcraft = {                                                                                           # Набор приложений Аrtcraft
+      url = "github:devitek/artcraft-nixos";
       inputs.nixpkgs.follows = "nixpkgs";                                                                  # Зависимости используют основной nixpkgs
     };
 
-    comfyui-nix = {                                                                                        # Flake для ComfyUI
-      url = "github:utensils/comfyui-nix";
-    };
-
+    blender-cuda.url = "github:adithyagenie/blender-cuda-nixos";                                           # Бинарная сборка Blender с поддержкой cuda
+    comfyui-nix.url = "github:utensils/comfyui-nix";                                                       # Flake для ComfyUI
     import-tree.url = "github:vic/import-tree";                                                            # Утилита для рекурсивного импорта файлов
-
-
     nixpkgs-pinned-25-11.url = "github:NixOS/nixpkgs/b77b3de8775677f84492abe84635f87b0e153f0f";            # Снапшот nixpkgs 25.11, нужен для krita (krita нужна 5.2.15 (Qt5) — плагины ai_diffusion и vision_tools не совместимы (Qt6))
 
  #   fufexan/nix-gaming nickm8/nix-gaming TophC7/play.nix
   };
 
   # ========== Выходные данные (outputs) ==========
-  outputs = inputs@{ nixpkgs, nixpkgs-unstable, nur, agenix, stylix, blender-cuda, comfyui-nix, nixpkgs-pinned-25-11, ... }: # Функция, которая принимает все входы и возвращает результаты сборки
+  outputs = inputs@{ nixpkgs, nixpkgs-unstable, nur, agenix, stylix, blender-cuda, comfyui-nix, artcraft, nixpkgs-pinned-25-11, ... }: # Функция, которая принимает все входы и возвращает результаты сборки
     let
       pkgsUnstable = import nixpkgs-unstable {                                                             # Создаём экземпляр нестабильного nixpkgs (для свежих пакетов)
         localSystem = "x86_64-linux";                                                                      # Новый синтаксис с атрибутом localSystem вместо устаревшего `system`
@@ -83,6 +79,7 @@
         modules = [                                                                                        # Список модулей, из которых собирается система
           inputs.stylix.nixosModules.stylix                                                                # Модуль стилизации (stylix)
           inputs.agenix.nixosModules.default                                                               # Модуль управления секретами (agenix)
+          inputs.artcraft.nixosModules.default                                                             # Модуль приложений Аrtcraft
           { nixpkgs.pkgs = pkgsWithOverlay; }                                                              # Переопределяем pkgs для всей системы
           (inputs.import-tree ./modules)                                                                   # Основной модуль config nixos. Рекурсивно импортируем все модули из папки modules/nixos
         ];
