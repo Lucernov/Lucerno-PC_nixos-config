@@ -20,7 +20,7 @@ stdenv.mkDerivation {
   pname = "orchestools";
   inherit version;
 
-  # Берем все 4 архива с GitHub Media (LFS-домен)
+  # Берём все 4 архива из GitHub Releases
   srcs = [
     (fetchurl {
       url = "https://github.com/Lucernov/Lucerno-PC_nixos-config/releases/download/orchestools-1.0/ORCHESTOOLS-BRASS-1.0.1.tar.xz";

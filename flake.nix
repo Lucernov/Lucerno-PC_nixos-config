@@ -99,7 +99,7 @@
         shortcircuit-xt = pkgsWithOverlay.lucerno-packages.shortcircuit-xt;
         tape-echo-2 = pkgsWithOverlay.lucerno-packages.tape-echo-2;
 
-        # LFS-пакеты (переведенные на media.githubusercontent.com)
+        # Пакеты с ассетами в GitHub Releases
         air-g-plugins = pkgsWithOverlay.lucerno-packages.air-g-plugins;
         orchestools = pkgsWithOverlay.lucerno-packages.orchestools;
         ot-piano-s = pkgsWithOverlay.lucerno-packages.ot-piano-s;

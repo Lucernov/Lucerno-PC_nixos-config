@@ -295,7 +295,8 @@ in
       # ДОБАВИТЬ: Доступ к iPhone/iPad для группы idevice
       SUBSYSTEM=="usb", ATTR{idVendor}=="05ac", MODE="0660", GROUP="idevice"
 
-      SUBSYSTEM=="usb", ATTRS{idVendor}=="84ef", ATTRS{idProduct}=="0031", MODE="0666"
+      # Hotone Ampero II Stomp — USB-проброс в QEMU/KVM для прошивки через Windows-утилиту в виртуалке
+      SUBSYSTEM=="usb", ATTRS{idVendor}=="84ef", MODE="0666"
     '';
 
     usbmuxd = {

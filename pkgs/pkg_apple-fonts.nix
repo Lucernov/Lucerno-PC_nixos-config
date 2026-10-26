@@ -6,7 +6,7 @@
 #   - SF-Pro-Display-Regular.otf   — для заголовков окон KDE
 #   - New York (48 .otf)           — Small/Medium/Large/ExtraLarge × все веса
 #
-# Всё в одном архиве dotfiles/repo/apple-fonts.tar.zst (~16 МБ),
+# Всё в одном архиве apple-fonts.tar.zst (~16 МБ),
 # сжатие zstd --ultra -22 из исходных ~53 МБ.
 
 { lib
@@ -19,7 +19,7 @@ stdenv.mkDerivation {
   pname = "apple-fonts-lite";
   version = "1.0";
 
-  # Берем архив напрямую с GitHub Media (LFS-домен)
+  # Берем архив из GitHub Releases
   src = fetchurl {
     url = "https://github.com/Lucernov/Lucerno-PC_nixos-config/releases/download/personal-assets-1.0/apple-fonts.tar.zst";
     hash = "sha256-B8UMmIpsIH+TSCYhc1AVnqFY6YjwrIilwBZtiZujVL4=";

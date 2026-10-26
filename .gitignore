@@ -76,3 +76,6 @@
 !/dotfiles/repo/**/*
 !/dotfiles/sys-icons/
 !/dotfiles/sys-icons/**/*
+!/dotfiles/scripts/
+/dotfiles/scripts/*
+!/dotfiles/scripts/*.sh

@@ -19,7 +19,7 @@ stdenv.mkDerivation {
   pname = "ot-piano-s";
   inherit version;
 
-  # Берем файл напрямую с GitHub Media (LFS-домен)
+  # Берём файл из GitHub Releases
   src = fetchurl {
     url = "https://github.com/Lucernov/Lucerno-PC_nixos-config/releases/download/ot-piano-s-1.0/OT_P1ANO_S.so.xz";
     hash = "sha256-gm7hQYkKYzpSDnr5x0sRd0+i+yNFeNGYpyjj3hM96yw=";

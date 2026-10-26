@@ -152,7 +152,7 @@ stdenvNoCC.mkDerivation rec {
     description = "Addon manager for World of Warcraft and The Elder Scrolls Online";
     homepage = "https://minion.mmoui.com/";
     license = lib.licenses.unfree;
-    platforms = lib.platforms.linux;
+    platforms = [ "x86_64-linux" ];
     mainProgram = "minion";
     maintainers = with lib.maintainers; [ patrickdag ];
     sourceProvenance = with lib.sourceTypes; [ binaryBytecode ];

@@ -20,7 +20,7 @@ stdenv.mkDerivation {
   pname = "air-g-plugins";
   inherit version;
 
-  # Архив берется напрямую с GitHub Media (LFS-домен)
+  # Архив берётся из GitHub Releases
   src = fetchurl {
     url = "https://github.com/Lucernov/Lucerno-PC_nixos-config/releases/download/air-g-1.0/Air-G-Plugins-Collection.tar.zst";
     hash = "sha256-4ZI017GwKY6O91m4U0HBUfGf8OMAiEZWJ8HBS6cPioc=";

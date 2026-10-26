@@ -106,8 +106,8 @@ stdenv.mkDerivation (finalAttrs: {
   pname = "triplecheese";
   version = "1.3.0.12092";
 
-  # Архив теперь берется напрямую с GitHub Media (через LFS-домен).
-  # Это позволяет собирать пакет даже тем, кто просто подключает наш флейк.
+  # Архив берётся из GitHub Releases.
+  # Не расходует LFS-квоту и не зависит от media CDN.
   # Структура архива:
   #   u-he/TripleCheese/         → ~/.u-he/TripleCheese
   #   vst3/TripleCheese.vst3/    → ~/.vst3/TripleCheese.vst3

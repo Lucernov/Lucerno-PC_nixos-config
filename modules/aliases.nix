@@ -38,7 +38,7 @@
 
       # ========== Автообновление плагинов ==========
       pkgupdate = "cd ${myLib.home}/${myLib.configDirName} && \
-        export GITHUB_TOKEN=$(grep -oE 'ghp_[A-Za-z0-9]+' /run/agenix/github-token | head -1) && \
+        export GITHUB_TOKEN=$(grep -oE '(ghp_[A-Za-z0-9]+|github_pat_[A-Za-z0-9_]+)' /run/agenix/github-token | head -1) && \
         for pkg in je8086 ostirus drumlabooh drumlabooh-multi pitchnet; do \
           echo \"━━━ $pkg ━━━\"; \
           nix-update \"$pkg\" --flake || echo \"  ⚠️ $pkg: пропущен\"; \
@@ -73,6 +73,10 @@
 
       # ========== Замена софта ==========
       cat = "bat --paging=never";                                # bat с подсветкой, но БЕЗ pager (чтобы вести себя как cat)
+
+      # ========== Пользовательские скрипты ==========
+      relic-up = "bash ${myLib.home}/${myLib.configDirName}/dotfiles/scripts/update-relic.sh";
+      pt = "bash ${myLib.home}/${myLib.configDirName}/dotfiles/scripts/generate-prompt.sh";
 
       # ========== Список всех музыкальных плагинов ==========
       plugins = ''
