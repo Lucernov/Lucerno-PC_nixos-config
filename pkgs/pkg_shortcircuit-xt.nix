@@ -25,11 +25,11 @@
 
 stdenv.mkDerivation rec {
   pname = "shortcircuit-xt";
-  version = "2026-10-17-47b74ef";
+  version = "2026-10-21-72ad423";
 
   src = fetchurl {
     url = "https://github.com/surge-synthesizer/shortcircuit-xt/releases/download/Nightly/shortcircuit-xt-linux-${version}.zip";
-    hash = "sha256-lmtM/3QRMwpfkFe1we1F0+8Uul9192YmDkoOf2UxCZU=";
+    hash = "sha256-ui6IjGyxTy1ENFOPogRhmxb5XbVsg6Yv0kBxHrncZic=";
   };
 
   nativeBuildInputs = [ unzip autoPatchelfHook ];
