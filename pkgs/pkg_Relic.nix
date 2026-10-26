@@ -22,13 +22,13 @@
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "relic-clap";
-  version = "0.4.1";
+  version = "0.4.3";
 
   # Архив берется напрямую с GitHub Media (LFS-домен).
   # Это позволяет собирать пакет без локального git lfs pull.
   src = fetchurl {
-    url = "https://media.githubusercontent.com/media/Lucernov/Lucerno-PC_nixos-config/main/dotfiles/repo/Relic-Linux-CLAP-0.4.1.tar.zst";
-    hash = "sha256-XUG7SyQiviKruRHGDiGM6+w9/VXhOBBwfYFrEQw90eQ=";
+    url = "https://media.githubusercontent.com/media/Lucernov/Lucerno-PC_nixos-config/main/dotfiles/repo/Relic-Linux-CLAP-0.4.3.tar.zst";
+    hash = "sha256-YMdyHSjsgeW4Wd2aNf99LFlkbaPX9qXMAy0fcD5jGUI=";
   };
 
   nativeBuildInputs = [ autoPatchelfHook zstd ];
