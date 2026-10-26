@@ -112,7 +112,7 @@ stdenv.mkDerivation (finalAttrs: {
   #   u-he/TripleCheese/         → ~/.u-he/TripleCheese
   #   vst3/TripleCheese.vst3/    → ~/.vst3/TripleCheese.vst3
   src = fetchurl {
-    url = "https://media.githubusercontent.com/media/Lucernov/Lucerno-PC_nixos-config/main/dotfiles/repo/TripleCheese-writable.tar.xz";
+    url = "https://github.com/Lucernov/Lucerno-PC_nixos-config/releases/download/personal-assets-1.0/TripleCheese-writable.tar.xz";
     hash = "sha256-+QPk8XMkUeUqn7wBp9UMpwQleT2y4f206I7M0co4DQQ=";
   };
 

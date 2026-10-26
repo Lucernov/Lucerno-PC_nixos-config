@@ -31,13 +31,13 @@ stdenv.mkDerivation {
 
   # Берем плагин с GitHub Media
   src = fetchurl {
-    url = "https://media.githubusercontent.com/media/Lucernov/Lucerno-PC_nixos-config/main/dotfiles/repo/Mulhacen-0.15.0.clap.xz";
+    url = "https://github.com/Lucernov/Lucerno-PC_nixos-config/releases/download/personal-assets-1.0/Mulhacen-0.15.0.clap.xz";
     hash = "sha256-/DOVCsGNXW3dsPiUXFkNY0MtlHhoildGGZVWOBcV4uA=";
   };
 
   # Берем factory-ресурсы с GitHub Media
   factorySrc = fetchurl {
-    url = "https://media.githubusercontent.com/media/Lucernov/Lucerno-PC_nixos-config/main/dotfiles/repo/Mulhacen-0.15.0-factory.tar.xz";
+    url = "https://github.com/Lucernov/Lucerno-PC_nixos-config/releases/download/personal-assets-1.0/Mulhacen-0.15.0-factory.tar.xz";
     hash = "sha256-/0puIbYON4R1PX/TAu/B7BTws5pprNJWlL9RgeYVKso=";
   };
 

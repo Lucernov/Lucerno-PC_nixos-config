@@ -21,7 +21,7 @@ stdenv.mkDerivation {
 
   # Берем архив напрямую с GitHub Media (LFS-домен)
   src = fetchurl {
-    url = "https://media.githubusercontent.com/media/Lucernov/Lucerno-PC_nixos-config/main/dotfiles/repo/apple-fonts.tar.zst";
+    url = "https://github.com/Lucernov/Lucerno-PC_nixos-config/releases/download/personal-assets-1.0/apple-fonts.tar.zst";
     hash = "sha256-B8UMmIpsIH+TSCYhc1AVnqFY6YjwrIilwBZtiZujVL4=";
   };
 
