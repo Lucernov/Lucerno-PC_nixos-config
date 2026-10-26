@@ -76,7 +76,7 @@
 
       # ========== Пользовательские скрипты ==========
       relic-up = "bash ${myLib.home}/${myLib.configDirName}/dotfiles/scripts/update-relic.sh";
-      pt = "bash ${myLib.home}/${myLib.configDirName}/dotfiles/scripts/generate-prompt.sh";
+      promt = "bash ${myLib.home}/${myLib.configDirName}/dotfiles/scripts/generate-prompt.sh";
 
       # ========== Список всех музыкальных плагинов ==========
       plugins = ''

@@ -276,7 +276,7 @@ gh release create "$RELEASE_TAG" \
   --title "Relic CLAP $VERSION" \
   --notes "Relic Free Audio Plugin Suite — ${#EXPECTED_CLAP[@]} CLAP plugins.
 
-Обновление из архива апстрима \`$(basename "$ZIP")\` — извлечены только CLAP-плагины, VST3 и документация не включены. Перепаковано в tar.zst (zstd --ultra -22), воспроизводимо." \
+Обновление из архива апстрима \`${ZIP##*/}\` — извлечены только CLAP-плагины, VST3 и документация не включены. Перепаковано в tar.zst (zstd --ultra -22), воспроизводимо." \
   "$TARGET"
 
 echo "✅ Релиз создан: https://github.com/${REPO_SLUG}/releases/tag/${RELEASE_TAG}"
