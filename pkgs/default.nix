@@ -14,7 +14,7 @@ in
     # ====== Обёртки над пакетами nixpkgs ======
     btop = pkgs.callPackage ./wrap_btop.nix { };
     reaper = pkgs.callPackage ./wrap_reaper.nix {
-      inherit (pkgs-unstable) reaper;
+      inherit (pkgs) reaper;
       cpupower = pkgs.linuxPackages_zen.cpupower;
     };
     teamspeak = pkgs.callPackage ./wrap_teamspeak.nix {
