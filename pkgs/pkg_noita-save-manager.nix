@@ -5,16 +5,14 @@
 #
 # Особенности:
 #   - Приложение на Python с GUI на PySimpleGUI (зависит также от psutil).
-#   - PySimpleGUI удалён из nixpkgs, поэтому передаётся как локальный пакет
-#     my-packages.pysimplegui (см. pkg_pysimplegui.nix).
+#   - PySimpleGUI удалён из nixpkgs, поэтому объявлен локально в let-блоке.
 #   - postInstall подменяет захардкоженный автором путь к сохранениям Noita
 #     под Proton на корректный (~/.steam/steam/.../Nolla_Games_Noita).
 #   - Обёртка запускает программу из ~/.local/share/noita_save_manager —
 #     чтобы бэкапы сохранялись в предсказуемое место, а не в cwd.
 #   - АВТООБНОВЛЕНИЕ НЕ ПОДКЛЮЧЕНО сознательно:
 #       • апстрим не менялся с 2021 года (последний коммит 6f7f27b);
-#       • unstableGitUpdater не работает в flake-контексте — он пытается
-#         импортировать ./default.nix (nixpkgs-путь), а в системе flake.nix.
+#       • unstableGitUpdater не работает в flake-контексте.
 #     Если апстрим оживёт — обновлять вручную:
 #       nix-prefetch-github mcgillij noita_save_manager --rev <новый-коммит>
 #     и править rev/hash/version в этом файле.
@@ -26,7 +24,6 @@
 , makeDesktopItem
 , makeWrapper
 , copyDesktopItems
-, pysimplegui
 }:
 
 let
@@ -34,6 +31,31 @@ let
   icon = fetchurl {
     url = "https://media.githubusercontent.com/media/Lucernov/Lucerno-PC_nixos-config/main/dotfiles/sys-icons/icon-noita-save-manager.png";
     hash = "sha256-jqpNQ0oeBKZmaJXukmfQJKZXR1V5NqiwmWSZcM7qMcQ=";
+  };
+
+  # Встроенный PySimpleGUI (используется только здесь)
+  pysimplegui = python3.pkgs.buildPythonPackage {
+    pname = "pysimplegui";
+    version = "6.3";
+    pyproject = true;
+
+    src = fetchFromGitHub {
+      owner = "PySimpleGUI";
+      repo = "PySimpleGUI";
+      rev = "8d00420665f265836205b9e7dd71bff2621d399a";
+      hash = "sha256-79/pSgBqD4Nlmhm3l1cXyV40ve4CZAFjZJ9XjPecp7A=";
+    };
+
+    build-system = [ python3.pkgs.setuptools ];
+    propagatedBuildInputs = [ python3.pkgs.tkinter ];
+    pythonImportsCheck = [ "PySimpleGUI" ];
+
+    meta = with lib; {
+      description = "Python GUIs for Humans (LGPL3 community version)";
+      homepage = "https://github.com/PySimpleGUI/PySimpleGUI";
+      license = licenses.lgpl3Plus;
+      platforms = platforms.linux;
+    };
   };
 in
 python3.pkgs.buildPythonApplication rec {

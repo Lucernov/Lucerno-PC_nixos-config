@@ -5,8 +5,6 @@ final: prev:
 let
   versions = import ./versions.nix;
   pkgs = final;
-
-  pysimplegui = pkgs.python3.pkgs.callPackage ./pkg_pysimplegui.nix { };                                                         # Убирает самосслку
   superfly = pkgs.callPackage ./pkg_SuperflyDSP.nix { inherit versions; };                                                       # SuperflyDSP: один .nix-файл возвращает ТРИ плагина (lostSamplers, lostTapes, lostVinyls)
 in
 {
@@ -54,19 +52,11 @@ in
     apple-fonts-lite = pkgs.callPackage ./pkg_apple-fonts.nix { };
 
     # ====== Noita save manager ======
-    # pysimplegui определён в let-блоке выше (общая зависимость).
-    inherit pysimplegui;
-    noita-save-manager = pkgs.callPackage ./pkg_noita-save-manager.nix {
-      inherit pysimplegui;
-    };
+    noita-save-manager = pkgs.callPackage ./pkg_noita-save-manager.nix { };
 
     # ====== Плагины для Krita ======
     krita-ai-diffusion = pkgs.callPackage ./pkg_krita-ai-diffusion.nix { };
     krita-vision-tools = pkgs.callPackage ./pkg_krita-vision-tools.nix { };
-
-    # ====== HDrezka (API + Client) ======
-    # Возвращает набор: { hdrezkaapi, rezka-fzf, client, api, default }
-    hdrezka = pkgs.callPackage ./pkg_hdrezka.nix { };
 
     # ====== Временный патч для Minion ======
     minion = pkgs.callPackage ./pkg_minion.nix { };
