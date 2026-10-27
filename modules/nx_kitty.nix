@@ -161,9 +161,9 @@ in
   # ─────────────────────────────────────────────────────────────────────────
 
   systemd.tmpfiles.rules = [
-    "L+ ${myLib.home}/.config/kitty/kitty.conf - ${myLib.userName} ${myLib.userName} - ${kittyConf}"
-    "L+ ${myLib.home}/.config/kitty/quick-access-terminal.conf - ${myLib.userName} ${myLib.userName} - ${quickAccessConf}"
-    "L+ ${myLib.home}/.local/share/applications/net.local.toggle-kitty.desktop - ${myLib.userName} ${myLib.userName} - ${pkgs.writeText "net.local.toggle-kitty.desktop" ''
+    (myLib.mkLink "${myLib.home}/.config/kitty/kitty.conf" kittyConf)
+    (myLib.mkLink "${myLib.home}/.config/kitty/quick-access-terminal.conf" quickAccessConf)
+    (myLib.mkLink "${myLib.home}/.local/share/applications/net.local.toggle-kitty.desktop" (pkgs.writeText "net.local.toggle-kitty.desktop" ''
       [Desktop Entry]
       Exec=${myLib.home}/.local/bin/toggle-kitty
       Name=Toggle Kitty
@@ -171,17 +171,17 @@ in
       StartupNotify=false
       Type=Application
       X-KDE-GlobalAccel-CommandShortcut=true
-    ''}"
+    ''))
     # Удаляем старый сокет Kitty, чтобы новый создавался с правильным именем
     "R /tmp/kitty-sock - - - - -"
     # Скрипт запуска Kitty через Win+Z (открыть/закрыть выпадающее окно)
-    "L+ ${myLib.home}/.local/bin/toggle-kitty 0755 ${myLib.userName} ${myLib.userName} - ${pkgs.writeShellScript "toggle-kitty" ''
+    (myLib.mkLinkExec "${myLib.home}/.local/bin/toggle-kitty" (pkgs.writeShellScript "toggle-kitty" ''
       export KITTY_LISTEN_ON=unix:/tmp/kitty-sock
       if kitty @ get-window-id --match title:"quick-access" 2>/dev/null; then
           kitty @ close-window --match title:"quick-access"
       else
           kitten quick-access-terminal
       fi
-    ''}"
+    ''))
   ];
 }

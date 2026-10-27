@@ -7,20 +7,18 @@ in
 {
   systemd.tmpfiles.rules = [
     # ── PATH для KDE Plasma (влияет на .desktop и все KDE-приложения) ──
-    "d ${home}/.config/plasma-workspace/env 0755 ${myLib.userName} ${myLib.userName} -"
-    "L+ ${home}/.config/plasma-workspace/env/path.sh - ${myLib.userName} ${myLib.userName} - ${pkgs.writeText "path.sh" ''
+    (myLib.mkDir "${home}/.config/plasma-workspace/env")
+    (myLib.mkLink "${home}/.config/plasma-workspace/env/path.sh" (pkgs.writeText "path.sh" ''
       #!/bin/sh
       # Идемпотентное добавление ~/.local/bin в PATH.
-      # KDE может source'ить этот файл несколько раз за сессию (startplasma, рестарт plasmashell, ksmserver re-exec) — без проверки
-      # каждый source добавляет ещё одну копию .local/bin в PATH. case — POSIX-совместимо (работает в sh, bash, zsh, dash).
       case ":$PATH:" in
         *":$HOME/.local/bin:"*) ;;
         *) export PATH="$HOME/.local/bin:$PATH" ;;
       esac
-    ''}"
+    ''))
 
-    # ---------- Переопределение путей домашних папок (генерируемые через pkgs.writeText) ----------
-    "L+ ${home}/.config/user-dirs.dirs - ${myLib.userName} ${myLib.userName} - ${pkgs.writeText "user-dirs.dirs" ''
+    # ---------- Переопределение путей домашних папок ----------
+    (myLib.mkLink "${home}/.config/user-dirs.dirs" (pkgs.writeText "user-dirs.dirs" ''
       XDG_DESKTOP_DIR="$HOME/Desktop"
       XDG_DOWNLOAD_DIR="$HOME/Загрузки"
       XDG_TEMPLATES_DIR="$HOME/Templates"
@@ -29,65 +27,61 @@ in
       XDG_MUSIC_DIR="/mnt/music"
       XDG_PICTURES_DIR="/mnt/images"
       XDG_VIDEOS_DIR="/mnt/video"
-    ''}"
+    ''))
 
     # ---------- Директории ----------
-    "d ${home}/${configDir} 0755 ${myLib.userName} ${myLib.userName} -"
-    "d ${home}/.local/bin 0755 ${myLib.userName} ${myLib.userName} -"
-    "d ${home}/.local/share 0755 ${myLib.userName} ${myLib.userName} -"
-    "d ${home}/.local/share/applications 0755 ${myLib.userName} ${myLib.userName} -"
-    "d ${home}/.local/share/Steam/config 0755 ${myLib.userName} ${myLib.userName} -"
-    "d ${home}/.config 0755 ${myLib.userName} ${myLib.userName} -"
-    "d ${home}/.config/autostart 0755 ${myLib.userName} ${myLib.userName} -"
-    "d ${home}/${configDir}/secrets 0750 ${myLib.userName} ${myLib.userName} -"
+    (myLib.mkDir "${home}/${configDir}")
+    (myLib.mkDir "${home}/.local/bin")
+    (myLib.mkDir "${home}/.local/share")
+    (myLib.mkDir "${home}/.local/share/applications")
+    (myLib.mkDir "${home}/.local/share/Steam/config")
+    (myLib.mkDir "${home}/.config")
+    (myLib.mkDir "${home}/.config/autostart")
+    "d ${home}/${configDir}/secrets 0750 ${myLib.userName} ${myLib.userName} -" # 0750, поэтому оставляем как есть
 
     # ДИСКИ
-    "d /mnt/ai 0755 ${myLib.userName} ${myLib.userName} -"
-    "d /mnt/sys_archiv 0755 ${myLib.userName} ${myLib.userName} -"
+    (myLib.mkDir "/mnt/ai")
+    (myLib.mkDir "/mnt/sys_archiv")
 
     # ---------- Права на энергопотребление CPU ----------
     "z /sys/class/powercap/intel-rapl:*/energy_uj 0640 root powercap -"
 
-    # ---------- Симлинки конфигов (из ~/nixos-config/dotfiles/config) ----------
-    "L+ ${home}/.config/btop - ${myLib.userName} ${myLib.userName} - ${home}/${configDir}/dotfiles/config/btop"
-    "L+ ${home}/.config/qmmp - ${myLib.userName} ${myLib.userName} - ${home}/${configDir}/dotfiles/config/qmmp"
-    "L+ ${home}/.config/SocialStream - ${myLib.userName} ${myLib.userName} - ${home}/${configDir}/dotfiles/config/SocialStream"
-    "L+ ${home}/.config/obs-studio - ${myLib.userName} ${myLib.userName} - ${home}/${configDir}/dotfiles/config/obs-studio"
-    "L+ ${home}/.config/MangoHud - ${myLib.userName} ${myLib.userName} - ${home}/${configDir}/dotfiles/config/MangoHud"
-    "L+ ${home}/.config/kdeglobals - ${myLib.userName} ${myLib.userName} - ${home}/${configDir}/dotfiles/config/KDE/config_kdeglobals"
-    "L+ ${home}/.config/kglobalshortcutsrc - ${myLib.userName} ${myLib.userName} - ${home}/${configDir}/dotfiles/config/KDE/config_kglobalshortcutsrc"
-    "L+ ${home}/.config/kwinrc - ${myLib.userName} ${myLib.userName} - ${home}/${configDir}/dotfiles/config/KDE/config_kwinrc"
-    "L+ ${home}/.config/kxkbrc - ${myLib.userName} ${myLib.userName} - ${home}/${configDir}/dotfiles/config/KDE/config_kxkbrc"
-    "L+ ${home}/.config/plasmarc - ${myLib.userName} ${myLib.userName} - ${home}/${configDir}/dotfiles/config/KDE/config_plasmarc"
-    "L+ ${home}/.config/mc - ${myLib.userName} ${myLib.userName} - ${home}/${configDir}/dotfiles/config/mc"
-    "L+ ${home}/.config/fastfetch - ${myLib.userName} ${myLib.userName} - ${home}/${configDir}/dotfiles/config/fastfetch"
-    "L+ ${home}/.config/TeamSpeak - ${myLib.userName} ${myLib.userName} - ${home}/${configDir}/dotfiles/config/TeamSpeak"
-    "L+ ${home}/.config/KDE - ${myLib.userName} ${myLib.userName} - ${home}/${configDir}/dotfiles/config/KDE/KDE"
+    # ---------- Симлинки конфигов ----------
+    (myLib.mkLink "${home}/.config/btop" "${home}/${configDir}/dotfiles/config/btop")
+    (myLib.mkLink "${home}/.config/qmmp" "${home}/${configDir}/dotfiles/config/qmmp")
+    (myLib.mkLink "${home}/.config/SocialStream" "${home}/${configDir}/dotfiles/config/SocialStream")
+    (myLib.mkLink "${home}/.config/obs-studio" "${home}/${configDir}/dotfiles/config/obs-studio")
+    (myLib.mkLink "${home}/.config/MangoHud" "${home}/${configDir}/dotfiles/config/MangoHud")
+    (myLib.mkLink "${home}/.config/kdeglobals" "${home}/${configDir}/dotfiles/config/KDE/config_kdeglobals")
+    (myLib.mkLink "${home}/.config/kglobalshortcutsrc" "${home}/${configDir}/dotfiles/config/KDE/config_kglobalshortcutsrc")
+    (myLib.mkLink "${home}/.config/kwinrc" "${home}/${configDir}/dotfiles/config/KDE/config_kwinrc")
+    (myLib.mkLink "${home}/.config/kxkbrc" "${home}/${configDir}/dotfiles/config/KDE/config_kxkbrc")
+    (myLib.mkLink "${home}/.config/plasmarc" "${home}/${configDir}/dotfiles/config/KDE/config_plasmarc")
+    (myLib.mkLink "${home}/.config/mc" "${home}/${configDir}/dotfiles/config/mc")
+    (myLib.mkLink "${home}/.config/fastfetch" "${home}/${configDir}/dotfiles/config/fastfetch")
+    (myLib.mkLink "${home}/.config/TeamSpeak" "${home}/${configDir}/dotfiles/config/TeamSpeak")
+    (myLib.mkLink "${home}/.config/KDE" "${home}/${configDir}/dotfiles/config/KDE/KDE")
 
     # ---------- Kdenlive ----------
-    # Конфиги в ~/.config/
-    "L+ ${home}/.config/kdenlive-layoutsrc - ${myLib.userName} ${myLib.userName} - ${home}/${configDir}/dotfiles/config/kdenlive/kdenlive-layoutsrc"
-    "L+ ${home}/.config/kdenliverc - ${myLib.userName} ${myLib.userName} - ${home}/${configDir}/dotfiles/config/kdenlive/kdenliverc"
-    # Директории данных в ~/.local/share/kdenlive/
-    "d ${home}/.local/share/kdenlive 0755 ${myLib.userName} ${myLib.userName} -"
-    "L+ ${home}/.local/share/kdenlive/export - ${myLib.userName} ${myLib.userName} - ${home}/${configDir}/dotfiles/config/kdenlive/export"
-    "L+ ${home}/.local/share/kdenlive/layouts - ${myLib.userName} ${myLib.userName} - ${home}/${configDir}/dotfiles/config/kdenlive/layouts"
+    (myLib.mkLink "${home}/.config/kdenlive-layoutsrc" "${home}/${configDir}/dotfiles/config/kdenlive/kdenlive-layoutsrc")
+    (myLib.mkLink "${home}/.config/kdenliverc" "${home}/${configDir}/dotfiles/config/kdenlive/kdenliverc")
+    (myLib.mkDir "${home}/.local/share/kdenlive")
+    (myLib.mkLink "${home}/.local/share/kdenlive/export" "${home}/${configDir}/dotfiles/config/kdenlive/export")
+    (myLib.mkLink "${home}/.local/share/kdenlive/layouts" "${home}/${configDir}/dotfiles/config/kdenlive/layouts")
 
     # ---------- cliamp ----------
-    # ~/.config/cliamp — РЕАЛЬНАЯ директория, потому что cliamp создаёт внутри cliamp.sock и cliamp.log. Если симлинковать всю папку — сокет попадёт в репозиторий и сломает `nix eval`.
-    "d ${home}/.config/cliamp 0755 ${myLib.userName} ${myLib.userName} -"
-    "L+ ${home}/.config/cliamp/playlists - ${myLib.userName} ${myLib.userName} - ${home}/${configDir}/dotfiles/config/cliamp/playlists"
-    "L+ ${home}/.config/cliamp/config.toml - ${myLib.userName} ${myLib.userName} - ${home}/${configDir}/dotfiles/config/cliamp/config.toml"
-    "L+ ${home}/.config/cliamp/radio_favorites.toml - ${myLib.userName} ${myLib.userName} - ${home}/${configDir}/dotfiles/config/cliamp/radio_favorites.toml"
+    (myLib.mkDir "${home}/.config/cliamp")
+    (myLib.mkLink "${home}/.config/cliamp/playlists" "${home}/${configDir}/dotfiles/config/cliamp/playlists")
+    (myLib.mkLink "${home}/.config/cliamp/config.toml" "${home}/${configDir}/dotfiles/config/cliamp/config.toml")
+    (myLib.mkLink "${home}/.config/cliamp/radio_favorites.toml" "${home}/${configDir}/dotfiles/config/cliamp/radio_favorites.toml")
 
     # ---------- Симлинки для приложений и данных ----------
-    "d ${home}/.config/AmneziaVPN.ORG 0755 ${myLib.userName} ${myLib.userName} -"
-    "L+ ${home}/.config/AmneziaVPN.ORG/AmneziaVPN.conf - ${myLib.userName} ${myLib.userName} - ${config.age.secrets."amneziavpn-conf".path}"
-    "L+ ${home}/.local/bin/socialstreamninja - ${myLib.userName} ${myLib.userName} - /mnt/sys_archiv/pkgs/AppImages/socialstreamninja.AppImage" # v0.4.28
+    (myLib.mkDir "${home}/.config/AmneziaVPN.ORG")
+    (myLib.mkLink "${home}/.config/AmneziaVPN.ORG/AmneziaVPN.conf" config.age.secrets."amneziavpn-conf".path)
+    (myLib.mkLink "${home}/.local/bin/socialstreamninja" "/mnt/sys_archiv/pkgs/AppImages/socialstreamninja.AppImage") # v0.4.28
 
     # ---------- Автозапуск ----------
-    # AmneziaVPN
-    "L+ ${home}/.config/autostart/amneziavpn.desktop - ${myLib.userName} ${myLib.userName} - ${pkgs.writeText "amneziavpn.desktop" ''
+    (myLib.mkLink "${home}/.config/autostart/amneziavpn.desktop" (pkgs.writeText "amneziavpn.desktop" ''
       [Desktop Entry]
       Type=Application
       Name=AmneziaVPN
@@ -96,12 +90,12 @@ in
       X-KDE-autostart-after=panel
       StartupNotify=false
       Terminal=false
-    ''}"
+    ''))
 
     # ========== .desktop файлы ==========
 
-    # --- Ярлык REAPER в меню KDE с кастомным запусском ---
-    "L+ ${home}/.local/share/applications/reaper-x11.desktop - ${myLib.userName} ${myLib.userName} - ${pkgs.writeText "reaper-x11.desktop" ''
+    # --- Ярлык REAPER в меню KDE ---
+    (myLib.mkLink "${home}/.local/share/applications/reaper-x11.desktop" (pkgs.writeText "reaper-x11.desktop" ''
       [Desktop Entry]
       Version=1.0
       Type=Application
@@ -112,10 +106,10 @@ in
       Categories=Audio;AudioVideo;
       Terminal=false
       StartupWMClass=REAPER
-    ''}"
+    ''))
 
     # --- Ярлык Minion в меню KDE ---
-    "L+ ${home}/.local/share/applications/minion.desktop - ${myLib.userName} ${myLib.userName} - ${pkgs.writeText "minion.desktop" ''
+    (myLib.mkLink "${home}/.local/share/applications/minion.desktop" (pkgs.writeText "minion.desktop" ''
       [Desktop Entry]
       Version=1.0
       Type=Application
@@ -126,10 +120,10 @@ in
       Categories=Game;
       Terminal=false
       StartupWMClass=Minion
-    ''}"
+    ''))
 
-    # --- Ярлык QMMP в меню KDE с кастомным запусском ---
-    "L+ ${home}/.local/share/applications/org.qmmp.qmmp.desktop - ${myLib.userName} ${myLib.userName} - ${pkgs.writeText "org.qmmp.qmmp.desktop" ''
+    # --- Ярлык QMMP в меню KDE ---
+    (myLib.mkLink "${home}/.local/share/applications/org.qmmp.qmmp.desktop" (pkgs.writeText "org.qmmp.qmmp.desktop" ''
       [Desktop Entry]
       Name=Qmmp
       Exec=/run/current-system/sw/bin/qmmp %F
@@ -137,10 +131,10 @@ in
       Terminal=false
       Type=Application
       Categories=Audio;AudioVideo;
-    ''}"
+    ''))
 
     # --- Ярлык Ampero ---
-    "L+ ${home}/.local/share/applications/ampero2.desktop - ${myLib.userName} ${myLib.userName} - ${pkgs.writeText "ampero2.desktop" ''
+    (myLib.mkLink "${home}/.local/share/applications/ampero2.desktop" (pkgs.writeText "ampero2.desktop" ''
       [Desktop Entry]
       Type=Application
       Name=Ampero II
@@ -150,10 +144,10 @@ in
       Categories=Audio;AudioVideo;
       StartupNotify=true
       Terminal=false
-    ''}"
+    ''))
 
-    # --- Ярлык SocialStreamNinja приложение AppImage в меню KDE ---
-    "L+ ${home}/.local/share/applications/socialstreamninja.desktop - ${myLib.userName} ${myLib.userName} - ${pkgs.writeText "socialstreamninja.desktop" ''
+    # --- Ярлык SocialStreamNinja ---
+    (myLib.mkLink "${home}/.local/share/applications/socialstreamninja.desktop" (pkgs.writeText "socialstreamninja.desktop" ''
       [Desktop Entry]
       Version=1.0
       Type=Application
@@ -164,10 +158,10 @@ in
       Categories=Network;
       Terminal=false
       StartupNotify=true
-    ''}"
+    ''))
 
     # ----------Ярлык TeamSpeak 6 с поддержкой X11 в Wayland ----------
-    "L+ ${home}/.local/share/applications/teamspeak6.desktop - ${myLib.userName} ${myLib.userName} - ${pkgs.writeText "teamspeak6.desktop" ''
+    (myLib.mkLink "${home}/.local/share/applications/teamspeak6.desktop" (pkgs.writeText "teamspeak6.desktop" ''
       [Desktop Entry]
       Categories=Audio;AudioVideo;Chat;Network
       Comment=TeamSpeak Voice Communication Client
@@ -177,6 +171,6 @@ in
       StartupWMClass=teamspeak-client
       Type=Application
       Version=1.5
-    ''}"
+    ''))
   ];
 }

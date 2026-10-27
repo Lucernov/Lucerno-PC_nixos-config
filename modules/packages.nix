@@ -1,7 +1,29 @@
 # modules/packages.nix
-{ pkgs, pkgs-unstable, myLib, blender-cuda, ... }:
+{ pkgs, pkgs-unstable, myLib, blender-cuda, inputs, ... }:
 
+let
+  # ========== Пакеты из других флейков ==========
+  # Создаем экземпляр nixpkgs 25.11 для Krita (krita нужна 5.2.15 (Qt5) — плагины ai_diffusion и vision_tools не совместимы (Qt6))
+  pkgsPinned25_11 = import inputs.nixpkgs-pinned-25-11 {
+    localSystem = "x86_64-linux";
+    config.allowUnfree = true;
+  };
+in
 {
+  # ========== Оверлеи и настройки пакетов ==========
+  nixpkgs.config.allowUnfree = true;                              # Разрешаем несвободные пакеты
+
+  # Применяем оверлеи на уровне системы
+  nixpkgs.overlays = [
+    (import ../pkgs/default.nix { inherit pkgs-unstable; })       # 1. Оверлей с моими пакетами (lucerno-packages), ничего не переопределяет
+    inputs.nur.overlays.default                                   # 2. Все пакеты из NUR доступны как pkgs.nur.repos.<user>.<pkg>, ничего не переопределяет
+    inputs.comfyui-nix.overlays.default                           # 3. Оверлей ComfyUI (comfy-ui-cuda), ничего не переопределяет
+    (final: prev: {                                               # 4. Финальные переопределения krita и minion. Идут последними, чтобы перебить всё выше
+      krita  = pkgsPinned25_11.krita;                             #    Krita из фиксированного nixpkgs
+      minion = final.lucerno-packages.minion;                     #    Minion из локального pkg_minion.nix с патчем PR#539572
+    })
+  ];
+
   # ========== Включение системных модулей для программ ==========
   programs = {
     git = {
@@ -86,6 +108,7 @@
     kdeconnect.enable = true;                                     # Включить интеграцию с телефоном через KDE Connect
   };
 
+  # ========== Программы ==========
   environment.systemPackages = with pkgs; [
     # СИСТЕМНЫЕ
     oh-my-zsh                                                     # Пакет Oh My Zsh (фреймворк для управления конфигурацией Zsh)
@@ -128,7 +151,7 @@
     age                                                           # Утилита шифрования (генерация age-ключей)
   # rtcqs                                                         # Real-Time Config Quick Scan – диагностика системы для аудио (пока нет в NIXOS)
 
-    # ========== КОНСОЛЬНЫЕ УТИЛИТЫ ==========
+    # КОНСОЛЬНЫЕ УТИЛИТЫ
     bat                                                           # Улучшенный cat с подсветкой синтаксиса и интеграцией с Git
     lucerno-packages.btop                                         # Монитор ресурсов с графиками
     cava                                                          # Консольный аудиовизуализатор (спектроанализатор для музыки)

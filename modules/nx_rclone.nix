@@ -15,27 +15,27 @@ in
 
   # ========== Правила tmpfiles для папок монтирования ==========
   systemd.tmpfiles.rules = [
-    "d /mnt/www-GoogleDrive 0755 ${myLib.userName} ${myLib.userName} -"
-    "d /mnt/www-OneDrive 0755 ${myLib.userName} ${myLib.userName} -"
-    "d ${home}/.config/rclone 0755 ${myLib.userName} ${myLib.userName} -"
-    "L+ ${home}/.config/rclone/rclone.conf - ${myLib.userName} ${myLib.userName} - ${config.age.secrets."rclone-conf".path}"
-    "L+ ${home}/.config/rclone/exclude.txt - ${myLib.userName} ${myLib.userName} - ${pkgs.writeText "rclone-exclude.txt" ''
+    (myLib.mkDir "/mnt/www-GoogleDrive")
+    (myLib.mkDir "/mnt/www-OneDrive")
+    (myLib.mkDir "${home}/.config/rclone")
+    (myLib.mkLink "${home}/.config/rclone/rclone.conf" config.age.secrets."rclone-conf".path)
+    (myLib.mkLink "${home}/.config/rclone/exclude.txt" (pkgs.writeText "rclone-exclude.txt" ''
       *.gdoc
       *.gsheet
       *.gslides
-    ''}"
+    ''))
 
     # --- KIO настройки для ускорения корзины ---
-    "L+ ${home}/.config/kiorc - ${myLib.userName} ${myLib.userName} - ${pkgs.writeText "kiorc" ''
+    (myLib.mkLink "${home}/.config/kiorc" (pkgs.writeText "kiorc" ''
       [Trash]
       CheckMounts=false
-    ''}"
+    ''))
 
     # --- Исключение сетевых папок из индексации Baloo ---
-    "L+ ${home}/.config/baloofilerc - ${myLib.userName} ${myLib.userName} - ${pkgs.writeText "baloofilerc" ''
+    (myLib.mkLink "${home}/.config/baloofilerc" (pkgs.writeText "baloofilerc" ''
       [General]
       exclude filters=/mnt/www-GoogleDrive/,/mnt/www-OneDrive/
-    ''}"
+    ''))
   ];
 
   systemd.services = {

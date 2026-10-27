@@ -102,48 +102,47 @@ in
 
   systemd.tmpfiles.rules = [                                                        # Правила tmpfiles
     # ========== Правила tmpfiles для аудио и REAPER ==========
-    "d ${myLib.home}/.clap 0755 ${myLib.userName} ${myLib.userName} -"
-    "d ${myLib.home}/.lv2 0755 ${myLib.userName} ${myLib.userName} -"
-    "d ${myLib.home}/.vst 0755 ${myLib.userName} ${myLib.userName} -"
-    "d ${myLib.home}/.vst3 0755 ${myLib.userName} ${myLib.userName} -"
-    "d ${myLib.home}/.lxvst 0755 ${myLib.userName} ${myLib.userName} -"
-    "d ${myLib.home}/.ladspa 0755 ${myLib.userName} ${myLib.userName} -"
-    "d ${myLib.home}/.dssi 0755 ${myLib.userName} ${myLib.userName} -"
-    "L+ ${myLib.home}/.config/REAPER - ${myLib.userName} ${myLib.userName} - ${myLib.home}/${myLib.configDirName}/dotfiles/config/REAPER"
-    "d ${myLib.home}/${myLib.configDirName}/dotfiles/config/REAPER/UserPlugins 0755 ${myLib.userName} ${myLib.userName} -"
-    "L+ ${myLib.home}/${myLib.configDirName}/dotfiles/config/REAPER/UserPlugins/reaper_sws-x86_64.so - ${myLib.userName} ${myLib.userName} - ${pkgs.reaper-sws-extension}/UserPlugins/reaper_sws-x86_64.so"  # .so файлы REAPER
-    "L+ ${myLib.home}/${myLib.configDirName}/dotfiles/config/REAPER/UserPlugins/reaper_reapack-x86_64.so - ${myLib.userName} ${myLib.userName} - ${pkgs.reaper-reapack-extension}/UserPlugins/reaper_reapack-x86_64.so"  # .so файлы REAPER
-    "L+ ${myLib.home}/.local/bin/wine64 - ${myLib.userName} ${myLib.userName} - ${pkgs.wineWow64Packages.staging}/bin/wine"  # wine64
+    (myLib.mkDir "${myLib.home}/.clap")
+    (myLib.mkDir "${myLib.home}/.lv2")
+    (myLib.mkDir "${myLib.home}/.vst")
+    (myLib.mkDir "${myLib.home}/.vst3")
+    (myLib.mkDir "${myLib.home}/.lxvst")
+    (myLib.mkDir "${myLib.home}/.ladspa")
+    (myLib.mkDir "${myLib.home}/.dssi")
+    (myLib.mkLink "${myLib.home}/.config/REAPER" "${myLib.home}/${myLib.configDirName}/dotfiles/config/REAPER")
+    (myLib.mkDir "${myLib.home}/${myLib.configDirName}/dotfiles/config/REAPER/UserPlugins")
+    (myLib.mkLink "${myLib.home}/${myLib.configDirName}/dotfiles/config/REAPER/UserPlugins/reaper_sws-x86_64.so" "${pkgs.reaper-sws-extension}/UserPlugins/reaper_sws-x86_64.so")  # .so файлы REAPER
+    (myLib.mkLink "${myLib.home}/${myLib.configDirName}/dotfiles/config/REAPER/UserPlugins/reaper_reapack-x86_64.so" "${pkgs.reaper-reapack-extension}/UserPlugins/reaper_reapack-x86_64.so")  # .so файлы REAPER
+    (myLib.mkLink "${myLib.home}/.local/bin/wine64" "${pkgs.wineWow64Packages.staging}/bin/wine")  # wine64
     "L+ /usr/bin/zenity - - - - ${pkgs.zenity}/bin/zenity" # нужно для работы вывода меню выбора пресетов внутри плагина
 
     # ---------- Структура каталогов для данных Amp Locker и Drum Locker ----------
-    "d \"${myLib.home}/Audio Assault\" 0755 ${myLib.userName} ${myLib.userName} -"
-    "d \"${myLib.home}/Audio Assault/PluginData\" 0755 ${myLib.userName} ${myLib.userName} -"
-    "d \"${myLib.home}/Audio Assault/PluginData/Audio Assault\" 0755 ${myLib.userName} ${myLib.userName} -"
-    "L+ \"${myLib.home}/Audio Assault/PluginData/Audio Assault/AmpLockerData\" - ${myLib.userName} ${myLib.userName} - /run/current-system/sw/share/amp-locker"
-    "L+ \"${myLib.home}/Audio Assault/PluginData/Audio Assault/DrumLockerData\" - ${myLib.userName} ${myLib.userName} - /run/current-system/sw/share/drum-locker"
+    (myLib.mkDir "\"${myLib.home}/Audio Assault\"")
+    (myLib.mkDir "\"${myLib.home}/Audio Assault/PluginData\"")
+    (myLib.mkDir "\"${myLib.home}/Audio Assault/PluginData/Audio Assault\"")
+    (myLib.mkLink "\"${myLib.home}/Audio Assault/PluginData/Audio Assault/AmpLockerData\"" "/run/current-system/sw/share/amp-locker")
+    (myLib.mkLink "\"${myLib.home}/Audio Assault/PluginData/Audio Assault/DrumLockerData\"" "/run/current-system/sw/share/drum-locker")
 
     # ---------- Mulhacen: factory-ресурсы из деривации ----------
-    # Плагин ищет IRS-импульсы и .nam-модели в $XDG_DATA_HOME/Mulhacen/factory. Пробрасываем симлинк на $out/share/Mulhacen/factory из pkg_Mulhacen.nix.
-    "d ${myLib.home}/.local/share/Mulhacen 0755 ${myLib.userName} ${myLib.userName} -"
-    "L+ ${myLib.home}/.local/share/Mulhacen/factory - ${myLib.userName} ${myLib.userName} - ${pkgs.lucerno-packages.mulhacen-clap}/share/Mulhacen/factory"
+    (myLib.mkDir "${myLib.home}/.local/share/Mulhacen")
+    (myLib.mkLink "${myLib.home}/.local/share/Mulhacen/factory" "${pkgs.lucerno-packages.mulhacen-clap}/share/Mulhacen/factory")
 
     # ---------- Симлинки конфигов плагинов ----------
-    "L+ ${myLib.home}/.config/yabridgectl - ${myLib.userName} ${myLib.userName} - ${myLib.home}/${myLib.configDirName}/dotfiles/config/yabridgectl"
-    "L+ ${myLib.home}/.config/DecentSampler - ${myLib.userName} ${myLib.userName} - /mnt/sys_archiv/samples/DecentSampler"
-    "L+ \"${myLib.home}/.config/Amp Locker\" - ${myLib.userName} ${myLib.userName} - ${myLib.home}/${myLib.configDirName}/dotfiles/config/plugins/config_Amp Locker"
-    "L+ \"${myLib.home}/.config/Audio Assault\" - ${myLib.userName} ${myLib.userName} - ${myLib.home}/${myLib.configDirName}/dotfiles/config/plugins/config_Audio Assault"
-    "L+ ${myLib.home}/.config/geonkick - ${myLib.userName} ${myLib.userName} - ${myLib.home}/${myLib.configDirName}/dotfiles/config/plugins/config_geonkick"
-    "L+ ${myLib.home}/.config/lsp-plugins - ${myLib.userName} ${myLib.userName} - ${myLib.home}/${myLib.configDirName}/dotfiles/config/plugins/config_lsp-plugins"
-    "L+ ${myLib.home}/.config/3VStudio - ${myLib.userName} ${myLib.userName} - ${myLib.home}/${myLib.configDirName}/dotfiles/config/plugins/config_3VStudio"
-    "L+ \"${myLib.home}/.config/My Company\" - ${myLib.userName} ${myLib.userName} - ${myLib.home}/${myLib.configDirName}/dotfiles/config/plugins/config_My Company"
-    "L+ ${myLib.home}/.config/MANDA_AUDIO - ${myLib.userName} ${myLib.userName} - ${myLib.home}/${myLib.configDirName}/dotfiles/config/plugins/config_MANDA_AUDIO"
-    "L+ ${myLib.home}/.config/Plogue - ${myLib.userName} ${myLib.userName} - ${myLib.home}/${myLib.configDirName}/dotfiles/config/plugins/config_Plogue"
-    "L+ ${myLib.home}/.local/share/geonkick - ${myLib.userName} ${myLib.userName} - ${myLib.home}/${myLib.configDirName}/dotfiles/config/plugins/local_share_geonkick"
-    "L+ ${myLib.home}/${myLib.configDirName}/dotfiles/config/plugins/local_share_geonkick/presets - ${myLib.userName} ${myLib.userName} - /run/current-system/sw/share/geonkick/presets"
-    "L+ \"${myLib.home}/.local/share/The Usual Suspects\" - ${myLib.userName} ${myLib.userName} - ${myLib.home}/${myLib.configDirName}/dotfiles/config/plugins/local_share_The Usual Suspects"
-    "L+ ${myLib.home}/.local/share/vital - ${myLib.userName} ${myLib.userName} - /mnt/sys_archiv/samples/vital"
-    "L+ ${myLib.home}/drum_sklad - ${myLib.userName} ${myLib.userName} - /mnt/sys_archiv/samples/drum_sklad"
+    (myLib.mkLink "${myLib.home}/.config/yabridgectl" "${myLib.home}/${myLib.configDirName}/dotfiles/config/yabridgectl")
+    (myLib.mkLink "${myLib.home}/.config/DecentSampler" "/mnt/sys_archiv/samples/DecentSampler")
+    (myLib.mkLink "\"${myLib.home}/.config/Amp Locker\"" "${myLib.home}/${myLib.configDirName}/dotfiles/config/plugins/config_Amp Locker")
+    (myLib.mkLink "\"${myLib.home}/.config/Audio Assault\"" "${myLib.home}/${myLib.configDirName}/dotfiles/config/plugins/config_Audio Assault")
+    (myLib.mkLink "${myLib.home}/.config/geonkick" "${myLib.home}/${myLib.configDirName}/dotfiles/config/plugins/config_geonkick")
+    (myLib.mkLink "${myLib.home}/.config/lsp-plugins" "${myLib.home}/${myLib.configDirName}/dotfiles/config/plugins/config_lsp-plugins")
+    (myLib.mkLink "${myLib.home}/.config/3VStudio" "${myLib.home}/${myLib.configDirName}/dotfiles/config/plugins/config_3VStudio")
+    (myLib.mkLink "\"${myLib.home}/.config/My Company\"" "${myLib.home}/${myLib.configDirName}/dotfiles/config/plugins/config_My Company")
+    (myLib.mkLink "${myLib.home}/.config/MANDA_AUDIO" "${myLib.home}/${myLib.configDirName}/dotfiles/config/plugins/config_MANDA_AUDIO")
+    (myLib.mkLink "${myLib.home}/.config/Plogue" "${myLib.home}/${myLib.configDirName}/dotfiles/config/plugins/config_Plogue")
+    (myLib.mkLink "${myLib.home}/.local/share/geonkick" "${myLib.home}/${myLib.configDirName}/dotfiles/config/plugins/local_share_geonkick")
+    (myLib.mkLink "${myLib.home}/${myLib.configDirName}/dotfiles/config/plugins/local_share_geonkick/presets" "/run/current-system/sw/share/geonkick/presets")
+    (myLib.mkLink "\"${myLib.home}/.local/share/The Usual Suspects\"" "${myLib.home}/${myLib.configDirName}/dotfiles/config/plugins/local_share_The Usual Suspects")
+    (myLib.mkLink "${myLib.home}/.local/share/vital" "/mnt/sys_archiv/samples/vital")
+    (myLib.mkLink "${myLib.home}/drum_sklad" "/mnt/sys_archiv/samples/drum_sklad")
   ];
 
 }

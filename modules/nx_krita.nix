@@ -24,11 +24,11 @@ in
 {
   systemd.tmpfiles.rules = [
     # ---------- krita-ai-diffusion ----------
-    "L+ ${myLib.home}/.local/share/krita/pykrita/ai_diffusion - ${myLib.userName} ${myLib.userName} - ${pluginAI}/share/krita/pykrita/ai_diffusion"
-    "L+ ${myLib.home}/.local/share/krita/pykrita/ai_diffusion.desktop - ${myLib.userName} ${myLib.userName} - ${pluginAI}/share/krita/pykrita/ai_diffusion.desktop"
+    (myLib.mkLink "${myLib.home}/.local/share/krita/pykrita/ai_diffusion" "${pluginAI}/share/krita/pykrita/ai_diffusion")
+    (myLib.mkLink "${myLib.home}/.local/share/krita/pykrita/ai_diffusion.desktop" "${pluginAI}/share/krita/pykrita/ai_diffusion.desktop")
 
     # ---------- krita-vision-tools ----------
-    "L+ ${myLib.home}/.local/share/krita/pykrita/vision_tools - ${myLib.userName} ${myLib.userName} - ${pluginVT}/share/krita/pykrita/vision_tools"
-    "L+ ${myLib.home}/.local/share/krita/pykrita/vision_tools.desktop - ${myLib.userName} ${myLib.userName} - ${pluginVT}/share/krita/pykrita/vision_tools.desktop"
+    (myLib.mkLink "${myLib.home}/.local/share/krita/pykrita/vision_tools" "${pluginVT}/share/krita/pykrita/vision_tools")
+    (myLib.mkLink "${myLib.home}/.local/share/krita/pykrita/vision_tools.desktop" "${pluginVT}/share/krita/pykrita/vision_tools.desktop")
   ];
 }

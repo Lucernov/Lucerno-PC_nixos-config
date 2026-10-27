@@ -64,9 +64,9 @@ in
 
   # ====== Симлинки для статичных настроек ======
   systemd.tmpfiles.rules = [
-    "L+ ${myLib.home}/.config/katerc - ${myLib.userName} ${myLib.userName} - ${dotfilesKate}/katerc"                                          # Основной файл конфигурации Kate
-    "L+ ${myLib.home}/.config/kate-externaltoolspluginrc - ${myLib.userName} ${myLib.userName} - ${dotfilesKate}/kate-externaltoolspluginrc"  # Настройки плагина внешних инструментов (глобальные)
-    "L+ ${myLib.home}/.config/katevirc - ${myLib.userName} ${myLib.userName} - ${dotfilesKate}/katevirc"                                      # Настройки Vi-режима
-    "L+ ${myLib.home}/.config/kate - ${myLib.userName} ${myLib.userName} - ${dotfilesKate}/kate"                                              # Папка с внешними инструментами и LSP-клиентом (.config/kate/lspclient/settings.json)
+    (myLib.mkLink "${myLib.home}/.config/katerc" "${dotfilesKate}/katerc")                                          # Основной файл конфигурации Kate
+    (myLib.mkLink "${myLib.home}/.config/kate-externaltoolspluginrc" "${dotfilesKate}/kate-externaltoolspluginrc")  # Настройки плагина внешних инструментов (глобальные)
+    (myLib.mkLink "${myLib.home}/.config/katevirc" "${dotfilesKate}/katevirc")                                      # Настройки Vi-режима
+    (myLib.mkLink "${myLib.home}/.config/kate" "${dotfilesKate}/kate")                                              # Папка с внешними инструментами и LSP-клиентом
   ];
 }
