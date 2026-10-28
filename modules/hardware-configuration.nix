@@ -141,7 +141,11 @@ in
   # ========== ЖЕЛЕЗО ==========
   hardware = {
     cpu.intel.updateMicrocode = true;                                       # Включить загрузку актуального микрокода для процессоров Intel
-    enableRedistributableFirmware = true;                                   # Разрешить использование проприетарных прошивок
+    enableRedistributableFirmware = false;                                  # Отключить глобальный сбор ВСЕХ прошивок
+    firmware = with pkgs; [                                                 # Точечные указания прошивок
+      linux-firmware                                                        # Wi-Fi AX210, Bluetooth, Ethernet Realtek, базовая инициализация GPU
+      sof-firmware                                                          # Звук (Sound Open Firmware для чипов на материнской плате)
+    ];
     bluetooth = {
       enable = true;                                                        # Включить поддержку Bluetooth
       powerOnBoot = true;                                                   # Включить Bluetooth-адаптер при загрузке
