@@ -148,7 +148,6 @@ in
     ];
     bluetooth = {
       enable = true;                                                        # Включить поддержку Bluetooth
-      powerOnBoot = true;                                                   # Включить Bluetooth-адаптер при загрузке
     };
     graphics = {
       enable = true;                                                        # Включить поддержку аппаратного ускорения графики
@@ -157,8 +156,6 @@ in
     nvidia = {
       open = true;                                                          # Использовать открытые модули
       modesetting.enable = true;                                            # Обязательно для Wayland
-      nvidiaSettings = true;                                                # Установить утилиту nvidia-settings
-      powerManagement.enable = false;                                       # Отключить управление питанием (на десктопе не нужно)
 #     package = config.boot.kernelPackages.nvidiaPackages.latest;           # Стабильный nvidia драйвер (НЕ работает с ядром 7.2)
       package = config.boot.kernelPackages.nvidiaPackages.mkDriver {        # ДРАЙВЕР 595.99.02 (работает с ядром 7.2)
         version = "595.99.02";
@@ -183,7 +180,6 @@ in
     loader = {
       systemd-boot.enable = true;                                           # Использовать простой UEFI загрузчик systemd-boot
       efi.canTouchEfiVariables = true;                                      # Разрешить запись в EFI-переменные (нужно для добавления записей загрузки)
-      systemd-boot.consoleMode = "auto";                                    # детализация вывода загрузчика
     };
     #system.nixos-init.enable = true;                                       # Альтернативная система инициализации (пока не используется)
 
@@ -208,10 +204,7 @@ in
       options snd_usb_audio implicit_fb=1
     '';
 
-    extraModulePackages = [ ];                                              # Дополнительные пакеты модулей ядра (пусто – не используются)
-
     kernelParams = [                                                        # Параметры, передаваемые ядру при загрузке (через командную строку)
-      "nvidia_drm.modeset=1"                                                # Включить режимный сет DRM NVIDIA (нужен для Wayland)
       "nvidia_drm.fbdev=1"                                                  # Включить фреймбуфер через DRM (для консоли и раннего вывода)
       "initcall_blacklist=simpledrm_platform_driver_init"                   # Запретить загрузку simpledrm (убирает конфликт с simpledrm для работы TTY)
       "fbcon=font:TER16x32"                                                 # Установить шрифт консоли: TER16x32 (высокое разрешение, 16x32 пикселя)
@@ -222,10 +215,9 @@ in
       "tsc=reliable"                                                        # Считать TSC надёжным (не сбрасывается при состояниях сна)
       "irqaffinity=0"                                                       # Перенаправить все аппаратные прерывания на ядро 0
       "nowatchdog"                                                          # Отключить сторожевые таймеры (watchdog)
-      "quiet"                                                               # Подавляет большую часть сообщений ядра в консоли (оставляет только важные предупреждения и ошибки)
       "rd.systemd.show_status=auto"                                         # Управляет выводом статуса systemd в initrd: показывает только ошибки и важные события. Значение auto — systemd сам решает, когда показывать статус
       "rd.udev.log_priority=3"                                              # Устанавливает уровень логирования для udev в initrd (3 = ошибки). Уменьшает шум от udev.
-      "usbcore.quirks=07fd:0008:k,q"                                        # Явно указывает ядру применять quirk для MOTU M4 (отключает автоприостановку и включает обработку синхронизации)
+      "usbcore.quirks=07fd:0008:q"                                          # MOTU M4: не читать строковые дескрипторы config/interface (устройство их отдаёт некорректно)
     # "threadirqs"                                                          # Превратить все прерывания в потоки (улучшает отзывчивость при аудио) создает проблемы у звуковухи, там жесткие тайминги!
     # "preempt=full"                                                        # Полная вытесняемость ядра (снижает задержки, полезно для реального времени) создает проблемы у звуковухи, там жесткие тайминги!
     ];
@@ -241,7 +233,6 @@ in
       "vm.dirty_writeback_centisecs" = 500;                                 # Интервал сброса грязных данных (500 сотых секунды = 5 секунд)
       "vm.dirty_expire_centisecs" = 3000;                                   # Время жизни грязных данных (3000 сотых секунды = 30 секунд) – по истечении принудительный сброс
       "vm.max_map_count" = 1048576;                                         # Максимальное количество отображений памяти (memory maps) для процесса (полезно для игр и больших приложений)
-      "kernel.printk" = "3 3 3 3";                                          # Установить уровни логирования для консоли, системного лога, сообщений по умолчанию и ограничений. Только сообщения уровня KERN_ERR и выше (ошибки)
       "net.core.default_qdisc" = "fq";                                      # Установить глобальный планировщик очередей для сетевых интерфейсов: fq (Fair Queue)
       "net.ipv4.tcp_congestion_control" = "bbr";                            # Использовать алгоритм управления перегрузкой TCP BBR (Bottleneck Bandwidth and RTT). Даёт значительный прирост скорости передачи данных
     };
@@ -254,7 +245,6 @@ in
       kernelModules = [                                                     # Модули, загружаемые на раннем этапе (initrd)
         "nvidia"                                                            # Основной драйвер NVIDIA
         "nvidia_modeset"                                                    # Kernel Mode Setting. Задать разрешение, частоту обновления и формат вывода на уровне ядра, а не через пользовательские утилиты (необходимо для Wayland)
-        "nvidia_uvm"                                                        # Unified Virtual Memory: единое адресное пространство CPU↔GPU. ОБЯЗАТЕЛЕН для CUDA, OpenCL и compute-задач
         "nvidia_drm"                                                        # Интеграция NVIDIA с DRM (Direct Rendering Manager)
       ];
       availableKernelModules = [                                            # Модули, которые могут быть загружены динамически при обнаружении оборудования
@@ -268,8 +258,7 @@ in
       ];
     };
 
-    consoleLogLevel = 3;                                                    # Установить минимальный уровень важности сообщений ядра, выводимых на консоль. Будут показаны только ошибки и критические сообщения (уровень KERN_ERR и выше).
-    tmp.cleanOnBoot = true;                                                 # Автоматически очищать каталог /tmp при каждой загрузке системы. Повышает безопасность (удаляет временные файлы, созданные другими пользователями)
+    consoleLogLevel = 3;                                                    # Установить минимальный уровень важности сообщений ядра, выводимых на консоль. Будут показаны только ошибки и критические сообщения (уровень KERN_ERR и выше)
   };
 
   # ========== СЕТЬ ==========
@@ -300,7 +289,7 @@ in
       SUBSYSTEM=="usb", ATTR{idVendor}=="05ac", MODE="0660", GROUP="idevice"
 
       # Hotone Ampero II Stomp — USB-проброс в QEMU/KVM для прошивки через Windows-утилиту в виртуалке
-      SUBSYSTEM=="usb", ATTRS{idVendor}=="84ef", MODE="0666"
+      SUBSYSTEM=="usb", ATTRS{idVendor}=="84ef", MODE="0660", GROUP="libvirtd"
     '';
 
     usbmuxd = {

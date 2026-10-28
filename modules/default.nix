@@ -34,18 +34,18 @@
       hashedPasswordFile = config.age.secrets."lucerno-password.hash".path;                                 # Файл с хешем пароля (расшифровывается agenix)
       group = myLib.userName;                                                                               # Группа, к которой принадлежит пользователь
       extraGroups = [
-        "wheel"                                                                                             # Доступ к командам sudo (администрирование системы)
-        "networkmanager"                                                                                    # Управление сетями через NetworkManager (Wi‑Fi, VPN)
         "audio"                                                                                             # Для низкоуровневого доступа к звуку (ALSA, PipeWire, PulseAudio)
-        "rtkit"                                                                                             # Приоритет реального времени для аудио (Realtime Kit)
-        "video"                                                                                             # Доступ к видеоустройствам и аппаратному ускорению (VA‑API, VDPAU)
-        "nvidia"                                                                                            # Доступ к драйверу NVIDIA (CUDA, OpenCL, аппаратное ускорение)
-        "render"                                                                                            # Доступ к рендерингу через DRM (аппаратное ускорение графики)
-        "storage"                                                                                           # Управление дисками и хранилищами (монтирование, форматирование)
         "fuse"                                                                                              # Доступ к FUSE (монтирование в пользовательском пространстве для rclone и др.)
-        "powercap"                                                                                          # Доступ к энергопотреблению CPU через RAPL (используется btop, powertop)
-        "libvirtd"                                                                                          # Управление виртуальными машинами через QEMU/KVM (libvirt)
         "idevice"                                                                                           # Доступ к устройствам Apple (iPhone, iPad) через USB. Нужен для работы демона usbmuxd
+        "libvirtd"                                                                                          # Управление виртуальными машинами через QEMU/KVM (libvirt)
+        "networkmanager"                                                                                    # Управление сетями через NetworkManager (Wi‑Fi, VPN)
+        "nvidia"                                                                                            # Доступ к драйверу NVIDIA (CUDA, OpenCL, аппаратное ускорение)
+        "powercap"                                                                                          # Доступ к энергопотреблению CPU через RAPL (используется btop, powertop)
+        "render"                                                                                            # Доступ к рендерингу через DRM (аппаратное ускорение графики)
+        "rtkit"                                                                                             # Приоритет реального времени для аудио (Realtime Kit)
+        "storage"                                                                                           # Управление дисками и хранилищами (монтирование, форматирование)
+        "video"                                                                                             # Доступ к видеоустройствам и аппаратному ускорению (VA‑API, VDPAU)
+        "wheel"                                                                                             # Доступ к командам sudo (администрирование системы)
       ];
       shell = pkgs.zsh;                                                                                     # Командная оболочка по умолчанию (Zsh)
     };
@@ -85,9 +85,6 @@
       NIXOS_OZONE_WL = "1";                                                                                 # Включить поддержку Ozone Wayland для Chromium/Electron (флаг NIXOS_OZONE_WL)
       WLR_NO_HARDWARE_CURSORS = "1";                                                                        # Отключить аппаратные курсоры в wlroots (помогает избежать проблем с мерцанием курсора на NVIDIA)
       EGL_PLATFORM = "wayland";                                                                             # Указать EGL использовать Wayland (необходимо для некоторых приложений)
-      VK_LAYER_DISABLE = "steam_fossilize";                                                                 # Отключить слой Steam Fossilize, который иногда вызывает вылеты или тормоза в играх
-      PROTON_NO_ESYNC = "1";                                                                                # Отключить старую синхронизацию esync (Eventfd), так как используется NTSync
-      PROTON_NO_FSYNC = "1";                                                                                # Отключить старую синхронизацию fsync (Futex), так как используется NTSync
       PROTON_USE_NTSYNC = "1";                                                                              # Включить улучшенную синхронизацию NTSync (вместо устаревших esync/fsync) для лучшей производительности в Proton
       TESSDATA_PREFIX = "/run/current-system/sw/share/tessdata";                                            # Путь к языковым данным Tesseract для OCR в Spectacle
       XMODIFIERS = "@im=none";                                                                              # Говорит Xlib не пытаться открыть XIM (убирает "XOpenIM() failed" в логе Steam)
@@ -115,30 +112,30 @@
     settings = {
       experimental-features = [ "nix-command" "flakes" ];                                                   # Включить поддержку команд Nix и флейков (flake)
       auto-optimise-store = true;                                                                           # Автоматически оптимизировать store (удалять дубликаты файлов)
-      max-jobs = 1;                                                                                         # Максимальное количество параллельных сборок (задач Nix)
+      max-jobs = 4;                                                                                         # Максимальное количество параллельных сборок (задач Nix)
       keep-derivations = true;                                                                              # Сохранять деривации (промежуточные результаты сборки) – полезно для кэширования
       keep-outputs = true;                                                                                  # Сохранять готовые outputs пакетов (обычно всегда true)
       substituters = [                                                                                      # Список дополнительных кэшей (substituters), откуда Nix может скачивать готовые бинарные сборки
         "https://cache.nixos.org"                                                                           # Основной кэш NixOS
+        "https://nix-community.cachix.org"                                                                  # Кэш Nix Community
         "https://cache.nixos-cuda.org"                                                                      # Специализированный CUDA-кэш
         "https://cache.flox.dev"                                                                            # Официальный кэш NVIDIA/CUDA (предотвращает компиляцию CUDA из исходников)
-        "https://nix-community.cachix.org"                                                                  # Кэш Nix Community
         "https://adithyagenie.cachix.org"                                                                   # Кэш готовых сборок Blender с CUDA (от adithyagenie, экономит время компиляции)
-        "https://chaotic-nyx.cachix.org"                                                                    # Дополнительный кеш с большим количеством популярных пакетов
-        "https://devenv.cachix.org"                                                                         # Кеш для сред разработки (devenv)
-      # "https://attic.xuyh0120.win/lantian"                                                                # Добавляем кэш аттика от xuyh0120 (содержит множество готовых сборок для CachyOS пакетов)
         "https://comfyui.cachix.org"                                                                        # Кэш готовых сборок ComfyUI (в т.ч. CUDA-wheels PyTorch) – избавляет от многочасовой компиляции из исходников
+      # "https://devenv.cachix.org"                                                                         # Кеш для сред разработки (devenv)
+      # "https://chaotic-nyx.cachix.org"                                                                    # Дополнительный кеш с большим количеством популярных пакетов
+      # "https://attic.xuyh0120.win/lantian"                                                                # Добавляем кэш аттика от xuyh0120 (содержит множество готовых сборок для CachyOS пакетов)
       ];
       trusted-public-keys = [                                                                               # Публичные ключи для проверки подписей пакетов из соответствующих кэшей
         "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="                                    # Ключ основного кэша
+        "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="                           # ключ кэша nix-community
         "cache.nixos-cuda.org:74DUi4Ye579gUqzH4ziL9IyiJBlDpMRn9MBN8oNan9M="                                 # Публичный ключ CUDA-кэша
         "cache.flox.dev-1:H4Tsx+8AOz3b3CvyCqVQPyEr2cHKH+O8bHn8ZgYp/po="                                     # Ключ кэша flox (CUDA)
-        "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="                           # ключ кэша nix-community
         "adithyagenie.cachix.org-1:h6BSMboeVfxyrULWuRQqAyweo4AJRATekb88xotfQwc="                            # Публичный ключ кэша adithyagenie (Blender с CUDA)
-        "chaotic-nyx.cachix.org-1:HfnXSw4pj95iI/n17rIDy40agHj12WfF+Gqk6SonIT8="                             # Ключ chaotic-nyx
-        "devenv.cachix.org-1:w1cLUi8dv3hnoSPGAuibQv+f9TZLr6cv/Hm9XgU50cw="                                  # Ключ devenv
-      # "lantian:EeAUQ+W+6r7EtwnmYjeVwx5kOGEBpjlBfPlzGlTNvHc="                                              # Публичный ключ для проверки подписей пакетов из указанного аттика.
         "comfyui.cachix.org-1:33mf9VzoIjzVbp0zwj+fT51HG0y31ZTK3nzYZAX0rec="                                 # Публичный ключ кэша ComfyUI (официальный ключ из flake.nix проекта utensils/comfyui-nix)
+      # "devenv.cachix.org-1:w1cLUi8dv3hnoSPGAuibQv+f9TZLr6cv/Hm9XgU50cw="                                  # Ключ devenv
+      # "chaotic-nyx.cachix.org-1:HfnXSw4pj95iI/n17rIDy40agHj12WfF+Gqk6SonIT8="                             # Ключ chaotic-nyx
+      # "lantian:EeAUQ+W+6r7EtwnmYjeVwx5kOGEBpjlBfPlzGlTNvHc="                                              # Публичный ключ для проверки подписей пакетов из указанного аттика.
       ];
     };
     gc = {                                                                                                  # Настройки автоматической очистки старых поколений (garbage collection)
