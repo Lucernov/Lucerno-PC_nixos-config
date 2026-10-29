@@ -70,6 +70,12 @@ in
           --allow-non-empty \
           --transfers=1 \
           --checkers=1 \
+          --dir-cache-time 24h \
+          --attr-timeout 24h \
+          --vfs-cache-max-age 24h \
+          --vfs-cache-max-size 10G \
+          --buffer-size 32M \
+          --async-read=true \
           --drive-use-trash=false'';
         ExecStop = "/run/current-system/sw/bin/fusermount -u /mnt/www-GoogleDrive"; # Команда размонтирования
         Restart = "on-failure";                                                     # Перезапускать при сбое
@@ -109,14 +115,45 @@ in
           --allow-other \
           --allow-non-empty \
           --transfers=1 \
-          --checkers=1'';
+          --checkers=1 \
+          --dir-cache-time 24h \
+          --attr-timeout 24h \
+          --vfs-cache-max-age 24h \
+          --vfs-cache-max-size 10G \
+          --buffer-size 32M \
+          --async-read=true \
+          --drive-use-trash=false'';
         ExecStop = "/run/current-system/sw/bin/fusermount -u /mnt/www-OneDrive";   # Команда размонтирования
         Restart = "on-failure";                                                    # Перезапускать при сбое
         RestartSec = 5;                                                            # Задержка перед перезапуском (5 секунд)
       };
     };
 
-        # ========== Сервис монтирования Яндекс.Диска ==========
+    # =========================================================================
+    # ВАЖНО: Особенности настройки Яндекс.Диска (Yandex Disk)
+    # =========================================================================
+    # Стандартное приложение rclone больше не имеет прав на запись в Яндекс.Диск
+    # Если вылазит ошибка "410 Gone" или "insufficient permissions":
+    #
+    # 1. Перейти на Яндекс Полигон (отладочная площадка API):
+    #    https://yandex.ru/dev/disk/poligon
+    #
+    # 2. Войти в свой аккаунт и нажать "Получить OAuth-токен"
+    #
+    # 3. Открыть ~/.config/rclone/rclone.conf и в секции [yandex]
+    #    вставить токен в следующем формате (ВНИМАНИЕ на refresh_token и expiry):
+    #
+    #    [yandex]
+    #    type = yandex
+    #    token = {"access_token":"ТОКЕН_ИЗ_ПОЛИГОНА","token_type":"OAuth","refresh_token":"unused","expiry":"2099-01-01T00:00:00Z"}
+    #
+    # 4. Перезапустить сервис: sudo systemctl restart rclone-yandex
+    #
+    # 5. Обновить секрет agenix:
+    #    cd ~/nixos-config/secrets && ragenix -e rclone-conf.age -i ~/.config/agenix/keys.txt
+    #
+    # Токен Полигона действует около года. После истечения срока процедуру нужно повторить
+    # =========================================================================
     rclone-yandex = {
       description = "RClone Mount for Yandex Disk";                                 # Описание сервиса
       after = [ "network-online.target" ];                                          # Запускать после поднятия сети
@@ -148,7 +185,14 @@ in
           --allow-other \
           --allow-non-empty \
           --transfers=1 \
-          --checkers=1'';
+          --checkers=1 \
+          --dir-cache-time 24h \
+          --attr-timeout 24h \
+          --vfs-cache-max-age 24h \
+          --vfs-cache-max-size 10G \
+          --buffer-size 32M \
+          --async-read=true \
+          --drive-use-trash=false'';
         ExecStop = "/run/current-system/sw/bin/fusermount -u /mnt/www-YandexDisk";     # Команда размонтирования
         Restart = "on-failure";                                                    # Перезапускать при сбое
         RestartSec = 5;                                                            # Задержка перед перезапуском (5 секунд)
