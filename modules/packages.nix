@@ -201,7 +201,6 @@ in
     telegram-desktop                                              # Мессенджер Telegram
     zapzap                                                        # Вотсап клииент
     lucerno-packages.teamspeak                                    # Голосовой чат Тимспик
-    yandex-disk
 
     # ГРАФИКА
     upscaler                                                      # Увеличение разрешения изображений
