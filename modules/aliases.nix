@@ -126,6 +126,10 @@
       # ========== Эффекты ==========
       neo- = "neo --defaultbg";                                  # матричный дождь на фоне терминала
 
+      # ========== Облачные диски ==========
+      clouds-restart = "sudo systemctl restart rclone-gdrive rclone-onedrive rclone-yandex && echo '✅ Облачные диски перезапущены'"; # Перезапустить все сервисы rclone
+      clouds-unmount = "sudo fusermount -uz /mnt/www-GoogleDrive /mnt/www-OneDrive /mnt/www-YandexDisk 2>/dev/null; echo '✅ Монтирования очищены'"; # Принудительно размонтировать (если зависло)
+
       # ========== Включение-отключение проектора ==========
       cinema-on  = "kscreen-doctor output.HDMI-A-1.enable output.HDMI-A-1.mode.1 output.HDMI-A-1.position.2560,360";
       cinema-off = "kscreen-doctor output.HDMI-A-1.disable output.DP-1.priority.1";
