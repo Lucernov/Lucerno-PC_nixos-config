@@ -18,16 +18,22 @@ in
     (myLib.mkDir "/mnt/www-GoogleDrive")
     (myLib.mkDir "/mnt/www-OneDrive")
     (myLib.mkDir "${home}/.config/rclone")
+
+    # Убрали симлинк на rclone.conf, так как agenix делает его read-only.
+    # Вместо этого rclone будет копировать его при старте (ExecStartPre ниже).
+
     (myLib.mkLink "${home}/.config/rclone/exclude.txt" (pkgs.writeText "rclone-exclude.txt" ''
       *.gdoc
       *.gsheet
       *.gslides
     ''))
+
     # --- KIO настройки для ускорения корзины ---
     (myLib.mkLink "${home}/.config/kiorc" (pkgs.writeText "kiorc" ''
       [Trash]
       CheckMounts=false
     ''))
+
     # --- Исключение сетевых папок из индексации Baloo ---
     (myLib.mkLink "${home}/.config/baloofilerc" (pkgs.writeText "baloofilerc" ''
       [General]
@@ -39,13 +45,14 @@ in
     # ========== Сервис монтирования Google Drive ==========
     rclone-gdrive = {
       description = "RClone Mount for Google Drive";                                # Описание сервиса
-      after = [ "network-online.target" "agenix.service" ];                         # Запустить после того, как сеть поднята, и после расшифровки секретов agenix
-      wants = [ "network-online.target" "agenix.service" ];                         # Желательно дождаться готовности сети и agenix
+      after = [ "network-online.target" ];                                          # Запустить после того, как сеть полностью поднята (с доступом в интернет)
+      wants = [ "network-online.target" ];                                          # Желательно дождаться готовности сети
       wantedBy = [ "multi-user.target" ];                                           # Автоматически запускать при загрузке системы
       serviceConfig = {
         User = myLib.userName;                                                      # Запустить от имени пользователя
         Group = myLib.userName;                                                     # Группа users (стандартная для обычных пользователей)
         Type = "simple";                                                            # Простой процесс (не разветвляется)
+
         # ---------- Отключение ограничений systemd для работы с FUSE ----------
         PrivateDevices = false;                                                     # Разрешить доступ к устройствам (/dev/fuse)
         ProtectSystem = "off";                                                      # Отключить защиту системных каталогов (необходимо для монтирования)
@@ -56,9 +63,14 @@ in
         SupplementaryGroups = [ "fuse" ];                                           # Добавить группу fuse для доступа к /dev/fuse
         DeviceAllow = [ "/dev/fuse" ];                                              # Явно разрешить доступ к устройству FUSE
         AmbientCapabilities = [ "CAP_SYS_ADMIN" ];                                  # Дать процессу возможность монтировать (нужно для FUSE)
+
         # ---------- Безопасное копирование конфига из agenix ----------
-        # Сначала принудительно удаляем старый симлинк (если он есть), затем создаем новый файл с правами 600
-        ExecStartPre = ''${pkgs.coreutils}/bin/rm -f ${home}/.config/rclone/rclone.conf && ${pkgs.coreutils}/bin/install -m 600 ${config.age.secrets."rclone-conf".path} ${home}/.config/rclone/rclone.conf'';
+        # Передаем команды списком, systemd выполнит их по очереди.
+        ExecStartPre = [
+          ''${pkgs.coreutils}/bin/rm -f ${home}/.config/rclone/rclone.conf''
+          ''${pkgs.coreutils}/bin/install -m 600 ${config.age.secrets."rclone-conf".path} ${home}/.config/rclone/rclone.conf''
+        ];
+
         # ---------- Команда запуска rclone ----------
         ExecStart = ''${pkgs.rclone}/bin/rclone mount gdrive: /mnt/www-GoogleDrive \
           --config=${home}/.config/rclone/rclone.conf \
@@ -68,6 +80,7 @@ in
           --transfers=1 \
           --checkers=1 \
           --drive-use-trash=false'';
+
         ExecStop = "/run/current-system/sw/bin/fusermount -u /mnt/www-GoogleDrive"; # Команда размонтирования
         Restart = "on-failure";                                                     # Перезапускать при сбое
         RestartSec = 5;                                                             # Задержка перед перезапуском (5 секунд)
@@ -77,13 +90,14 @@ in
     # ========== Сервис монтирования OneDrive ==========
     rclone-onedrive = {
       description = "RClone Mount for OneDrive";                                    # Описание сервиса
-      after = [ "network-online.target" "agenix.service" ];                         # Запускать после поднятия сети и расшифровки секретов agenix
-      wants = [ "network-online.target" "agenix.service" ];                         # Желательно дождаться сети и agenix
+      after = [ "network-online.target" ];                                          # Запускать после поднятия сети
+      wants = [ "network-online.target" ];                                          # Желательно дождаться сети
       wantedBy = [ "multi-user.target" ];                                           # Автозапуск при загрузке
       serviceConfig = {
         User = myLib.userName;                                                      # Запускать от пользователя
         Group = myLib.userName;                                                     # Группа users
         Type = "simple";                                                            # Простой процесс
+
         # ---------- Отключение ограничений systemd для работы с FUSE ----------
         PrivateDevices = false;                                                     # Разрешить доступ к устройствам (/dev/fuse)
         ProtectSystem = "off";                                                      # Отключить защиту системных каталогов (необходимо для монтирования)
@@ -94,9 +108,14 @@ in
         SupplementaryGroups = [ "fuse" ];                                           # Добавить группу fuse для доступа к /dev/fuse
         DeviceAllow = [ "/dev/fuse" ];                                              # Явно разрешить доступ к устройству FUSE
         AmbientCapabilities = [ "CAP_SYS_ADMIN" ];                                  # Дать процессу возможность монтировать (нужно для FUSE)
+
         # ---------- Безопасное копирование конфига из agenix ----------
-        # Сначала принудительно удаляем старый симлинк (если он есть), затем создаем новый файл с правами 600
-        ExecStartPre = ''${pkgs.coreutils}/bin/rm -f ${home}/.config/rclone/rclone.conf && ${pkgs.coreutils}/bin/install -m 600 ${config.age.secrets."rclone-conf".path} ${home}/.config/rclone/rclone.conf'';
+        # Передаем команды списком, systemd выполнит их по очереди.
+        ExecStartPre = [
+          ''${pkgs.coreutils}/bin/rm -f ${home}/.config/rclone/rclone.conf''
+          ''${pkgs.coreutils}/bin/install -m 600 ${config.age.secrets."rclone-conf".path} ${home}/.config/rclone/rclone.conf''
+        ];
+
         # ---------- Команда запуска rclone ----------
         ExecStart = ''${pkgs.rclone}/bin/rclone mount onedrive: /mnt/www-OneDrive \
           --config=${home}/.config/rclone/rclone.conf \
@@ -105,6 +124,7 @@ in
           --allow-non-empty \
           --transfers=1 \
           --checkers=1'';
+
         ExecStop = "/run/current-system/sw/bin/fusermount -u /mnt/www-OneDrive";   # Команда размонтирования
         Restart = "on-failure";                                                    # Перезапускать при сбое
         RestartSec = 5;                                                            # Задержка перед перезапуском (5 секунд)
