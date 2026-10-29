@@ -42,4 +42,48 @@
       ExecStart = "${pkgs.kdePackages.plasma-workspace}/bin/plasma-apply-wallpaperimage ${myLib.wallpaperPath}";
     };
   };
+
+   # ========== Настройки корзины KDE ==========
+  systemd.tmpfiles.rules = [
+    (myLib.mkLink "${myLib.home}/.config/ktrashrc" (pkgs.writeText "ktrashrc" ''
+      [/home/lucerno/.local/share/Trash]
+      Days=7
+      LimitReachedAction=0
+      Percent=10
+      UseSizeLimit=true
+      UseTimeLimit=false
+
+      [/mnt/video-temp/.Trash-1000]
+      Days=7
+      LimitReachedAction=0
+      Percent=10
+      UseSizeLimit=true
+      UseTimeLimit=false
+
+      [/mnt/video/.Trash-1000]
+      Days=7
+      LimitReachedAction=0
+      Percent=10
+      UseSizeLimit=true
+      UseTimeLimit=false
+
+      # --- Изменения для rclone (добавлено trash_disable=true) ---
+      [/mnt/www-GoogleDrive/.Trash-1000]
+      Days=7
+      LimitReachedAction=0
+      Percent=10
+      UseSizeLimit=false
+      UseTimeLimit=false
+      trash_disable=true
+
+      # --- Новая секция для OneDrive ---
+      [/mnt/www-OneDrive/.Trash-1000]
+      Days=7
+      LimitReachedAction=0
+      Percent=10
+      UseSizeLimit=false
+      UseTimeLimit=false
+      trash_disable=true
+    ''))
+  ];
 }
