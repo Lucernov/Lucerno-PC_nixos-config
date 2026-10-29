@@ -57,8 +57,8 @@ in
         DeviceAllow = [ "/dev/fuse" ];                                              # Явно разрешить доступ к устройству FUSE
         AmbientCapabilities = [ "CAP_SYS_ADMIN" ];                                  # Дать процессу возможность монтировать (нужно для FUSE)
         # ---------- Безопасное копирование конфига из agenix ----------
-        # install заменяет старый симлинк обычным файлом, не трогая оригинал в /run/agenix/
-        ExecStartPre = ''${pkgs.coreutils}/bin/install -m 600 ${config.age.secrets."rclone-conf".path} ${home}/.config/rclone/rclone.conf'';
+        # Сначала принудительно удаляем старый симлинк (если он есть), затем создаем новый файл с правами 600
+        ExecStartPre = ''${pkgs.coreutils}/bin/rm -f ${home}/.config/rclone/rclone.conf && ${pkgs.coreutils}/bin/install -m 600 ${config.age.secrets."rclone-conf".path} ${home}/.config/rclone/rclone.conf'';
         # ---------- Команда запуска rclone ----------
         ExecStart = ''${pkgs.rclone}/bin/rclone mount gdrive: /mnt/www-GoogleDrive \
           --config=${home}/.config/rclone/rclone.conf \
@@ -95,8 +95,8 @@ in
         DeviceAllow = [ "/dev/fuse" ];                                              # Явно разрешить доступ к устройству FUSE
         AmbientCapabilities = [ "CAP_SYS_ADMIN" ];                                  # Дать процессу возможность монтировать (нужно для FUSE)
         # ---------- Безопасное копирование конфига из agenix ----------
-        # install заменяет старый симлинк обычным файлом, не трогая оригинал в /run/agenix/
-        ExecStartPre = ''${pkgs.coreutils}/bin/install -m 600 ${config.age.secrets."rclone-conf".path} ${home}/.config/rclone/rclone.conf'';
+        # Сначала принудительно удаляем старый симлинк (если он есть), затем создаем новый файл с правами 600
+        ExecStartPre = ''${pkgs.coreutils}/bin/rm -f ${home}/.config/rclone/rclone.conf && ${pkgs.coreutils}/bin/install -m 600 ${config.age.secrets."rclone-conf".path} ${home}/.config/rclone/rclone.conf'';
         # ---------- Команда запуска rclone ----------
         ExecStart = ''${pkgs.rclone}/bin/rclone mount onedrive: /mnt/www-OneDrive \
           --config=${home}/.config/rclone/rclone.conf \
