@@ -68,6 +68,7 @@
       UseTimeLimit=false
 
       # --- Изменения для rclone (добавлено trash_disable=true) ---
+      # --- Секция для GoogleDrive ---
       [/mnt/www-GoogleDrive/.Trash-1000]
       Days=7
       LimitReachedAction=0
@@ -76,8 +77,17 @@
       UseTimeLimit=false
       trash_disable=true
 
-      # --- Новая секция для OneDrive ---
+      # --- Секция для OneDrive ---
       [/mnt/www-OneDrive/.Trash-1000]
+      Days=7
+      LimitReachedAction=0
+      Percent=10
+      UseSizeLimit=false
+      UseTimeLimit=false
+      trash_disable=true
+
+      # --- Секция для Яндекс.Диска ---
+      [/mnt/www-YandexDisk/.Trash-1000]
       Days=7
       LimitReachedAction=0
       Percent=10

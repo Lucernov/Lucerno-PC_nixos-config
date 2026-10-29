@@ -17,27 +17,22 @@ in
   systemd.tmpfiles.rules = [
     (myLib.mkDir "/mnt/www-GoogleDrive")
     (myLib.mkDir "/mnt/www-OneDrive")
+    (myLib.mkDir "/mnt/www-YandexDisk")
     (myLib.mkDir "${home}/.config/rclone")
-
-    # Убрали симлинк на rclone.conf, так как agenix делает его read-only.
-    # Вместо этого rclone будет копировать его при старте (ExecStartPre ниже).
-
     (myLib.mkLink "${home}/.config/rclone/exclude.txt" (pkgs.writeText "rclone-exclude.txt" ''
       *.gdoc
       *.gsheet
       *.gslides
     ''))
-
     # --- KIO настройки для ускорения корзины ---
     (myLib.mkLink "${home}/.config/kiorc" (pkgs.writeText "kiorc" ''
       [Trash]
       CheckMounts=false
     ''))
-
     # --- Исключение сетевых папок из индексации Baloo ---
     (myLib.mkLink "${home}/.config/baloofilerc" (pkgs.writeText "baloofilerc" ''
       [General]
-      exclude filters=/mnt/www-GoogleDrive/,/mnt/www-OneDrive/
+      exclude filters=/mnt/www-GoogleDrive/,/mnt/www-OneDrive/,/mnt/www-YandexDisk/
     ''))
   ];
 
@@ -52,7 +47,6 @@ in
         User = myLib.userName;                                                      # Запустить от имени пользователя
         Group = myLib.userName;                                                     # Группа users (стандартная для обычных пользователей)
         Type = "simple";                                                            # Простой процесс (не разветвляется)
-
         # ---------- Отключение ограничений systemd для работы с FUSE ----------
         PrivateDevices = false;                                                     # Разрешить доступ к устройствам (/dev/fuse)
         ProtectSystem = "off";                                                      # Отключить защиту системных каталогов (необходимо для монтирования)
@@ -63,14 +57,11 @@ in
         SupplementaryGroups = [ "fuse" ];                                           # Добавить группу fuse для доступа к /dev/fuse
         DeviceAllow = [ "/dev/fuse" ];                                              # Явно разрешить доступ к устройству FUSE
         AmbientCapabilities = [ "CAP_SYS_ADMIN" ];                                  # Дать процессу возможность монтировать (нужно для FUSE)
-
         # ---------- Безопасное копирование конфига из agenix ----------
-        # Передаем команды списком, systemd выполнит их по очереди.
         ExecStartPre = [
           ''${pkgs.coreutils}/bin/rm -f ${home}/.config/rclone/rclone.conf''
           ''${pkgs.coreutils}/bin/install -m 600 ${config.age.secrets."rclone-conf".path} ${home}/.config/rclone/rclone.conf''
         ];
-
         # ---------- Команда запуска rclone ----------
         ExecStart = ''${pkgs.rclone}/bin/rclone mount gdrive: /mnt/www-GoogleDrive \
           --config=${home}/.config/rclone/rclone.conf \
@@ -80,7 +71,6 @@ in
           --transfers=1 \
           --checkers=1 \
           --drive-use-trash=false'';
-
         ExecStop = "/run/current-system/sw/bin/fusermount -u /mnt/www-GoogleDrive"; # Команда размонтирования
         Restart = "on-failure";                                                     # Перезапускать при сбое
         RestartSec = 5;                                                             # Задержка перед перезапуском (5 секунд)
@@ -97,7 +87,6 @@ in
         User = myLib.userName;                                                      # Запускать от пользователя
         Group = myLib.userName;                                                     # Группа users
         Type = "simple";                                                            # Простой процесс
-
         # ---------- Отключение ограничений systemd для работы с FUSE ----------
         PrivateDevices = false;                                                     # Разрешить доступ к устройствам (/dev/fuse)
         ProtectSystem = "off";                                                      # Отключить защиту системных каталогов (необходимо для монтирования)
@@ -108,14 +97,11 @@ in
         SupplementaryGroups = [ "fuse" ];                                           # Добавить группу fuse для доступа к /dev/fuse
         DeviceAllow = [ "/dev/fuse" ];                                              # Явно разрешить доступ к устройству FUSE
         AmbientCapabilities = [ "CAP_SYS_ADMIN" ];                                  # Дать процессу возможность монтировать (нужно для FUSE)
-
         # ---------- Безопасное копирование конфига из agenix ----------
-        # Передаем команды списком, systemd выполнит их по очереди.
         ExecStartPre = [
           ''${pkgs.coreutils}/bin/rm -f ${home}/.config/rclone/rclone.conf''
           ''${pkgs.coreutils}/bin/install -m 600 ${config.age.secrets."rclone-conf".path} ${home}/.config/rclone/rclone.conf''
         ];
-
         # ---------- Команда запуска rclone ----------
         ExecStart = ''${pkgs.rclone}/bin/rclone mount onedrive: /mnt/www-OneDrive \
           --config=${home}/.config/rclone/rclone.conf \
@@ -124,8 +110,46 @@ in
           --allow-non-empty \
           --transfers=1 \
           --checkers=1'';
-
         ExecStop = "/run/current-system/sw/bin/fusermount -u /mnt/www-OneDrive";   # Команда размонтирования
+        Restart = "on-failure";                                                    # Перезапускать при сбое
+        RestartSec = 5;                                                            # Задержка перед перезапуском (5 секунд)
+      };
+    };
+
+        # ========== Сервис монтирования Яндекс.Диска ==========
+    rclone-yandex = {
+      description = "RClone Mount for Yandex Disk";                                 # Описание сервиса
+      after = [ "network-online.target" ];                                          # Запускать после поднятия сети
+      wants = [ "network-online.target" ];                                          # Желательно дождаться сети
+      wantedBy = [ "multi-user.target" ];                                           # Автозапуск при загрузке
+      serviceConfig = {
+        User = myLib.userName;                                                      # Запускать от пользователя
+        Group = myLib.userName;                                                     # Группа пользователя
+        Type = "simple";                                                            # Простой процесс
+        # ---------- Отключение ограничений systemd для работы с FUSE ----------
+        PrivateDevices = false;                                                     # Разрешить доступ к устройствам (/dev/fuse)
+        ProtectSystem = "off";                                                      # Отключить защиту системных каталогов (необходимо для монтирования)
+        ProtectHome = false;                                                        # Разрешить доступ к домашней папке (нужен конфиг rclone)
+        NoNewPrivileges = false;                                                    # Разрешить процессу получать новые привилегии (CAP_SYS_ADMIN)
+        PrivateMounts = false;                                                      # Не изолировать точки монтирования (нужно для FUSE)
+        MountFlags = "shared";                                                      # Сделать монтирования разделяемыми (необходимо для FUSE)
+        SupplementaryGroups = [ "fuse" ];                                           # Добавить группу fuse для доступа к /dev/fuse
+        DeviceAllow = [ "/dev/fuse" ];                                              # Явно разрешить доступ к устройству FUSE
+        AmbientCapabilities = [ "CAP_SYS_ADMIN" ];                                  # Дать процессу возможность монтировать (нужно для FUSE)
+        # ---------- Безопасное копирование конфига из agenix ----------
+        ExecStartPre = [
+          ''${pkgs.coreutils}/bin/rm -f ${home}/.config/rclone/rclone.conf''
+          ''${pkgs.coreutils}/bin/install -m 600 ${config.age.secrets."rclone-conf".path} ${home}/.config/rclone/rclone.conf''
+        ];
+        # ---------- Команда запуска rclone ----------
+        ExecStart = ''${pkgs.rclone}/bin/rclone mount yandex: /mnt/www-YandexDisk \
+          --config=${home}/.config/rclone/rclone.conf \
+          --vfs-cache-mode full \
+          --allow-other \
+          --allow-non-empty \
+          --transfers=1 \
+          --checkers=1'';
+        ExecStop = "/run/current-system/sw/bin/fusermount -u /mnt/www-YandexDisk";     # Команда размонтирования
         Restart = "on-failure";                                                    # Перезапускать при сбое
         RestartSec = 5;                                                            # Задержка перед перезапуском (5 секунд)
       };
