@@ -68,7 +68,9 @@ in
           --allow-other \
           --allow-non-empty \
           --transfers=1 \
-          --checkers=1'';
+          --checkers=1 \
+          --fuse-flag x-gvfs-notrash \
+          --drive-use-trash=false'';
 
         ExecStop = "/run/current-system/sw/bin/fusermount -u /mnt/www-GoogleDrive"; # Команда размонтирования
         Restart = "on-failure";                                                     # Перезапускать при сбое
@@ -105,7 +107,9 @@ in
           --allow-other \
           --allow-non-empty \
           --transfers=1 \
-          --checkers=1'';
+          --checkers=1 \
+          --fuse-flag x-gvfs-notrash \
+          --drive-use-trash=false'';
 
         ExecStop = "/run/current-system/sw/bin/fusermount -u /mnt/www-OneDrive";   # Команда размонтирования
         Restart = "on-failure";                                                    # Перезапускать при сбое
