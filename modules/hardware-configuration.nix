@@ -180,6 +180,7 @@ in
     loader = {
       systemd-boot.enable = true;                                           # Использовать простой UEFI загрузчик systemd-boot
       efi.canTouchEfiVariables = true;                                      # Разрешить запись в EFI-переменные (нужно для добавления записей загрузки)
+      systemd-boot.consoleMode = "auto";                                    # управляет разрешением (разрешающей способностью) экрана в меню загрузчика и на ранней консоли
     };
     #system.nixos-init.enable = true;                                       # Альтернативная система инициализации (пока не используется)
 
