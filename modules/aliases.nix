@@ -51,6 +51,10 @@
         (SC_URL=$(curl -s -H \"Authorization: Bearer $GITHUB_TOKEN\" https://api.github.com/repos/surge-synthesizer/shortcircuit-xt/releases/tags/Nightly | grep -oE 'https://[^\"]+shortcircuit-xt-linux-[0-9]{4}-[0-9]{2}-[0-9]{2}-[a-f0-9]{7}\\.zip' | head -1) && \
          SC_VER=$(echo \"$SC_URL\" | sed -E 's/.*shortcircuit-xt-linux-(.*)\\.zip/\\1/') && \
          nix-update shortcircuit-xt --flake --url \"$SC_URL\" --version \"$SC_VER\" || echo '  ⚠️ shortcircuit-xt: пропущен') && \
+        echo '━━━ tdr-nova ━━━' && \
+        (TDR_VER=$(curl -s https://www.tokyodawn.net/tdr-nova/ | grep -oE 'Nova/[0-9]+\\.[0-9]+\\.[0-9]+/' | head -1 | cut -d'/' -f2) && \
+         TDR_URL=\"https://www.tokyodawn.net/labs/Nova/$TDR_VER/TDR%20Nova.tar.gz\" && \
+         nix-update tdr-nova --flake --url \"$TDR_URL\" --version \"$TDR_VER\" || echo '  ⚠️ tdr-nova: пропущен') && \
         echo '' && \
         git diff --stat pkgs/ && \
         echo '' && \
@@ -60,9 +64,8 @@
         echo '  • Собрать и применить: local-up' && \
         echo '  • Закоммитить:         sync' && \
         echo '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━'";
-      # satordist2 намеренно НЕ включён: апстрим не ставит git-теги,
-      # nix-update видит только старый v0.6.5 и понижает версию.
-      # Процедура проверки и ручного обновления — в шапке pkgs/pkg_satordist2.nix.
+      # satordist2 намеренно НЕ включён: апстрим не ставит git-теги, nix-update видит только старый v0.6.5 и понижает версию
+      # Процедура проверки и ручного обновления — в шапке pkgs/pkg_satordist2.nix
 
       # ========== Приложения ==========
       parabolic = "org.nickvision.tubeconverter";                # запустить Parabolic (загрузчик видео/аудио с YouTube)

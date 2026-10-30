@@ -327,11 +327,11 @@ in
     ratatouille-lv2                                               # плагин для загрузки и микширования нейросетевых моделей гитарных усилителей (аналог Neural Amp Model)
       # --- Эффекты (обработка звука) ---
     noise-repellent                                               # Шумодав для пост обработки голоса (spectral subtraction, вносит задержку ~23 мс)
-    zlequalizer                                                   # ZL Equalizer – 16-полосный динамический эквалайзер с поддержкой Mid/Side и режима Dynamic
-    zlspectrumequalizer                                           # ZL Spectrum Analyzer – анализатор спектра в реальном времени с настраиваемым разрешением и режимом сравнения
-    zlcompressor                                                  # ZL Compressor – компрессор с несколькими режимами (VCA/FET/OPT), sidechain и Mid/Side обработкой
-    zlsplitter                                                    # ZL Splitter – частотный сплиттер для многополосной обработки (2–4 полосы с настраиваемыми кроссоверами)
-    nih-plug                                                      # Набор CLAP/VST3-плагинов NIH-plug, включает Spectral Compressor (спектральный компрессор аналог Soothe 2)
+  # zlequalizer                                                   # ZL Equalizer – 16-полосный динамический эквалайзер с поддержкой Mid/Side и режима Dynamic (НЕ СОВМЕСТИМЫ С glibc NIXOS 26.05)
+  # zlspectrumequalizer                                           # ZL Spectrum Analyzer – анализатор спектра в реальном времени с настраиваемым разрешением и режимом сравнения (НЕ СОВМЕСТИМЫ С glibc NIXOS 26.05)
+  # zlcompressor                                                  # ZL Compressor – компрессор с несколькими режимами (VCA/FET/OPT), sidechain и Mid/Side обработкой (НЕ СОВМЕСТИМЫ С glibc NIXOS 26.05)
+  # zlsplitter                                                    # ZL Splitter – частотный сплиттер для многополосной обработки (2–4 полосы с настраиваемыми кроссоверами) (НЕ СОВМЕСТИМЫ С glibc NIXOS 26.05)
+  # nih-plug                                                      # Набор CLAP/VST3-плагинов NIH-plug, включает Spectral Compressor (спектральный компрессор аналог Soothe 2) (НЕ СОВМЕСТИМЫ С glibc NIXOS 26.05)
 
     # KDE приложения
     kdePackages.kdenlive                                          # Видеоредактор (пока тут, т.к. в нестабильном 26.08 уже можно перемещать дорожки)

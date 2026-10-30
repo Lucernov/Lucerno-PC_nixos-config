@@ -28,4 +28,5 @@
   sforzando = pkgs.lucerno-packages.sforzando;
   numa-player = pkgs.lucerno-packages.numa-player;
   tal-vocoder-2 = pkgs.lucerno-packages.tal-vocoder-2;
+  tdr-nova = pkgs.lucerno-packages.tdr-nova;
 }

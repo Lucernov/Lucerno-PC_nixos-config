@@ -8,10 +8,17 @@
 #            librt, libdl, libpthread, libm, libc, libstdc++, libgcc_s
 #   dlopen:  libcurl, libXcursor, libXrandr, libXss
 #
-# dlopen-библиотеки autoPatchelfHook не видит (их нет в NEEDED),
-# поэтому вынесены в runtimeDependencies — хук принудительно добавит
-# их пути в rpath. Без этого плагин упадёт при попытке загрузить
-# Xcursor/Xrandr/curl в рантайме.
+# dlopen-библиотеки autoPatchelfHook не видит (их нет в NEEDED).
+# runtimeDependencies в используемой версии auto-patchelf (0-unstable-2024-08-14)
+# резолвит NEEDED, но в RPATH не добавляет — проверено patchelf --print-rpath:
+# в RPATH попадают только 7 путей из NEEDED, без curl/Xcursor/Xrandr/Xss.
+# Поэтому используем appendRunpaths — он добавляет пути ПОСЛЕ shrink-rpath,
+# из-за чего они не вырезаются (тот же приём, что в pkg_tal-vocoder-2.nix
+# для $ORIGIN и libTAL-Vocoder-2.so).
+#
+# lib.getLib curl: у curl libcurl.so.4 лежит в output `out`, а не `bin`.
+# Без getLib в RPATH попадёт curl-<ver>-bin/lib, где libcurl.so.4 нет —
+# dlopen("libcurl.so.4") упадёт молча.
 #
 # libGL и libxcb не требуются — плагин не использует OpenGL и не грузит
 # xcb напрямую.
@@ -60,8 +67,9 @@ stdenv.mkDerivation (finalAttrs: {
   ];
 
   # dlopen-зависимости: не попадают в NEEDED, хук их не видит.
-  # runtimeDependencies добавляет пути принудительно после формирования rpath.
-  runtimeDependencies = [
+  # appendRunpaths добавляет пути в RPATH после shrink-rpath,
+  # поэтому они не вырезаются (см. комментарий в шапке файла).
+  appendRunpaths = map (p: "${lib.getLib p}/lib") [
     curl
     libXcursor
     libXrandr
