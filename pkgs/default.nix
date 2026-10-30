@@ -45,6 +45,7 @@ in
     shortcircuit-xt = pkgs.callPackage ./pkg_shortcircuit-xt.nix { };                                                             # Автообновление через nix-update
     tal-vocoder-2 = pkgs.callPackage ./pkg_tal-vocoder-2.nix { inherit versions; };
     tape-echo-2 = pkgs.callPackage ./pkg_tape-echo-2.nix { };                                                                     # Автообновление через nix-update
+    tdr-nova = pkgs.callPackage ./pkg_tdr-nova.nix { };
     triplecheese = pkgs.callPackage ./pkg_Triple-Cheese.nix { };
 
     # ====== Шрифты ======

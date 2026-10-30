@@ -306,6 +306,7 @@ in
       # --- Эффекты (обработка звука) ---
     lsp-plugins                                                   # Набор LSP: EQ, компрессоры, лимитеры, meters
     x42-plugins                                                   # Meters, EQ, компрессоры и другие LV2-плагины от Robin Gareus (Ardour dev)
+    lucerno-packages.tdr-nova                                     # TDR Nova — параллельный динамический эквалайзер от Tokyo Dawn Labs (VST2 + VST3)
     lucerno-packages.relic-clap                                   # Relic Free Audio Plugin Suite (компрессоры и прочее для сведения и мастеринга)
     lucerno-packages.air-g-plugins                                # Коллекция VST3-плагинов на основе Airwindows для микширования и мастеринга + педали еще туда засунул
     dragonfly-reverb                                              # Реверберация Dragonfly (VST/LV2)
