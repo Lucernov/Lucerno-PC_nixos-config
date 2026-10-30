@@ -240,14 +240,20 @@ in
 
     # ========== НАСТРОЙКИ INITRD (начальный загрузочный образ) ==========
     initrd = {
-      systemd.enable = true;                                                # Использовать systemd в initrd вместо скриптов. Ускоряет загрузку, позволяет параллельно запускать службы
+      systemd = {
+        enable = true;                                                      # Использовать systemd в initrd вместо скриптов. Ускоряет загрузку, позволяет параллельно запускать службы
+        services.plymouth-start = {
+          after = [ "systemd-modules-load.service" ];                       # Plymouth стартует ПОСЛЕ загрузки модулей из initrd (nvidia, nvidia_modeset, nvidia_drm)
+          requires = [ "systemd-modules-load.service" ];                    # Жёсткая зависимость: если modules-load не отработает, Plymouth не запустится
+        };
+      };
       verbose = false;                                                      # Отключить подробный вывод сообщений initrd (делает загрузку более чистой и быстрой).
       supportedFilesystems = [ "exfat" ];                                   # Поддержка exFAT для внешних USB-дисков
-#       kernelModules = [                                                     # Модули, загружаемые на раннем этапе (initrd)
-#         "nvidia"                                                            # Основной драйвер NVIDIA
-#         "nvidia_modeset"                                                    # Kernel Mode Setting. Задать разрешение, частоту обновления и формат вывода на уровне ядра, а не через пользовательские утилиты (необходимо для Wayland)
-#         "nvidia_drm"                                                        # Интеграция NVIDIA с DRM (Direct Rendering Manager)
-#       ];
+      kernelModules = [                                                     # Модули, загружаемые на раннем этапе (initrd)
+        "nvidia"                                                            # Основной драйвер NVIDIA
+        "nvidia_modeset"                                                    # Kernel Mode Setting. Задать разрешение, частоту обновления и формат вывода на уровне ядра, а не через пользовательские утилиты (необходимо для Wayland)
+        "nvidia_drm"                                                        # Интеграция NVIDIA с DRM (Direct Rendering Manager)
+      ];
       availableKernelModules = [                                            # Модули, которые могут быть загружены динамически при обнаружении оборудования
         "vmd"                                                               # Intel Volume Management Device (для NVMe и RAID)
         "xhci_pci"                                                          # USB 3.0/3.1 контроллеры
