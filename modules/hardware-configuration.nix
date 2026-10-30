@@ -176,9 +176,12 @@ in
   # kernelPackages = inputs.nix-cachyos-kernel.legacyPackages.${pkgs.stdenv.hostPlatform.system}."linuxPackages-cachyos-bore-lto-x86_64-v3";  # Установка кастомного CachyOS ядра для intel i5 13400f процессора
 
     loader = {
-      systemd-boot.enable = true;                                           # Использовать простой UEFI загрузчик systemd-boot
       efi.canTouchEfiVariables = true;                                      # Разрешить запись в EFI-переменные (нужно для добавления записей загрузки)
-      systemd-boot.consoleMode = "auto";                                    # Автоматически подбирать разрешение консоли в меню загрузчика и на ранней консоли
+      systemd-boot = {
+        enable = true;                                                      # Использовать простой UEFI загрузчик systemd-boot
+        consoleMode = "auto";                                               # Автоматически подбирать разрешение консоли в меню загрузчика и на ранней консоли
+        configurationLimit = 5;                                             # Держать в загрузчике только 5 последних записей (старые initrd/ядра удаляются из /boot; откат в /nix/store через nixos-rebuild --rollback не затрагивается)
+      };
     };
     #system.nixos-init.enable = true;                                       # Альтернативная система инициализации (пока не используется)
 
