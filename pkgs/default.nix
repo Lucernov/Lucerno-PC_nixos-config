@@ -10,7 +10,6 @@ in
 {
   lucerno-packages = {
     # ====== Обёртки над пакетами nixpkgs ======
-    btop = pkgs.callPackage ./wrap_btop.nix { };
     reaper = pkgs.callPackage ./wrap_reaper.nix {
       inherit (pkgs) reaper;
       cpupower = pkgs.linuxPackages_zen.cpupower;
