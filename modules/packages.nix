@@ -330,6 +330,7 @@ in
     zlspectrumequalizer                                           # ZL Spectrum Analyzer – анализатор спектра в реальном времени с настраиваемым разрешением и режимом сравнения
     zlcompressor                                                  # ZL Compressor – компрессор с несколькими режимами (VCA/FET/OPT), sidechain и Mid/Side обработкой
     zlsplitter                                                    # ZL Splitter – частотный сплиттер для многополосной обработки (2–4 полосы с настраиваемыми кроссоверами)
+    nih-plug                                                      # Набор CLAP/VST3-плагинов NIH-plug, включает Spectral Compressor (спектральный компрессор)
 
     # KDE приложения
     kdePackages.kdenlive                                          # Видеоредактор (пока тут, т.к. в нестабильном 26.08 уже можно перемещать дорожки)
