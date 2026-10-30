@@ -26,12 +26,14 @@ in
       device = "/dev/disk/by-uuid/${sysUUID}";
       fsType = "btrfs";
       options = [ "subvol=@" "compress=zstd" "noatime" "space_cache=v2" "ssd" "discard=async" ];
+      neededForBoot = true;
     };
 
     "/nix" = {
       device = "/dev/disk/by-uuid/${sysUUID}";
       fsType = "btrfs";
       options = [ "subvol=@nix" "compress=zstd" "noatime" "space_cache=v2" "ssd" "discard=async" ];
+      neededForBoot = true;
     };
 
     "/home" = {
@@ -48,14 +50,12 @@ in
       device = "/dev/disk/by-uuid/${sysBackupUUID}";
       fsType = "btrfs";
       options = [ "subvol=@sys-archiv" "compress=zstd" "noatime" "space_cache=v2" "ssd" "discard=async" ];
-      neededForBoot = true;
     };
 
     "/mnt/ai" = {
       device = "/dev/disk/by-uuid/${sysBackupUUID}";
       fsType = "btrfs";
       options = [ "subvol=@ai" "compress=zstd" "noatime" "space_cache=v2" "ssd" "discard=async" ];
-      neededForBoot = true;
     };
 
     # ========== SWAP НА ДИСКЕ ==========
@@ -64,6 +64,7 @@ in
       device = "/dev/disk/by-uuid/${sysBackupUUID}";
       fsType = "btrfs";
       options = [ "subvol=@swap" "noatime" "nodatacow" ];
+      neededForBoot = true;
     };
 
     # NVMe SSD для игр (ext4)
@@ -71,7 +72,7 @@ in
       device = "/dev/disk/by-uuid/${gamesUUID}";
       fsType = "ext4";
       options = [ "rw" "noatime"];
-      neededForBoot = true;
+    # neededForBoot = true;
     };
 
     # HDD для музыки (sdc1, btrfs с подтомом @music)
@@ -79,7 +80,6 @@ in
       device = "/dev/disk/by-uuid/${musicUUID}";
       fsType = "btrfs";
       options = [ "subvol=@music" "compress=zstd" "noatime" "space_cache=v2" ];
-      neededForBoot = true;
     };
 
   # HDD с несколькими подтомами (sdb1)
@@ -93,21 +93,18 @@ in
       device = "/dev/disk/by-uuid/${dataUUID}";
       fsType = "btrfs";
       options = [ "subvol=@docs" "compress=zstd" "noatime" "space_cache=v2" ];
-      neededForBoot = true;
     };
 
     "/mnt/images" = {
       device = "/dev/disk/by-uuid/${dataUUID}";
       fsType = "btrfs";
       options = [ "subvol=@images" "nodatacow" "noatime" "space_cache=v2" ];
-      neededForBoot = true;
     };
 
     "/mnt/video" = {
       device = "/dev/disk/by-uuid/${dataUUID}";
       fsType = "btrfs";
       options = [ "subvol=@video" "nodatacow" "noatime" "space_cache=v2" ];
-      neededForBoot = true;
     };
 
     "/mnt/video-temp" = {
@@ -148,6 +145,7 @@ in
     ];
     bluetooth = {
       enable = true;                                                        # Включить поддержку Bluetooth
+      powerOnBoot = true;                                                   # Включить Bluetooth-адаптер при загрузке
     };
     graphics = {
       enable = true;                                                        # Включить поддержку аппаратного ускорения графики
@@ -180,14 +178,14 @@ in
     loader = {
       systemd-boot.enable = true;                                           # Использовать простой UEFI загрузчик systemd-boot
       efi.canTouchEfiVariables = true;                                      # Разрешить запись в EFI-переменные (нужно для добавления записей загрузки)
-      systemd-boot.consoleMode = "auto";                                    # управляет разрешением (разрешающей способностью) экрана в меню загрузчика и на ранней консоли
+      systemd-boot.consoleMode = "auto";                                    # Автоматически подбирать разрешение консоли в меню загрузчика и на ранней консоли
     };
     #system.nixos-init.enable = true;                                       # Альтернативная система инициализации (пока не используется)
 
     kernelModules = [                                                       # Модули на основном этапе
       "ntsync"                                                              # Модуль для улучшения синхронизации в Wine/Proton (игры)
-      "nvidia_uvm"                                                          # Unified Virtual Memory для NVIDIA (CUDA, OpenCL, AI)
-      "intel_rapl_msr"                                                      # Модуль для чтения энергопотребления процессора (RAPL). Нужен для btop, powertop и других утилит.
+      "nvidia_uvm"                                                          # Unified Virtual Memory для NVIDIA (CUDA, OpenCL, AI) НЕ УБИРАТЬ. Автоподгрузка иногда может лагать
+      "intel_rapl_msr"                                                      # Модуль для чтения энергопотребления процессора (RAPL). Нужен для btop, powertop и других утилит
       "kvm-intel"                                                           # Модуль аппаратной виртуализации KVM для процессоров Intel
       "snd-seq"                                                             # ALSA Sequencer — ядро MIDI-подсистемы Linux (нужен для MIDI в REAPER)
       "snd-rawmidi"                                                         # Raw MIDI — низкоуровневый драйвер для доступа к MIDI-устройствам (Axiom Pro 25, NUX NPK-20)
@@ -209,6 +207,8 @@ in
       "nvidia_drm.fbdev=1"                                                  # Включить фреймбуфер через DRM (для консоли и раннего вывода)
       "initcall_blacklist=simpledrm_platform_driver_init"                   # Запретить загрузку simpledrm (убирает конфликт с simpledrm для работы TTY)
       "fbcon=font:TER16x32"                                                 # Установить шрифт консоли: TER16x32 (высокое разрешение, 16x32 пикселя)
+      "quiet"                                                               # Убрать сообщения консол на стадии загрузки
+      "splash"                                                              # Показать заставку
       "transparent_hugepage=madvise"                                        # Использовать прозрачные огромные страницы только по запросу madvise
       "rcupdate.rcu_cpu_stall_timeout=60"                                   # Таймаут ожидания RCU (60 сек) – диагностика зависаний
       "usbcore.autosuspend=-1"                                              # Отключить автоматическую приостановку USB-устройств
@@ -243,11 +243,11 @@ in
       systemd.enable = true;                                                # Использовать systemd в initrd вместо скриптов. Ускоряет загрузку, позволяет параллельно запускать службы
       verbose = false;                                                      # Отключить подробный вывод сообщений initrd (делает загрузку более чистой и быстрой).
       supportedFilesystems = [ "exfat" ];                                   # Поддержка exFAT для внешних USB-дисков
-      kernelModules = [                                                     # Модули, загружаемые на раннем этапе (initrd)
-        "nvidia"                                                            # Основной драйвер NVIDIA
-        "nvidia_modeset"                                                    # Kernel Mode Setting. Задать разрешение, частоту обновления и формат вывода на уровне ядра, а не через пользовательские утилиты (необходимо для Wayland)
-        "nvidia_drm"                                                        # Интеграция NVIDIA с DRM (Direct Rendering Manager)
-      ];
+#       kernelModules = [                                                     # Модули, загружаемые на раннем этапе (initrd)
+#         "nvidia"                                                            # Основной драйвер NVIDIA
+#         "nvidia_modeset"                                                    # Kernel Mode Setting. Задать разрешение, частоту обновления и формат вывода на уровне ядра, а не через пользовательские утилиты (необходимо для Wayland)
+#         "nvidia_drm"                                                        # Интеграция NVIDIA с DRM (Direct Rendering Manager)
+#       ];
       availableKernelModules = [                                            # Модули, которые могут быть загружены динамически при обнаружении оборудования
         "vmd"                                                               # Intel Volume Management Device (для NVMe и RAID)
         "xhci_pci"                                                          # USB 3.0/3.1 контроллеры
@@ -260,6 +260,8 @@ in
     };
 
     consoleLogLevel = 3;                                                    # Установить минимальный уровень важности сообщений ядра, выводимых на консоль. Будут показаны только ошибки и критические сообщения (уровень KERN_ERR и выше)
+    plymouth.enable = true;
+    tmp.cleanOnBoot = true;                                                 # Автоматически очищать каталог /tmp при каждой загрузке системы. Повышает безопасность (удаляет временные файлы, созданные другими пользователями)
   };
 
   # ========== СЕТЬ ==========
