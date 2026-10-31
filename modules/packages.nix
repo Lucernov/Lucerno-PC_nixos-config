@@ -20,11 +20,7 @@
     vim.enable = true;                                            # Устанавливает Vim (текстовый редактор)
     nano.enable = true;                                           # Устанавливает Nano (простой текстовый редактор)
     htop.enable = true;                                           # Устанавливает htop (монитор процессов)
-  # amnezia-vpn.enable = true;                                    # Включает сервис AmneziaVPN (VPN-клиент)
-    amnezia-vpn = {                                               # Включает сервис AmneziaVPN (VPN-клиент) 5.0.3.0
-      enable = true;
-      package = pkgs-unstable.amnezia-vpn;                        # из нестабильного канала
-    };
+    amnezia-vpn.enable = true;                                    # Включает сервис AmneziaVPN (VPN-клиент)
 
     virt-manager.enable = true;                                   # Включает Virtual Machine Manager (графический интерфейс для управления QEMU/KVM через libvirt)
     appimage = {
@@ -217,7 +213,6 @@
     hyphenDicts.ru_RU                                             # Словарь для автоматической расстановки переносов (русский язык)
     libreoffice-qt-still                                          # Офисный пакет LibreOffice (стабильная ветка) с интеграцией в KDE Plasma через Qt
     planify                                                       # Менеджер задач и проектов (GTK, синхронизация с Todoist, Nextcloud)
-
 
     # ИГРЫ
     minion                                                        # Менеджер аддонов для TESO

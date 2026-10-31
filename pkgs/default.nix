@@ -1,6 +1,4 @@
 # pkgs/default.nix
-{ pkgs-unstable }:
-
 final: prev:
 let
   versions = import ./versions.nix;

@@ -50,7 +50,7 @@
 
       # Единственный источник истины для оверлеев. Используется ДВАЖДЫ — для packages (pkgsWithOverlay) и для NixOS-системы (через specialArgs → modules/packages.nix)
       allOverlays = [                                                                                      # Все оверлеи. Порядок применения снизу вверх
-        (import ./pkgs/default.nix { pkgs-unstable = pkgsUnstable; })                                      # 1. Оверлей с моими пакетами (lucerno-packages), ничего не переопределяет
+        (import ./pkgs/default.nix)                                                                        # 1. Оверлей с моими пакетами (lucerno-packages), ничего не переопределяет
         nur.overlays.default                                                                               # 2. Все пакеты из NUR доступны как pkgs.nur.repos.<user>.<pkg>, ничего не переопределяет
         comfyui-nix.overlays.default                                                                       # 3. Оверлей ComfyUI (comfy-ui-cuda), ничего не переопределяет
         (final: prev: {                                                                                    # 4. Финальные переопределения krita и minion. Идут последними, чтобы перебить всё выше
