@@ -10,6 +10,11 @@ in
   hostName = "Lucerno-PC";
   configDirName = "nixos-config";
 
+  # Разрешение framebuffer для TTY (см. nx_tty.nix)
+  # Менять при смене основного монитора — иначе консоль съедет (чёрная полоса справа или не на весь экран)
+  # Значение должно совпадать с родным разрешением основного монитора
+  consoleResolution = { x = 2560; y = 1440; };
+
   # Хелперы теперь видят переменные из let-блока
   mkDir = path: "d ${path} 0755 ${userName} ${userName} -";                         # Создать директорию
   mkLink = path: target: "L+ ${path} - ${userName} ${userName} - ${target}";        # Создать симлинк

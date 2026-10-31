@@ -30,13 +30,13 @@
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "pitchnet";
-  version = "0.7.2";
+  version = "0.7.3";
 
   src = fetchurl {
     # Обрати внимание: в URL стоит "v${version}" — GitHub-тег начинается с v,
     # а версия в файле — без него. nix-update понимает это автоматически.
     url = "https://github.com/SessionLoops/PitchNet/releases/download/v${finalAttrs.version}/PitchNet-Linux-x86_64.run";
-    hash = "sha256-HIuwfGnIOyWX88vlp4d8mTg1xNtSit5g6kVDCtEjDNc=";
+    hash = "sha256-e9slYg0n0w3zuYZTkdLTSWKYjWComsMjOd90KM9e274=";
   };
 
   nativeBuildInputs = [ autoPatchelfHook ];

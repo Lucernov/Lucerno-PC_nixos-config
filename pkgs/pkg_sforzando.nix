@@ -63,6 +63,11 @@ stdenv.mkDerivation {
     libsigcxx
   ];
 
+  # Собирать нечего: пакет — это готовые бинарники из .deb.
+  # Явно отключаем фазы, чтобы stdenv не искал Makefile/configure вхолостую.
+  dontBuild = true;
+  dontConfigure = true;
+
   unpackPhase = ''
     runHook preUnpack
     unzip $src
@@ -72,10 +77,32 @@ stdenv.mkDerivation {
   installPhase = ''
     runHook preInstall
 
-    cd LINUX_plogue-sforzando_${version}_x86_64
+    # Ищем единственную папку LINUX_plogue-sforzando_*. Если их 0 или >1 — структура архива изменилась, и надо посмотреть глазами, что там
+    # maxdepth 2 — потому что верхний уровень может быть обёрнут в ещё одну папку при смене упаковки у Plogue
+    mapfile -t CANDIDATES < <(find . -maxdepth 2 -type d -name 'LINUX_plogue-sforzando_*')
+
+    if [ "''${#CANDIDATES[@]}" -ne 1 ]; then
+      echo "ERROR: ожидалась ровно одна папка LINUX_plogue-sforzando_*, найдено ''${#CANDIDATES[@]}:"
+      printf '  %s\n' "''${CANDIDATES[@]}"
+      echo "Содержимое $PWD:"
+      ls -la
+      exit 1
+    fi
+
+    cd "''${CANDIDATES[0]}"
+
+    # Распаковываем .deb. nullglob — чтобы при отсутствии .deb цикл не выполнялся, а $deb не стал литералом '*.deb'. Явная проверка на пустоту — чтобы не собрать тихо битый пакет с пустым extracted/
+    shopt -s nullglob
+    DEBS=(*.deb)
+    if [ "''${#DEBS[@]}" -eq 0 ]; then
+      echo "ERROR: не найдено ни одного .deb в $PWD"
+      echo "Содержимое:"
+      ls -la
+      exit 1
+    fi
 
     mkdir -p extracted
-    for deb in *.deb; do
+    for deb in "''${DEBS[@]}"; do
       dpkg-deb -x "$deb" extracted
     done
 

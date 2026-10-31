@@ -36,12 +36,6 @@
     hash       = "sha256-lb8RuIdLgDC2y9KSF6hlWXWKlt4jI8tndWk/WVanpGo=";
   };
 
-#   music-pattern-generator = {                                           # обновляется редко и github не подходит для автообновления
-#     version = "2.2.0";                                                  # https://github.com/hisschemoller/music-pattern-generator/releases
-#     url     = "https://github.com/hisschemoller/music-pattern-generator/releases/download/v2.2.0/mpg_2_2_installer_lin.deb";
-#     hash    = "sha256-L83MCo1TqSbt+4MwRXWCVgegpuYEYNLrjrJnzPMwLwE=";
-#   };
-
   numa-player = {                                                       # обновляется иногда
     version = "2.2.2";                                                  # https://www.studiologic-music.com/products/numaplayer/
     url     = "https://www.studiologic-music.com/api/get-files/NumaPlayer_2.2.2.deb";
@@ -53,12 +47,6 @@
     url     = "https://sforzando.s3.us-east-1.amazonaws.com/LINUX_plogue-sforzando_1.982_x86_64.zip";
     hash    = "sha256-7ms1T9N1/50M4wgZaD9E07cSof5P9Tx35E3wNtqCqQA=";
   };
-
-#   shortcircuit-xt = {                                                   # обновляется активно и github Nightly не подходит для автообновления
-#     version       = "2026-09-14-8cda0ce";                               # https://github.com/surge-synthesizer/shortcircuit-xt/releases/
-#     url           = "https://github.com/surge-synthesizer/shortcircuit-xt/releases/download/Nightly/shortcircuit-xt-linux-2026-09-14-8cda0ce.zip";
-#     hash          = "sha256-wOCqKyDl/AjpZGsTUOWjFlkXMVZoiEavJpFHv/N6ksw=";
-#   };
 
   tal-vocoder-2 = {                                                     # обновляется редко
     version     = "2";                                                  # https://tal-software.com/products/tal-vocoder
