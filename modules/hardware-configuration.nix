@@ -1,4 +1,4 @@
-{ config, pkgs, lib, modulesPath, ... }:
+{ config, pkgs, lib, ... }:
 
 let
   # UUID дисков
@@ -12,8 +12,6 @@ let
 in
 
 {
-  imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
-
   # ========== ОСНОВНОЙ ДИСК ==========
   fileSystems = {
     "/boot" = {

@@ -1,20 +1,12 @@
 # modules/packages.nix
-{ pkgs, pkgs-unstable, myLib, blender-cuda, inputs, pkgsPinned25_11, ... }:
+{ pkgs, lib, pkgs-unstable, myLib, blender-cuda, allOverlays, ... }:
 
 {
   # ========== Оверлеи и настройки пакетов ==========
   nixpkgs.config.allowUnfree = true;                              # Разрешаем несвободные пакеты
 
-  # Применяем оверлеи на уровне системы
-  nixpkgs.overlays = [
-    (import ../pkgs/default.nix { inherit pkgs-unstable; })       # 1. Оверлей с моими пакетами (lucerno-packages), ничего не переопределяет
-    inputs.nur.overlays.default                                   # 2. Все пакеты из NUR доступны как pkgs.nur.repos.<user>.<pkg>, ничего не переопределяет
-    inputs.comfyui-nix.overlays.default                           # 3. Оверлей ComfyUI (comfy-ui-cuda), ничего не переопределяет
-    (final: prev: {                                               # 4. Финальные переопределения krita и minion. Идут последними, чтобы перебить всё выше
-      krita  = pkgsPinned25_11.krita;                             #    Krita из фиксированного nixpkgs
-      minion = final.lucerno-packages.minion;                     #    Minion из локального pkg_minion.nix с патчем PR#539572
-    })
-  ];
+  # Единый allOverlays из flake.nix. mkAfter фиксирует порядок
+  nixpkgs.overlays = lib.mkAfter allOverlays;
 
   # ========== Включение системных модулей для программ ==========
   programs = {
