@@ -49,8 +49,6 @@ let
     cursor_stop_blinking_after 15.0
     # Список доступных вариантов раскладки окон (можно переключать)
     enabled_layouts splits,fat,grid,stack,tall,horizontal,vertical
-    # Раскладка по умолчанию (разделение на панели, как в tmux)
-    default_layout splits
     # Основной шрифт терминала
     font_family JetBrainsMono Nerd Font Mono
     # Размер шрифта в пунктах
@@ -61,8 +59,8 @@ let
     italic_font auto
     # Автоматический выбор жирного курсива
     bold_italic_font auto
-    # принудительно включить лигатуры и контекстные альтернативы
-    font_features JetBrainsMono Nerd Font Mono:liga=1,calt=1
+    # Принудительно включить лигатуры и контекстные альтернативы
+    font_features JetBrainsMonoNFM-Regular +liga +calt
     # Ширина нового окна терминала по умолчанию (в пикселях)
     initial_window_width 1024
     # Высота нового окна терминала по умолчанию
@@ -71,7 +69,6 @@ let
     background_opacity 0.8
     # Включить размытие фона, радиус размытия (можно менять от 0 до 50; чем больше, тем сильнее размытие)
     background_blur 1
-    background_blur_opacity 0.0
     # Убрать рамку окна (закомментировано)
     # hide_window_decorations yes
 
@@ -123,7 +120,6 @@ let
     background_opacity 0.1
     # Включить размытие фона, радиус размытия (можно менять от 0 до 50; чем больше, тем сильнее размытие)
     background_blur 1
-    background_blur_opacity 0.0
     # Убрать рамку окна
     hide_window_decorations yes
     # Не скрывать при запуске (показывать сразу)
@@ -134,8 +130,8 @@ let
     font_family JetBrainsMono Nerd Font Mono
     # Размер шрифта в пунктах
     font_size 15
-    # принудительно включить лигатуры и контекстные альтернативы
-    font_features JetBrainsMono Nerd Font Mono:liga=1,calt=1
+    # Принудительно включить лигатуры и контекстные альтернативы. Синтаксис: `+feature`, имя шрифта — PostScript
+    font_features JetBrainsMonoNFM-Regular +liga +calt
   '';
 
 in
