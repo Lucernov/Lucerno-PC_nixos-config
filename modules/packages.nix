@@ -1,14 +1,6 @@
 # modules/packages.nix
-{ pkgs, pkgs-unstable, myLib, blender-cuda, inputs, ... }:
+{ pkgs, pkgs-unstable, myLib, blender-cuda, inputs, pkgsPinned25_11, ... }:
 
-let
-  # ========== Пакеты из других флейков ==========
-  # Создаем экземпляр nixpkgs 25.11 для Krita (krita нужна 5.2.15 (Qt5) — плагины ai_diffusion и vision_tools не совместимы (Qt6))
-  pkgsPinned25_11 = import inputs.nixpkgs-pinned-25-11 {
-    localSystem = "x86_64-linux";
-    config.allowUnfree = true;
-  };
-in
 {
   # ========== Оверлеи и настройки пакетов ==========
   nixpkgs.config.allowUnfree = true;                              # Разрешаем несвободные пакеты
@@ -320,13 +312,13 @@ in
     rnnoise-plugin                                                # Нейро шумодав для голоса Real-time
     lucerno-packages.mulhacen-clap                                # Mulhacen — пятиполосный сустейнер от Node97 Audio с NAM + IR (CLAP) Альтернатива плагину Parallax
     lucerno-packages.satordist2                                   # SATORDIST2 — 4-полосный сатуратор (CLAP + VST3)
+    noise-repellent                                               # Шумодав для пост обработки голоса (spectral subtraction, вносит задержку ~23 мс)
 
     ] ++ (with pkgs-unstable; [                                   # Пакеты из нестабильного канала (более свежие версии)
     # МУЗЫКА
       # --- Гитарные процессоры и усилители ---
     ratatouille-lv2                                               # плагин для загрузки и микширования нейросетевых моделей гитарных усилителей (аналог Neural Amp Model)
       # --- Эффекты (обработка звука) ---
-    noise-repellent                                               # Шумодав для пост обработки голоса (spectral subtraction, вносит задержку ~23 мс)
   # zlequalizer                                                   # ZL Equalizer – 16-полосный динамический эквалайзер с поддержкой Mid/Side и режима Dynamic (НЕ СОВМЕСТИМЫ С glibc NIXOS 26.05)
   # zlspectrumequalizer                                           # ZL Spectrum Analyzer – анализатор спектра в реальном времени с настраиваемым разрешением и режимом сравнения (НЕ СОВМЕСТИМЫ С glibc NIXOS 26.05)
   # zlcompressor                                                  # ZL Compressor – компрессор с несколькими режимами (VCA/FET/OPT), sidechain и Mid/Side обработкой (НЕ СОВМЕСТИМЫ С glibc NIXOS 26.05)

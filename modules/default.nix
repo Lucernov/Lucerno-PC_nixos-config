@@ -102,8 +102,8 @@
       RuntimeMaxUse=300M
       # размер одного файла для runtime-логов
       RuntimeMaxFileSize=100M
-      # автоматическая очистка по времени (3 дня)
-      SystemMaxRetentionSec=3d
+      # автоматическая очистка по времени (7 дней)
+      SystemMaxRetentionSec=7d
     '';
   };
 

@@ -42,13 +42,19 @@
         };
       };
 
+      # Фиксированный nixpkgs 25.11 (только для Krita 5.2.15 / Qt5 — плагины ai_diffusion и vision_tools)
+      pkgsPinned25_11 = import nixpkgs-pinned-25-11 {
+        localSystem = "x86_64-linux";
+        config.allowUnfree = true;
+      };
+
       # Создаем оверлеи и pkgs ТОЛЬКО для сборки пакетов (outputs)
       allOverlays = [                                                                                      # Все оверлеи здесь и переданы один раз в `nixpkgs.pkgs = pkgsWithOverlay`. Порядок применения снизу вверх
         (import ./pkgs/default.nix { pkgs-unstable = pkgsUnstable; })                                      # 1. Оверлей с моими пакетами (lucerno-packages), ничего не переопределяет
         nur.overlays.default                                                                               # 2. Все пакеты из NUR доступны как pkgs.nur.repos.<user>.<pkg>, ничего не переопределяет
         comfyui-nix.overlays.default                                                                       # 3. Оверлей ComfyUI (comfy-ui-cuda), ничего не переопределяет
         (final: prev: {                                                                                    # 4. Финальные переопределения krita и minion. Идут последними, чтобы перебить всё выше
-          krita  = (import nixpkgs-pinned-25-11 { localSystem = "x86_64-linux"; config.allowUnfree = true; }).krita;
+          krita  = pkgsPinned25_11.krita;
           minion = final.lucerno-packages.minion;
         })
       ];
@@ -67,6 +73,7 @@
           inherit myLib;                                                                                   # Мои общие переменные
           inherit inputs;                                                                                  # Все входы (flake-зависимости)
           inherit blender-cuda;                                                                            # Flake с Blender+CUDA для передачи в пакеты
+          inherit pkgsPinned25_11;                                                                         # Фиксированный nixpkgs 25.11 (для Krita)
           pkgs-unstable = pkgsUnstable;                                                                    # Нестабильные пакеты для использования в модулях
         };
 

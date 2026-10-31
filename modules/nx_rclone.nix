@@ -37,15 +37,34 @@ in
   ];
 
   systemd.services = {
+    # ========== Сервис подготовки конфигурации rclone ==========
+    # Вынесен в отдельный oneshot-сервис, чтобы три сервиса монтирования
+    # не соревновались за один и тот же файл rclone.conf при старте.
+    rclone-config-setup = {
+      description = "Setup rclone configuration from agenix";
+      wantedBy = [ "multi-user.target" ];                                           # Запускать при загрузке системы
+      before = [ "rclone-gdrive.service" "rclone-onedrive.service" "rclone-yandex.service" ]; # Гарантируем запуск до монтирований
+      serviceConfig = {
+        Type = "oneshot";                                                           # Одноразовый сервис (выполнился и завершился)
+        User = myLib.userName;                                                      # Запускаем от имени пользователя (чтобы права на файл были правильные)
+        Group = myLib.userName;
+        ExecStart = [
+          "${pkgs.coreutils}/bin/rm -f ${home}/.config/rclone/rclone.conf"          # Удаляем старый конфиг
+          "${pkgs.coreutils}/bin/install -m 600 ${config.age.secrets."rclone-conf".path} ${home}/.config/rclone/rclone.conf" # Раскладываем новый
+        ];
+      };
+    };
+
     # ========== Сервис монтирования Google Drive ==========
     rclone-gdrive = {
       description = "RClone Mount for Google Drive";                                # Описание сервиса
-      after = [ "network-online.target" ];                                          # Запустить после того, как сеть полностью поднята (с доступом в интернет)
+      after = [ "network-online.target" "rclone-config-setup.service" ];            # Ждём сеть и готовый конфиг
       wants = [ "network-online.target" ];                                          # Желательно дождаться готовности сети
+      requires = [ "rclone-config-setup.service" ];                                 # Жёсткая зависимость: если конфиг не создастся, монтирование не запустится
       wantedBy = [ "multi-user.target" ];                                           # Автоматически запускать при загрузке системы
       serviceConfig = {
         User = myLib.userName;                                                      # Запустить от имени пользователя
-        Group = myLib.userName;                                                     # Группа users (стандартная для обычных пользователей)
+        Group = myLib.userName;                                                     # Группа пользователя
         Type = "simple";                                                            # Простой процесс (не разветвляется)
         # ---------- Отключение ограничений systemd для работы с FUSE ----------
         PrivateDevices = false;                                                     # Разрешить доступ к устройствам (/dev/fuse)
@@ -57,11 +76,6 @@ in
         SupplementaryGroups = [ "fuse" ];                                           # Добавить группу fuse для доступа к /dev/fuse
         DeviceAllow = [ "/dev/fuse" ];                                              # Явно разрешить доступ к устройству FUSE
         AmbientCapabilities = [ "CAP_SYS_ADMIN" ];                                  # Дать процессу возможность монтировать (нужно для FUSE)
-        # ---------- Безопасное копирование конфига из agenix ----------
-        ExecStartPre = [
-          ''${pkgs.coreutils}/bin/rm -f ${home}/.config/rclone/rclone.conf''
-          ''${pkgs.coreutils}/bin/install -m 600 ${config.age.secrets."rclone-conf".path} ${home}/.config/rclone/rclone.conf''
-        ];
         # ---------- Команда запуска rclone ----------
         ExecStart = ''${pkgs.rclone}/bin/rclone mount gdrive: /mnt/www-GoogleDrive \
           --config=${home}/.config/rclone/rclone.conf \
@@ -86,12 +100,13 @@ in
     # ========== Сервис монтирования OneDrive ==========
     rclone-onedrive = {
       description = "RClone Mount for OneDrive";                                    # Описание сервиса
-      after = [ "network-online.target" ];                                          # Запускать после поднятия сети
+      after = [ "network-online.target" "rclone-config-setup.service" ];            # Ждём сеть и готовый конфиг
       wants = [ "network-online.target" ];                                          # Желательно дождаться сети
+      requires = [ "rclone-config-setup.service" ];                                 # Жёсткая зависимость
       wantedBy = [ "multi-user.target" ];                                           # Автозапуск при загрузке
       serviceConfig = {
         User = myLib.userName;                                                      # Запускать от пользователя
-        Group = myLib.userName;                                                     # Группа users
+        Group = myLib.userName;                                                     # Группа пользователя
         Type = "simple";                                                            # Простой процесс
         # ---------- Отключение ограничений systemd для работы с FUSE ----------
         PrivateDevices = false;                                                     # Разрешить доступ к устройствам (/dev/fuse)
@@ -103,11 +118,6 @@ in
         SupplementaryGroups = [ "fuse" ];                                           # Добавить группу fuse для доступа к /dev/fuse
         DeviceAllow = [ "/dev/fuse" ];                                              # Явно разрешить доступ к устройству FUSE
         AmbientCapabilities = [ "CAP_SYS_ADMIN" ];                                  # Дать процессу возможность монтировать (нужно для FUSE)
-        # ---------- Безопасное копирование конфига из agenix ----------
-        ExecStartPre = [
-          ''${pkgs.coreutils}/bin/rm -f ${home}/.config/rclone/rclone.conf''
-          ''${pkgs.coreutils}/bin/install -m 600 ${config.age.secrets."rclone-conf".path} ${home}/.config/rclone/rclone.conf''
-        ];
         # ---------- Команда запуска rclone ----------
         ExecStart = ''${pkgs.rclone}/bin/rclone mount onedrive: /mnt/www-OneDrive \
           --config=${home}/.config/rclone/rclone.conf \
@@ -121,8 +131,7 @@ in
           --vfs-cache-max-age 24h \
           --vfs-cache-max-size 10G \
           --buffer-size 32M \
-          --async-read=true \
-          --drive-use-trash=false'';
+          --async-read=true'';
         ExecStop = "/run/current-system/sw/bin/fusermount -u /mnt/www-OneDrive";   # Команда размонтирования
         Restart = "on-failure";                                                    # Перезапускать при сбое
         RestartSec = 5;                                                            # Задержка перед перезапуском (5 секунд)
@@ -156,8 +165,9 @@ in
     # =========================================================================
     rclone-yandex = {
       description = "RClone Mount for Yandex Disk";                                 # Описание сервиса
-      after = [ "network-online.target" ];                                          # Запускать после поднятия сети
+      after = [ "network-online.target" "rclone-config-setup.service" ];            # Ждём сеть и готовый конфиг
       wants = [ "network-online.target" ];                                          # Желательно дождаться сети
+      requires = [ "rclone-config-setup.service" ];                                 # Жёсткая зависимость
       wantedBy = [ "multi-user.target" ];                                           # Автозапуск при загрузке
       serviceConfig = {
         User = myLib.userName;                                                      # Запускать от пользователя
@@ -173,11 +183,6 @@ in
         SupplementaryGroups = [ "fuse" ];                                           # Добавить группу fuse для доступа к /dev/fuse
         DeviceAllow = [ "/dev/fuse" ];                                              # Явно разрешить доступ к устройству FUSE
         AmbientCapabilities = [ "CAP_SYS_ADMIN" ];                                  # Дать процессу возможность монтировать (нужно для FUSE)
-        # ---------- Безопасное копирование конфига из agenix ----------
-        ExecStartPre = [
-          ''${pkgs.coreutils}/bin/rm -f ${home}/.config/rclone/rclone.conf''
-          ''${pkgs.coreutils}/bin/install -m 600 ${config.age.secrets."rclone-conf".path} ${home}/.config/rclone/rclone.conf''
-        ];
         # ---------- Команда запуска rclone ----------
         ExecStart = ''${pkgs.rclone}/bin/rclone mount yandex: /mnt/www-YandexDisk \
           --config=${home}/.config/rclone/rclone.conf \
@@ -191,8 +196,7 @@ in
           --vfs-cache-max-age 24h \
           --vfs-cache-max-size 10G \
           --buffer-size 32M \
-          --async-read=true \
-          --drive-use-trash=false'';
+          --async-read=true'';
         ExecStop = "/run/current-system/sw/bin/fusermount -u /mnt/www-YandexDisk";     # Команда размонтирования
         Restart = "on-failure";                                                    # Перезапускать при сбое
         RestartSec = 5;                                                            # Задержка перед перезапуском (5 секунд)
