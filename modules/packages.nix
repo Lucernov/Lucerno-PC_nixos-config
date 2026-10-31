@@ -21,7 +21,11 @@
     nano.enable = true;                                           # Устанавливает Nano (простой текстовый редактор)
     htop.enable = true;                                           # Устанавливает htop (монитор процессов)
   # amnezia-vpn.enable = true;                                    # Включить сервис AmneziaVPN
-    amnezia-vpn.package = pkgs-unstable.amnezia-vpn;              # Включить сервис AmneziaVPNиз нестабильного канала (в стабильном 26.05 сломана иконка в трее)
+  # amnezia-vpn.package = pkgs-unstable.amnezia-vpn;              # Включить сервис AmneziaVPNиз нестабильного канала (в стабильном 26.05 сломана иконка в трее)
+    amnezia-vpn = {                                               # Включает сервис AmneziaVPN (VPN-клиент)
+      enable = true;
+      package = pkgs-unstable.amnezia-vpn;                        # из нестабильного канала (в стабильном 26.05 сломана иконка в трее)
+    };
 
     virt-manager.enable = true;                                   # Включает Virtual Machine Manager (графический интерфейс для управления QEMU/KVM через libvirt)
     appimage = {
