@@ -11,6 +11,27 @@
 #   Поэтому factory/ кладём под $out/share/Mulhacen/ и пробрасываем
 #   симлинком через systemd.tmpfiles.rules в ~/.local/share/Mulhacen/factory
 #   (см. modules/nx_audio.nix).
+#
+# ─────────────────────────────────────────────────────────────────────
+# ОБНОВЛЕНИЕ ПРИ НОВОЙ ВЕРСИИ MULHACEN
+# ─────────────────────────────────────────────────────────────────────
+# Апстрим не имеет публичного API (Node97 Audio не публикует релизы
+# на GitHub/GitLab), поэтому nix-update тут не применим. Архивы лежат
+# в собственных GitHub Releases этого репозитория.
+#
+#   1. Получить новый .clap и factory-архив от автора.
+#   2. Загрузить оба как ассеты в GitHub Releases:
+#        https://github.com/Lucernov/Lucerno-PC_nixos-config/releases
+#      (обновить тег personal-assets-<N> или создать новый)
+#   3. Пересчитать хеши:
+#        nix-prefetch-url "https://github.com/.../Mulhacen-<ver>.clap.xz"
+#        nix hash convert --hash-algo sha256 --to sri <base32>
+#        (то же для factory-архива)
+#   4. Обновить version, url, hash, factoryUrl, factoryHash
+#      в pkgs/versions.nix (блок mulhacen-clap).
+#   5. nix build .#mulhacen-clap && local-up
+#
+# ─────────────────────────────────────────────────────────────────────
 
 { lib
 , stdenv
@@ -23,22 +44,26 @@
 , libXext
 , libXrandr
 , xz
+, versions
 }:
+
+let
+  inherit (versions.mulhacen-clap) version url hash factoryUrl factoryHash;
+in
 
 stdenv.mkDerivation {
   pname = "mulhacen-clap";
-  version = "0.15.0";
+  inherit version;
 
   # Берём плагин из GitHub Releases
   src = fetchurl {
-    url = "https://github.com/Lucernov/Lucerno-PC_nixos-config/releases/download/personal-assets-1.0/Mulhacen-0.15.0.clap.xz";
-    hash = "sha256-/DOVCsGNXW3dsPiUXFkNY0MtlHhoildGGZVWOBcV4uA=";
+    inherit url hash;
   };
 
   # Берём factory-ресурсы из GitHub Releases
   factorySrc = fetchurl {
-    url = "https://github.com/Lucernov/Lucerno-PC_nixos-config/releases/download/personal-assets-1.0/Mulhacen-0.15.0-factory.tar.xz";
-    hash = "sha256-/0puIbYON4R1PX/TAu/B7BTws5pprNJWlL9RgeYVKso=";
+    url = factoryUrl;
+    hash = factoryHash;
   };
 
   nativeBuildInputs = [ autoPatchelfHook xz ];

@@ -30,6 +30,14 @@
     hash     = "sha256-QT3WIh2wBiD6xnKINWvsV/jn7rA1GN/jj/B1OqFBwzs=";
   };
 
+  mulhacen-clap = {                                                     # не обновляется автоматически (архив в своих GitHub Releases)
+    version     = "0.15.0";                                             # https://node97.com/
+    url         = "https://github.com/Lucernov/Lucerno-PC_nixos-config/releases/download/personal-assets-1.0/Mulhacen-0.15.0.clap.xz";
+    hash        = "sha256-/DOVCsGNXW3dsPiUXFkNY0MtlHhoildGGZVWOBcV4uA=";
+    factoryUrl  = "https://github.com/Lucernov/Lucerno-PC_nixos-config/releases/download/personal-assets-1.0/Mulhacen-0.15.0-factory.tar.xz";
+    factoryHash = "sha256-/0puIbYON4R1PX/TAu/B7BTws5pprNJWlL9RgeYVKso=";
+  };
+
   mtpdk        = {                                                      # обновляется иногда
     version    = "2.1.5.1";                                             # https://www.powerdrumkit.com/linux.php
     url        = "https://resources.manda-audio.com/DOWNLOADS/products/mtpdk2_free/2.1.5/MTPDK-2.1.5.1-VST3-64bit-Linux-FULL.zip";
