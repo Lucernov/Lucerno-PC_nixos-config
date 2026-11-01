@@ -13,7 +13,7 @@
 
 ## 📦 Использование музыкальных пакетов (Flake)
 
-Репозиторий экспортирует готовый оверлей и набор пакетов `lucerno-packages`
+Репозиторий экспортирует набор пакетов `lucerno-packages` (VST2, VST3, CLAP, LV2), доступный через `packages.<system>.*`
 
 Добавьте репозиторий в `inputs` вашего `flake.nix`:
 
@@ -32,46 +32,8 @@
 }
 ```
 
-### Вариант 1: Через оверлей
 
-```nix
-{ pkgs, inputs, ... }:
-{
-  nixpkgs.overlays = [ inputs.lucerno-audio.overlays.default ];
-
-  environment.systemPackages = with pkgs.lucerno-packages; [
-    # 💻 Отдельные программы
-    music-pattern-generator # Визуальный MIDI-секвенсор
-    
-    # 🎹 Плагины - инструменты
-    amp-locker        # Гитарный стек (VST3 + LV2)
-    drum-locker       # Барабанная установка (VST3 + LV2)
-    drumlabooh        # LV2-сэмплер ударных                   https://github.com/psemiletov/drumlabooh
-    drumlabooh-multi  # LV2-сэмплер ударных многоканальный    https://github.com/psemiletov/drumlabooh
-    je8086            # Эмуляция Roland JP-8000 (CLAP) !!! ДЛЯ РАБОТЫ ТРЕБУЕТСЯ ОРИГИНАЛЬНЫЙ BIOS !!! ЕГО ВАМ НАДО НАЙТИ САМОСТОЯТЕЛЬНО !!! Т.е. имеется в виду, что надо получить биос из своего железного синтезатора, разумеется
-    mtpdk             # MT Power Drum Kit 2 (VST3)
-    numa-player       # Studiologic Numa Player (VST3 + standalone) Коммерческий плагин. Бесплатный, но для работы с библиотекой требуется регистрация на https://www.studiologic-music.com/products/numaplayer/
-    orchestools       # Набор оркестровых инструментов (VST3) https://musictop69.wixsite.com/orchestools/orchestools-two (сэмплы скачивать тут)
-    ostirus           # Эмуляция Access Virus TI (CLAP) !!! ДЛЯ РАБОТЫ ТРЕБУЕТСЯ ОРИГИНАЛЬНЫЙ BIOS !!! ЕГО ВАМ НАДО НАЙТИ САМОСТОЯТЕЛЬНО !!! Т.е. имеется в виду, что надо получить биос из своего железного синтезатора, разумеется
-    ot-piano-s        # Пианино (VST2)                        https://musictop69.wixsite.com/orchestools (сэмплы скачивать тут)
-    shortcircuit-xt   # Сэмплер (CLAP)
-    sforzando         # SFZ-сэмплер (VST3 + CLAP)
-    tal-vocoder-2     # Вокодер (VST3 + CLAP)
-    
-    # 🎛️ Плагины - эффекты
-    air-g-plugins     # Коллекция педалей и эффектов (VST3)
-    lostSamplers      # Эмуляция шумов сэмплеров (VST3)
-    lostTapes         # Эмуляция магнитофона (VST3)
-    lostVinyls        # Эмуляция винилового проигрывателя (VST3)
-    pitchnet          # Нейросетевой питч-корректор (VST3)
-    relic-clap        # Набор компрессоров и эквалайзеров (CLAP)
-    satordist2        # 4-полосный сатуратор (CLAP + VST3)
-    tape-echo-2       # Эмуляция Roland Space Echo
-  ];
-}
-```
-
-### Вариант 2: Напрямую из `packages`
+### Подключение плагинов
 
 ```nix
 { inputs, pkgs, ... }:
@@ -104,6 +66,7 @@
     inputs.lucerno-audio.packages.${pkgs.stdenv.hostPlatform.system}.relic-clap
     inputs.lucerno-audio.packages.${pkgs.stdenv.hostPlatform.system}.satordist2
     inputs.lucerno-audio.packages.${pkgs.stdenv.hostPlatform.system}.tape-echo-2
+    inputs.lucerno-audio.packages.${pkgs.stdenv.hostPlatform.system}.tdr-nova
   ];
 }
 ```
