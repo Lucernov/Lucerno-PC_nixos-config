@@ -193,7 +193,7 @@
     curtail                                                       # Уменьшает размер изображений
     optipng                                                       # Оптимизатор PNG файлов
     pinta                                                         # Простой растровый редактор
-    inputs.nixpkgs-pinned-25-11.legacyPackages.${pkgs.stdenv.hostPlatform.system}.krita # Кастомный пакет Krita (цифровая живопись) берется из NIXOS 25.11
+    krita                                                    # Krita растровый редактор
   # inkscape                                                      # Векторная графика
     constrict                                                     # Графическая утилита для сжатия видео до заданного размера (GTK-приложение, обёртка над FFmpeg)
 

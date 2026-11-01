@@ -24,7 +24,6 @@
     blender-cuda.url = "github:adithyagenie/blender-cuda-nixos";                                           # Бинарная сборка Blender с поддержкой cuda
     comfyui-nix.url = "github:utensils/comfyui-nix";                                                       # Flake для ComfyUI
     import-tree.url = "github:vic/import-tree";                                                            # Утилита для рекурсивного импорта файлов
-    nixpkgs-pinned-25-11.url = "github:NixOS/nixpkgs/b77b3de8775677f84492abe84635f87b0e153f0f";            # Снапшот nixpkgs 25.11, нужен для krita (krita нужна 5.2.15 (Qt5) — плагины ai_diffusion и vision_tools не совместимы (Qt6))
   };
 
   # ========== Выходные данные (outputs) ==========
