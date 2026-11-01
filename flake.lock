@@ -315,22 +315,6 @@
         "type": "github"
       }
     },
-    "nixpkgs-pinned-25-11": {
-      "locked": {
-        "lastModified": 1779467186,
-        "narHash": "sha256-nOesoDCiXcUftqbRBMz9tt4blI5PvljMWbm3kuCA+0s=",
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "b77b3de8775677f84492abe84635f87b0e153f0f",
-        "type": "github"
-      },
-      "original": {
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "b77b3de8775677f84492abe84635f87b0e153f0f",
-        "type": "github"
-      }
-    },
     "nixpkgs-unstable": {
       "locked": {
         "lastModified": 1793110635,
@@ -412,7 +396,6 @@
         "comfyui-nix": "comfyui-nix",
         "import-tree": "import-tree",
         "nixpkgs": "nixpkgs_3",
-        "nixpkgs-pinned-25-11": "nixpkgs-pinned-25-11",
         "nixpkgs-unstable": "nixpkgs-unstable",
         "stylix": "stylix"
       }
