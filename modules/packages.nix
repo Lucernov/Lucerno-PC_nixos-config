@@ -1,5 +1,5 @@
 # modules/packages.nix
-{ pkgs, lib, pkgs-unstable, myLib, blender-cuda, allOverlays, ... }:
+{ pkgs, lib, pkgs-unstable, myLib, allOverlays, inputs, ... }:
 
 {
   # ========== Оверлеи и настройки пакетов ==========
@@ -193,12 +193,12 @@
     curtail                                                       # Уменьшает размер изображений
     optipng                                                       # Оптимизатор PNG файлов
     pinta                                                         # Простой растровый редактор
-    krita                                                         # Кастомный пакет Krita (цифровая живопись) берется из NIXOS 25.11
+    inputs.nixpkgs-pinned-25-11.legacyPackages.${pkgs.stdenv.hostPlatform.system}.krita # Кастомный пакет Krita (цифровая живопись) берется из NIXOS 25.11
   # inkscape                                                      # Векторная графика
     constrict                                                     # Графическая утилита для сжатия видео до заданного размера (GTK-приложение, обёртка над FFmpeg)
 
     # 3D-моделирование
-    blender-cuda.packages.${pkgs.stdenv.hostPlatform.system}.blender-with-cuda  # 3D редактор (бинарная версия с поддержкой CUDA)
+    inputs.blender-cuda.packages.${pkgs.stdenv.hostPlatform.system}.blender-with-cuda  # 3D редактор (бинарная версия с поддержкой CUDA)
     freecad                                                       # 3D кад программа
   # dune3d                                                        # 3D кад программа
     prusa-slicer                                                  # Слайсер для 3D принтера
@@ -220,7 +220,7 @@
     planify                                                       # Менеджер задач и проектов (GTK, синхронизация с Todoist, Nextcloud)
 
     # ИГРЫ
-    minion                                                        # Менеджер аддонов для TESO
+    lucerno-packages.minion                                       # Менеджер аддонов для TESO
     lucerno-packages.noita-save-manager                           # Менеджер сохранений для Noita
     (bottles.override { removeWarningPopup = true; })             # Запуск Windows-приложений через Wine (без всплывающих предупреждений)
     goverlay                                                      # Оверлей для мониторинга системы и FPS (MangoHud, vkBasalt)
@@ -241,7 +241,7 @@
   # heroic                                                        # Лаунчер для Epic Games Store и GOG
 
     # ИИ
-    comfy-ui-cuda                                                 # ComfyUI с поддержкой CUDA для генерации изображений через нейросети
+    inputs.comfyui-nix.packages.${pkgs.stdenv.hostPlatform.system}.cuda # ComfyUI с поддержкой CUDA для генерации изображений через нейросети
 
     # ВИРТУАЛКА
     virtio-win                                                    # Драйверы VirtIO для Windows (не ISO, а папка с драйверами, подключается через CD-ROM как папка)

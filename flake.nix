@@ -6,11 +6,6 @@
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-26.05";                                                      # Стабильный канал Nixpkgs
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";                                          # Нестабильный канал Nixpkgs (последние обновления)
 
-    nur = {                                                                                                # Подключить NUR (Nix User Repository) репозиторий пользовательских пакетов
-      url = "github:nix-community/NUR";
-      inputs.nixpkgs.follows = "nixpkgs";                                                                  # Зависимости используют основной nixpkgs
-    };
-
     agenix = {                                                                                             # Управление секретами (шифрование через age)
       url = "github:ryantm/agenix";
       inputs.nixpkgs.follows = "nixpkgs";                                                                  # Зависимости используют основной nixpkgs
@@ -33,7 +28,7 @@
   };
 
   # ========== Выходные данные (outputs) ==========
-  outputs = inputs@{ nixpkgs, nixpkgs-unstable, nur, agenix, stylix, blender-cuda, comfyui-nix, artcraft, nixpkgs-pinned-25-11, ... }: # Функция, которая принимает все входы и возвращает результаты сборки
+  outputs = inputs@{ nixpkgs, nixpkgs-unstable, ... }:                               # Функция, которая принимает все входы и возвращает результаты сборки
     let
       pkgsUnstable = import nixpkgs-unstable {                                                             # Создать экземпляр нестабильного nixpkgs (для свежих пакетов)
         localSystem = "x86_64-linux";                                                                      # Новый синтаксис с атрибутом localSystem вместо устаревшего `system`
@@ -42,21 +37,9 @@
         };
       };
 
-      # Фиксированный nixpkgs 25.11 (только для Krita 5.2.15 / Qt5 — плагины ai_diffusion и vision_tools) используется только внутри allOverlays, наружу не отдаётся
-      pkgsPinned25_11 = import nixpkgs-pinned-25-11 {
-        localSystem = "x86_64-linux";
-        config.allowUnfree = true;
-      };
-
       # Единственный источник истины для оверлеев. Используется ДВАЖДЫ — для packages (pkgsWithOverlay) и для NixOS-системы (через specialArgs → modules/packages.nix)
-      allOverlays = [                                                                                      # Все оверлеи. Порядок применения снизу вверх
-        (import ./pkgs/default.nix)                                                                        # 1. Оверлей с моими пакетами (lucerno-packages), ничего не переопределяет
-        nur.overlays.default                                                                               # 2. Все пакеты из NUR доступны как pkgs.nur.repos.<user>.<pkg>, ничего не переопределяет
-        comfyui-nix.overlays.default                                                                       # 3. Оверлей ComfyUI (comfy-ui-cuda), ничего не переопределяет
-        (final: prev: {                                                                                    # 4. Финальные переопределения krita и minion. Идут последними, чтобы перебить всё выше
-          krita  = pkgsPinned25_11.krita;
-          minion = final.lucerno-packages.minion;
-        })
+      allOverlays = [                                                                                      # Все оверлеи
+        (import ./pkgs/default.nix)                                                                        # Оверлей с моими пакетами (lucerno-packages), ничего не переопределяет
       ];
 
       pkgsWithOverlay = import nixpkgs {                                                                   # Создать экземпляр nixpkgs со всеми оверлеями
@@ -72,8 +55,7 @@
         specialArgs = {                                                                                    # Дополнительные аргументы, передаваемые во все модули
           inherit myLib;                                                                                   # Мои общие переменные
           inherit inputs;                                                                                  # Все входы (flake-зависимости)
-          inherit blender-cuda;                                                                            # Flake с Blender+CUDA для передачи в пакеты
-          inherit allOverlays;                                                                             # ← ИЗМЕНЕНО: единый список оверлеев (вместо pkgsPinned25_11)
+          inherit allOverlays;                                                                             # Eдиный список оверлеев
           pkgs-unstable = pkgsUnstable;                                                                    # Нестабильные пакеты для использования в модулях
         };
 
