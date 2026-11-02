@@ -53,13 +53,8 @@ in
     (myLib.mkLink "${home}/.config/obs-studio" "${home}/${configDir}/dotfiles/config/obs-studio")
     (myLib.mkLink "${home}/.config/MangoHud" "${home}/${configDir}/dotfiles/config/MangoHud")
 
-    # ⚠️ ЭТИ СТРОКИ ЗАКОММЕНТИРОВАНЫ, ТАК КАК ТЕПЕРЬ УПРАВЛЯЮТСЯ PLASMA-MANAGER
-    # (myLib.mkLink "${home}/.config/kdeglobals" "${home}/${configDir}/dotfiles/config/KDE/config_kdeglobals")
-    # (myLib.mkLink "${home}/.config/kglobalshortcutsrc" "${home}/${configDir}/dotfiles/config/KDE/config_kglobalshortcutsrc")
-    # (myLib.mkLink "${home}/.config/kwinrc" "${home}/${configDir}/dotfiles/config/KDE/config_kwinrc")
-    # (myLib.mkLink "${home}/.config/kxkbrc" "${home}/${configDir}/dotfiles/config/KDE/config_kxkbrc")
-    # (myLib.mkLink "${home}/.config/plasmarc" "${home}/${configDir}/dotfiles/config/KDE/config_plasmarc")
-    # (myLib.mkLink "${home}/.config/KDE" "${home}/${configDir}/dotfiles/config/KDE/KDE")
+    # Папка KDE содержит конфиги (kunifiedpush, qrca, UserFeedback), которые не управляются plasma-manager
+    (myLib.mkLink "${home}/.config/KDE" "${home}/${configDir}/dotfiles/config/KDE")
 
     (myLib.mkLink "${home}/.config/mc" "${home}/${configDir}/dotfiles/config/mc")
     (myLib.mkLink "${home}/.config/fastfetch" "${home}/${configDir}/dotfiles/config/fastfetch")
