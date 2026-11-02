@@ -144,7 +144,7 @@ in
       LANG = "ru_RU.UTF-8";                                         # Основной язык системы
       LANGUAGE = "ru_RU.UTF-8";                                     # Дополнительный язык
       QT_QPA_PLATFORMTHEME = "kde";                                 # Тема Qt для приложений
-      GTK_THEME = "catppuccin-mocha-blue-standard";                 # Принудительно задать GTK-тему, чтобы KDE не перебивала её
+      GTK_THEME = "catppuccin-mocha-blue-standard";                 # Принудительно задать GTK-тему (страховка)
     };
 
     # ========== Настройка фона SDDM ==========
@@ -156,9 +156,8 @@ in
     ];
   };
 
-  # ========== Настройка GTK через dconf (запасной вариант) ==========
-  # KDE может перезаписывать dconf, но мы оставляем это для приложений,
-  # которые читают настройки напрямую оттуда.
+  # ========== Настройка GTK через dconf ==========
+  # Нужен для приложений и fastfetch, которые читают настройки из dconf.
   programs.dconf.profiles.user.databases = [{
     settings = {
       "org/gnome/desktop/interface" = {
@@ -169,7 +168,9 @@ in
     };
   }];
 
-  # ========== Принудительная установка шрифта в dconf для fastfetch ==========
+  # ========== Принудительная установка шрифта в dconf ==========
+  # KDE-служба kde-gtk-config при старте перезаписывает dconf на дефолт.
+  # Этот сервис запускается ПОСЛЕ неё и возвращает правильный шрифт.
   systemd.user.services.force-gtk-font = {
     description = "Force GTK font name in dconf";
     after = [ "graphical-session.target" "plasma-kde-gtk-config.service" ];
@@ -208,7 +209,7 @@ in
     ''))
 
     # ---------- Принудительное применение GTK-темы ----------
-    # KDE-служба kde-gtk-config при старте перезаписывает эти файлы на Breeze.
+    # KDE-служба kde-gtk-config перезаписывает эти файлы при старте.
     # Делаем их read-only симлинками на Nix Store, чтобы KDE не могла их изменить.
     (myLib.mkDir "${myLib.home}/.config/gtk-3.0")
     (myLib.mkLink "${myLib.home}/.config/gtk-3.0/settings.ini" (pkgs.writeText "gtk3-settings.ini" ''
