@@ -2,7 +2,6 @@
 
 let
   # ========== Кастомная цветовая схема KDE (Catppuccin Mocha + кастомный акцент) ==========
-  # Взята из твоего GUI-конфига. Файл будет создан в /nix/store и слинкован в ~/.local/share/color-schemes/
   catppuccinMochaColors = pkgs.writeText "CatppuccinMocha.colors" ''
     [ColorEffects:Disabled]
     Color=49,50,68
@@ -140,11 +139,14 @@ in
   };
 
   environment = {
-    # ========== Переменные окружения для сессии SDDM ==========
+    # ========== Переменные окружения для сессии ==========
     sessionVariables = {
       LANG = "ru_RU.UTF-8";                                         # Основной язык системы
       LANGUAGE = "ru_RU.UTF-8";                                     # Дополнительный язык
       QT_QPA_PLATFORMTHEME = "kde";                                 # Тема Qt для приложений
+
+      # Принудительно задаем GTK-тему, чтобы KDE не перебивала её
+      GTK_THEME = "Catppuccin-Mocha-Standard-Blue-Dark";
     };
 
     # ========== Настройка фона SDDM ==========
@@ -156,8 +158,9 @@ in
     ];
   };
 
-  # ========== Применение цветовой схемы GTK ==========
-  # Для GTK используем стандартный синий, так как он ближе всего к твоему кастомному цвету
+  # ========== Настройка GTK через dconf (запасной вариант) ==========
+  # KDE может перезаписывать dconf, но мы оставляем это для приложений,
+  # которые читают настройки напрямую оттуда.
   programs.dconf.profiles.user.databases = [{
     settings = {
       "org/gnome/desktop/interface" = {
@@ -178,13 +181,30 @@ in
     };
   };
 
-  # ========== Настройки KDE и корзины ==========
+  # ========== Настройки KDE, GTK и корзины ==========
   systemd.tmpfiles.rules = [
-    # Создаем папку для тем и линкуем сгенерированный файл
+    # ---------- Кастомная цветовая схема KDE ----------
     (myLib.mkDir "${myLib.home}/.local/share/color-schemes")
     (myLib.mkLink "${myLib.home}/.local/share/color-schemes/CatppuccinMocha.colors" catppuccinMochaColors)
 
-    # Твои настройки корзины
+    # ---------- Принудительное применение GTK-темы ----------
+    # KDE-служба kde-gtk-config при старте перезаписывает эти файлы на Breeze.
+    # Делаем их read-only симлинками на Nix Store, чтобы KDE не могла их изменить.
+    (myLib.mkDir "${myLib.home}/.config/gtk-3.0")
+    (myLib.mkLink "${myLib.home}/.config/gtk-3.0/settings.ini" (pkgs.writeText "gtk3-settings.ini" ''
+      [Settings]
+      gtk-theme-name = Catppuccin-Mocha-Standard-Blue-Dark
+      gtk-application-prefer-dark-theme = 1
+    ''))
+
+    (myLib.mkDir "${myLib.home}/.config/gtk-4.0")
+    (myLib.mkLink "${myLib.home}/.config/gtk-4.0/settings.ini" (pkgs.writeText "gtk4-settings.ini" ''
+      [Settings]
+      gtk-theme-name = Catppuccin-Mocha-Standard-Blue-Dark
+      gtk-application-prefer-dark-theme = 1
+    ''))
+
+    # ---------- Настройки корзины ----------
     (myLib.mkLink "${myLib.home}/.config/ktrashrc" (pkgs.writeText "ktrashrc" ''
       [/home/lucerno/.local/share/Trash]
       Days=7
