@@ -126,7 +126,7 @@ in
 {
   home.stateVersion = "26.05";
 
-  # ========== Настройка GTK (Firefox, Telegram и др.) ==========
+    # ========== Настройка GTK (Firefox, Telegram и др.) ==========
   gtk = {
     enable = true;
     font = {
@@ -135,18 +135,24 @@ in
     };
     theme = {
       name = lib.mkForce "Catppuccin-Mocha-Standard-Blue-Dark";
-      # Указываем Home Manager, откуда брать файлы этой темы
-      package = lib.mkForce (pkgs.catppuccin-gtk.override {
-        variant = "mocha";
-        accents = [ "blue" ];
-        size = "standard";
-      });
+      # package = ...; # УБРАНО, чтобы избежать ошибки распаковки
     };
     iconTheme = {
       name = lib.mkForce "Gradient-Dark-Icons";
-      # Если иконки тоже ругаются, раскомментируй и укажи пакет:
-      # package = lib.mkForce pkgs.gradient-icons;
     };
+  };
+
+  # Вручную создаем симлинки на тему Catppuccin для GTK3 и GTK4
+  home.file = {
+    ".config/gtk-3.0/gtk.css".source =
+      "${pkgs.catppuccin-gtk.override { variant = "mocha"; accents = [ "blue" ]; size = "standard"; }}/share/themes/Catppuccin-Mocha-Standard-Blue-Dark/gtk-3.0/gtk.css";
+    ".config/gtk-3.0/assets".source =
+      "${pkgs.catppuccin-gtk.override { variant = "mocha"; accents = [ "blue" ]; size = "standard"; }}/share/themes/Catppuccin-Mocha-Standard-Blue-Dark/gtk-3.0/assets";
+
+    ".config/gtk-4.0/gtk.css".source =
+      "${pkgs.catppuccin-gtk.override { variant = "mocha"; accents = [ "blue" ]; size = "standard"; }}/share/themes/Catppuccin-Mocha-Standard-Blue-Dark/gtk-4.0/gtk.css";
+    ".config/gtk-4.0/assets".source =
+      "${pkgs.catppuccin-gtk.override { variant = "mocha"; accents = [ "blue" ]; size = "standard"; }}/share/themes/Catppuccin-Mocha-Standard-Blue-Dark/gtk-4.0/assets";
   };
 
   # ========== Принудительная настройка dconf ==========
