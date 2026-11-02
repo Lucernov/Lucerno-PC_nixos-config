@@ -126,13 +126,13 @@ in
 {
   home.stateVersion = "26.05";
 
-  # НИКАКИХ home.packages!!!
+  # Размещаем файл цветовой схемы в правильной папке
+  home.file.".local/share/color-schemes/CatppuccinMocha.colors".source = catppuccinMochaColors;
 
   programs.plasma = {
     enable = true;
     workspace = {
       colorScheme = "CatppuccinMocha";
-      customColorSchemes = [ catppuccinMochaColors ];
     };
     fonts = {
       general = {
