@@ -1,4 +1,4 @@
-{ pkgs, myLib, ... }:
+{ pkgs, lib, myLib, ... }:
 
 let
   # ========== Кастомная цветовая схема KDE (Catppuccin Mocha + кастомный акцент) ==========
@@ -145,7 +145,10 @@ in
       LANGUAGE = "ru_RU.UTF-8";                                     # Дополнительный язык
       QT_QPA_PLATFORMTHEME = "kde";                                 # Тема Qt для приложений
       GTK_THEME = "catppuccin-mocha-blue-standard";                 # Принудительно задать GTK-тему, чтобы KDE не перебивала её
-      XDG_DATA_DIRS = "${pkgs.gsettings-desktop-schemas}/share:${pkgs.gtk3}/share:/run/current-system/sw/share";  # Указать gsettings, где искать схемы. Без этого fastfetch не видит GTK3/4
+      XDG_DATA_DIRS = lib.mkAfter [                                 # Указать gsettings, где искать схемы. Без этого fastfetch не видит GTK3/4
+      "${pkgs.gsettings-desktop-schemas}/share"
+      "${pkgs.gtk3}/share"
+    ];
     };
 
     # ========== Настройка фона SDDM ==========
