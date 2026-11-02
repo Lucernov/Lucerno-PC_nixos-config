@@ -1,7 +1,7 @@
 { pkgs, lib, myLib, ... }:
 
 let
-  # ========== Твоя кастомная цветовая схема (152,152,193) ==========
+  # ========== Твоя кастомная цветовая схема (152,152,193) для KDE ==========
   catppuccinMochaColors = pkgs.writeText "CatppuccinMocha.colors" ''
     [ColorEffects:Disabled]
     Color=49,50,68
@@ -126,37 +126,37 @@ in
 {
   home.stateVersion = "26.05";
 
-    # ========== Настройка GTK (Firefox, Telegram и др.) ==========
+  # =========================================================
+  # GTK (Firefox, Telegram и др.) - ОБХОД БАГА HOME MANAGER
+  # =========================================================
   gtk = {
     enable = true;
     font = {
       name = lib.mkForce "SF Pro";
       size = lib.mkForce 12;
     };
-    theme = {
-      name = lib.mkForce "Catppuccin-Mocha-Standard-Blue-Dark";
-      # package = ...; # УБРАНО, чтобы избежать ошибки распаковки
-    };
+
+    # Отключаем встроенный механизм тем, чтобы он не пытался распаковать папку
+    theme = null;
+
     iconTheme = {
       name = lib.mkForce "Gradient-Dark-Icons";
     };
+
+    # Прописываем имя темы напрямую в настройки GTK
+    gtk3.extraConfig = {
+      gtk-theme-name = "Catppuccin-Mocha-Standard-Blue-Dark";
+    };
+    gtk4.extraConfig = {
+      gtk-theme-name = "Catppuccin-Mocha-Standard-Blue-Dark";
+    };
   };
 
-  # Вручную создаем симлинки на тему Catppuccin для GTK3 и GTK4
-  home.file = {
-    ".config/gtk-3.0/gtk.css".source =
-      "${pkgs.catppuccin-gtk.override { variant = "mocha"; accents = [ "blue" ]; size = "standard"; }}/share/themes/Catppuccin-Mocha-Standard-Blue-Dark/gtk-3.0/gtk.css";
-    ".config/gtk-3.0/assets".source =
-      "${pkgs.catppuccin-gtk.override { variant = "mocha"; accents = [ "blue" ]; size = "standard"; }}/share/themes/Catppuccin-Mocha-Standard-Blue-Dark/gtk-3.0/assets";
+  # Создаем симлинк на тему в домашней папке, чтобы GTK мог её найти
+  home.file.".local/share/themes/Catppuccin-Mocha-Standard-Blue-Dark".source =
+    "${pkgs.catppuccin-gtk.override { variant = "mocha"; accents = [ "blue" ]; size = "standard"; }}/share/themes/Catppuccin-Mocha-Standard-Blue-Dark";
 
-    ".config/gtk-4.0/gtk.css".source =
-      "${pkgs.catppuccin-gtk.override { variant = "mocha"; accents = [ "blue" ]; size = "standard"; }}/share/themes/Catppuccin-Mocha-Standard-Blue-Dark/gtk-4.0/gtk.css";
-    ".config/gtk-4.0/assets".source =
-      "${pkgs.catppuccin-gtk.override { variant = "mocha"; accents = [ "blue" ]; size = "standard"; }}/share/themes/Catppuccin-Mocha-Standard-Blue-Dark/gtk-4.0/assets";
-  };
-
-  # ========== Принудительная настройка dconf ==========
-  # Перебиваем дефолтные значения модуля GNOME (DejaVu Sans)
+  # Принудительно задаем значения в dconf (перебиваем дефолт DejaVu Sans)
   dconf.settings = {
     "org/gnome/desktop/interface" = {
       font-name = lib.mkForce "SF Pro 12";
@@ -165,9 +165,12 @@ in
     };
   };
 
-  # Размещаем файл цветовой схемы в правильной папке
+  # Файл цветовой схемы для KDE
   home.file.".local/share/color-schemes/CatppuccinMocha.colors".source = catppuccinMochaColors;
 
+  # =========================================================
+  # QT (KDE PLASMA) - РАБОТАЕТ ЧЕРЕЗ PLASMA-MANAGER
+  # =========================================================
   programs.plasma = {
     enable = true;
 
@@ -199,8 +202,8 @@ in
         { layout = "ru"; }
       ];
       options = [
-        "grp:ctrl_shift_toggle" # Переключение по Ctrl+Shift
-        "grp_led:scroll"        # Индикация Scroll Lock
+        "grp:ctrl_shift_toggle"
+        "grp_led:scroll"
       ];
     };
 
@@ -216,20 +219,15 @@ in
       };
     };
 
-    # ========== ГОРЯЧИЕ КЛАВИШИ (ПЕРЕНОС ИЗ СТАРОГО KXKBRC) ==========
+    # ========== ГОРЯЧИЕ КЛАВИШИ ==========
     shortcuts = {
-      # Переключение раскладки по Meta+Alt+K / L (в дополнение к Ctrl+Shift)
       "KDE Keyboard Layout Switcher" = {
         "Switch to Last-Used Keyboard Layout" = "Meta+Alt+L";
         "Switch to Next Keyboard Layout" = "Meta+Alt+K";
       };
-
-      # Твоя Kitty на Meta+Z
       "services/net.local.toggle-kitty.desktop" = {
         _launch = "Meta+Z";
       };
-
-      # Управление окнами (KWin)
       "kwin" = {
         "Expose" = "Meta+F9";
         "ExposeAll" = "Meta+F10";
@@ -263,14 +261,10 @@ in
         "Window to Next Screen" = "Meta+Shift+Right";
         "Window to Previous Screen" = "Meta+Shift+Left";
       };
-
-      # Блокировка и выход
       "ksmserver" = {
         "Lock Session" = "Meta+L";
         "Log Out" = "Ctrl+Alt+Del";
       };
-
-      # Панель задач и меню пуск
       "plasmashell" = {
         "activate application launcher" = "Meta";
         "activate task manager entry 1" = "Meta+1";
