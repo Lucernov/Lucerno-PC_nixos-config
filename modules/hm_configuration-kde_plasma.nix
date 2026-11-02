@@ -126,7 +126,7 @@ in
 {
   home.stateVersion = "26.05";
 
-    # ========== Настройка GTK (Firefox, Telegram и др.) ==========
+  # ========== Настройка GTK (Firefox, Telegram и др.) ==========
   gtk = {
     enable = true;
     font = {
@@ -135,9 +135,17 @@ in
     };
     theme = {
       name = lib.mkForce "Catppuccin-Mocha-Standard-Blue-Dark";
+      # Указываем Home Manager, откуда брать файлы этой темы
+      package = lib.mkForce (pkgs.catppuccin-gtk.override {
+        variant = "mocha";
+        accents = [ "blue" ];
+        size = "standard";
+      });
     };
     iconTheme = {
       name = lib.mkForce "Gradient-Dark-Icons";
+      # Если иконки тоже ругаются, раскомментируй и укажи пакет:
+      # package = lib.mkForce pkgs.gradient-icons;
     };
   };
 
