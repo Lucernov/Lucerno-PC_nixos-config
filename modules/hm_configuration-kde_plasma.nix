@@ -126,7 +126,7 @@ in
 {
   home.stateVersion = "26.05";
 
-  # ========== Настройка GTK (Firefox, Telegram и др.) ==========
+    # ========== Настройка GTK (Firefox, Telegram и др.) ==========
   gtk = {
     enable = true;
     font = {
@@ -138,6 +138,16 @@ in
     };
     iconTheme = {
       name = lib.mkForce "Gradient-Dark-Icons";
+    };
+  };
+
+  # ========== Принудительная настройка dconf ==========
+  # Перебиваем дефолтные значения модуля GNOME (DejaVu Sans)
+  dconf.settings = {
+    "org/gnome/desktop/interface" = {
+      font-name = lib.mkForce "SF Pro 12";
+      gtk-theme = lib.mkForce "Catppuccin-Mocha-Standard-Blue-Dark";
+      icon-theme = lib.mkForce "Gradient-Dark-Icons";
     };
   };
 
