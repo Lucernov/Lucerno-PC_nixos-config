@@ -1,4 +1,4 @@
-{ inputs, myLib, ... }:
+{ inputs, lib, myLib, ... }:
 
 {
   # ========== Глобальные настройки Home Manager ==========
@@ -6,17 +6,18 @@
   home-manager.useUserPackages = true;
   home-manager.backupFileExtension = "backup";
 
-  # Передаем inputs и myLib внутрь Home Manager, чтобы они были доступны в конфигах
+  # Передаем inputs и myLib внутрь Home Manager
   home-manager.extraSpecialArgs = { inherit inputs myLib; };
 
   # ========== Настройки для конкретного пользователя ==========
   home-manager.users.${myLib.userName} = { ... }: {
-    # Обязательный параметр
     home.stateVersion = "26.05";
 
     imports = [
       inputs.plasma-manager.homeManagerModules.plasma-manager
-      ./hm_configuration-kde_plasma.nix
+
+      # Собираем все hm_-файлы из папки modules/
+      (inputs.import-tree.filter (path: lib.hasPrefix "hm_" (baseNameOf path)) ./modules) # Собирать все hm_-файлы из modules/
     ];
   };
 }

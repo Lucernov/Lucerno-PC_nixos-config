@@ -74,7 +74,7 @@
           inputs.agenix.nixosModules.default                                                               # Модуль управления секретами (agenix)
           inputs.artcraft.nixosModules.default                                                             # Модуль приложений Аrtcraft
           home-manager.nixosModules.home-manager                                                           # Модуль Home Manager
-          (inputs.import-tree ./modules)                                                                   # Основной модуль config nixos. Рекурсивно импортируются все модули из папки modules/nixos
+          (inputs.import-tree.filter (path: !(nixpkgs.lib.hasPrefix "hm_" (baseNameOf path))) ./modules)   # Основной модуль config nixos с исключением всех файлов с префиксом hm_ из системного импорта
         ];
       };
 
