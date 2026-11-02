@@ -1,4 +1,4 @@
-{ pkgs, lib, myLib, ... }:
+{ pkgs, myLib, ... }:
 
 let
   # ========== Кастомная цветовая схема KDE (Catppuccin Mocha + кастомный акцент) ==========
@@ -145,10 +145,6 @@ in
       LANGUAGE = "ru_RU.UTF-8";                                     # Дополнительный язык
       QT_QPA_PLATFORMTHEME = "kde";                                 # Тема Qt для приложений
       GTK_THEME = "catppuccin-mocha-blue-standard";                 # Принудительно задать GTK-тему, чтобы KDE не перебивала её
-      XDG_DATA_DIRS = lib.mkAfter [                                 # Указать gsettings, где искать схемы. Без этого fastfetch не видит GTK3/4
-      "${pkgs.gsettings-desktop-schemas}/share"
-      "${pkgs.gtk3}/share"
-    ];
     };
 
     # ========== Настройка фона SDDM ==========
@@ -168,9 +164,23 @@ in
       "org/gnome/desktop/interface" = {
         gtk-theme = "catppuccin-mocha-blue-standard";
         color-scheme = "prefer-dark";
+        font-name = "SF Pro 12";
       };
     };
   }];
+
+  # ========== Принудительная установка шрифта в dconf для fastfetch ==========
+  systemd.user.services.force-gtk-font = {
+    description = "Force GTK font name in dconf";
+    after = [ "graphical-session.target" "plasma-kde-gtk-config.service" ];
+    wantedBy = [ "graphical-session.target" ];
+    serviceConfig = {
+      Type = "oneshot";
+      ExecStart = [
+        "${pkgs.dconf}/bin/dconf write /org/gnome/desktop/interface/font-name \"'SF Pro 12'\""
+      ];
+    };
+  };
 
   # ========== Установка обоев при старте сессии (от пользователя) ==========
   systemd.user.services.set-wallpaper = {
@@ -204,6 +214,7 @@ in
     (myLib.mkLink "${myLib.home}/.config/gtk-3.0/settings.ini" (pkgs.writeText "gtk3-settings.ini" ''
       [Settings]
       gtk-theme-name = catppuccin-mocha-blue-standard
+      gtk-font-name = SF Pro 12
       gtk-application-prefer-dark-theme = 1
     ''))
 
@@ -211,6 +222,7 @@ in
     (myLib.mkLink "${myLib.home}/.config/gtk-4.0/settings.ini" (pkgs.writeText "gtk4-settings.ini" ''
       [Settings]
       gtk-theme-name = catppuccin-mocha-blue-standard
+      gtk-font-name = SF Pro 12
       gtk-application-prefer-dark-theme = 1
     ''))
 
