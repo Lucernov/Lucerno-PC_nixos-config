@@ -187,6 +187,14 @@ in
     (myLib.mkDir "${myLib.home}/.local/share/color-schemes")
     (myLib.mkLink "${myLib.home}/.local/share/color-schemes/CatppuccinMocha.colors" catppuccinMochaColors)
 
+    # ---------- Настройка GTK2 ----------
+    (myLib.mkLink "${myLib.home}/.gtkrc-2.0" (pkgs.writeText "gtkrc-2.0" ''
+      gtk-theme-name="catppuccin-mocha-blue-standard"
+      gtk-icon-theme-name="Gradient-Dark-Icons"
+      gtk-font-name="SF Pro 12"
+      gtk-application-prefer-dark-theme=1
+    ''))
+
     # ---------- Принудительное применение GTK-темы ----------
     # KDE-служба kde-gtk-config при старте перезаписывает эти файлы на Breeze.
     # Делаем их read-only симлинками на Nix Store, чтобы KDE не могла их изменить.
