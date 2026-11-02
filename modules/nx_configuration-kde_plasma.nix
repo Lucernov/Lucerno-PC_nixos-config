@@ -146,7 +146,7 @@ in
       QT_QPA_PLATFORMTHEME = "kde";                                 # Тема Qt для приложений
 
       # Принудительно задаем GTK-тему, чтобы KDE не перебивала её
-      GTK_THEME = "Catppuccin-Mocha-Standard-Blue-Dark";
+      GTK_THEME = "catppuccin-mocha-blue-standard";
     };
 
     # ========== Настройка фона SDDM ==========
@@ -164,7 +164,7 @@ in
   programs.dconf.profiles.user.databases = [{
     settings = {
       "org/gnome/desktop/interface" = {
-        gtk-theme = "Catppuccin-Mocha-Standard-Blue-Dark";
+        gtk-theme = "catppuccin-mocha-blue-standard";
         color-scheme = "prefer-dark";
       };
     };
@@ -193,14 +193,14 @@ in
     (myLib.mkDir "${myLib.home}/.config/gtk-3.0")
     (myLib.mkLink "${myLib.home}/.config/gtk-3.0/settings.ini" (pkgs.writeText "gtk3-settings.ini" ''
       [Settings]
-      gtk-theme-name = Catppuccin-Mocha-Standard-Blue-Dark
+      gtk-theme-name = catppuccin-mocha-blue-standard
       gtk-application-prefer-dark-theme = 1
     ''))
 
     (myLib.mkDir "${myLib.home}/.config/gtk-4.0")
     (myLib.mkLink "${myLib.home}/.config/gtk-4.0/settings.ini" (pkgs.writeText "gtk4-settings.ini" ''
       [Settings]
-      gtk-theme-name = Catppuccin-Mocha-Standard-Blue-Dark
+      gtk-theme-name = catppuccin-mocha-blue-standard
       gtk-application-prefer-dark-theme = 1
     ''))
 
