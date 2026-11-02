@@ -137,11 +137,11 @@ in
     fonts = {
       general = {
         family = "SF Pro";
-        size = 12;
+        pointSize = 12;
       };
       fixedWidth = {
         family = "JetBrainsMono Nerd Font Mono";
-        size = 15;
+        pointSize = 15;
       };
     };
   };
