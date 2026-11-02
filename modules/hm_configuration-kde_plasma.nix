@@ -136,14 +136,13 @@ in
       size = lib.mkForce 12;
     };
 
-    # Отключаем встроенный механизм тем, чтобы он не пытался распаковать папку
-    theme = null;
+    # ПРИНУДИТЕЛЬНО отключаем встроенный механизм тем
+    theme = lib.mkForce null;
 
     iconTheme = {
       name = lib.mkForce "Gradient-Dark-Icons";
     };
 
-    # Прописываем имя темы напрямую в настройки GTK
     gtk3.extraConfig = {
       gtk-theme-name = "Catppuccin-Mocha-Standard-Blue-Dark";
     };
