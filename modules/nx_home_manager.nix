@@ -4,7 +4,7 @@
   # ========== Глобальные настройки Home Manager ==========
   home-manager.useGlobalPkgs = true;
   home-manager.useUserPackages = true;
-  home-manager.backupFileExtension = "backup";
+  home-manager.backupCommand = "rm -f";
 
   # Передаем inputs и myLib внутрь Home Manager
   home-manager.extraSpecialArgs = { inherit inputs myLib; };
