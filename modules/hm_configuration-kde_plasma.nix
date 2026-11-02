@@ -132,6 +132,13 @@ in
   # Полностью отключаем встроенный модуль GTK, чтобы обойти баг с распаковкой архива темы
   gtk.enable = lib.mkForce false;
 
+  # Вручную создаем файл конфигурации для GTK2
+  home.file.".gtkrc-2.0".text = ''
+    gtk-theme-name="Catppuccin-Mocha-Standard-Blue-Dark"
+    gtk-icon-theme-name="Gradient-Dark-Icons"
+    gtk-font-name="SF Pro 12"
+    gtk-application-prefer-dark-theme=1
+  '';
   # Вручную создаем файлы settings.ini для GTK3 и GTK4
   home.file.".config/gtk-3.0/settings.ini".text = ''
     [Settings]
