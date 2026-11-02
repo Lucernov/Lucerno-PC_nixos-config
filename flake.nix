@@ -6,6 +6,17 @@
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-26.05";                                                      # Стабильный канал Nixpkgs
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";                                          # Нестабильный канал Nixpkgs (последние обновления)
 
+    home-manager = {
+      url = "github:nix-community/home-manager/release-26.05";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    plasma-manager = {
+      url = "github:nix-community/plasma-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.home-manager.follows = "home-manager";
+    };
+
     agenix = {                                                                                             # Управление секретами (шифрование через age)
       url = "github:ryantm/agenix";
       inputs.nixpkgs.follows = "nixpkgs";                                                                  # Зависимости используют основной nixpkgs
@@ -27,7 +38,7 @@
   };
 
   # ========== Выходные данные (outputs) ==========
-  outputs = inputs@{ nixpkgs, nixpkgs-unstable, ... }:                                                     # Функция, которая принимает все входы и возвращает результаты сборки
+  outputs = inputs@{ nixpkgs, nixpkgs-unstable, home-manager, plasma-manager, ... }:                       # Функция, которая принимает все входы и возвращает результаты сборки
     let
       pkgsUnstable = import nixpkgs-unstable {                                                             # Создать экземпляр нестабильного nixpkgs (для свежих пакетов)
         localSystem = "x86_64-linux";                                                                      # Новый синтаксис с атрибутом localSystem вместо устаревшего `system`
@@ -62,6 +73,7 @@
           inputs.stylix.nixosModules.stylix                                                                # Модуль стилизации (stylix)
           inputs.agenix.nixosModules.default                                                               # Модуль управления секретами (agenix)
           inputs.artcraft.nixosModules.default                                                             # Модуль приложений Аrtcraft
+          home-manager.nixosModules.home-manager                                                           # Модуль Home Manager
           (inputs.import-tree ./modules)                                                                   # Основной модуль config nixos. Рекурсивно импортируются все модули из папки modules/nixos
         ];
       };

@@ -134,11 +134,6 @@
     fbset                                                         # Настройка разрешения framebuffer для TTY (используется в nx_tty.nix)
     ragenix                                                       # CLI agenix (Rust-реализация, совместима с ryantm/agenix)
     age                                                           # Утилита шифрования (генерация age-ключей)
-    (catppuccin-gtk.override {                                    # Тема для GTK-приложений
-      variant = "mocha";
-      accents = [ "blue" ];
-      size = "standard";
-    })
 
     # КОНСОЛЬНЫЕ УТИЛИТЫ
     bat                                                           # Улучшенный cat с подсветкой синтаксиса и интеграцией с Git

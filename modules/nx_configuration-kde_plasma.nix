@@ -1,128 +1,5 @@
 { pkgs, myLib, ... }:
 
-let
-  # ========== Кастомная цветовая схема KDE (Catppuccin Mocha + кастомный акцент) ==========
-  catppuccinMochaColors = pkgs.writeText "CatppuccinMocha.colors" ''
-    [ColorEffects:Disabled]
-    Color=49,50,68
-    ColorAmount=0
-    ColorEffect=0
-    ContrastAmount=0.45
-    ContrastEffect=1
-    IntensityAmount=0.1
-    IntensityEffect=2
-
-    [ColorEffects:Inactive]
-    ChangeSelectionColor=true
-    Color=108,112,134
-    ColorAmount=0.025
-    ColorEffect=2
-    ContrastAmount=0.1
-    ContrastEffect=2
-    Enable=true
-    IntensityAmount=0
-    IntensityEffect=0
-
-    [Colors:Button]
-    BackgroundAlternate=69,71,90
-    BackgroundNormal=69,71,90
-    DecorationFocus=152,152,193
-    DecorationHover=152,152,193
-    ForegroundActive=116,199,236
-    ForegroundInactive=186,194,222
-    ForegroundLink=137,180,250
-    ForegroundNegative=243,139,168
-    ForegroundNeutral=249,226,175
-    ForegroundNormal=205,214,244
-    ForegroundPositive=166,227,161
-    ForegroundVisited=137,180,250
-
-    [Colors:Complementary]
-    BackgroundAlternate=24,24,37
-    BackgroundNormal=30,30,46
-    DecorationFocus=152,152,193
-    DecorationHover=152,152,193
-    ForegroundActive=152,152,193
-    ForegroundInactive=186,194,222
-    ForegroundLink=152,152,193
-    ForegroundNegative=243,139,168
-    ForegroundNeutral=249,226,175
-    ForegroundNormal=205,214,244
-    ForegroundPositive=166,227,161
-    ForegroundVisited=147,153,178
-
-    [Colors:Selection]
-    BackgroundAlternate=69,71,90
-    BackgroundNormal=152,152,193
-    DecorationFocus=152,152,193
-    DecorationHover=152,152,193
-    ForegroundActive=116,199,236
-    ForegroundInactive=186,194,222
-    ForegroundLink=137,180,250
-    ForegroundNegative=243,139,168
-    ForegroundNeutral=249,226,175
-    ForegroundNormal=255,255,255
-    ForegroundPositive=166,227,161
-    ForegroundVisited=137,180,250
-
-    [Colors:Tooltip]
-    BackgroundAlternate=69,71,90
-    BackgroundNormal=16,16,25
-    DecorationFocus=152,152,193
-    DecorationHover=152,152,193
-    ForegroundActive=116,199,236
-    ForegroundInactive=186,194,222
-    ForegroundLink=137,180,250
-    ForegroundNegative=243,139,168
-    ForegroundNeutral=249,226,175
-    ForegroundNormal=205,214,244
-    ForegroundPositive=166,227,161
-    ForegroundVisited=137,180,250
-
-    [Colors:View]
-    BackgroundAlternate=37,37,54
-    BackgroundNormal=34,34,51
-    DecorationFocus=152,152,193
-    DecorationHover=152,152,193
-    ForegroundActive=116,199,236
-    ForegroundInactive=186,194,222
-    ForegroundLink=137,180,250
-    ForegroundNegative=243,139,168
-    ForegroundNeutral=249,226,175
-    ForegroundNormal=205,214,244
-    ForegroundPositive=166,227,161
-    ForegroundVisited=137,180,250
-
-    [Colors:Window]
-    BackgroundAlternate=24,24,37
-    BackgroundNormal=30,30,46
-    DecorationFocus=152,152,193
-    DecorationHover=152,152,193
-    ForegroundActive=116,199,236
-    ForegroundInactive=186,194,222
-    ForegroundLink=137,180,250
-    ForegroundNegative=243,139,168
-    ForegroundNeutral=249,226,175
-    ForegroundNormal=205,214,244
-    ForegroundPositive=166,227,161
-    ForegroundVisited=137,180,250
-
-    [General]
-    Name=CatppuccinMocha
-    shadeSortColumn=true
-
-    [KDE]
-    contrast=7
-
-    [WM]
-    activeBackground=30,30,46
-    activeBlend=30,30,46
-    activeForeground=205,214,244
-    inactiveBackground=30,30,46
-    inactiveBlend=30,30,46
-    inactiveForeground=186,194,222
-  '';
-in
 {
   # ========== Настройки дисплейного менеджера и рабочего стола ==========
   services = {
@@ -144,7 +21,6 @@ in
       LANG = "ru_RU.UTF-8";                                         # Основной язык системы
       LANGUAGE = "ru_RU.UTF-8";                                     # Дополнительный язык
       QT_QPA_PLATFORMTHEME = "kde";                                 # Тема Qt для приложений
-      GTK_THEME = "catppuccin-mocha-blue-standard";                 # Принудительно задать GTK-тему (страховка)
     };
 
     # ========== Настройка фона SDDM ==========
@@ -156,34 +32,8 @@ in
     ];
   };
 
-  # ========== Настройка GTK через dconf ==========
-  # Нужен для приложений и fastfetch, которые читают настройки из dconf.
-  programs.dconf.profiles.user.databases = [{
-    settings = {
-      "org/gnome/desktop/interface" = {
-        gtk-theme = "catppuccin-mocha-blue-standard";
-        color-scheme = "prefer-dark";
-        font-name = "SF Pro 12";
-      };
-    };
-  }];
-
-  # ========== Принудительная установка шрифта в dconf ==========
-  # KDE-служба kde-gtk-config при старте перезаписывает dconf на дефолт.
-  # Этот сервис запускается ПОСЛЕ неё и возвращает правильный шрифт.
-  systemd.user.services.force-gtk-font = {
-    description = "Force GTK font name in dconf";
-    after = [ "graphical-session.target" "plasma-kde-gtk-config.service" ];
-    wantedBy = [ "graphical-session.target" ];
-    serviceConfig = {
-      Type = "oneshot";
-      ExecStart = [
-        "${pkgs.dconf}/bin/dconf write /org/gnome/desktop/interface/font-name \"'SF Pro 12'\""
-      ];
-    };
-  };
-
   # ========== Установка обоев при старте сессии (от пользователя) ==========
+  # Если plasma-manager научится задавать обои, этот сервис можно будет убрать.
   systemd.user.services.set-wallpaper = {
     description = "Set Plasma wallpaper";
     after = [ "graphical-session.target" ];
@@ -194,40 +44,9 @@ in
     };
   };
 
-  # ========== Настройки KDE, GTK и корзины ==========
+  # ========== Настройки корзины ==========
+  # plasma-manager может не поддерживать все опции ktrashrc, поэтому оставляем их здесь.
   systemd.tmpfiles.rules = [
-    # ---------- Кастомная цветовая схема KDE ----------
-    (myLib.mkDir "${myLib.home}/.local/share/color-schemes")
-    (myLib.mkLink "${myLib.home}/.local/share/color-schemes/CatppuccinMocha.colors" catppuccinMochaColors)
-
-    # ---------- Настройка GTK2 ----------
-    (myLib.mkLink "${myLib.home}/.gtkrc-2.0" (pkgs.writeText "gtkrc-2.0" ''
-      gtk-theme-name="catppuccin-mocha-blue-standard"
-      gtk-icon-theme-name="Gradient-Dark-Icons"
-      gtk-font-name="SF Pro 12"
-      gtk-application-prefer-dark-theme=1
-    ''))
-
-    # ---------- Принудительное применение GTK-темы ----------
-    # KDE-служба kde-gtk-config перезаписывает эти файлы при старте.
-    # Делаем их read-only симлинками на Nix Store, чтобы KDE не могла их изменить.
-    (myLib.mkDir "${myLib.home}/.config/gtk-3.0")
-    (myLib.mkLink "${myLib.home}/.config/gtk-3.0/settings.ini" (pkgs.writeText "gtk3-settings.ini" ''
-      [Settings]
-      gtk-theme-name = catppuccin-mocha-blue-standard
-      gtk-font-name = SF Pro 12
-      gtk-application-prefer-dark-theme = 1
-    ''))
-
-    (myLib.mkDir "${myLib.home}/.config/gtk-4.0")
-    (myLib.mkLink "${myLib.home}/.config/gtk-4.0/settings.ini" (pkgs.writeText "gtk4-settings.ini" ''
-      [Settings]
-      gtk-theme-name = catppuccin-mocha-blue-standard
-      gtk-font-name = SF Pro 12
-      gtk-application-prefer-dark-theme = 1
-    ''))
-
-    # ---------- Настройки корзины ----------
     (myLib.mkLink "${myLib.home}/.config/ktrashrc" (pkgs.writeText "ktrashrc" ''
       [/home/lucerno/.local/share/Trash]
       Days=7
