@@ -151,7 +151,6 @@ in
       colorScheme = "CatppuccinMocha";
       iconTheme = "Gradient-Dark-Icons";
       wallpaper = myLib.wallpaperPath;
-      gtkTheme = "Catppuccin-Mocha-Standard-Blue-Dark";
       windowDecorations = {
         library = "org.kde.breeze";
         theme = "Breeze";
