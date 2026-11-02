@@ -137,7 +137,7 @@ in
       name = lib.mkForce "Catppuccin-Mocha-Standard-Blue-Dark";
     };
     iconTheme = {
-      name = "Gradient-Dark-Icons";
+      name = lib.mkForce "Gradient-Dark-Icons";
     };
   };
 
