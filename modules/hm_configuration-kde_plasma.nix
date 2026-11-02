@@ -149,14 +149,15 @@ in
       };
     };
 
-    # ========== НАСТРОЙКА КЛАВИАТУРЫ ==========
+    # ========== НАСТРОЙКА КЛАВИАТУРЫ (КАК В ТВОЕМ KXKBRC) ==========
     input.keyboard = {
       layouts = [
         { layout = "us"; }
         { layout = "ru"; }
       ];
       options = [
-        "grp:alt_shift_toggle" # Переключение по Alt+Shift (стандарт)
+        "grp:ctrl_shift_toggle" # Переключение по Ctrl+Shift
+        "grp_led:scroll"        # Индикация русской раскладки через Scroll Lock
       ];
     };
   };
