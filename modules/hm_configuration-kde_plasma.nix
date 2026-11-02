@@ -130,8 +130,8 @@ in
   gtk = {
     enable = true;
     font = {
-      name = "SF Pro";
-      size = 12;
+      name = lib.mkForce "SF Pro";
+      size = lib.mkForce 12;
     };
     theme = {
       name = lib.mkForce "Catppuccin-Mocha-Standard-Blue-Dark";
