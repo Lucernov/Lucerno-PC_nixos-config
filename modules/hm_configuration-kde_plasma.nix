@@ -126,7 +126,20 @@ in
 {
   home.stateVersion = "26.05";
 
-  # НИКАКИХ home.packages!!!
+  # ========== Настройка GTK (Firefox, Telegram и др.) ==========
+  gtk = {
+    enable = true;
+    font = {
+      name = "SF Pro";
+      size = 12;
+    };
+    theme = {
+      name = "Catppuccin-Mocha-Standard-Blue-Dark";
+    };
+    iconTheme = {
+      name = "Gradient-Dark-Icons";
+    };
+  };
 
   # Размещаем файл цветовой схемы в правильной папке
   home.file.".local/share/color-schemes/CatppuccinMocha.colors".source = catppuccinMochaColors;
@@ -138,6 +151,7 @@ in
       colorScheme = "CatppuccinMocha";
       iconTheme = "Gradient-Dark-Icons";
       wallpaper = myLib.wallpaperPath;
+      gtkTheme = "Catppuccin-Mocha-Standard-Blue-Dark";
       windowDecorations = {
         library = "org.kde.breeze";
         theme = "Breeze";
