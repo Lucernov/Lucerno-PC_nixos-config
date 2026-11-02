@@ -1,4 +1,4 @@
-{ pkgs, myLib, ... }:
+{ pkgs, lib, myLib, ... }:
 
 let
   # ========== Твоя кастомная цветовая схема (152,152,193) ==========
@@ -134,7 +134,7 @@ in
       size = 12;
     };
     theme = {
-      name = "Catppuccin-Mocha-Standard-Blue-Dark";
+      name = lib.mkForce "Catppuccin-Mocha-Standard-Blue-Dark";
     };
     iconTheme = {
       name = "Gradient-Dark-Icons";
