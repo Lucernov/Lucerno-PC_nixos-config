@@ -14,13 +14,9 @@
     # Обязательный параметр
     home.stateVersion = "26.05";
 
-    imports = [ inputs.plasma-manager.homeManagerModules.plasma-manager ];
-
-    # НИКАКИХ home.packages!!!
-
-    programs.plasma = {
-      enable = true;
-      # ... тут будут настройки KDE ...
-    };
+    imports = [
+      inputs.plasma-manager.homeManagerModules.plasma-manager
+      ./hm_configuration-kde_plasma.nix
+    ];
   };
 }
