@@ -285,4 +285,7 @@ in
       };
     };
   };
+
+  # ========== Отключаем Stylix для Qt в Home Manager ==========
+  stylix.targets.qt.enable = lib.mkForce false;
 }
