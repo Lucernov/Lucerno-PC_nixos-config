@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, myLib, ... }:
 
 let
   # ========== Твоя кастомная цветовая схема (152,152,193) ==========
@@ -136,6 +136,9 @@ in
 
     workspace = {
       colorScheme = "CatppuccinMocha";
+      iconTheme = "Gradient-Dark-Icons";
+      wallpaper = myLib.wallpaperPath;
+      windowDecorations = "org.kde.breeze";
     };
 
     fonts = {
@@ -144,12 +147,12 @@ in
         pointSize = 12;
       };
       fixedWidth = {
-        family = "JetBrainsMono Nerd Font Mono";
-        pointSize = 15;
+        family = "JetBrains Mono";
+        pointSize = 12;
       };
     };
 
-    # ========== НАСТРОЙКА КЛАВИАТУРЫ (КАК В ТВОЕМ KXKBRC) ==========
+    # ========== НАСТРОЙКА КЛАВИАТУРЫ ==========
     input.keyboard = {
       layouts = [
         { layout = "us"; }
@@ -157,8 +160,92 @@ in
       ];
       options = [
         "grp:ctrl_shift_toggle" # Переключение по Ctrl+Shift
-        "grp_led:scroll"        # Индикация русской раскладки через Scroll Lock
+        "grp_led:scroll"        # Индикация Scroll Lock
       ];
+    };
+
+    # ========== ЭФФЕКТЫ KWIN И ВИРТУАЛЬНЫЕ СТОЛЫ ==========
+    kwin = {
+      virtualDesktops = {
+        number = 2;
+        rows = 2;
+      };
+      effects = {
+        blur.enable = true;
+        translucency.enable = true;
+      };
+    };
+
+    # ========== ГОРЯЧИЕ КЛАВИШИ (ПЕРЕНОС ИЗ СТАРОГО KXKBRC) ==========
+    shortcuts = {
+      # Переключение раскладки по Meta+Alt+K / L (в дополнение к Ctrl+Shift)
+      "KDE Keyboard Layout Switcher" = {
+        "Switch to Last-Used Keyboard Layout" = "Meta+Alt+L";
+        "Switch to Next Keyboard Layout" = "Meta+Alt+K";
+      };
+
+      # Твоя Kitty на Meta+Z
+      "services/net.local.toggle-kitty.desktop" = {
+        _launch = "Meta+Z";
+      };
+
+      # Управление окнами (KWin)
+      "kwin" = {
+        "Expose" = "Meta+F9";
+        "ExposeAll" = "Meta+F10";
+        "ExposeClass" = "Meta+F7";
+        "Grid View" = "Meta+G";
+        "Kill Window" = "Meta+Ctrl+Esc";
+        "Show Desktop" = "Meta+D";
+        "Switch One Desktop Down" = "Meta+Ctrl+Down";
+        "Switch One Desktop Up" = "Meta+Ctrl+Up";
+        "Switch One Desktop to the Left" = "Meta+Ctrl+Left";
+        "Switch One Desktop to the Right" = "Meta+Ctrl+Right";
+        "Switch Window Down" = "Meta+Alt+Down";
+        "Switch Window Left" = "Meta+Alt+Left";
+        "Switch Window Right" = "Meta+Alt+Right";
+        "Switch Window Up" = "Meta+Alt+Up";
+        "Switch to Desktop 1" = "Meta+F1";
+        "Switch to Desktop 2" = "Meta+F2";
+        "Switch to Desktop 3" = "Meta+F3";
+        "Switch to Desktop 4" = "Meta+F4";
+        "Window Close" = "Alt+F4";
+        "Window Maximize" = "Meta+PgUp";
+        "Window Minimize" = "Meta+PgDown";
+        "Window Quick Tile Bottom" = "Meta+Down";
+        "Window Quick Tile Left" = "Meta+Left";
+        "Window Quick Tile Right" = "Meta+Right";
+        "Window Quick Tile Top" = "Meta+Up";
+        "Walk Through Windows" = "Meta+Tab";
+        "Walk Through Windows (Reverse)" = "Meta+Shift+Tab";
+        "Walk Through Windows of Current Application" = "Meta+`";
+        "Walk Through Windows of Current Application (Reverse)" = "Meta+~";
+        "Window to Next Screen" = "Meta+Shift+Right";
+        "Window to Previous Screen" = "Meta+Shift+Left";
+      };
+
+      # Блокировка и выход
+      "ksmserver" = {
+        "Lock Session" = "Meta+L";
+        "Log Out" = "Ctrl+Alt+Del";
+      };
+
+      # Панель задач и меню пуск
+      "plasmashell" = {
+        "activate application launcher" = "Meta";
+        "activate task manager entry 1" = "Meta+1";
+        "activate task manager entry 2" = "Meta+2";
+        "activate task manager entry 3" = "Meta+3";
+        "activate task manager entry 4" = "Meta+4";
+        "activate task manager entry 5" = "Meta+5";
+        "activate task manager entry 6" = "Meta+6";
+        "activate task manager entry 7" = "Meta+7";
+        "activate task manager entry 8" = "Meta+8";
+        "activate task manager entry 9" = "Meta+9";
+        "manage activities" = "Meta+Q";
+        "show dashboard" = "Ctrl+F12";
+        "show-on-mouse-pos" = "Meta+V";
+      };
     };
   };
 }
