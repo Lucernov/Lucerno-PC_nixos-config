@@ -127,35 +127,32 @@ in
   home.stateVersion = "26.05";
 
   # =========================================================
-  # GTK (Firefox, Telegram и др.) - ОБХОД БАГА HOME MANAGER
+  # GTK (Firefox, Telegram и др.) - РУЧНАЯ НАСТРОЙКА
   # =========================================================
-  gtk = {
-    enable = true;
-    font = {
-      name = lib.mkForce "SF Pro";
-      size = lib.mkForce 12;
-    };
+  # Полностью отключаем встроенный модуль GTK, чтобы обойти баг с распаковкой архива темы
+  gtk.enable = lib.mkForce false;
 
-    # ПРИНУДИТЕЛЬНО отключаем встроенный механизм тем
-    theme = lib.mkForce null;
+  # Вручную создаем файлы settings.ini для GTK3 и GTK4
+  home.file.".config/gtk-3.0/settings.ini".text = ''
+    [Settings]
+    gtk-theme-name=Catppuccin-Mocha-Standard-Blue-Dark
+    gtk-font-name=SF Pro 12
+    gtk-icon-theme-name=Gradient-Dark-Icons
+    gtk-application-prefer-dark-theme=1
+  '';
+  home.file.".config/gtk-4.0/settings.ini".text = ''
+    [Settings]
+    gtk-theme-name=Catppuccin-Mocha-Standard-Blue-Dark
+    gtk-font-name=SF Pro 12
+    gtk-icon-theme-name=Gradient-Dark-Icons
+    gtk-application-prefer-dark-theme=1
+  '';
 
-    iconTheme = {
-      name = lib.mkForce "Gradient-Dark-Icons";
-    };
-
-    gtk3.extraConfig = {
-      gtk-theme-name = "Catppuccin-Mocha-Standard-Blue-Dark";
-    };
-    gtk4.extraConfig = {
-      gtk-theme-name = "Catppuccin-Mocha-Standard-Blue-Dark";
-    };
-  };
-
-  # Создаем симлинк на тему в домашней папке, чтобы GTK мог её найти
+  # Создаем симлинк на папку темы, чтобы GTK-приложения могли её найти
   home.file.".local/share/themes/Catppuccin-Mocha-Standard-Blue-Dark".source =
     "${pkgs.catppuccin-gtk.override { variant = "mocha"; accents = [ "blue" ]; size = "standard"; }}/share/themes/Catppuccin-Mocha-Standard-Blue-Dark";
 
-  # Принудительно задаем значения в dconf (перебиваем дефолт DejaVu Sans)
+  # Принудительно задаем значения в dconf (для fastfetch и GTK-приложений)
   dconf.settings = {
     "org/gnome/desktop/interface" = {
       font-name = lib.mkForce "SF Pro 12";
