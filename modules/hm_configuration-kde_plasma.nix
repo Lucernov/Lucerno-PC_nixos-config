@@ -139,7 +139,7 @@ in
         family = "SF Pro";
         size = 12;
       };
-      fixed = {
+      fixedWidth = {
         family = "JetBrainsMono Nerd Font Mono";
         size = 15;
       };
