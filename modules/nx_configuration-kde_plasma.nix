@@ -144,9 +144,8 @@ in
       LANG = "ru_RU.UTF-8";                                         # Основной язык системы
       LANGUAGE = "ru_RU.UTF-8";                                     # Дополнительный язык
       QT_QPA_PLATFORMTHEME = "kde";                                 # Тема Qt для приложений
-
-      # Принудительно задаем GTK-тему, чтобы KDE не перебивала её
-      GTK_THEME = "catppuccin-mocha-blue-standard";
+      GTK_THEME = "catppuccin-mocha-blue-standard";                 # Принудительно задать GTK-тему, чтобы KDE не перебивала её
+      GSETTINGS_SCHEMA_DIR = "${pkgs.gsettings-desktop-schemas}/share/glib-2.0/schemas";  # Указать gsettings, где искать схемы. Без этого fastfetch не видит GTK3/4
     };
 
     # ========== Настройка фона SDDM ==========
