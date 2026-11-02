@@ -7,6 +7,7 @@
       image = myLib.wallpaperPath;                                                        # Путь к изображению для обоев рабочего стола и экрана входа
       polarity = "dark";                                                                  # Цветовая направленность: "dark" (тёмная) или "light" (светлая)
       base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-mocha.yaml";         # Активная цветовая схема в формате base16 (Catppuccin Mocha)
-      targets.gtk.enable = false;
+      targets.qt.enable = false;                                                          # Qt (KDE) настроен через plasma-manager
+      targets.gtk.enable = false;                                                         # GTK настроен вручную через dconf/home.file
     };
 }
