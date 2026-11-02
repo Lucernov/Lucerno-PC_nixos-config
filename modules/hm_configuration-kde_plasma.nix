@@ -138,7 +138,10 @@ in
       colorScheme = "CatppuccinMocha";
       iconTheme = "Gradient-Dark-Icons";
       wallpaper = myLib.wallpaperPath;
-      windowDecorations = "org.kde.breeze";
+      windowDecorations = {
+        library = "org.kde.breeze";
+        theme = "Breeze";
+      };
     };
 
     fonts = {
