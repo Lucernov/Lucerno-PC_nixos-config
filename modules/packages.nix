@@ -257,9 +257,11 @@
     wineWow64Packages.staging                                     # Wine с поддержкой 64 и 32 бит (staging‑патчи для аудио)
     yabridge                                                      # Мост для запуска Windows VST-плагинов в Linux (через Wine)
   # yabridgectl                                                   # Утилита для управления yabridge (сканирование, синхронизация)
-    (yabridgectl.override {
-      wineWow64Packages = wineWow64Packages.staging;              # Утилита для управления yabridge (сканирование, синхронизация) Override: winedump из staging (уже есть в systemPackages), а не из дефолтного 9.21
-    })
+(yabridgectl.override {
+  wineWow64Packages = wineWow64Packages // {
+    yabridge = wineWow64Packages.staging;
+  };                                                            # Override: winedump берётся из staging (уже в systemPackages), а не из дефолтного 9.21
+})
     winetricks                                                    # Вспомогательный скрипт для настройки Wine (установка DLL, зависимостей)
     coppwr                                                        # Графическая утилита для управления PipeWire
       # --- Синтезаторы и Сэмплеры ---
