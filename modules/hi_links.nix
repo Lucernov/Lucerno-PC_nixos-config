@@ -70,6 +70,7 @@ in
     # ---------- Vesktop ----------
     (myLib.mkDir "${home}/.config/vesktop")
     (myLib.mkLink "${home}/.config/vesktop/themes" "${home}/${configDir}/dotfiles/config/vesktop/themes")
+    (myLib.mkLink "${home}/.config/vesktop/settings" "${home}/${configDir}/dotfiles/config/vesktop/settings")
 
     # ---------- cliamp ----------
     (myLib.mkDir "${home}/.config/cliamp")
