@@ -67,6 +67,10 @@ in
     (myLib.mkLink "${home}/.local/share/kdenlive/export" "${home}/${configDir}/dotfiles/config/kdenlive/export")
     (myLib.mkLink "${home}/.local/share/kdenlive/layouts" "${home}/${configDir}/dotfiles/config/kdenlive/layouts")
 
+    # ---------- Vesktop ----------
+    (myLib.mkDir "${home}/.config/vesktop")
+    (myLib.mkLink "${home}/.config/vesktop/themes" "${home}/${configDir}/dotfiles/config/vesktop/themes")
+
     # ---------- cliamp ----------
     (myLib.mkDir "${home}/.config/cliamp")
     (myLib.mkLink "${home}/.config/cliamp/playlists" "${home}/${configDir}/dotfiles/config/cliamp/playlists")

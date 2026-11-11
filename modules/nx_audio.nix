@@ -17,13 +17,13 @@ in
 
 {
   environment.sessionVariables = {
-    CLAP_PATH   = pluginPath "clap";    # Установить переменную окружения для пользовательской папки CLAP
-    LV2_PATH    = pluginPath "lv2";     # Установить переменную окружения для пользовательской папки LV2
-    VST_PATH    = pluginPath "vst";     # Установить переменную окружения для пользовательской папки VST
-    VST3_PATH   = pluginPath "vst3";    # Установить переменную окружения для пользовательской папки VST3
-    LXVST_PATH  = pluginPath "lxvst";   # Установить переменную окружения для пользовательской папки LXVST (Linux VST — устаревший формат)
-    LADSPA_PATH = pluginPath "ladspa";  # Установить переменную окружения для пользовательской папки LADSPA (простой формат эффектов)
-    DSSI_PATH   = pluginPath "dssi";    # Установить переменную окружения для пользовательской папки DSSI (инструменты на базе LADSPA)
+    CLAP_PATH   = pluginPath "clap";                                                # Установить переменную окружения для пользовательской папки CLAP
+    LV2_PATH    = pluginPath "lv2";                                                 # Установить переменную окружения для пользовательской папки LV2
+    VST_PATH    = pluginPath "vst";                                                 # Установить переменную окружения для пользовательской папки VST
+    VST3_PATH   = pluginPath "vst3";                                                # Установить переменную окружения для пользовательской папки VST3
+    LXVST_PATH  = pluginPath "lxvst";                                               # Установить переменную окружения для пользовательской папки LXVST (Linux VST — устаревший формат)
+    LADSPA_PATH = pluginPath "ladspa";                                              # Установить переменную окружения для пользовательской папки LADSPA (простой формат эффектов)
+    DSSI_PATH   = pluginPath "dssi";                                                # Установить переменную окружения для пользовательской папки DSSI (инструменты на базе LADSPA)
   };
 
   services = {
@@ -35,7 +35,7 @@ in
       jack.enable = true;                                                           # JACK-совместимость (PipeWire как JACK-сервер)
       pulse.enable = true;                                                          # Включить pipewire-pulse — эмуляцию сервера PulseAudio поверх PipeWire
       wireplumber.enable = true;                                                    # WirePlumber — менеджер сессий для PipeWire (более современный, чем старый media-session)
-      extraLv2Packages = with pkgs; [                                               # Позволяет PipeWire загружать LV2-плагины как filter-chain (обработка сигнала на уровне звукового сервера, а не в DAW).
+      extraLv2Packages = with pkgs; [                                               # Позволяет PipeWire загружать LV2-плагины как filter-chain (обработка сигнала на уровне звукового сервера, а не в DAW)
         lsp-plugins                                                                 # Набор LSP: EQ, компрессоры, лимитеры, meters
         noise-repellent                                                             # Нейро шумодав для голоса Real-time
       ];
@@ -69,7 +69,7 @@ in
 
   # ========== Настройка приоритетов реального времени для PipeWire и WirePlumber ==========
   security = {
-    rtkit.enable = true;                                                            # Включить rtkit (Realtime Kit) — демон, дающий процессам приоритет реального времени. Необходим для низких задержек в аудио.
+    rtkit.enable = true;                                                            # Включить rtkit (Realtime Kit) — демон, дающий процессам приоритет реального времени. Необходим для низких задержек в аудио
     pam.loginLimits = [                                                             # Лимиты для аудио-группы (чтобы приложения имели приоритет реального времени и блокировку памяти)
       { domain = "@audio"; item = "rtprio"; type = "soft"; value = "89"; }          # мягкий лимит RT-приоритета
       { domain = "@audio"; item = "rtprio"; type = "hard"; value = "89"; }          # жёсткий лимит RT-приоритета
@@ -102,6 +102,32 @@ in
     '';
   };
 
+  # Пути с пробелами — через activationScripts, а НЕ через tmpfiles.d
+  system.activationScripts.audioPathsWithSpaces.text = ''
+    set -e
+
+    # Каталог Audio Assault — родитель для симлинков AmpLockerData/DrumLockerData
+    ${pkgs.coreutils}/bin/mkdir -p "${myLib.home}/Audio Assault/PluginData/Audio Assault"
+    ${pkgs.coreutils}/bin/chown -R "${myLib.userName}:${myLib.userName}" "${myLib.home}/Audio Assault"
+
+    # Симлинки на store (Amp Locker и Drum Locker пресеты)
+    # ln -sfnT заменяет target, даже если это пустой каталог
+    ${pkgs.coreutils}/bin/ln -sfnT "/run/current-system/sw/share/amp-locker" \
+      "${myLib.home}/Audio Assault/PluginData/Audio Assault/AmpLockerData"
+    ${pkgs.coreutils}/bin/ln -sfnT "/run/current-system/sw/share/drum-locker" \
+      "${myLib.home}/Audio Assault/PluginData/Audio Assault/DrumLockerData"
+
+    # Симлинки на dotfiles (конфиги плагинов)
+    ${pkgs.coreutils}/bin/ln -sfnT "${myLib.home}/${myLib.configDirName}/dotfiles/config/plugins/config_Amp Locker" \
+      "${myLib.home}/.config/Amp Locker"
+    ${pkgs.coreutils}/bin/ln -sfnT "${myLib.home}/${myLib.configDirName}/dotfiles/config/plugins/config_Audio Assault" \
+      "${myLib.home}/.config/Audio Assault"
+    ${pkgs.coreutils}/bin/ln -sfnT "${myLib.home}/${myLib.configDirName}/dotfiles/config/plugins/config_My Company" \
+      "${myLib.home}/.config/My Company"
+    ${pkgs.coreutils}/bin/ln -sfnT "${myLib.home}/${myLib.configDirName}/dotfiles/config/plugins/local_share_The Usual Suspects" \
+      "${myLib.home}/.local/share/The Usual Suspects"
+  '';
+
   systemd.tmpfiles.rules = [                                                        # Правила tmpfiles
     # ========== Правила tmpfiles для аудио и REAPER ==========
     (myLib.mkDir "${myLib.home}/.clap")
@@ -118,31 +144,20 @@ in
     (myLib.mkLink "${myLib.home}/.local/bin/wine64" "${pkgs.wineWow64Packages.staging}/bin/wine")  # wine64
     "L+ /usr/bin/zenity - - - - ${pkgs.zenity}/bin/zenity" # нужно для работы вывода меню выбора пресетов внутри плагина
 
-    # ---------- Структура каталогов для данных Amp Locker и Drum Locker ----------
-    (myLib.mkDir "\"${myLib.home}/Audio Assault\"")
-    (myLib.mkDir "\"${myLib.home}/Audio Assault/PluginData\"")
-    (myLib.mkDir "\"${myLib.home}/Audio Assault/PluginData/Audio Assault\"")
-    (myLib.mkLink "\"${myLib.home}/Audio Assault/PluginData/Audio Assault/AmpLockerData\"" "/run/current-system/sw/share/amp-locker")
-    (myLib.mkLink "\"${myLib.home}/Audio Assault/PluginData/Audio Assault/DrumLockerData\"" "/run/current-system/sw/share/drum-locker")
-
     # ---------- Mulhacen: factory-ресурсы из деривации ----------
     (myLib.mkDir "${myLib.home}/.local/share/Mulhacen")
     (myLib.mkLink "${myLib.home}/.local/share/Mulhacen/factory" "${pkgs.lucerno-packages.mulhacen-clap}/share/Mulhacen/factory")
 
-    # ---------- Симлинки конфигов плагинов ----------
+    # ---------- Симлинки конфигов плагинов (без пробелов в путях) ----------
     (myLib.mkLink "${myLib.home}/.config/yabridgectl" "${myLib.home}/${myLib.configDirName}/dotfiles/config/yabridgectl")
     (myLib.mkLink "${myLib.home}/.config/DecentSampler" "/mnt/sys_archiv/samples/DecentSampler")
-    (myLib.mkLink "\"${myLib.home}/.config/Amp Locker\"" "${myLib.home}/${myLib.configDirName}/dotfiles/config/plugins/config_Amp Locker")
-    (myLib.mkLink "\"${myLib.home}/.config/Audio Assault\"" "${myLib.home}/${myLib.configDirName}/dotfiles/config/plugins/config_Audio Assault")
     (myLib.mkLink "${myLib.home}/.config/geonkick" "${myLib.home}/${myLib.configDirName}/dotfiles/config/plugins/config_geonkick")
     (myLib.mkLink "${myLib.home}/.config/lsp-plugins" "${myLib.home}/${myLib.configDirName}/dotfiles/config/plugins/config_lsp-plugins")
     (myLib.mkLink "${myLib.home}/.config/3VStudio" "${myLib.home}/${myLib.configDirName}/dotfiles/config/plugins/config_3VStudio")
-    (myLib.mkLink "\"${myLib.home}/.config/My Company\"" "${myLib.home}/${myLib.configDirName}/dotfiles/config/plugins/config_My Company")
     (myLib.mkLink "${myLib.home}/.config/MANDA_AUDIO" "${myLib.home}/${myLib.configDirName}/dotfiles/config/plugins/config_MANDA_AUDIO")
     (myLib.mkLink "${myLib.home}/.config/Plogue" "${myLib.home}/${myLib.configDirName}/dotfiles/config/plugins/config_Plogue")
     (myLib.mkLink "${myLib.home}/.local/share/geonkick" "${myLib.home}/${myLib.configDirName}/dotfiles/config/plugins/local_share_geonkick")
     (myLib.mkLink "${myLib.home}/${myLib.configDirName}/dotfiles/config/plugins/local_share_geonkick/presets" "/run/current-system/sw/share/geonkick/presets")
-    (myLib.mkLink "\"${myLib.home}/.local/share/The Usual Suspects\"" "${myLib.home}/${myLib.configDirName}/dotfiles/config/plugins/local_share_The Usual Suspects")
     (myLib.mkLink "${myLib.home}/.local/share/vital" "/mnt/sys_archiv/samples/vital")
     (myLib.mkLink "${myLib.home}/drum_sklad" "/mnt/sys_archiv/samples/drum_sklad")
   ];

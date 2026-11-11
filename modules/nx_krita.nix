@@ -23,6 +23,7 @@ let
 in
 {
   systemd.tmpfiles.rules = [
+    (myLib.mkDir "${myLib.home}/.local/share/krita/pykrita")
     # ---------- krita-ai-diffusion ----------
     (myLib.mkLink "${myLib.home}/.local/share/krita/pykrita/ai_diffusion" "${pluginAI}/share/krita/pykrita/ai_diffusion")
     (myLib.mkLink "${myLib.home}/.local/share/krita/pykrita/ai_diffusion.desktop" "${pluginAI}/share/krita/pykrita/ai_diffusion.desktop")

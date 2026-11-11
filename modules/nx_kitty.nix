@@ -157,6 +157,7 @@ in
   # ─────────────────────────────────────────────────────────────────────────
 
   systemd.tmpfiles.rules = [
+    (myLib.mkDir "${myLib.home}/.config/kitty")
     (myLib.mkLink "${myLib.home}/.config/kitty/kitty.conf" kittyConf)
     (myLib.mkLink "${myLib.home}/.config/kitty/quick-access-terminal.conf" quickAccessConf)
     (myLib.mkLink "${myLib.home}/.local/share/applications/net.local.toggle-kitty.desktop" (pkgs.writeText "net.local.toggle-kitty.desktop" ''

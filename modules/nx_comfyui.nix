@@ -141,7 +141,10 @@ in
     (myLib.mkLink "${home}/.local/share/applications/comfyui-status.desktop" "${statusDesktop}/share/applications/comfyui-status.desktop")
 
     # ---------- Директории ComfyUI в ~/.config/comfy-ui/ ----------
+    (myLib.mkDir "/mnt/ai/ComfyUI_models")
+    (myLib.mkDir "${home}/.config/comfy-ui")
     (myLib.mkDir "${home}/.config/comfy-ui/custom_nodes")
+    (myLib.mkDir "${home}/.config/comfy-ui/models")
     (myLib.mkDir "${home}/.config/comfy-ui/models/diffusion_models")
     (myLib.mkDir "${home}/.config/comfy-ui/models/inpaint")
     (myLib.mkDir "${home}/.config/comfy-ui/models/loras")
