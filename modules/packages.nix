@@ -114,7 +114,6 @@
     yt-dlp                                                        # Утилита для загрузки видео/аудио с YouTube и сотен других сайтов (форк youtube-dl) нужен для cliamp
     libva-utils                                                   # Утилиты для VA-API (аппаратное ускорение видео)
     wayland-utils                                                 # Набор утилит для диагностики Wayland (например, wayland-info)
-  # lact                                                          # Утилита для управления видеокартами NVIDIA и AMD (мониторинг, разгон, управление вентиляторами, настройка VF-кривой). Для NVIDIA требуется библиотека NVML
     uv                                                            # Менеджер Python-проектов (альтернатива pip + virtualenv)
     gsettings-desktop-schemas                                     # Схемы настроек для GSettings (используются GTK-приложениями)
     base16-schemes                                                # Набор цветовых схем Base16 (для терминалов, редакторов)
@@ -134,6 +133,7 @@
     fbset                                                         # Настройка разрешения framebuffer для TTY (используется в nx_tty.nix)
     ragenix                                                       # CLI agenix (Rust-реализация, совместима с ryantm/agenix)
     age                                                           # Утилита шифрования (генерация age-ключей)
+  # lact - !!! УСТАНОВЛЕНО !!!                                    # Утилита для андервольта видеокарт (Установлено черз сервиис, подробности тут nx_lact.nix) Для NVIDIA требуется библиотека NVML
 
     # КОНСОЛЬНЫЕ УТИЛИТЫ
     bat                                                           # Улучшенный cat с подсветкой синтаксиса и интеграцией с Git
@@ -256,12 +256,7 @@
     reaper-reapack-extension                                      # Менеджер скриптов ReaPack для REAPER (установка пользовательских скриптов)
     wineWow64Packages.staging                                     # Wine с поддержкой 64 и 32 бит (staging‑патчи для аудио)
     yabridge                                                      # Мост для запуска Windows VST-плагинов в Linux (через Wine)
-  # yabridgectl                                                   # Утилита для управления yabridge (сканирование, синхронизация)
-(yabridgectl.override {
-  wineWow64Packages = wineWow64Packages // {
-    yabridge = wineWow64Packages.staging;
-  };                                                            # Override: winedump берётся из staging (уже в systemPackages), а не из дефолтного 9.21
-})
+    yabridgectl                                                   # Утилита для управления yabridge (сканирование, синхронизация)
     winetricks                                                    # Вспомогательный скрипт для настройки Wine (установка DLL, зависимостей)
     coppwr                                                        # Графическая утилита для управления PipeWire
       # --- Синтезаторы и Сэмплеры ---

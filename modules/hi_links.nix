@@ -37,28 +37,35 @@ in
     (myLib.mkDir "${home}/.local/share/Steam/config")
     (myLib.mkDir "${home}/.config")
     (myLib.mkDir "${home}/.config/autostart")
-    "d ${home}/${configDir}/secrets 0750 ${myLib.userName} ${myLib.userName} -" # 0750, поэтому оставляем как есть
-
-    # ДИСКИ
-    (myLib.mkDir "/mnt/ai")
-    (myLib.mkDir "/mnt/sys_archiv")
+    "d ${home}/${configDir}/secrets 0750 ${myLib.userName} ${myLib.userName} -"
 
     # ---------- Права на энергопотребление CPU ----------
     "z /sys/class/powercap/intel-rapl:*/energy_uj 0640 root powercap -"
 
     # ---------- Симлинки конфигов ----------
-    (myLib.mkLink "${home}/.config/btop" "${home}/${configDir}/dotfiles/config/btop")
-    (myLib.mkLink "${home}/.config/qmmp" "${home}/${configDir}/dotfiles/config/qmmp")
-    (myLib.mkLink "${home}/.config/SocialStream" "${home}/${configDir}/dotfiles/config/SocialStream")
-    (myLib.mkLink "${home}/.config/obs-studio" "${home}/${configDir}/dotfiles/config/obs-studio")
-    (myLib.mkLink "${home}/.config/MangoHud" "${home}/${configDir}/dotfiles/config/MangoHud")
-
     # Папка KDE содержит конфиги (kunifiedpush, qrca, UserFeedback), которые не управляются plasma-manager
     (myLib.mkLink "${home}/.config/KDE" "${home}/${configDir}/dotfiles/config/KDE")
 
-    (myLib.mkLink "${home}/.config/mc" "${home}/${configDir}/dotfiles/config/mc")
+    (myLib.mkLink "${home}/.config/btop" "${home}/${configDir}/dotfiles/config/btop")
     (myLib.mkLink "${home}/.config/fastfetch" "${home}/${configDir}/dotfiles/config/fastfetch")
+    (myLib.mkLink "${home}/.config/MangoHud" "${home}/${configDir}/dotfiles/config/MangoHud")
+    (myLib.mkLink "${home}/.config/mc" "${home}/${configDir}/dotfiles/config/mc")
+    (myLib.mkLink "${home}/.config/obs-studio" "${home}/${configDir}/dotfiles/config/obs-studio")
+    (myLib.mkLink "${home}/.config/qmmp" "${home}/${configDir}/dotfiles/config/qmmp")
     (myLib.mkLink "${home}/.config/TeamSpeak" "${home}/${configDir}/dotfiles/config/TeamSpeak")
+
+    # ---------- Amnezia ----------
+    (myLib.mkDir "${home}/.config/AmneziaVPN.ORG")
+    (myLib.mkLink "${home}/.config/AmneziaVPN.ORG/AmneziaVPN.conf" config.age.secrets."amneziavpn-conf".path)
+
+    # ---------- Authenticator ----------
+    (myLib.mkLink "${home}/.local/share/authenticator" "${home}/${configDir}/dotfiles/config/authenticator")
+
+    # ---------- Cliamp ----------
+    (myLib.mkDir "${home}/.config/cliamp")
+    (myLib.mkLink "${home}/.config/cliamp/playlists" "${home}/${configDir}/dotfiles/config/cliamp/playlists")
+    (myLib.mkLink "${home}/.config/cliamp/config.toml" "${home}/${configDir}/dotfiles/config/cliamp/config.toml")
+    (myLib.mkLink "${home}/.config/cliamp/radio_favorites.toml" "${home}/${configDir}/dotfiles/config/cliamp/radio_favorites.toml")
 
     # ---------- Kdenlive ----------
     (myLib.mkLink "${home}/.config/kdenlive-layoutsrc" "${home}/${configDir}/dotfiles/config/kdenlive/kdenlive-layoutsrc")
@@ -67,21 +74,17 @@ in
     (myLib.mkLink "${home}/.local/share/kdenlive/export" "${home}/${configDir}/dotfiles/config/kdenlive/export")
     (myLib.mkLink "${home}/.local/share/kdenlive/layouts" "${home}/${configDir}/dotfiles/config/kdenlive/layouts")
 
+    # ---------- SocialStream ----------
+    (myLib.mkDir "${home}/.config/SocialStream")
+    (myLib.mkLink "${home}/.config/SocialStream/config.json" "${home}/${configDir}/dotfiles/config/SocialStream/config.json")
+    (myLib.mkLink "${home}/.config/SocialStream/savedSync.json" "${home}/${configDir}/dotfiles/config/SocialStream/savedSync.json")
+    (myLib.mkLink "${home}/.local/bin/socialstreamninja" "/mnt/sys_archiv/pkgs/AppImages/socialstreamninja.AppImage") # v0.4.28
+
     # ---------- Vesktop ----------
     (myLib.mkDir "${home}/.config/vesktop")
     (myLib.mkLink "${home}/.config/vesktop/themes" "${home}/${configDir}/dotfiles/config/vesktop/themes")
     (myLib.mkLink "${home}/.config/vesktop/settings" "${home}/${configDir}/dotfiles/config/vesktop/settings")
-
-    # ---------- cliamp ----------
-    (myLib.mkDir "${home}/.config/cliamp")
-    (myLib.mkLink "${home}/.config/cliamp/playlists" "${home}/${configDir}/dotfiles/config/cliamp/playlists")
-    (myLib.mkLink "${home}/.config/cliamp/config.toml" "${home}/${configDir}/dotfiles/config/cliamp/config.toml")
-    (myLib.mkLink "${home}/.config/cliamp/radio_favorites.toml" "${home}/${configDir}/dotfiles/config/cliamp/radio_favorites.toml")
-
-    # ---------- Симлинки для приложений и данных ----------
-    (myLib.mkDir "${home}/.config/AmneziaVPN.ORG")
-    (myLib.mkLink "${home}/.config/AmneziaVPN.ORG/AmneziaVPN.conf" config.age.secrets."amneziavpn-conf".path)
-    (myLib.mkLink "${home}/.local/bin/socialstreamninja" "/mnt/sys_archiv/pkgs/AppImages/socialstreamninja.AppImage") # v0.4.28
+    (myLib.mkLink "${home}/.config/vesktop/settings.json" "${home}/${configDir}/dotfiles/config/vesktop/settings.json")
 
     # ---------- Автозапуск ----------
     (myLib.mkLink "${home}/.config/autostart/amneziavpn.desktop" (pkgs.writeText "amneziavpn.desktop" ''
