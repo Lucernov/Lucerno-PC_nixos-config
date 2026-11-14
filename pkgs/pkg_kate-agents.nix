@@ -24,7 +24,6 @@ stdenv.mkDerivation {
     qt6.wrapQtAppsHook
   ];
 
-  # Строго по CMakeLists.txt: Core, Gui, Widgets, Network + KF6 компоненты
   buildInputs = [
     qt6.qtbase
     kdePackages.kcoreaddons
@@ -33,6 +32,24 @@ stdenv.mkDerivation {
     kdePackages.kxmlgui
     kdePackages.kconfigwidgets
   ];
+
+  # 🔥 ПАТЧ ДЛЯ ОБХОДА ДЕДЛОКА
+  # Отключаем стриминг, чтобы плагин не зависал на многопоточности Qt
+  postPatch = ''
+    # Патчим провайдер OpenAI (там формируется JSON запроса)
+    if [ -f src/openaiprovider.cpp ]; then
+      substituteInPlace src/openaiprovider.cpp \
+        --replace '"stream": true' '"stream": false' \
+        --replace '"stream":true' '"stream":false' \
+        --replace 'stream = true' 'stream = false'
+    fi
+    # На всякий случай патчим и сам цикл агента, если настройка вынесена туда
+    if [ -f src/agentloop.cpp ]; then
+      substituteInPlace src/agentloop.cpp \
+        --replace '"stream": true' '"stream": false' \
+        --replace '"stream":true' '"stream":false'
+    fi
+  '';
 
   cmakeFlags = [
     "-DBUILD_TESTING=OFF"
