@@ -129,7 +129,7 @@
     ifuse                                                         # Утилита для монтирования файловой системы iPhone/iPad как обычной папки в Linux (через FUSE)
     vulkan-hdr-layer-kwin6                                        # Vulkan HDR Layer — посредник между HDR-игрой и драйвером NVIDIA (решает проблему "HDR не обнаружен")
     linuxPackages_zen.cpupower                                    # Утилита для управления частотой CPU (используется для смены governor)
-    lm-sensors                                                    # Утилита для отображения температуры и состояния датчиков оборудования
+    lm_sensors                                                    # Утилита для отображения температуры и состояния датчиков оборудования
     nix-update                                                    # Автообновление дериваций через GitHub/GitLab API
     fbset                                                         # Настройка разрешения framebuffer для TTY (используется в nx_tty.nix)
     ragenix                                                       # CLI agenix (Rust-реализация, совместима с ryantm/agenix)
