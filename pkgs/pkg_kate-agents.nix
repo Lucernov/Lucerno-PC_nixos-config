@@ -20,19 +20,18 @@ stdenv.mkDerivation {
 
   nativeBuildInputs = [
     cmake
-    kdePackages.extra-cmake-modules  # <-- ИСПРАВЛЕНО: используем версию из kdePackages
+    kdePackages.extra-cmake-modules
     qt6.wrapQtAppsHook
   ];
 
+  # Строго по CMakeLists.txt: Core, Gui, Widgets, Network + KF6 компоненты
   buildInputs = [
     qt6.qtbase
-    qt6.qtdeclarative
     kdePackages.kcoreaddons
     kdePackages.ki18n
-    kdePackages.kconfigwidgets
     kdePackages.ktexteditor
     kdePackages.kxmlgui
-    kdePackages.syntax-highlighting
+    kdePackages.kconfigwidgets
   ];
 
   cmakeFlags = [
