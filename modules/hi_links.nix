@@ -189,5 +189,31 @@ in
       Type=Application
       Version=1.5
     ''))
+
+    # --- Ярлык включения проектора (Cinema ON) ---
+    (myLib.mkLink "${home}/.local/share/applications/cinema-on.desktop" (pkgs.writeText "cinema-on.desktop" ''
+      [Desktop Entry]
+      Version=1.0
+      Type=Application
+      Name=Cinema ON
+      Comment=Включить проектор (HDMI-A-1)
+      Exec=${pkgs.kdePackages.kscreen}/bin/kscreen-doctor output.HDMI-A-1.enable output.HDMI-A-1.mode.1 output.HDMI-A-1.position.2560,360
+      Icon=video-display
+      Categories=System;Settings;
+      Terminal=false
+    ''))
+
+    # --- Ярлык выключения проектора (Cinema OFF) ---
+    (myLib.mkLink "${home}/.local/share/applications/cinema-off.desktop" (pkgs.writeText "cinema-off.desktop" ''
+      [Desktop Entry]
+      Version=1.0
+      Type=Application
+      Name=Cinema OFF
+      Comment=Выключить проектор (HDMI-A-1)
+      Exec=${pkgs.kdePackages.kscreen}/bin/kscreen-doctor output.HDMI-A-1.disable output.DP-1.priority.1
+      Icon=video-display
+      Categories=System;Settings;
+      Terminal=false
+    ''))
   ];
 }
