@@ -28,6 +28,29 @@ let
     hash = "sha256-UbEOrDL3niD7Zw2FQQkz7lg13OvAPukC59nyP9SUIKU=";
   };
 
+  # ComfyUI-LLM-Session (чат с историей для Causal LM)
+  # Обновление: git ls-remote https://github.com/kantan-kanto/ComfyUI-LLM-Session refs/heads/main
+  # Получить rev+hash: nix run nixpkgs#nix-prefetch-git -- <url> refs/heads/main
+  llm-session = pkgs.fetchgit {
+    url = "https://github.com/kantan-kanto/ComfyUI-LLM-Session";
+    rev = "ec2b293c55a821a1e18f84058680895a5ab77a74";
+    hash = "sha256-+/pM+5sgNnDYWf5NCpNm4njoO66SdENA3iv+gGczddQ=";
+  };
+
+  # llama-cpp-python с поддержкой CUDA
+  # Нужен для работы ComfyUI-LLM-Session, чтобы запускать GGUF-модели (Causal LM) на видеокарте
+  llama-cpp-cuda = pkgs.python3Packages.llama-cpp-python.override {
+    cudaSupport = true;
+    cudaPackages = pkgs.cudaPackages;
+  };
+
+  # Модифицированная сборка ComfyUI
+  # Добавляем llama-cpp-python в окружение, чтобы узлы ComfyUI-LLM-Session могли его импортировать
+  comfyui-with-llm-session = inputs.comfyui-nix.packages.${pkgs.stdenv.hostPlatform.system}.cuda
+    .overridePythonAttrs (old: {
+      propagatedBuildInputs = (old.propagatedBuildInputs or [ ]) ++ [ llama-cpp-cuda ];
+    });
+
   # Скрипты ComfyUI (остаются как есть)
   startScript = pkgs.writeShellScript "start-comfyui" ''
     systemctl --user start comfyui
@@ -104,7 +127,7 @@ in
     serviceConfig = {
       Type = "simple";                                                                  # Тип сервиса (простой процесс, не разветвляется)
       WorkingDirectory = "${home}/.config/comfy-ui";                                    # Рабочая директория (где лежат модели и workflows)
-      ExecStart = "${inputs.comfyui-nix.packages.${pkgs.stdenv.hostPlatform.system}.cuda}/bin/comfy-ui --listen 127.0.0.1 --port 8188 --enable-manager"; # Команда запуска - только локальный доступ
+      ExecStart = "${comfyui-with-llm-session}/bin/comfy-ui --listen 127.0.0.1 --port 8188 --enable-manager"; # Команда запуска (изменена на сборку с llama-cpp-python)
       Restart = "on-failure";                                                           # Перезапускать сервис, если он упал с ошибкой
       RestartSec = 5;                                                                   # Задержка перед перезапуском (5 секунд)
       DevicePolicy = "closed";                                                          # Разрешать только явно перечисленные устройства (безопасность)
@@ -203,11 +226,12 @@ in
     # ---------- custom_nodes (плагины ComfyUI) ----------
     (myLib.mkLink "${home}/.config/comfy-ui/custom_nodes/NStor-ComfyUI-Translation" nstor-translation) # NStor-ComfyUI-Translation (локализация интерфейса)
     (myLib.mkLink "${home}/.config/comfy-ui/custom_nodes/LVNodes" "${lvnodes}/LVNodes")                # LVNodes (ComfyUI-LLM-Chat)
+    (myLib.mkLink "${home}/.config/comfy-ui/custom_nodes/ComfyUI-LLM-Session" llm-session)             # ComfyUI-LLM-Session (Чат с историей)
 
     # ---------- Модели для ComfyUI ----------
     (myLib.mkLink "${home}/.config/comfy-ui/models/text_encoders/qwen_3_4b_fp4_flux2.safetensors" "/mnt/ai/ComfyUI_models/default/text_encoders/qwen_3_4b_fp4_flux2.safetensors") # default (Text encoder для Flux-2-Klein)
     (myLib.mkLink "${home}/.config/comfy-ui/models/checkpoints/yue2_3b_int8_convrot.safetensors" "/mnt/ai/ComfyUI_models/yue2/yue2_3b_int8_convrot.safetensors") # Yue (Yue2) music model
     (myLib.mkLink "${home}/.config/comfy-ui/models/audio_encoders/sheetsage2_bf16.safetensors" "/mnt/ai/ComfyUI_models/yue2/sheetsage2_bf16.safetensors") # Yue (Yue2) audio encoder
-    (myLib.mkLink "${home}/.config/comfy-ui/models/text_encoders/qwen2.5-coder-7b-instruct-q4_k_m.gguf" "/mnt/ai/ComfyUI_models/LLM/qwen2.5-coder-7b-instruct-q4_k_m.gguf") # Qwen2.5-Coder-7B (GGUF) для LVLLMChat
+    (myLib.mkLink "${home}/.config/comfy-ui/models/LLM/qwen2.5-coder-7b-instruct-q4_k_m.gguf" "/mnt/ai/ComfyUI_models/LLM/qwen2.5-coder-7b-instruct-q4_k_m.gguf") # Qwen2.5-Coder-7B для LLM Session
   ];
 }
