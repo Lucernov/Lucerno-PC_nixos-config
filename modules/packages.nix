@@ -242,7 +242,7 @@
 
     # ИИ
     inputs.comfyui-nix.packages.${pkgs.stdenv.hostPlatform.system}.cuda # ComfyUI с поддержкой CUDA для генерации изображений через нейросети
-    ollama-cuda                                                   # Локальный сервер с поддержкой CUDA для запуска LLM (Qwen, Llama и др.) через HTTP API на 127.0.0.1:11434
+    (pkgs.jan.override { cudaSupport = true; })                   # Открытый офлайн-чат (аналог ChatGPT) с графическим интерфейсом и поддержкой CUDA
 
     # ВИРТУАЛКА
     virtio-win                                                    # Драйверы VirtIO для Windows (не ISO, а папка с драйверами, подключается через CD-ROM как папка)
