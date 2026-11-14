@@ -325,18 +325,19 @@
   services = {
     lact.enable = true;                                           # Утилита для разгона/андервольта видеокарт
 
-    ollama = {                                                    # Движок для запуска LLM (Ollama)
-      enable = true;
-      package = pkgs.ollama-cuda;                                 # Использовать CUDA (RTX 3070)
-      home = "/mnt/ai/Ollama";                                    # Переносим рабочую директорию Ollama
-      models = "/mnt/ai/Ollama/models";
-    };
-  };
+    systemd.services.ollama = {
+      # Эта команда выполнится прямо перед стартом службы и силой выдаст права
+      preStart = ''
+        mkdir -p /mnt/ai/Ollama
+        chown -R ollama:ollama /mnt/ai/Ollama
+      '';
 
-  # Принудительно отключаем DynamicUser, чтобы служба использовала статического пользователя ollama
-  systemd.services.ollama.serviceConfig = {
-    DynamicUser = lib.mkForce false;
-    StateDirectory = lib.mkForce [ ];
+      serviceConfig = {
+        DynamicUser = lib.mkForce false;
+        StateDirectory = lib.mkForce [ ];
+        ReadWritePaths = lib.mkForce [ "/mnt/ai/Ollama" ];
+      };
+    };
   };
 
 }
