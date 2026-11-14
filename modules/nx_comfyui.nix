@@ -39,9 +39,9 @@ let
 
   # llama-cpp-python с поддержкой CUDA
   # Нужен для работы ComfyUI-LLM-Session, чтобы запускать GGUF-модели (Causal LM) на видеокарте
-  llama-cpp-cuda = pkgs.python3Packages.llama-cpp-python.override {
+  llama-cpp-cuda = pkgs.python312Packages.llama-cpp-python.override {
     cudaSupport = true;
-    cudaPackages = pkgs.cudaPackages;
+    cudaPackages = pkgs.cudaPackages_13;
   };
 
   # Модифицированная сборка ComfyUI
