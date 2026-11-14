@@ -45,11 +45,16 @@ let
   };
 
   # Модифицированная сборка ComfyUI
-  # Добавляем llama-cpp-python в окружение, чтобы узлы ComfyUI-LLM-Session могли его импортировать
-  comfyui-with-llm-session = inputs.comfyui-nix.packages.${pkgs.stdenv.hostPlatform.system}.cuda
-    .overridePythonAttrs (old: {
-      propagatedBuildInputs = (old.propagatedBuildInputs or [ ]) ++ [ llama-cpp-cuda ];
-    });
+  # Оборачиваем готовый пакет, чтобы добавить llama-cpp-python в PYTHONPATH
+  comfyui-with-llm-session = pkgs.symlinkJoin {
+    name = "comfyui-with-llm-session";
+    paths = [ inputs.comfyui-nix.packages.${pkgs.stdenv.hostPlatform.system}.cuda ];
+    nativeBuildInputs = [ pkgs.makeWrapper ];
+    postBuild = ''
+      wrapProgram $out/bin/comfy-ui \
+        --prefix PYTHONPATH : "${llama-cpp-cuda}/lib/python3.12/site-packages"
+    '';
+  };
 
   # Скрипты ComfyUI (остаются как есть)
   startScript = pkgs.writeShellScript "start-comfyui" ''
