@@ -59,6 +59,12 @@ stdenv.mkDerivation (finalAttrs: {
     hash = "sha256-q0V2gK0TjBnR5r1bqMTnBGezCtbwWwEzRuaEDl1bg4o=";
   };
 
+  # Распаковываем вручную и указываем, что работаем в текущей папке
+  unpackPhase = ''
+    tar --extract --file $src
+  '';
+  sourceRoot = ".";
+
   nativeBuildInputs = [ autoPatchelfHook zstd ];
 
   buildInputs = [
@@ -71,7 +77,6 @@ stdenv.mkDerivation (finalAttrs: {
     gcc.cc.lib
   ];
 
-  # Плагин — это библиотека (.so), а не приложение. Запрещаем Nix оборачивать его в wrapQtAppsHook
   dontWrapQtApps = true;
 
   installPhase = ''
@@ -90,3 +95,4 @@ stdenv.mkDerivation (finalAttrs: {
     platforms = [ "x86_64-linux" ];
   };
 })
+
