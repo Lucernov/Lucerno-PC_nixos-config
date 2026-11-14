@@ -33,13 +33,21 @@ stdenv.mkDerivation {
     kdePackages.kconfigwidgets
   ];
 
-  # 🔥 НАДЕЖНЫЙ ПАТЧ
-  # Заменяем ВСЕ объявления QMutex на QRecursiveMutex в заголовочном файле.
-  # QMutexLocker автоматически подстроится под тип, так как у него есть шаблонный конструктор.
+  # 🔥 ФИНАЛЬНЫЙ ПАТЧ (Мьютекс + Отключение стриминга)
   postPatch = ''
+    # 1. Исправляем дедлок мьютекса
     if [ -f src/agentloop.h ]; then
       substituteInPlace src/agentloop.h \
         --replace 'QMutex m_' 'QRecursiveMutex m_'
+    fi
+
+    # 2. Отключаем стриминг (ловит и JSON-объекты, и строки)
+    if [ -f src/openaiprovider.cpp ]; then
+      substituteInPlace src/openaiprovider.cpp \
+        --replace 'obj["stream"] = true;' 'obj["stream"] = false;' \
+        --replace 'obj.insert("stream", true);' 'obj.insert("stream", false);' \
+        --replace '"stream": true' '"stream": false' \
+        --replace '"stream":true' '"stream":false'
     fi
   '';
 
