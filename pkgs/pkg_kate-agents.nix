@@ -33,18 +33,13 @@ stdenv.mkDerivation {
     kdePackages.kconfigwidgets
   ];
 
-  # 🔥 ИСПРАВЛЕНИЕ БАГА С МЬЮТЕКСОМ (Дедлок/Краш)
-  # Автор плагина дважды лочит QMutex в одном потоке.
-  # Меняем его на QRecursiveMutex, который разрешает повторный захват.
+  # 🔥 НАДЕЖНЫЙ ПАТЧ
+  # Заменяем ВСЕ объявления QMutex на QRecursiveMutex в заголовочном файле.
+  # QMutexLocker автоматически подстроится под тип, так как у него есть шаблонный конструктор.
   postPatch = ''
     if [ -f src/agentloop.h ]; then
       substituteInPlace src/agentloop.h \
-        --replace 'QMutex m_mutex' 'QRecursiveMutex m_mutex'
-    fi
-    if [ -f src/agentloop.cpp ]; then
-      substituteInPlace src/agentloop.cpp \
-        --replace 'QMutexLocker locker(&m_mutex)' 'QMutexLocker locker(&m_mutex)' \
-        --replace 'QMutexLocker<QMutex> locker(&m_mutex)' 'QMutexLocker<QRecursiveMutex> locker(&m_mutex)'
+        --replace 'QMutex m_' 'QRecursiveMutex m_'
     fi
   '';
 
