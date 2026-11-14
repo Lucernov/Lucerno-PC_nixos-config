@@ -329,6 +329,7 @@
       enable = true;
       package = pkgs.ollama-cuda;                                 # Использовать CUDA (RTX 3070)
       home = "/mnt/ai/Ollama";                                    # Переносим рабочую директорию Ollama
+      models = "/mnt/ai/Ollama/models";
     };
   };
 

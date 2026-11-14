@@ -38,6 +38,7 @@ in
     (myLib.mkDir "${home}/.config")
     (myLib.mkDir "${home}/.config/autostart")
     "d ${home}/${configDir}/secrets 0750 ${myLib.userName} ${myLib.userName} -"
+    "d /mnt/ai/Ollama 0755 ollama ollama - -"
 
     # ---------- Права на энергопотребление CPU ----------
     "z /sys/class/powercap/intel-rapl:*/energy_uj 0640 root powercap -"
