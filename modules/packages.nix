@@ -309,6 +309,8 @@
     lucerno-packages.satordist2                                   # SATORDIST2 — 4-полосный сатуратор (CLAP + VST3)
     noise-repellent                                               # Шумодав для пост обработки голоса (spectral subtraction, вносит задержку ~23 мс)
 
+    sonic-visualiser
+
     ] ++ (with pkgs-unstable; [                                   # Пакеты из нестабильного канала (более свежие версии)
     # МУЗЫКА
       # --- Гитарные процессоры и усилители ---
