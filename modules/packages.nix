@@ -242,6 +242,7 @@
 
     # ИИ
     inputs.comfyui-nix.packages.${pkgs.stdenv.hostPlatform.system}.cuda # ComfyUI с поддержкой CUDA для генерации изображений через нейросети
+    ollama-cuda
 
     # ВИРТУАЛКА
     virtio-win                                                    # Драйверы VirtIO для Windows (не ISO, а папка с драйверами, подключается через CD-ROM как папка)
@@ -324,28 +325,6 @@
     # ========== Системные сервисы ==========
   services = {
     lact.enable = true;                                           # Утилита для разгона/андервольта видеокарт
-
-    ollama = {                                                    # Движок для запуска LLM (Ollama)
-      enable = true;
-      package = pkgs.ollama-cuda;                                 # Использовать CUDA (RTX 3070)
-      home = "/mnt/ai/Ollama";                                    # Переносим рабочую директорию Ollama
-      models = "/mnt/ai/Ollama/models";
-    };
-  };
-
-  # Переопределяем параметры systemd для Ollama (вне блока services!)
-  systemd.services.ollama = {
-    # Выполняем chown от root (префикс +), иначе у пользователя ollama не будет прав
-    serviceConfig.ExecStartPre = [
-      "+${pkgs.coreutils}/bin/mkdir -p /mnt/ai/Ollama"
-      "+${pkgs.coreutils}/bin/chown -R ollama:ollama /mnt/ai/Ollama"
-    ];
-
-    serviceConfig = {
-      DynamicUser = lib.mkForce false;
-      StateDirectory = lib.mkForce [ ];
-      ReadWritePaths = lib.mkForce [ "/mnt/ai/Ollama" ];
-    };
   };
 
 }
