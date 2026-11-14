@@ -327,8 +327,7 @@
 
     ollama = {                                                    # Движок для запуска LLM (Ollama)
       enable = true;
-      acceleration = "cuda";                                      # Использовать CUDA (RTX 3070)
-    # host = "127.0.0.1";                                         # По умолчанию слушает только локально (безопасно)
+      package = pkgs.ollama-cuda;                                 # Использовать CUDA (RTX 3070)
     };
 
     open-webui = {                                                # Веб-интерфейс для общения с Ollama
