@@ -333,6 +333,12 @@
     };
   };
 
+  # Принудительно отключаем DynamicUser, чтобы служба использовала статического пользователя ollama
+  systemd.services.ollama.serviceConfig = {
+    DynamicUser = lib.mkForce false;
+    StateDirectory = lib.mkForce [ ];
+  };
+
 }
 
 # ===== Быстрый запуск утилит без установки (через nix run) =====
