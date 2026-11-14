@@ -33,24 +33,20 @@ stdenv.mkDerivation {
     kdePackages.kconfigwidgets
   ];
 
-  # 🔥  ПАТЧ (Мьютекс + Убийство стриминга)
   postPatch = ''
     # 1. Исправляем дедлок мьютекса
+    # Используем --replace-fail (новый синтаксис), чтобы не было warning'ов
     if [ -f src/agentloop.h ]; then
       substituteInPlace src/agentloop.h \
-        --replace 'QMutex m_' 'QRecursiveMutex m_'
+        --replace-fail 'QMutex m_' 'QRecursiveMutex m_'
     fi
 
-    # 2. Тотально выключаем стриминг (ловит любые названия переменных)
+    # 2. Тотально выключаем стриминг (через sed, который умеет в регулярки)
     if [ -f src/openaiprovider.cpp ]; then
-      # Ловит requestBody["stream"] = true;
-      substituteInPlace src/openaiprovider.cpp \
-        --replace-regexp '\["stream"\][[:space:]]*=[[:space:]]*true' '["stream"] = false'
-
-      # Ловит возможные варианты через insert и объекты
-      substituteInPlace src/openaiprovider.cpp \
-        --replace-regexp 'stream[[:space:]]*:[[:space:]]*true' 'stream: false' \
-        --replace-regexp '"stream"[[:space:]]*:[[:space:]]*true' '"stream": false'
+      # Ловит любые варианты: ["stream"] = true, "stream": true, insert("stream", true)
+      sed -i -E 's/\["stream"\]\s*=\s*true/["stream"] = false/g' src/openaiprovider.cpp
+      sed -i -E 's/"stream"\s*:\s*true/"stream": false/g' src/openaiprovider.cpp
+      sed -i -E 's/insert\("stream",\s*true\)/insert("stream", false)/g' src/openaiprovider.cpp
     fi
   '';
 
