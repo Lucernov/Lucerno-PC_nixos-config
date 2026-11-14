@@ -174,6 +174,7 @@
     kdePackages.ktorrent                                          # Torrent-клиент
     #kdePackages.kdialog
     (tesseract.override { enableLanguages = [ "eng" "rus" ]; })   # Tesseract — движок оптического распознавания символов (OCR) + Добавляет языковые пакеты: английский и русский
+    lucerno-packages.kate-agents
 
     # ИНТЕРНЕТ
     iw                                                            # Утилита для настройки беспроводных сетей (Wi-Fi)

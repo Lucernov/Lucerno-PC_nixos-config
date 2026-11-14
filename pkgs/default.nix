@@ -19,6 +19,8 @@ in
     qmmp = pkgs.callPackage ./wrap_qmmp.nix { };
 
     # ====== ДЕРИВАЦИИ ======
+    # ====== Плагины для Kate ======
+    kate-agents = pkgs.callPackage ./pkg_kate-agents.nix { };
     # Плагины для музыки
     air-g-plugins = pkgs.callPackage ./pkg_air-g-plugins.nix { inherit versions; };
     amp-locker = pkgs.callPackage ./pkg_Amp-Locker.nix { inherit versions; };
