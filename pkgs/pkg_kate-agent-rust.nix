@@ -57,7 +57,7 @@ stdenv.mkDerivation (finalAttrs: {
   # Ссылка на ваш релиз на GitHub
   src = fetchurl {
     url = "https://github.com/Lucernov/Lucerno-PC_nixos-config/releases/download/kate-agent-0.1.0/kateagentrust-0.1.0.tar.zst";
-    hash = "sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA="; # Временный хеш
+    hash = "sha256-q0V2gK0TjBnR5r1bqMTnBGezCtbwWwEzRuaEDl1bg4o=";
   };
 
   # autoPatchelfHook автоматически прописывает правильные пути (rpath)
