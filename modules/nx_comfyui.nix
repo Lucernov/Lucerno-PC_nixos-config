@@ -208,6 +208,6 @@ in
     (myLib.mkLink "${home}/.config/comfy-ui/models/text_encoders/qwen_3_4b_fp4_flux2.safetensors" "/mnt/ai/ComfyUI_models/default/text_encoders/qwen_3_4b_fp4_flux2.safetensors") # default (Text encoder для Flux-2-Klein)
     (myLib.mkLink "${home}/.config/comfy-ui/models/checkpoints/yue2_3b_int8_convrot.safetensors" "/mnt/ai/ComfyUI_models/yue2/yue2_3b_int8_convrot.safetensors") # Yue (Yue2) music model
     (myLib.mkLink "${home}/.config/comfy-ui/models/audio_encoders/sheetsage2_bf16.safetensors" "/mnt/ai/ComfyUI_models/yue2/sheetsage2_bf16.safetensors") # Yue (Yue2) audio encoder
-    (myLib.mkLink "${home}/.config/comfy-ui/models/LLM/qwen2.5-coder-7b-instruct-q4_k_m.gguf" "/mnt/ai/ComfyUI_models/LLM/qwen2.5-coder-7b-instruct-q4_k_m.gguf") # Qwen2.5-Coder-7B для LLM Chat
+    (myLib.mkLink "${home}/.config/comfy-ui/models/text_encoders/qwen2.5-coder-7b-instruct-q4_k_m.gguf" "/mnt/ai/ComfyUI_models/LLM/qwen2.5-coder-7b-instruct-q4_k_m.gguf") # Qwen2.5-Coder-7B (GGUF) для LVLLMChat
   ];
 }
