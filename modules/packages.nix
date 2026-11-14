@@ -329,14 +329,8 @@
       enable = true;
       package = pkgs.ollama-cuda;                                 # Использовать CUDA (RTX 3070)
     };
-
-    open-webui = {                                                # Веб-интерфейс для общения с Ollama
-      enable = true;
-      environment = {
-        OLLAMA_API_BASE_URL = "http://127.0.0.1:11434";
-      };
-    };
   };
+
 }
 
 # ===== Быстрый запуск утилит без установки (через nix run) =====
