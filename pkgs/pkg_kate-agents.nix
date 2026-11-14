@@ -33,7 +33,7 @@ stdenv.mkDerivation {
     kdePackages.kconfigwidgets
   ];
 
-  # 🔥 ТОТАЛЬНЫЙ ПАТЧ (Мьютекс + Отключение стриминга + Отключение tools)
+  # 🔥 ИСПРАВЛЕННЫЙ ПАТЧ (Мьютекс + Отключение стриминга + Отключение tools)
   postPatch = ''
     # 1. Исправляем дедлок мьютекса
     if [ -f src/agentloop.h ]; then
@@ -41,16 +41,16 @@ stdenv.mkDerivation {
         --replace-fail 'QMutex m_' 'QRecursiveMutex m_'
     fi
 
-    # 2. Выключаем стриминг и tools
+    # 2. Выключаем стриминг и tools в OpenAI провайдере
     if [ -f src/openaiprovider.cpp ]; then
+      # Убиваем стриминг (ставим false)
       sed -i -E 's/\["stream"\]\s*=\s*true/["stream"] = false/g' src/openaiprovider.cpp
       sed -i -E 's/"stream"\s*:\s*true/"stream": false/g' src/openaiprovider.cpp
-      sed -i -E 's/insert\("stream",\s*true\)/insert("stream", false)/g' src/openaiprovider.cpp
 
-      # Убираем отправку tools в Ollama, чтобы не провоцировать сложный парсинг
-      sed -i -E 's/\["tools"\]\s*=\s*[^;]+;/\/\/ TOOLS REMOVED BY NIX/g' src/openaiprovider.cpp
-      sed -i -E 's/req\["tools"\]\s*=\s*[^;]+;/\/\/ TOOLS REMOVED BY NIX/g' src/openaiprovider.cpp
-      sed -i -E 's/"tools"\s*:\s*\[[^]]*\]/"tools": []/g' src/openaiprovider.cpp
+      # Отключаем tools БЕЗОПАСНО: переименовываем ключ "tools" в "tools_ignored".
+      # C++ код останется синтаксически валидным, а Ollama проигнорирует этот JSON-ключ.
+      sed -i -E 's/\["tools"\]/["tools_ignored"]/g' src/openaiprovider.cpp
+      sed -i -E 's/"tools"\s*:/"tools_ignored":/g' src/openaiprovider.cpp
     fi
   '';
 

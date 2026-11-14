@@ -244,6 +244,7 @@
     # ИИ
     inputs.comfyui-nix.packages.${pkgs.stdenv.hostPlatform.system}.cuda # ComfyUI с поддержкой CUDA для генерации изображений через нейросети
     ollama-cuda
+    aichat
 
     # ВИРТУАЛКА
     virtio-win                                                    # Драйверы VirtIO для Windows (не ISO, а папка с драйверами, подключается через CD-ROM как папка)
