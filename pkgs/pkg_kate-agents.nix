@@ -3,7 +3,6 @@
 , stdenv
 , fetchFromGitHub
 , cmake
-, extra-cmake-modules
 , kdePackages
 , qt6
 }:
@@ -16,12 +15,12 @@ stdenv.mkDerivation {
     owner = "Mte90";
     repo = "kate-agents";
     rev = "b3732eb4221284f913f4bb2966eccecec54e31b6";
-    hash = "sha256-bLXnCaMHxOnaRvblz4RWNTtooq/Yc5l3puc5mDVKOak="; # <-- Вставили реальный хеш
+    hash = "sha256-bLXnCaMHxOnaRvblz4RWNTtooq/Yc5l3puc5mDVKOak=";
   };
 
   nativeBuildInputs = [
     cmake
-    extra-cmake-modules
+    kdePackages.extra-cmake-modules  # <-- ИСПРАВЛЕНО: используем версию из kdePackages
     qt6.wrapQtAppsHook
   ];
 
