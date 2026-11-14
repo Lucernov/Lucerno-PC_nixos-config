@@ -33,21 +33,18 @@ stdenv.mkDerivation {
     kdePackages.kconfigwidgets
   ];
 
-  # 🔥 ПАТЧ ДЛЯ ОБХОДА ДЕДЛОКА
-  # Отключаем стриминг, чтобы плагин не зависал на многопоточности Qt
+  # 🔥 ИСПРАВЛЕНИЕ БАГА С МЬЮТЕКСОМ (Дедлок/Краш)
+  # Автор плагина дважды лочит QMutex в одном потоке.
+  # Меняем его на QRecursiveMutex, который разрешает повторный захват.
   postPatch = ''
-    # Патчим провайдер OpenAI (там формируется JSON запроса)
-    if [ -f src/openaiprovider.cpp ]; then
-      substituteInPlace src/openaiprovider.cpp \
-        --replace '"stream": true' '"stream": false' \
-        --replace '"stream":true' '"stream":false' \
-        --replace 'stream = true' 'stream = false'
+    if [ -f src/agentloop.h ]; then
+      substituteInPlace src/agentloop.h \
+        --replace 'QMutex m_mutex' 'QRecursiveMutex m_mutex'
     fi
-    # На всякий случай патчим и сам цикл агента, если настройка вынесена туда
     if [ -f src/agentloop.cpp ]; then
       substituteInPlace src/agentloop.cpp \
-        --replace '"stream": true' '"stream": false' \
-        --replace '"stream":true' '"stream":false'
+        --replace 'QMutexLocker locker(&m_mutex)' 'QMutexLocker locker(&m_mutex)' \
+        --replace 'QMutexLocker<QMutex> locker(&m_mutex)' 'QMutexLocker<QRecursiveMutex> locker(&m_mutex)'
     fi
   '';
 
