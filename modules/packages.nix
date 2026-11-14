@@ -129,6 +129,7 @@
     ifuse                                                         # Утилита для монтирования файловой системы iPhone/iPad как обычной папки в Linux (через FUSE)
     vulkan-hdr-layer-kwin6                                        # Vulkan HDR Layer — посредник между HDR-игрой и драйвером NVIDIA (решает проблему "HDR не обнаружен")
     linuxPackages_zen.cpupower                                    # Утилита для управления частотой CPU (используется для смены governor)
+    lm-sensors                                                    # Утилита для отображения температуры и состояния датчиков оборудования
     nix-update                                                    # Автообновление дериваций через GitHub/GitLab API
     fbset                                                         # Настройка разрешения framebuffer для TTY (используется в nx_tty.nix)
     ragenix                                                       # CLI agenix (Rust-реализация, совместима с ryantm/agenix)
@@ -164,6 +165,7 @@
     unzip                                                         # Распаковка ZIP-архивов
     yazi                                                          # Современный файловый менеджер на Rust с предпросмотром изображений и видео
     zoxide                                                        # Умная замена cd, запоминающая часто используемые папки
+    genact                                                        # Генератор бессмысленной активности в терминале (имитация работы, для прикола)
 
     # KDE приложения
     kdePackages.breeze-gtk                                        # Обеспечивает единый внешний вид GTK-программ в окружении KDE Plasma
@@ -180,7 +182,6 @@
     wget                                                          # Утилита для загрузки файлов из интернета
     authenticator                                                 # Приложение для двухфакторной аутентификации (TOTP, HOTP), например, для аккаунтов Google, GitHub и т.д.
     parabolic                                                     # Загрузчик видео/аудио с YouTube (альтернатива yt-dlp)
-  # (discord.override { withOpenASAR = true; })                   # Голосовой/текстовый чат
     (vesktop.override { withSystemVencord = false; })             # Голосовой/текстовый чат (альтернатиивный discord клиент в котором открываются видео ролики)
     telegram-desktop                                              # Мессенджер Telegram
     zapzap                                                        # Вотсап клииент
@@ -192,7 +193,7 @@
     curtail                                                       # Уменьшает размер изображений
     optipng                                                       # Оптимизатор PNG файлов
     pinta                                                         # Простой растровый редактор
-    krita                                                    # Krita растровый редактор
+    krita                                                         # Krita растровый редактор
   # inkscape                                                      # Векторная графика
     constrict                                                     # Графическая утилита для сжатия видео до заданного размера (GTK-приложение, обёртка над FFmpeg)
 
@@ -241,6 +242,7 @@
 
     # ИИ
     inputs.comfyui-nix.packages.${pkgs.stdenv.hostPlatform.system}.cuda # ComfyUI с поддержкой CUDA для генерации изображений через нейросети
+    ollama-cuda                                                   # Локальный сервер с поддержкой CUDA для запуска LLM (Qwen, Llama и др.) через HTTP API на 127.0.0.1:11434
 
     # ВИРТУАЛКА
     virtio-win                                                    # Драйверы VirtIO для Windows (не ISO, а папка с драйверами, подключается через CD-ROM как папка)
@@ -323,9 +325,5 @@
 }
 
 # ===== Быстрый запуск утилит без установки (через nix run) =====
-#nix run nixpkgs#lm-sensors                                                 # Утилита для отображения температуры и состояния датчиков оборудования
-#nix run nixpkgs#genact                                                     # Генератор бессмысленной активности в терминале (имитация работы, для прикола)
+#nix run nixpkgs#
 
-# ===== Генерация конфигов Plasma Manager =====
-#nix run github:nix-community/plasma-manager/trunk#rc2nix > plasma.nix      # Сгенерировать текущий конфиг Plasma в Nix-формате (rc2nix)
-#nix run github:nix-community/plasma-manager#rc2nix > plasma-current.nix    # Альтернативный способ (из главной ветки) получить Nix-конфиг Plasma
