@@ -328,6 +328,9 @@
     ollama = {                                                    # Движок для запуска LLM (Ollama)
       enable = true;
       package = pkgs.ollama-cuda;                                 # Использовать CUDA (RTX 3070)
+      environmentVariables = {
+        OLLAMA_MODELS = "/mnt/ai/Ollama/models";                  # Расположение моделей
+      };
     };
   };
 
