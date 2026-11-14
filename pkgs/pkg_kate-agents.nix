@@ -33,7 +33,7 @@ stdenv.mkDerivation {
     kdePackages.kconfigwidgets
   ];
 
-  # 🔥 ФИНАЛЬНЫЙ ПАТЧ (Мьютекс + Отключение стриминга)
+  # 🔥  ПАТЧ (Мьютекс + Убийство стриминга)
   postPatch = ''
     # 1. Исправляем дедлок мьютекса
     if [ -f src/agentloop.h ]; then
@@ -41,13 +41,16 @@ stdenv.mkDerivation {
         --replace 'QMutex m_' 'QRecursiveMutex m_'
     fi
 
-    # 2. Отключаем стриминг (ловит и JSON-объекты, и строки)
+    # 2. Тотально выключаем стриминг (ловит любые названия переменных)
     if [ -f src/openaiprovider.cpp ]; then
+      # Ловит requestBody["stream"] = true;
       substituteInPlace src/openaiprovider.cpp \
-        --replace 'obj["stream"] = true;' 'obj["stream"] = false;' \
-        --replace 'obj.insert("stream", true);' 'obj.insert("stream", false);' \
-        --replace '"stream": true' '"stream": false' \
-        --replace '"stream":true' '"stream":false'
+        --replace-regexp '\["stream"\][[:space:]]*=[[:space:]]*true' '["stream"] = false'
+
+      # Ловит возможные варианты через insert и объекты
+      substituteInPlace src/openaiprovider.cpp \
+        --replace-regexp 'stream[[:space:]]*:[[:space:]]*true' 'stream: false' \
+        --replace-regexp '"stream"[[:space:]]*:[[:space:]]*true' '"stream": false'
     fi
   '';
 
