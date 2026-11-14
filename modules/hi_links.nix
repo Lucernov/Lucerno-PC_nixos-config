@@ -38,7 +38,6 @@ in
     (myLib.mkDir "${home}/.config")
     (myLib.mkDir "${home}/.config/autostart")
     "d ${home}/${configDir}/secrets 0750 ${myLib.userName} ${myLib.userName} -"
-    "d /mnt/ai/Ollama 0755 ollama ollama - -"
 
     # ---------- Права на энергопотребление CPU ----------
     "z /sys/class/powercap/intel-rapl:*/energy_uj 0640 root powercap -"
@@ -74,6 +73,13 @@ in
     (myLib.mkDir "${home}/.local/share/kdenlive")
     (myLib.mkLink "${home}/.local/share/kdenlive/export" "${home}/${configDir}/dotfiles/config/kdenlive/export")
     (myLib.mkLink "${home}/.local/share/kdenlive/layouts" "${home}/${configDir}/dotfiles/config/kdenlive/layouts")
+
+    # ---------- Ollama ----------
+    # Создаем папку на внешнем диске с правами твоего пользователя
+    "d /mnt/ai/Ollama 0755 ${myLib.userName} users - -"
+    "d /mnt/ai/Ollama/models 0755 ${myLib.userName} users - -"
+    # Делаем ~/.ollama симлинком на /mnt/ai/Ollama
+    (myLib.mkLink "${home}/.ollama" "/mnt/ai/Ollama")
 
     # ---------- SocialStream ----------
     (myLib.mkDir "${home}/.config/SocialStream")
