@@ -67,6 +67,10 @@ in
     (myLib.mkLink "${home}/.config/cliamp/config.toml" "${home}/${configDir}/dotfiles/config/cliamp/config.toml")
     (myLib.mkLink "${home}/.config/cliamp/radio_favorites.toml" "${home}/${configDir}/dotfiles/config/cliamp/radio_favorites.toml")
 
+    # ---------- kate-agent-rust ----------
+    (myLib.mkDir "${home}/.config/kate-agent-rust")
+    (myLib.mkLink "${home}/.config/kate-agent-rust/config.json" "${home}/${configDir}/dotfiles/config/kate-agent-rust/config.json")
+
     # ---------- Kdenlive ----------
     (myLib.mkLink "${home}/.config/kdenlive-layoutsrc" "${home}/${configDir}/dotfiles/config/kdenlive/kdenlive-layoutsrc")
     (myLib.mkLink "${home}/.config/kdenliverc" "${home}/${configDir}/dotfiles/config/kdenlive/kdenliverc")
