@@ -1,23 +1,10 @@
 # pkgs/pkg_pitchnet.nix
 #
 # Особенности:
-#   - PitchNet распространяется как Makeself-архив (.run), не tar/zip.
-#     Распаковываем через `sh $src --noexec --target .` — распаковка без
-#     запуска install.sh (который требует root и ставит в /opt).
-#   - libonnxruntime.so.1 и libonnxruntime_providers_shared.so лежат в
-#     payload/opt/Session Loops/PitchNet/lib/ — разработчик поставляет
-#     их как бандл внутри .run, а не как системную зависимость.
-#     Мы копируем эту папку в $out/share/pitchnet/lib/, поэтому
-#     autoPatchelfHook (рекурсивно обходит $out) находит их сам и
-#     прописывает путь в rpath VST3. В логе сборки это видно:
-#       libonnxruntime.so.1 -> found: .../share/pitchnet/lib
-#   - autoPatchelfIgnoreMissingDeps — страховка: если по какой-то причине
-#     autoPatchelfHook не найдёт onnxruntime в $out (например, апстрим
-#     изменит структуру .run), сборка не упадёт, а пропустит эти deps.
-#     На практике он их находит, поэтому эта опция не срабатывает.
-#   - Standalone НЕ устанавливается: падает при старте с SEGV в
-#     juce::Component::centreWithSize (баг JUCE на Linux). VST3 в REAPER
-#     работает нормально.
+#   - PitchNet распространяется как Makeself-архив (.run), не tar/zip Распаковываем через `sh $src --noexec --target .` — распаковка без запуска install.sh (который требует root и ставит в /opt)
+#   - В 0.8.1 структура архива изменилась: вместо payload/opt/Session Loops/PitchNet/ ресурсы теперь лежат в payload/app/. VST3 bundle теперь ещё и содержит вкомпилированный libonnxruntime в Contents/x86_64-linux/lib/
+#   - autoPatchelfIgnoreMissingDeps — страховка на случай, если autoPatchelfHook не найдёт onnxruntime в $out. В 0.8.1 он его находит (и в VST3 bundle, и в $out/share/pitchnet/lib/), но оставляем для совместимости
+#   - Standalone НЕ устанавливается: падает при старте с SEGV в juce::Component::centreWithSize (баг JUCE на Linux). VST3 в REAPER работает нормально
 
 { lib
 , stdenv
@@ -30,13 +17,11 @@
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "pitchnet";
-  version = "0.7.3";
+  version = "0.8.1";
 
   src = fetchurl {
-    # Обрати внимание: в URL стоит "v${version}" — GitHub-тег начинается с v,
-    # а версия в файле — без него. nix-update понимает это автоматически.
     url = "https://github.com/SessionLoops/PitchNet/releases/download/v${finalAttrs.version}/PitchNet-Linux-x86_64.run";
-    hash = "sha256-e9slYg0n0w3zuYZTkdLTSWKYjWComsMjOd90KM9e274=";
+    hash = "sha256-UsNMxBcI39HZWghLEa91EdpJe+4SrGNW/jpH5Gs34ik=";
   };
 
   nativeBuildInputs = [ autoPatchelfHook ];
@@ -48,8 +33,6 @@ stdenv.mkDerivation (finalAttrs: {
     stdenv.cc.cc.lib
   ];
 
-  # Страховка: если autoPatchelfHook не найдёт onnxruntime в $out,
-  # сборка не упадёт. См. комментарий в шапке файла.
   autoPatchelfIgnoreMissingDeps = [
     "libonnxruntime.so.1"
     "libonnxruntime_providers_shared.so"
@@ -64,18 +47,15 @@ stdenv.mkDerivation (finalAttrs: {
   installPhase = ''
     runHook preInstall
 
-    # Ресурсы, нужные VST3-плагину: модели, libonnxruntime, шрифты, локали.
-    # Standalone-бинарник PitchNet НЕ устанавливается:
-    # он падает при старте из-за бага JUCE (centreWithSize в initialise()).
-    # Сам VST3 в REAPER работает нормально.
+    # В 0.8.1 ресурсы лежат в payload/app/ (раньше было payload/opt/Session Loops/PitchNet/)
     mkdir -p $out/share/pitchnet
-    cp -r "payload/opt/Session Loops/PitchNet/models" $out/share/pitchnet/
-    cp -r "payload/opt/Session Loops/PitchNet/lib"    $out/share/pitchnet/
-    cp -r "payload/opt/Session Loops/PitchNet/fonts"  $out/share/pitchnet/
-    cp -r "payload/opt/Session Loops/PitchNet/lang"   $out/share/pitchnet/
+    cp -r payload/app/models $out/share/pitchnet/
+    cp -r payload/app/lib    $out/share/pitchnet/
+    cp -r payload/app/fonts  $out/share/pitchnet/
+    cp -r payload/app/lang   $out/share/pitchnet/
     chmod -R u+w $out/share/pitchnet
 
-    # VST3
+    # VST3 (структура bundle не изменилась)
     mkdir -p $out/lib/vst3
     cp -r payload/vst3/PitchNet.vst3 $out/lib/vst3/
     chmod -R u+w $out/lib/vst3/PitchNet.vst3
