@@ -19,6 +19,15 @@ let
     hash = "sha256-X/40bb90SYmJqxGwJ8bGd9Zq8Ylzf2fDtHHcTXHQ1DQ=";
   };
 
+  # LVNodes (ComfyUI-LLM-Chat) с Hugging Face
+  # Обновление: git ls-remote https://huggingface.co/lvladikov/ComfyUI-Nodes-and-Workflows refs/heads/main
+  # Получить rev+hash: nix run nixpkgs#nix-prefetch-git -- <url> refs/heads/main
+  lvnodes = pkgs.fetchgit {
+    url = "https://huggingface.co/lvladikov/ComfyUI-Nodes-and-Workflows";
+    rev = "f42f504846870545c4f2587e98d9694e87a3adb0";
+    hash = "sha256-UbEOrDL3niD7Zw2FQQkz7lg13OvAPukC59nyP9SUIKU=";
+  };
+
   # Скрипты ComfyUI (остаются как есть)
   startScript = pkgs.writeShellScript "start-comfyui" ''
     systemctl --user start comfyui
@@ -153,6 +162,7 @@ in
     (myLib.mkDir "${home}/.config/comfy-ui/models/vae")
     (myLib.mkDir "${home}/.config/comfy-ui/models/checkpoints")
     (myLib.mkDir "${home}/.config/comfy-ui/models/audio_encoders")
+    (myLib.mkDir "${home}/.config/comfy-ui/models/LLM")
 
     # ---------- Директории на /mnt/ai (цели симлинков) ----------
     (myLib.mkDir "/mnt/ai/ComfyUI_output")
@@ -192,10 +202,12 @@ in
     # ============================== ComfyUI ==============================
     # ---------- custom_nodes (плагины ComfyUI) ----------
     (myLib.mkLink "${home}/.config/comfy-ui/custom_nodes/NStor-ComfyUI-Translation" nstor-translation) # NStor-ComfyUI-Translation (локализация интерфейса)
+    (myLib.mkLink "${home}/.config/comfy-ui/custom_nodes/LVNodes" "${lvnodes}/LVNodes")                # LVNodes (ComfyUI-LLM-Chat)
 
     # ---------- Модели для ComfyUI ----------
     (myLib.mkLink "${home}/.config/comfy-ui/models/text_encoders/qwen_3_4b_fp4_flux2.safetensors" "/mnt/ai/ComfyUI_models/default/text_encoders/qwen_3_4b_fp4_flux2.safetensors") # default (Text encoder для Flux-2-Klein)
     (myLib.mkLink "${home}/.config/comfy-ui/models/checkpoints/yue2_3b_int8_convrot.safetensors" "/mnt/ai/ComfyUI_models/yue2/yue2_3b_int8_convrot.safetensors") # Yue (Yue2) music model
     (myLib.mkLink "${home}/.config/comfy-ui/models/audio_encoders/sheetsage2_bf16.safetensors" "/mnt/ai/ComfyUI_models/yue2/sheetsage2_bf16.safetensors") # Yue (Yue2) audio encoder
+    (myLib.mkLink "${home}/.config/comfy-ui/models/LLM/qwen2.5-coder-7b-instruct-q4_k_m.gguf" "/mnt/ai/ComfyUI_models/LLM/qwen2.5-coder-7b-instruct-q4_k_m.gguf") # Qwen2.5-Coder-7B для LLM Chat
   ];
 }
