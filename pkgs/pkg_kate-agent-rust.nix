@@ -54,14 +54,11 @@ stdenv.mkDerivation (finalAttrs: {
   pname = "kate-agent-rust";
   version = "0.1.0";
 
-  # Ссылка на ваш релиз на GitHub
   src = fetchurl {
     url = "https://github.com/Lucernov/Lucerno-PC_nixos-config/releases/download/kate-agent-0.1.0/kateagentrust-0.1.0.tar.zst";
     hash = "sha256-q0V2gK0TjBnR5r1bqMTnBGezCtbwWwEzRuaEDl1bg4o=";
   };
 
-  # autoPatchelfHook автоматически прописывает правильные пути (rpath)
-  # к библиотекам Qt6/KF6 из Nix Store, иначе .so не загрузится в Kate.
   nativeBuildInputs = [ autoPatchelfHook zstd ];
 
   buildInputs = [
@@ -74,7 +71,9 @@ stdenv.mkDerivation (finalAttrs: {
     gcc.cc.lib
   ];
 
-  # Nix сам распакует tar.zst (архив содержит файл kateagentrust.so в корне)
+  # Плагин — это библиотека (.so), а не приложение. Запрещаем Nix оборачивать его в wrapQtAppsHook
+  dontWrapQtApps = true;
+
   installPhase = ''
     runHook preInstall
 
