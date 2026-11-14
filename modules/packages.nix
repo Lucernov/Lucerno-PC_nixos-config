@@ -321,22 +321,30 @@
     kdePackages.kdenlive                                          # Видеоредактор (пока тут, т.к. в нестабильном 26.08 уже можно перемещать дорожки)
   ]);
 
-  # ========== Системные сервисы ==========
+    # ========== Системные сервисы ==========
   services = {
     lact.enable = true;                                           # Утилита для разгона/андервольта видеокарт
 
-    systemd.services.ollama = {
-      # Эта команда выполнится прямо перед стартом службы и силой выдаст права
-      preStart = ''
-        mkdir -p /mnt/ai/Ollama
-        chown -R ollama:ollama /mnt/ai/Ollama
-      '';
+    ollama = {                                                    # Движок для запуска LLM (Ollama)
+      enable = true;
+      package = pkgs.ollama-cuda;                                 # Использовать CUDA (RTX 3070)
+      home = "/mnt/ai/Ollama";                                    # Переносим рабочую директорию Ollama
+      models = "/mnt/ai/Ollama/models";
+    };
+  };
 
-      serviceConfig = {
-        DynamicUser = lib.mkForce false;
-        StateDirectory = lib.mkForce [ ];
-        ReadWritePaths = lib.mkForce [ "/mnt/ai/Ollama" ];
-      };
+  # Переопределяем параметры systemd для Ollama (вне блока services!)
+  systemd.services.ollama = {
+    # Эта команда выполнится прямо перед стартом службы и силой выдаст права
+    preStart = ''
+      mkdir -p /mnt/ai/Ollama
+      chown -R ollama:ollama /mnt/ai/Ollama
+    '';
+
+    serviceConfig = {
+      DynamicUser = lib.mkForce false;
+      StateDirectory = lib.mkForce [ ];
+      ReadWritePaths = lib.mkForce [ "/mnt/ai/Ollama" ];
     };
   };
 
