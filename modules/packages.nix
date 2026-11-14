@@ -335,11 +335,11 @@
 
   # Переопределяем параметры systemd для Ollama (вне блока services!)
   systemd.services.ollama = {
-    # Эта команда выполнится прямо перед стартом службы и силой выдаст права
-    preStart = ''
-      mkdir -p /mnt/ai/Ollama
-      chown -R ollama:ollama /mnt/ai/Ollama
-    '';
+    # Выполняем chown от root (префикс +), иначе у пользователя ollama не будет прав
+    serviceConfig.ExecStartPre = [
+      "+${pkgs.coreutils}/bin/mkdir -p /mnt/ai/Ollama"
+      "+${pkgs.coreutils}/bin/chown -R ollama:ollama /mnt/ai/Ollama"
+    ];
 
     serviceConfig = {
       DynamicUser = lib.mkForce false;
