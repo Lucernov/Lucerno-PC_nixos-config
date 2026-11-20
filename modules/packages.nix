@@ -217,7 +217,7 @@
     foliate                                                       # Программа для чтения электронных книг (EPUB, MOBI, AZW3, FB2) с поддержкой словарей и закладок
     hunspellDicts.ru_RU                                           # Словарь для проверки орфографии (русский язык)
     hyphenDicts.ru_RU                                             # Словарь для автоматической расстановки переносов (русский язык)
-    libreoffice-qt-still                                          # Офисный пакет LibreOffice (стабильная ветка) с интеграцией в KDE Plasma через Qt
+    libreoffice-qt-fresh                                          # Офисный пакет LibreOffice (стабильная ветка) с интеграцией в KDE Plasma через Qt
     planify                                                       # Менеджер задач и проектов (GTK, синхронизация с Todoist, Nextcloud)
 
     # ИГРЫ
