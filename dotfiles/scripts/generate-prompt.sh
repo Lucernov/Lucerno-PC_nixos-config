@@ -76,9 +76,9 @@ echo "" >> "$OUTPUT_FILE"
 # Удаляем лишние пустые строки в конце файла
 sed -i '/^$/N;/^\n$/D' "$OUTPUT_FILE"
 
-# Финальная проверка: не попали ли в промпт plaintext-секреты
+# Финальная проверка: не попали ли plaintext-секреты
 if grep -qiE 'AGE-SECRET-KEY-1|ghp_[A-Za-z0-9]{20}|BEGIN OPENSSH PRIVATE KEY' "$OUTPUT_FILE"; then
-    echo "❌ ОШИБКА: В промпте найден plaintext-секрет!"
+    echo "❌ ОШИБКА: В тексте найден plaintext-секрет!"
     echo "Не отдавайте его никому. Файл: $OUTPUT_FILE"
     exit 1
 fi

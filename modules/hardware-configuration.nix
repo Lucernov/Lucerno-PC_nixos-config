@@ -242,13 +242,13 @@ in
     # ========== НАСТРОЙКИ INITRD (начальный загрузочный образ) ==========
     initrd = {
       systemd = {
-        enable = true;                                                      # Использовать systemd в initrd вместо скриптов. Ускоряет загрузку, позволяет параллельно запускать службы
+        enable = true;                                                      # Использовать systemd в initrd вместо скриптов
         services.plymouth-start = {
           after = [ "systemd-modules-load.service" ];                       # Plymouth стартует ПОСЛЕ загрузки модулей из initrd (nvidia, nvidia_modeset, nvidia_drm)
           requires = [ "systemd-modules-load.service" ];                    # Жёсткая зависимость: если modules-load не отработает, Plymouth не запустится
         };
       };
-      verbose = false;                                                      # Отключить подробный вывод сообщений initrd (делает загрузку более чистой и быстрой).
+      verbose = false;                                                      # Отключить подробный вывод сообщений initrd (делает загрузку более чистой и быстрой)
       supportedFilesystems = [ "exfat" ];                                   # Поддержка exFAT для внешних USB-дисков
       kernelModules = [                                                     # Модули, загружаемые на раннем этапе (initrd)
         "nvidia"                                                            # Основной драйвер NVIDIA
