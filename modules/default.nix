@@ -146,3 +146,21 @@
   };
 
 }
+
+#             "nix.dev"
+#             "cachix.org"
+#             "nixos-cache-proxy.cofob.dev"
+#             "nixos.org"
+#             "cache.nixos.org"
+#             "releases.nixos.org"
+#             "cache.nixos.org"
+#             "channels.nixos.org"
+#             "search.nixos.org"
+#             "cache.garnix.io"
+#             "garnix-cache.com"
+#             "cache.nixos-cuda.org"
+#             "git.lix.systems"
+#             "m1.ppy.sh"
+#             "snix.dev"
+#             "dl.genymotion.com"
+#             "chaotic.cx"

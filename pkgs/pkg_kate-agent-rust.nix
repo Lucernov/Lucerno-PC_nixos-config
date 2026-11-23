@@ -16,9 +16,9 @@
 # По умолчанию плагин настроен на работу с ЛОКАЛЬНОЙ Ollama:
 #   URL: http://127.0.0.1:11434/api/chat
 #   Модель: qwen-coder:latest
-# Стриминг отключен (stream: false), контекст увеличен до 16384 токенов.
+# Стриминг отключен (stream: false), контекст увеличен до 16384 токенов
 # API-ключ не требуется (пустое поле). Если понадобится внешнее API,
-# настройки можно поменять через шестеренку в самом плагине Kate.
+# настройки можно поменять через шестеренку в самом плагине Kate
 #
 # Настройки (URL, API Key, System Prompt) сохраняются в:
 #   ~/.config/kate-agent-rust/config.json
@@ -29,15 +29,15 @@
 # Исходники лежат вне репозитория (на внешнем диске):
 #   /mnt/sys_archiv/pkgs/My_Soft/kate-agent-rust/
 #
-# 1. Внести правки в исходники.
+# 1. Внести правки в исходники
 # 2. Зайти в nix-shell и собрать: ./cpp/deploy.sh
 # 3. Упаковать бинарник:
 #    tar --sort=name --mtime='@0' --owner=0 --group=0 --numeric-owner \
 #        -c kateagentrust.so | zstd --ultra -22 -T0 -q -c > kateagentrust-0.1.0.tar.zst
 # 4. Создать новый GitHub Release (например, kate-agent-0.1.1)
-#    и прикрепить туда этот tar.zst.
-# 5. Обновить `version`, `url` и `hash` в этом файле.
-#    (hash получается через nix build .#kate-agent-rust).
+#    и прикрепить туда этот tar.zst
+# 5. Обновить `version`, `url` и `hash` в этом файле
+#    (hash получается через nix build .#kate-agent-rust)
 # ─────────────────────────────────────────────────────────────────────
 
 { lib
