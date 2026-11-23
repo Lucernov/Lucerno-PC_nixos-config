@@ -3,6 +3,35 @@
 #
 # Использование: bash ~/nixos-config/dotfiles/scripts/amnezia-update.sh
 # Или алиас: amnezia-up
+#
+# -----------------------------------------------------------------------------
+# РУЧНОЕ ОБНОВЛЕНИЕ
+# 1. Бэкап и «оживление» конфига
+# # бэкап текущего (обязательно -L — разыменовать симлинк)
+# cp -L ~/.config/AmneziaVPN.ORG/AmneziaVPN.conf ~/amnezia-old.conf
+# # Amnezia в автозапуске — закрываем
+# pkill -f amnezia-vpn
+# # убираем симлинк, кладём обычную записываемую копию
+# rm ~/.config/AmneziaVPN.ORG/AmneziaVPN.conf
+# install -m600 ~/amnezia-old.conf ~/.config/AmneziaVPN.ORG/AmneziaVPN.conf
+#
+# 2. Импорт сервера в AmneziaVPN
+# -Запусти приложение.
+# -Добавь сервер через импорт из файла конфигурации → выбери /home/lucerno/111/WARPv2_2026-11-23.conf.
+# -Подключись, проверь что интернет работает через новый сервер.
+# -Полностью выйди из приложения (трей → Quit) — иначе конфиг не сбросится на диск.
+#
+# Проверь, что файл изменился:
+# stat -c '%y  %s байт' ~/.config/AmneziaVPN.ORG/AmneziaVPN.conf
+#
+# 3. Перешифровать секрет
+# age -r age1geasjv7af2fncszc8dlxk3qx8fltg2dpnftrlk2x9pplmzadwd5s8vyywn \
+#     -o ~/nixos-config/secrets/amneziavpn-conf.age \
+#     ~/.config/AmneziaVPN.ORG/AmneziaVPN.conf
+#
+# update
+# -----------------------------------------------------------------------------
+
 set -euo pipefail
 
 CONF="$HOME/.config/AmneziaVPN.ORG/AmneziaVPN.conf"
