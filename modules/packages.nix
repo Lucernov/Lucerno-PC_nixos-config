@@ -84,7 +84,7 @@
         "vectorcraft"                                             # Векторная графика — замена Adobe Illustrator
       # "filmcraft"                                               # Видеомонтаж — замена Adobe Premiere Pro
       # "wordcraft"                                               # Текстовый редактор — замена Microsoft Word
-        "gridcraft"                                               # Электронные таблицы — замена Microsoft Excel
+      # "gridcraft"                                               # Электронные таблицы — замена Microsoft Excel
       # "cadcraft"                                                # 2D/3D CAD — замена AutoCAD
       ];
     };
