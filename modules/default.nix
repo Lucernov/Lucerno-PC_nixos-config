@@ -118,6 +118,7 @@
       keep-derivations = true;                                                                              # Сохранять деривации (промежуточные результаты сборки) – полезно для кэширования
       keep-outputs = true;                                                                                  # Сохранять готовые outputs пакетов (обычно всегда true)
       substituters = [                                                                                      # Список дополнительных кэшей (substituters), откуда Nix может скачивать готовые бинарные сборки
+        "https://mirror.yandex.ru/nixos?priority=10"                                                        # Зеркало cache.nixos.org от Яндекса
         "https://cache.nixos.org"                                                                           # Основной кэш NixOS
         "https://nix-community.cachix.org"                                                                  # Кэш Nix Community
         "https://cache.nixos-cuda.org"                                                                      # Специализированный CUDA-кэш

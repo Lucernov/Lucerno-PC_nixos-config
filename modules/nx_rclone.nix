@@ -82,8 +82,8 @@ in
           --vfs-cache-mode full \
           --allow-other \
           --allow-non-empty \
-          --transfers=1 \
-          --checkers=1 \
+          --transfers=2 \
+          --checkers=4 \
           --dir-cache-time 24h \
           --attr-timeout 24h \
           --vfs-cache-max-age 24h \
@@ -124,8 +124,8 @@ in
           --vfs-cache-mode full \
           --allow-other \
           --allow-non-empty \
-          --transfers=1 \
-          --checkers=1 \
+          --transfers=2 \
+          --checkers=4 \
           --dir-cache-time 24h \
           --attr-timeout 24h \
           --vfs-cache-max-age 24h \
@@ -189,8 +189,8 @@ in
           --vfs-cache-mode full \
           --allow-other \
           --allow-non-empty \
-          --transfers=1 \
-          --checkers=1 \
+          --transfers=2 \
+          --checkers=4 \
           --dir-cache-time 24h \
           --attr-timeout 24h \
           --vfs-cache-max-age 24h \
